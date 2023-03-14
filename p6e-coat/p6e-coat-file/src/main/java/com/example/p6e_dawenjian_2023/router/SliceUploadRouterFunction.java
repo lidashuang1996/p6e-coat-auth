@@ -21,7 +21,7 @@ public class SliceUploadRouterFunction extends BaseRouterFunction implements Rou
      * @param handlerFunction 分片上传操作处理函数
      */
     public SliceUploadRouterFunction(OpenUploadHandlerFunction handlerFunction) {
-        super(RequestPredicates.POST("/upload/slice"), handlerFunction);
+        super(RequestPredicates.GET("/upload/slice/{id}").or(RequestPredicates.POST("/upload/slice")));
     }
 
 }

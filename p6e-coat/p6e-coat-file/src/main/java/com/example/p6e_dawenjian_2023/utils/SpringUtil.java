@@ -8,7 +8,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class SpringUtil {
+public final class SpringUtil {
     private static ApplicationContext APPLICATION;
     public static void init(ApplicationContext application) {
         APPLICATION = application;

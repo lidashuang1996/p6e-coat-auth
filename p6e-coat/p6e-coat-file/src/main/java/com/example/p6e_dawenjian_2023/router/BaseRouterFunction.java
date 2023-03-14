@@ -28,7 +28,7 @@ public class BaseRouterFunction implements RouterFunction<ServerResponse> {
      */
     public BaseRouterFunction(RequestPredicate predicate) {
         this.predicate = predicate;
-        this.handlerFunction = request -> ServerResponse.ok().build();
+        this.handlerFunction = request -> ServerResponse.ok().bodyValue("xxxxxx");
     }
 
     /**

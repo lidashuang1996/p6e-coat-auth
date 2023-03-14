@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>p6e_dawenjian_2023</artifactId>
+    <artifactId>p6e-coat-file</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>p6e_dawenjian_2023</name>
     <description>p6e_dawenjian_2023</description>
