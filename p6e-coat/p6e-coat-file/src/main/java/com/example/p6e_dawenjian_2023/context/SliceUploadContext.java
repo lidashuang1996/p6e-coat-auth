@@ -13,7 +13,16 @@ import java.util.Map;
 public class SliceUploadContext extends HashMap<String, Object> implements Serializable {
     private FilePart filePart;
     private Integer id;
+    private Integer index;
     private String signature;
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
 
     public String getSignature() {
         return signature;

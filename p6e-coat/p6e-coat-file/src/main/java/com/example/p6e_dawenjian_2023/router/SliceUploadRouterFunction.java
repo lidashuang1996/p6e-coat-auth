@@ -1,6 +1,5 @@
 package com.example.p6e_dawenjian_2023.router;
 
-import com.example.p6e_dawenjian_2023.handler.OpenUploadHandlerFunction;
 import com.example.p6e_dawenjian_2023.handler.SliceUploadHandlerFunction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -22,7 +21,8 @@ public class SliceUploadRouterFunction extends BaseRouterFunction implements Rou
      * @param handlerFunction 分片上传操作处理函数
      */
     public SliceUploadRouterFunction(SliceUploadHandlerFunction handlerFunction) {
-        super(RequestPredicates.POST("/upload/slice/{id}"), handlerFunction);
+        super(RequestPredicates.POST("/upload/slice")
+                .or(RequestPredicates.POST("/upload/slice/{id}")), handlerFunction);
     }
 
 }

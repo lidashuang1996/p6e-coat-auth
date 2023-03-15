@@ -1,5 +1,6 @@
 package com.example.p6e_dawenjian_2023.router;
 
+import com.example.p6e_dawenjian_2023.handler.AspectHandlerFunction;
 import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
@@ -28,7 +29,7 @@ public class BaseRouterFunction implements RouterFunction<ServerResponse> {
      */
     public BaseRouterFunction(RequestPredicate predicate) {
         this.predicate = predicate;
-        this.handlerFunction = request -> ServerResponse.ok().bodyValue("xxxxxx");
+        this.handlerFunction = request -> ServerResponse.ok().bodyValue(AspectHandlerFunction.ResultContext.build());
     }
 
     /**
