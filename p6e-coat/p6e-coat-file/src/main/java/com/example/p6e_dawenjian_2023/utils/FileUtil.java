@@ -2,8 +2,22 @@ package com.example.p6e_dawenjian_2023.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileUrlResource;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousFileChannel;
+import java.nio.file.StandardOpenOption;
+import java.security.MessageDigest;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * 文件帮助类
@@ -14,9 +28,22 @@ import java.io.File;
 public final class FileUtil {
 
     /**
+     * 文件连接符号
+     */
+    private static final String FILE_CONNECT_CHAR = ".";
+
+    /**
      * 路径连接符号
      */
     private static final String PATH_CONNECT_CHAR = "/";
+
+    private static final Random RANDOM = new Random();
+
+    /**
+     * 文件缓冲区大小
+     */
+    private static final int FILE_BUFFER_SIZE = 1024 * 1024 * 5;
+    private static final DefaultDataBufferFactory DEFAULT_DATA_BUFFER_FACTORY = new DefaultDataBufferFactory();
 
     /**
      * 注入日志对象
@@ -205,4 +232,132 @@ public final class FileUtil {
             }
         }
     }
+
+    /**
+     * 文件拼接
+     *
+     * @param left  文件名称
+     * @param right 文件后缀
+     * @return 拼接后的文件
+     */
+    public static String composeFile(String left, String right) {
+        if (left == null
+                || right == null
+                || left.isEmpty()
+                || right.isEmpty()) {
+            return null;
+        } else {
+            return left + FILE_CONNECT_CHAR + right;
+        }
+    }
+
+    /**
+     * 获取文件后缀
+     *
+     * @param content 文件名称
+     * @return 文件后缀
+     */
+    public static String getSuffix(String content) {
+        if (content != null && !content.isEmpty()) {
+            final StringBuilder suffix = new StringBuilder();
+            for (int i = content.length() - 1; i >= 0; i--) {
+                final String ch = String.valueOf(content.charAt(i));
+                if (FILE_CONNECT_CHAR.equals(ch)) {
+                    return suffix.toString();
+                } else {
+                    suffix.append(ch);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 读取文件内容
+     *
+     * @param file 文件对象
+     * @return Flux<DataBuffer> 读取的文件内容
+     */
+    public static Flux<DataBuffer> readFile(File file) {
+        if (file.isFile()) {
+            try {
+                return DataBufferUtils.read(new FileUrlResource(
+                        file.getAbsolutePath()), DEFAULT_DATA_BUFFER_FACTORY, FILE_BUFFER_SIZE);
+            } catch (IOException e) {
+                return Flux.error(e);
+            }
+        } else {
+            return Flux.error(new RuntimeException());
+        }
+    }
+
+    public static File[] readFolder(String folderPath) {
+        return readFolder(new File(folderPath));
+    }
+
+    public static File[] readFolder(File folder) {
+        if (folder.isDirectory()) {
+            return folder.listFiles((f, n) -> f.isFile());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取文件 MD5 签名
+     *
+     * @param file 文件对象
+     * @return 签名内容
+     */
+    public static Mono<String> obtainMD5Signature(File file) {
+        if (file.isFile()) {
+            final MessageDigest md;
+            try {
+                md = MessageDigest.getInstance("MD5");
+            } catch (Exception e) {
+                return Mono.error(e);
+            }
+            return readFile(file)
+                    .flatMap(buffer -> {
+                        md.update(buffer.toByteBuffer());
+                        return Mono.just(buffer.readPosition());
+                    })
+                    .collectList()
+                    .flatMap(l -> {
+                        final byte[] md5Bytes = md.digest();
+                        final StringBuilder hexValue = new StringBuilder();
+                        for (final byte md5Byte : md5Bytes) {
+                            int val = ((int) md5Byte) & 0xff;
+                            if (val < 16) {
+                                hexValue.append("0");
+                            }
+                            hexValue.append(Integer.toHexString(val));
+                        }
+                        return Mono.just(hexValue.toString());
+                    });
+        } else {
+            return Mono.error(new RuntimeException());
+        }
+    }
+
+    /**
+     * 获取文件 MD5 签名
+     *
+     * @param filePath 文件路径
+     * @return 签名内容
+     */
+    public static Mono<String> obtainMD5Signature(String filePath) {
+        return obtainMD5Signature(new File(filePath));
+    }
+
+    /**
+     * 生成唯一的文件名称
+     *
+     * @return 文件名称
+     */
+    public static String generateName() {
+        return UUID.randomUUID().toString().replaceAll("-", "") + RANDOM.nextInt(9999);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.p6e_dawenjian_2023.router;
 
+import com.example.p6e_dawenjian_2023.handler.CloseUploadHandlerFunction;
 import com.example.p6e_dawenjian_2023.handler.OpenUploadHandlerFunction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -20,8 +21,11 @@ public class CloseUploadRouterFunction extends BaseRouterFunction implements Rou
      *
      * @param handlerFunction 关闭上传操作处理函数
      */
-    public CloseUploadRouterFunction(OpenUploadHandlerFunction handlerFunction) {
-        super(RequestPredicates.POST("/upload/close/{id}").or(RequestPredicates.DELETE("/upload/close/{id}")), handlerFunction);
+    public CloseUploadRouterFunction(CloseUploadHandlerFunction handlerFunction) {
+        super(RequestPredicates.path("/upload/close")
+                .or(RequestPredicates.DELETE("/upload/close"))
+                .or(RequestPredicates.POST("/upload/close/{id}"))
+                .or(RequestPredicates.DELETE("/upload/close/{id}")), handlerFunction);
     }
 
 }

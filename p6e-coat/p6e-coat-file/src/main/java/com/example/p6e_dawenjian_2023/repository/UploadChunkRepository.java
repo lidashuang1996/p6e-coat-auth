@@ -1,12 +1,14 @@
 package com.example.p6e_dawenjian_2023.repository;
 
 import com.example.p6e_dawenjian_2023.model.UploadChunkModel;
+import com.example.p6e_dawenjian_2023.model.UploadModel;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -39,6 +41,14 @@ public class UploadChunkRepository extends BaseRepository {
      * @return Mono<UploadChunkModel> 模型对象
      */
     public Mono<UploadChunkModel> create(UploadChunkModel model) {
+        if (model == null) {
+            throw new NullPointerException(UploadChunkModel.class
+                    + " create(). " + UploadChunkModel.class + " => model is null ! ");
+        }
+        if (model.getOperator() == null) {
+            model.setOperator("sys");
+        }
+        model.setDate(LocalDateTime.now());
         return r2dbcEntityTemplate.insert(model);
     }
 

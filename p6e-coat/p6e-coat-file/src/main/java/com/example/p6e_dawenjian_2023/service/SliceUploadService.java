@@ -1,6 +1,6 @@
 package com.example.p6e_dawenjian_2023.service;
 
-import com.example.p6e_dawenjian_2023.context.OpenUploadContext;
+import com.example.p6e_dawenjian_2023.context.SliceUploadContext;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -20,6 +20,6 @@ public interface SliceUploadService {
      * @param context 打开上传上下文对象
      * @return 结果对象
      */
-    public Mono<Map<String, Object>> execute(OpenUploadContext context);
+    public Mono<Map<String, Object>> execute(SliceUploadContext context);
 
 }

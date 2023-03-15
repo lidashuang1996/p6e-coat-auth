@@ -28,9 +28,7 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
-        System.out.println(
-                httpRequest.getPath().elements()
-        );
+        context.setId(Integer.valueOf(queryParams.get("id").get(0)));
         return Mono.just(context);
     }
 

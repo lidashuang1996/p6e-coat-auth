@@ -12,15 +12,36 @@ public class CloseUploadContext extends HashMap<String, Object> implements Seria
 
     private Integer id;
 
+    public CloseUploadContext() {
+    }
+
+    public CloseUploadContext(Map<String, Object> map) {
+        this.putAll(map);
+        if (map.get("id") != null && map.get("id") instanceof final Integer content) {
+            this.setId(content);
+            this.remove("id");
+        }
+    }
+
     public Integer getId() {
         return id;
     }
 
-    public HashMap<String, Object> toMap() {
-        return new HashMap<>();
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Map<String, Object> toMap() {
+        this.put("id", id);
+        return this;
     }
 
     public CloseUploadContext setMap(Map<String, Object> map) {
+        this.putAll(map);
+        if (map.get("id") != null && map.get("id") instanceof final Integer content) {
+            this.setId(content);
+            this.remove("id");
+        }
         return this;
     }
 }

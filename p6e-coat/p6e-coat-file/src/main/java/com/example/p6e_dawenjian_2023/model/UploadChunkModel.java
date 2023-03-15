@@ -7,6 +7,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 文件块上传模型
@@ -35,4 +37,14 @@ public class UploadChunkModel implements Serializable {
     private String action;
     private LocalDateTime date;
     private String operator;
+    public Map<String, Object> toMap() {
+        final Map<String, Object> map = new HashMap<>(8);
+        map.put("id", id);
+        map.put("fid", fid);
+        map.put("name", name);
+        map.put("action", action);
+        map.put("date", date);
+        map.put("operator", operator);
+        return map;
+    }
 }
