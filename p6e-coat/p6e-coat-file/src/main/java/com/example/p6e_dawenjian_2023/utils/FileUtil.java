@@ -44,8 +44,8 @@ public final class FileUtil {
         if (folder.exists()) {
             LOGGER.debug("[ CreateFolder ] => " + absolutePath + " exists !");
             if (deleteExist) {
-                LOGGER.debug("[ CreateFolder ] => " + absolutePath
-                        + " exists ! need delete >>> " + deleteFolder(folder));
+                LOGGER.debug("[ CreateFolder ] => " + absolutePath + " exists >>> need delete !");
+                LOGGER.debug("[ CreateFolder ] => " + absolutePath + " delete >>> " + deleteFolder(folder));
             } else {
                 status = false;
             }

@@ -1,5 +1,6 @@
 package com.example.p6e_dawenjian_2023.aspect;
 
+import com.example.p6e_dawenjian_2023.utils.FileUtil;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -12,12 +13,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class DefaultAspect implements
-        Aspect,
-        OpenUploadAspect,
-        CloseUploadAspect,
-        SliceUploadAspect,
-        DownloadAspect {
+public class DefaultOpenUploadAspectImpl implements OpenUploadAspect {
 
     @Override
     public Mono<Boolean> before(Map<String, Object> data) {
@@ -26,6 +22,9 @@ public class DefaultAspect implements
 
     @Override
     public Mono<Boolean> after(Map<String, Object> data, Map<String, Object> result) {
+        final Object id = result.get("id");
+        result.clear();
+        result.put("id", id);
         return Mono.just(true);
     }
 

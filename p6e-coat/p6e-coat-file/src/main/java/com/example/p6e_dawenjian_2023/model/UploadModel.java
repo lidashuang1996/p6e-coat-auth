@@ -21,7 +21,7 @@ import java.util.Map;
 @Accessors(chain = true)
 public class UploadModel implements Serializable {
 
-    public static final String TABLE = "file_upload";
+    public static final String TABLE = "hksi_file_upload";
 
     public static final String ID = "id";
     public static final String NAME = "name";

@@ -2,10 +2,14 @@ package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.utils.SpringUtil;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.codec.multipart.FormFieldPart;
+import org.springframework.http.codec.multipart.Part;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,6 +19,16 @@ import java.util.Map;
  * @version 1.0
  */
 public abstract class RequestParameterMapper {
+
+    /**
+     * 表单数据前缀
+     */
+    public static final String FORM_DATA_PREFIX = "$FD_";
+
+    /**
+     * 参数数据前缀
+     */
+    public static final String PARAMETER_DATA_PREFIX = "$PR_";
 
     /**
      * 是否刷新缓存
@@ -29,13 +43,13 @@ public abstract class RequestParameterMapper {
     /**
      * 获取映射后的数据类型对象
      *
-     * @param request ServerHttpRequest 对象
+     * @param request ServerRequest 对象
      * @param oClass  映射的数据类型
      * @param <T>     映射的数据类型
      * @return 映射的数据类型对象的泛型
      */
     @SuppressWarnings("all")
-    public static <T> Mono<T> execute(ServerHttpRequest request, Class<T> oClass) {
+    public static <T> Mono<T> execute(ServerRequest request, Class<T> oClass) {
         if (!IS_REFRESH_CACHE) {
             refresh();
             IS_REFRESH_CACHE = true;
@@ -45,12 +59,15 @@ public abstract class RequestParameterMapper {
             throw new NullPointerException(RequestParameterMapper.class
                     + " execute(). CACHE.get(" + oClass.getName() + ") => mapper is null !");
         } else {
-            final Object o = mapper.execute(request);
-            if (o.getClass() == oClass) {
-                return Mono.just((T) o);
-            } else {
-                throw new TypeMismatchException(o, oClass);
-            }
+            return mapper
+                    .execute(request)
+                    .map(o -> {
+                        if (o.getClass() == oClass) {
+                            return (T) o;
+                        } else {
+                            throw new TypeMismatchException(o, oClass);
+                        }
+                    });
         }
     }
 
@@ -66,6 +83,35 @@ public abstract class RequestParameterMapper {
     }
 
     /**
+     * 读取 FormData 里面的数据
+     *
+     * @param request ServerRequest 对象
+     * @param data    保存的结果的数据对象
+     * @return 结果的数据对象
+     */
+    @SuppressWarnings("all")
+    public static Mono<Map<String, Object>> requestFormDataMapper(ServerRequest request, Map<String, Object> data) {
+        return request
+                .exchange()
+                .getMultipartData()
+                .map(m -> {
+                    for (final String key : m.keySet()) {
+                        if (data.get(FORM_DATA_PREFIX + key) != null) {
+                            data.put(PARAMETER_DATA_PREFIX + FORM_DATA_PREFIX + key, data.get(FORM_DATA_PREFIX + key));
+                            data.remove(FORM_DATA_PREFIX + key);
+                        }
+                        for (final Part part : m.get(key)) {
+                            data.putIfAbsent(FORM_DATA_PREFIX + key, new ArrayList<>());
+                            ((List<Object>) data.get(FORM_DATA_PREFIX + key)).add(
+                                    part instanceof final FormFieldPart fieldPart ? fieldPart.value() : part
+                            );
+                        }
+                    }
+                    return data;
+                });
+    }
+
+    /**
      * 输出映射的数据类型
      *
      * @return 映射的数据类型
@@ -77,6 +123,6 @@ public abstract class RequestParameterMapper {
      *
      * @return 映射的数据类型对象
      */
-    public abstract Mono<Object> execute(ServerHttpRequest request);
+    public abstract Mono<Object> execute(ServerRequest request);
 
 }

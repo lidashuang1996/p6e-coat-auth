@@ -44,7 +44,7 @@ public class CloseUploadHandlerFunction extends AspectHandlerFunction implements
     public Mono<ServerResponse> handle(ServerRequest request) {
         return
                 // 通过请求参数映射器获取上下文对象
-                RequestParameterMapper.execute(request.exchange().getRequest(), OpenUploadContext.class)
+                RequestParameterMapper.execute(request, OpenUploadContext.class)
                         // 执行打开上传操作之前的切点
                         .flatMap(c -> before(aspect, c.toMap()))
                         .flatMap(m -> {

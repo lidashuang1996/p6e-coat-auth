@@ -4,6 +4,7 @@ import com.example.p6e_dawenjian_2023.context.SliceUploadContext;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,12 +20,13 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
     }
 
     @Override
-    public Mono<Object> execute(ServerHttpRequest request) {
+    public Mono<Object> execute(ServerRequest request) {
         final SliceUploadContext context = new SliceUploadContext();
-        final MultiValueMap<String, String> queryParams = request.getQueryParams();
+        final ServerHttpRequest httpRequest = request.exchange().getRequest();
+        final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
         System.out.println(
-                request.getPath().elements()
+                httpRequest.getPath().elements()
         );
         return Mono.just(context);
     }

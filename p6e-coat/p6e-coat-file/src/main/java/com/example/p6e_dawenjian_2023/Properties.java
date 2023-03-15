@@ -25,7 +25,7 @@ public class Properties implements Serializable {
     /**
      * 基础的文件路径
      */
-    private String path = "/hksi/file/data";
+    private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
 
     /**
      * 允许上传的文件大小的最大值
@@ -39,10 +39,17 @@ public class Properties implements Serializable {
 
     private Map<String, Download> downloads = new HashMap<>();
 
+    private SimpleUpload simpleUpload = new SimpleUpload();
+
 
     @Data
     public static class Download implements Serializable {
         private String path;
+    }
+
+    @Data
+    public static class SimpleUpload implements Serializable {
+        private long maxSize = 1024 * 1024 * 15;
     }
 
 }
