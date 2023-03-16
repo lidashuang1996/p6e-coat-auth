@@ -15,6 +15,9 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * 分片上传服务
+ * 步骤2: 分片上传操作
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -33,8 +36,9 @@ public class SliceUploadServiceImpl implements SliceUploadService {
     private final UploadRepository uploadRepository;
     private final UploadChunkRepository uploadChunkRepository;
 
-
-    public SliceUploadServiceImpl(Properties properties, UploadRepository uploadRepository, UploadChunkRepository uploadChunkRepository) {
+    public SliceUploadServiceImpl(Properties properties,
+                                  UploadRepository uploadRepository,
+                                  UploadChunkRepository uploadChunkRepository) {
         this.properties = properties;
         this.uploadRepository = uploadRepository;
         this.uploadChunkRepository = uploadChunkRepository;

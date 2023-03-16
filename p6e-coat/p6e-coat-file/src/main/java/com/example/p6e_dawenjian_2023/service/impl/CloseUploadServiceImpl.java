@@ -2,7 +2,6 @@ package com.example.p6e_dawenjian_2023.service.impl;
 
 import com.example.p6e_dawenjian_2023.Properties;
 import com.example.p6e_dawenjian_2023.context.CloseUploadContext;
-import com.example.p6e_dawenjian_2023.model.UploadModel;
 import com.example.p6e_dawenjian_2023.repository.UploadRepository;
 import com.example.p6e_dawenjian_2023.service.CloseUploadService;
 import com.example.p6e_dawenjian_2023.utils.FileUtil;
@@ -13,6 +12,9 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * 分片上传服务
+ * 步骤3: 关闭上传操作
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -45,8 +47,9 @@ public class CloseUploadServiceImpl implements CloseUploadService {
         return repository
                 .closeLock(context.getId())
                 .map(m -> {
-                    final String a = properties.getPath() + m.getStorageLocation();
-                    final File[] files = FileUtil.readFolder(a);
+                    final String absolutePath = FileUtil.convertAbsolutePath(
+                            FileUtil.composePath(properties.getPath(), m.getStorageLocation()));
+                    final File[] files = FileUtil.readFolder(absolutePath);
                     for (int i = 0; i < files.length; i++) {
                         for (int j = i; j < files.length; j++) {
                             final String in = files[i].getName();

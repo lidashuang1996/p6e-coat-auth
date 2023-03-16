@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 下载服务
+ *
  * @author lidashuang
  * @version 1.0
  */

@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 /**
- * 分片上传
+ * 分片上传服务
  * 步骤1: 打开上传操作
  *
  * @author lidashuang

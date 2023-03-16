@@ -2,11 +2,14 @@ package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.utils.SpringUtil;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.codec.multipart.FormFieldPart;
 import org.springframework.http.codec.multipart.Part;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
+import java.nio.CharBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -26,7 +29,13 @@ public abstract class RequestParameterMapper {
     public static final String FORM_DATA_PREFIX = "$FD_";
 
     /**
-     * 参数数据前缀
+     * Raw Body 数据前缀
+     */
+    public static final String RAW_JSON_PREFIX = "$RJ_";
+
+    /**
+     * 路径参数数据前缀
+     * 默认不会携带，如果参数名称和表单参数名称相同时候会添加前缀
      */
     public static final String PARAMETER_DATA_PREFIX = "$PR_";
 
@@ -96,6 +105,9 @@ public abstract class RequestParameterMapper {
                 .getMultipartData()
                 .map(m -> {
                     for (final String key : m.keySet()) {
+                        // 如果存在数据
+                        // 那么说明存在路径参数和表单参数同名的情况
+                        // 需要将路径请求参数添加相应的前缀以用来区分
                         if (data.get(FORM_DATA_PREFIX + key) != null) {
                             data.put(PARAMETER_DATA_PREFIX + FORM_DATA_PREFIX + key, data.get(FORM_DATA_PREFIX + key));
                             data.remove(FORM_DATA_PREFIX + key);
@@ -103,10 +115,28 @@ public abstract class RequestParameterMapper {
                         for (final Part part : m.get(key)) {
                             data.putIfAbsent(FORM_DATA_PREFIX + key, new ArrayList<>());
                             ((List<Object>) data.get(FORM_DATA_PREFIX + key)).add(
+                                    // 如果为文件对象直接添加，不是文件对象将获取文本内容后添加
                                     part instanceof final FormFieldPart fieldPart ? fieldPart.value() : part
                             );
                         }
                     }
+                    return data;
+                });
+    }
+
+    /**
+     * 读取 Raw Body 里面的数据
+     *
+     * @param request ServerRequest 对象
+     * @param data    保存的结果的数据对象
+     * @return 结果的数据对象
+     */
+    public static Mono<Map<String, Object>> requestRawJsonMapper(ServerRequest request, Map<String, Object> data) {
+        return DataBufferUtils.join(request.exchange().getRequest().getBody())
+                .map(buffer -> {
+                    final CharBuffer charBuffer = StandardCharsets.UTF_8.decode(buffer.toByteBuffer());
+                    DataBufferUtils.release(buffer);
+                    System.out.println(charBuffer);
                     return data;
                 });
     }

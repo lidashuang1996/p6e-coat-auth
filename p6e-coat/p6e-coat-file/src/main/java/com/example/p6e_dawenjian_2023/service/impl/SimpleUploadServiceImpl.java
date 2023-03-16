@@ -15,6 +15,8 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * 简单（小文件）上传服务
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -36,7 +38,8 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
      */
     private final UploadFolderStorageLocationPathService folderPathService;
 
-    public SimpleUploadServiceImpl(Properties properties, UploadRepository repository, UploadFolderStorageLocationPathService folderPathService) {
+    public SimpleUploadServiceImpl(Properties properties, UploadRepository repository,
+                                   UploadFolderStorageLocationPathService folderPathService) {
         this.properties = properties;
         this.repository = repository;
         this.folderPathService = folderPathService;

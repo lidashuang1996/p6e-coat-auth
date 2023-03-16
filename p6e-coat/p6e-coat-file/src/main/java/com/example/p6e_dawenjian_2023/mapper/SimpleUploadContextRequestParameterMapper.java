@@ -2,6 +2,7 @@ package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.context.SimpleUploadContext;
 import com.example.p6e_dawenjian_2023.error.ParameterException;
+import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,10 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
     public Mono<Object> execute(ServerRequest request) {
         final SimpleUploadContext context = new SimpleUploadContext();
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
+        final MediaType mediaType = httpRequest.getHeaders().getContentType();
+        if (MediaType.MULTIPART_FORM_DATA != mediaType) {
+            throw  new RuntimeException();
+        }
         // 读取 URL 参数并写入
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
@@ -47,12 +52,11 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
                             && ol.get(0) instanceof final FilePart filePart) {
                         // 如果读取到了 FORM DATA 文件请求参数那么就写入到上下文对象中
                         newContext.setFilePart(filePart);
-                    } else {
-                        // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                        throw new ParameterException(this.getClass(),
-                                "<" + FORM_DATA_PARAMETER_FILE + "> request parameter exception");
+                        return newContext;
                     }
-                    return newContext;
+                    // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
+                    throw new ParameterException(this.getClass(),
+                            "<" + FORM_DATA_PARAMETER_FILE + "> request parameter is null");
                 });
     }
 
