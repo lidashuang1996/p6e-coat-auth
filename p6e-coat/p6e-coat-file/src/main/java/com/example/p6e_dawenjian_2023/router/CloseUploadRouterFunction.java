@@ -14,7 +14,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(CloseUploadRouterFunction.class)
+@ConditionalOnMissingBean(
+        value = CloseUploadRouterFunction.class,
+        ignored = CloseUploadRouterFunction.class
+)
 public class CloseUploadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public CloseUploadRouterFunction(CloseUploadHandlerFunction handlerFunction) {

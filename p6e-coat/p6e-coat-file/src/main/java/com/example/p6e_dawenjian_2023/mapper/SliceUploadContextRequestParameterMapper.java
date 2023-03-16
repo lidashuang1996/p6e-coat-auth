@@ -1,7 +1,9 @@
 package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.context.SliceUploadContext;
+import com.example.p6e_dawenjian_2023.error.HttpMediaTypeException;
 import com.example.p6e_dawenjian_2023.error.ParameterException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.codec.multipart.FormFieldPart;
@@ -21,6 +23,10 @@ import java.util.List;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = SliceUploadContextRequestParameterMapper.class,
+        ignored = SliceUploadContextRequestParameterMapper.class
+)
 public class SliceUploadContextRequestParameterMapper extends RequestParameterMapper {
 
     /**
@@ -75,7 +81,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         final MediaType mediaType = httpRequest.getHeaders().getContentType();
         if (MediaType.MULTIPART_FORM_DATA != mediaType) {
-            throw new RuntimeException();
+            throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
         }
         context.putAll(queryParams);
         // 初始化请求参数 ID
@@ -95,12 +101,12 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                             try {
                                 newContext.setId(Integer.valueOf(filePart.value()));
                             } catch (Exception e) {
-                                // 如果没有读取到了 URL ID 那么就抛出参数异常
+                                // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
                                 throw new ParameterException(this.getClass(),
                                         "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
                             }
                         } else {
-                            // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
+                            // 如果没有读取到了 FORM DATA ID 请求参数那么就抛出参数异常
                             throw new ParameterException(this.getClass(),
                                     "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
                         }
@@ -112,12 +118,12 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                             try {
                                 newContext.setIndex(Integer.valueOf(filePart.value()));
                             } catch (Exception e) {
-                                // 如果没有读取到了 URL ID 那么就抛出参数异常
+                                // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
                                 throw new ParameterException(this.getClass(),
                                         "<" + FORM_DATA_PARAMETER_INDEX + "> request parameter type is not int");
                             }
                         } else {
-                            // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
+                            // 如果没有读取到了 FORM DATA INDEX 请求参数那么就抛出参数异常
                             throw new ParameterException(this.getClass(),
                                     "<" + FORM_DATA_PARAMETER_INDEX + "> request parameter is null");
                         }
@@ -128,7 +134,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                                 && ol.get(0) instanceof final FormFieldPart filePart) {
                             newContext.setSignature(filePart.value());
                         } else {
-                            // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
+                            // 如果没有读取到了 FORM DATA SIGNATURE 请求参数那么就抛出参数异常
                             throw new ParameterException(this.getClass(),
                                     "<" + FORM_DATA_PARAMETER_SIGNATURE + "> request parameter is null");
                         }
@@ -166,18 +172,12 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
         if (context.getId() == null) {
             // 读取 URL ID 请求参数
             final List<String> ids = queryParams.get(URL_PARAMETER_ID);
-            if (ids == null || ids.size() == 0) {
-                // 如果没有读取到了 URL ID 那么就抛出参数异常
-                throw new ParameterException(this.getClass(),
-                        "<" + URL_PARAMETER_ID + "> request parameter is null");
-            } else {
+            if (ids != null && ids.size() > 0) {
                 try {
                     // 如果读取到了 URL ID 那么就写入到上下文对象中
                     context.setId(Integer.valueOf(ids.get(0)));
                 } catch (Exception e) {
-                    // 如果没有读取到了 URL ID 那么就抛出参数异常
-                    throw new ParameterException(this.getClass(),
-                            "<" + URL_PARAMETER_ID + "> request parameter type is not int");
+                    // 忽略异常
                 }
             }
         }
@@ -190,21 +190,15 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
      * @param context SliceUploadContext 对象
      */
     private void initParameterIndex(ServerRequest request, SliceUploadContext context) {
-        final MultiValueMap<String, String> queryParams = request.exchange().getRequest().getQueryParams();
         // 读取 URL INDEX 请求参数
+        final MultiValueMap<String, String> queryParams = request.exchange().getRequest().getQueryParams();
         final List<String> indexes = queryParams.get(URL_PARAMETER_INDEX);
-        if (indexes == null || indexes.size() == 0) {
-            // 如果没有读取到了 URL INDEX 那么就抛出参数异常
-            throw new ParameterException(this.getClass(),
-                    "<" + URL_PARAMETER_INDEX + "> request parameter is null");
-        } else {
+        if (indexes != null && indexes.size() > 0) {
             try {
                 // 如果读取到了 URL INDEX 那么就写入到上下文对象中
                 context.setIndex(Integer.valueOf(indexes.get(0)));
             } catch (Exception e) {
-                // 如果没有读取到了 URL INDEX 那么就抛出参数异常
-                throw new ParameterException(this.getClass(),
-                        "<" + URL_PARAMETER_INDEX + "> request parameter type is not int");
+                // 忽略异常
             }
         }
     }
@@ -219,11 +213,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
         final MultiValueMap<String, String> queryParams = request.exchange().getRequest().getQueryParams();
         // 读取 URL SIGNATURE 请求参数
         final List<String> signatures = queryParams.get(URL_PARAMETER_SIGNATURE);
-        if (signatures == null || signatures.size() == 0) {
-            // 如果没有读取到了 URL SIGNATURE 那么就抛出参数异常
-            throw new ParameterException(this.getClass(),
-                    "<" + URL_PARAMETER_SIGNATURE + "> request parameter is null");
-        } else {
+        if (signatures != null && signatures.size() > 0) {
             // 如果读取到了 URL SIGNATURE 那么就写入到上下文对象中
             context.setSignature(signatures.get(0));
         }

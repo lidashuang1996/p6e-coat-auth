@@ -14,7 +14,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(SimpleUploadRouterFunction.class)
+@ConditionalOnMissingBean(
+        value = SimpleUploadRouterFunction.class,
+        ignored = SimpleUploadRouterFunction.class
+)
 public class SimpleUploadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public SimpleUploadRouterFunction(SimpleUploadHandlerFunction handlerFunction) {

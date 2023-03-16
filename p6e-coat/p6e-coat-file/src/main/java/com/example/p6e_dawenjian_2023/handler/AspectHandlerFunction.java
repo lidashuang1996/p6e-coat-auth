@@ -1,6 +1,7 @@
 package com.example.p6e_dawenjian_2023.handler;
 
 import com.example.p6e_dawenjian_2023.aspect.Aspect;
+import com.example.p6e_dawenjian_2023.error.AspectContactException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
@@ -10,12 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 切面处理函数
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class AspectHandlerFunction {
 
-
+    /**
+     * 结果的模型对象
+     */
     @Data
     @Accessors(chain = true)
     public static final class ResultContext implements Serializable {
@@ -95,6 +100,13 @@ public class AspectHandlerFunction {
         }
     }
 
+    /**
+     * 运行之前的切点处理
+     *
+     * @param aspect 切面对象
+     * @param data   参数对象
+     * @return 结果对象
+     */
     public Mono<Map<String, Object>> before(Aspect aspect, Map<String, Object> data) {
         if (data == null) {
             data = new HashMap<>(0);
@@ -105,11 +117,20 @@ public class AspectHandlerFunction {
                     if (b) {
                         return Mono.just(finalData);
                     } else {
-                        return Mono.error(new RuntimeException());
+                        return Mono.error(new AspectContactException(
+                                this.getClass(), "Action before intercept return error"));
                     }
                 });
     }
 
+    /**
+     * 运行之后的切点处理
+     *
+     * @param aspect 切面对象
+     * @param data   参数对象
+     * @param result 返回对象
+     * @return 结果对象
+     */
     public Mono<Map<String, Object>> after(Aspect aspect, Map<String, Object> data, Map<String, Object> result) {
         if (data == null) {
             data = new HashMap<>(0);
@@ -124,7 +145,8 @@ public class AspectHandlerFunction {
                     if (b) {
                         return Mono.just(finalResult);
                     } else {
-                        return Mono.error(new RuntimeException());
+                        return Mono.error(new AspectContactException(
+                                this.getClass(), "Action after intercept return error"));
                     }
                 });
     }

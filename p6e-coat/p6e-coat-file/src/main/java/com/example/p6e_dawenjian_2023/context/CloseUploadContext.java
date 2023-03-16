@@ -5,21 +5,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 关闭上传上下文对象
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class CloseUploadContext extends HashMap<String, Object> implements Serializable {
 
+    /**
+     * 上传编号
+     */
     private Integer id;
 
+    /**
+     * 无参数构造
+     */
     public CloseUploadContext() {
     }
 
+    /**
+     * map 初始化构造
+     *
+     * @param map 初始化对象
+     */
     public CloseUploadContext(Map<String, Object> map) {
         this.putAll(map);
         if (map.get("id") != null && map.get("id") instanceof final Integer content) {
             this.setId(content);
-            this.remove("id");
         }
     }
 
@@ -29,19 +41,11 @@ public class CloseUploadContext extends HashMap<String, Object> implements Seria
 
     public void setId(Integer id) {
         this.id = id;
+        this.put("id", id);
     }
 
     public Map<String, Object> toMap() {
-        this.put("id", id);
         return this;
     }
 
-    public CloseUploadContext setMap(Map<String, Object> map) {
-        this.putAll(map);
-        if (map.get("id") != null && map.get("id") instanceof final Integer content) {
-            this.setId(content);
-            this.remove("id");
-        }
-        return this;
-    }
 }

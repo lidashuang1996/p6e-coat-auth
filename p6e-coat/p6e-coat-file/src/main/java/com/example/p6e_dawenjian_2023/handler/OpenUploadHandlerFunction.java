@@ -4,6 +4,7 @@ import com.example.p6e_dawenjian_2023.mapper.RequestParameterMapper;
 import com.example.p6e_dawenjian_2023.aspect.OpenUploadAspect;
 import com.example.p6e_dawenjian_2023.context.OpenUploadContext;
 import com.example.p6e_dawenjian_2023.service.OpenUploadService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -17,6 +18,10 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = OpenUploadHandlerFunction.class,
+        ignored = OpenUploadHandlerFunction.class
+)
 public class OpenUploadHandlerFunction extends AspectHandlerFunction implements HandlerFunction<ServerResponse> {
 
     /**
@@ -48,7 +53,6 @@ public class OpenUploadHandlerFunction extends AspectHandlerFunction implements 
                         // 执行打开上传操作之前的切点
                         .flatMap(c -> before(aspect, c.toMap()))
                         .flatMap(m -> {
-                            System.out.println(m);
                             final OpenUploadContext context = new OpenUploadContext(m);
                             return
                                     // 执行打开上传服务
@@ -57,7 +61,7 @@ public class OpenUploadHandlerFunction extends AspectHandlerFunction implements 
                                             .flatMap(r -> after(aspect, context.toMap(), r));
                         })
                         // 结果返回
-                        .flatMap(r -> ServerResponse.ok().bodyValue(r));
+                        .flatMap(r -> ServerResponse.ok().bodyValue(ResultContext.build(r)));
     }
 
 }

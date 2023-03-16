@@ -14,7 +14,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(SliceUploadRouterFunction.class)
+@ConditionalOnMissingBean(
+        value = SliceUploadRouterFunction.class,
+        ignored = SliceUploadRouterFunction.class
+)
 public class SliceUploadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public SliceUploadRouterFunction(SliceUploadHandlerFunction handlerFunction) {

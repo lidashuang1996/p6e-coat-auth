@@ -24,7 +24,7 @@ import java.util.Map;
 public abstract class RequestParameterMapper {
 
     /**
-     * 表单数据前缀
+     * Form Data 数据前缀
      */
     public static final String FORM_DATA_PREFIX = "$FD_";
 
@@ -35,7 +35,9 @@ public abstract class RequestParameterMapper {
 
     /**
      * 路径参数数据前缀
-     * 默认不会携带，如果参数名称和表单参数名称相同时候会添加前缀
+     * 默认不会携带
+     * 如果参数名称和 Raw Body 参数名称相同时候会添加前缀
+     * 如果参数名称和 Form Data 参数名称相同时候会添加前缀
      */
     public static final String PARAMETER_DATA_PREFIX = "$PR_";
 

@@ -1,11 +1,12 @@
 package com.example.p6e_dawenjian_2023.folder;
 
 import com.example.p6e_dawenjian_2023.utils.FileUtil;
+import com.example.p6e_dawenjian_2023.utils.GeneratorUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 /**
  * 默认实现上传文件的本地存储路径服务
@@ -14,6 +15,10 @@ import java.util.UUID;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = UploadFolderStorageLocationPathService.class,
+        ignored = DefaultUploadFolderStorageLocationPathServiceImpl.class
+)
 public class DefaultUploadFolderStorageLocationPathServiceImpl implements UploadFolderStorageLocationPathService {
 
     /**
@@ -24,8 +29,8 @@ public class DefaultUploadFolderStorageLocationPathServiceImpl implements Upload
     @Override
     public String path() {
         // 文件路径由时间 + UUID 生成
-        return FileUtil.composePath(DATE_TIME_FORMATTER.format(
-                LocalDateTime.now()), UUID.randomUUID().toString().replaceAll("-", ""));
+        return FileUtil.composePath(DATE_TIME_FORMATTER.format(LocalDateTime.now()),
+                GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false));
     }
 
 }

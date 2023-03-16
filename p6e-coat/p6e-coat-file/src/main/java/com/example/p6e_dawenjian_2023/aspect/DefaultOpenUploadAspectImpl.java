@@ -1,5 +1,7 @@
 package com.example.p6e_dawenjian_2023.aspect;
 
+import com.example.p6e_dawenjian_2023.mapper.CloseUploadContextRequestParameterMapper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -12,6 +14,10 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = OpenUploadAspect.class,
+        ignored = DefaultOpenUploadAspectImpl.class
+)
 public class DefaultOpenUploadAspectImpl implements OpenUploadAspect {
 
     @Override

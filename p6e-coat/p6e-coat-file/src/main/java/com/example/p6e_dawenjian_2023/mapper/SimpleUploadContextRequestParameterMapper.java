@@ -1,7 +1,9 @@
 package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.context.SimpleUploadContext;
+import com.example.p6e_dawenjian_2023.error.HttpMediaTypeException;
 import com.example.p6e_dawenjian_2023.error.ParameterException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -19,6 +21,10 @@ import java.util.List;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = SimpleUploadContextRequestParameterMapper.class,
+        ignored = SimpleUploadContextRequestParameterMapper.class
+)
 public class SimpleUploadContextRequestParameterMapper extends RequestParameterMapper {
 
     /**
@@ -37,7 +43,7 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MediaType mediaType = httpRequest.getHeaders().getContentType();
         if (MediaType.MULTIPART_FORM_DATA != mediaType) {
-            throw  new RuntimeException();
+            throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
         }
         // 读取 URL 参数并写入
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();

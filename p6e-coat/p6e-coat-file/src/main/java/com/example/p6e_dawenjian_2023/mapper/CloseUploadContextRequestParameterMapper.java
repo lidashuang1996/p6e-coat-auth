@@ -2,6 +2,7 @@ package com.example.p6e_dawenjian_2023.mapper;
 
 import com.example.p6e_dawenjian_2023.context.CloseUploadContext;
 import com.example.p6e_dawenjian_2023.context.SliceUploadContext;
+import com.example.p6e_dawenjian_2023.error.HttpMediaTypeException;
 import com.example.p6e_dawenjian_2023.error.ParameterException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
@@ -22,7 +23,10 @@ import java.util.List;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(CloseUploadContextRequestParameterMapper.class)
+@ConditionalOnMissingBean(
+        value = CloseUploadContextRequestParameterMapper.class,
+        ignored = CloseUploadContextRequestParameterMapper.class
+)
 public class CloseUploadContextRequestParameterMapper extends RequestParameterMapper {
 
     /**
@@ -34,6 +38,11 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
      * URL ID 请求参数
      */
     private static final String FORM_DATA_PARAMETER_ID = "id";
+
+    /**
+     * RAW JSON 请求参数
+     */
+    private static final String RAW_JSON_PARAMETER_ID = "id";
 
     /**
      * 请求路径后缀标记
@@ -56,14 +65,9 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
         // 如果不是请求后缀标记
         // 那么请求的后缀是请求参数 ID
         if (!REQUEST_PATH_FINISH_MARK.equals(requestPathFinishContent)) {
-            try {
-                context.setId(Integer.valueOf(requestPathFinishContent));
-            } catch (Exception e) {
-                // 忽略异常
-            }
-        }
-        // 如果请求参数 ID 还是不存在，那么就去请求的路径中查询
-        if (context.getId() == null) {
+            context.setId(Integer.valueOf(requestPathFinishContent));
+            return Mono.just(context);
+        } else {
             // 读取 URL ID 请求参数
             final List<String> names = queryParams.get(URL_PARAMETER_ID);
             if (names != null && names.size() > 0) {
@@ -72,32 +76,26 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                     context.setId(Integer.valueOf(names.get(0)));
                     return Mono.just(context);
                 } catch (Exception e) {
-                    // 如果没有读取到了 URL ID 那么就抛出参数异常
+                    // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
                     throw new ParameterException(this.getClass(),
                             "<" + URL_PARAMETER_ID + "> request parameter type is not int");
                 }
             } else {
+                // 读取请求的媒体类型
                 final MediaType mediaType = httpRequest.getHeaders().getContentType();
                 if (MediaType.APPLICATION_JSON == mediaType) {
                     return requestRawJsonMapper(request, context)
                             .map(m -> {
                                 final SliceUploadContext newContext = new SliceUploadContext(m);
-                                final Object fdId = newContext.get(FORM_DATA_PREFIX + FORM_DATA_PARAMETER_ID);
-                                if (fdId instanceof final List<?> ol && ol.size() > 0
-                                        && ol.get(0) instanceof final FormFieldPart filePart) {
-                                    try {
-                                        newContext.setId(Integer.valueOf(filePart.value()));
-                                        return newContext;
-                                    } catch (Exception e) {
-                                        // 如果没有读取到了 URL ID 那么就抛出参数异常
-                                        throw new ParameterException(this.getClass(),
-                                                "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
-                                    }
+                                final Object rjId = newContext.get(RAW_JSON_PREFIX + RAW_JSON_PARAMETER_ID);
+                                if (rjId instanceof final Integer content) {
+                                    newContext.setId(content);
+                                    return newContext;
+                                } else {
+                                    // 如果没有读取到了 RAW JSON ID 请求参数那么就抛出参数异常
+                                    throw new ParameterException(this.getClass(),
+                                            "<" + RAW_JSON_PARAMETER_ID + "> request parameter is null");
                                 }
-                                // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                                throw new ParameterException(this.getClass(),
-                                        "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
-
                             });
                 } else if (MediaType.MULTIPART_FORM_DATA == mediaType) {
                     return requestFormDataMapper(request, context)
@@ -110,18 +108,18 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                                         newContext.setId(Integer.valueOf(filePart.value()));
                                         return newContext;
                                     } catch (Exception e) {
-                                        // 如果没有读取到了 URL ID 那么就抛出参数异常
+                                        // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
                                         throw new ParameterException(this.getClass(),
                                                 "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
                                     }
+                                } else {
+                                    // 如果没有读取到了 FORM DATA ID 请求参数那么就抛出参数异常
+                                    throw new ParameterException(this.getClass(),
+                                            "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
                                 }
-                                // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                                throw new ParameterException(this.getClass(),
-                                        "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
-
                             });
                 } else {
-                    throw new RuntimeException();
+                    throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
                 }
             }
         }

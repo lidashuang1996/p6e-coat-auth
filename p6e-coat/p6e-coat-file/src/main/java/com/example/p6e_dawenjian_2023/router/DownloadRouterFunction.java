@@ -14,7 +14,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(DownloadRouterFunction.class)
+@ConditionalOnMissingBean(
+        value = DownloadRouterFunction.class,
+        ignored = DownloadRouterFunction.class
+)
 public class DownloadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public DownloadRouterFunction(DownloadHandlerFunction handlerFunction) {
