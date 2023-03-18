@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * 文件帮助类
@@ -32,8 +31,6 @@ public final class FileUtil {
      * 路径连接符号
      */
     private static final String PATH_CONNECT_CHAR = "/";
-
-    private static final Random RANDOM = new Random();
 
     /**
      * 文件缓冲区大小
@@ -355,5 +352,23 @@ public final class FileUtil {
         return GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false);
     }
 
-
+    /**
+     * 获取文件的长度
+     *
+     * @param files 文件对象
+     * @return 文件的长度
+     */
+    public static long obtainFileLength(File... files) {
+        long length = 0;
+        if (files == null || files.length == 0) {
+            return 0L;
+        } else {
+            for (final File file : files) {
+                if (checkFileExist(file)) {
+                    length += file.length();
+                }
+            }
+        }
+        return length;
+    }
 }

@@ -52,6 +52,9 @@ public class UploadRepository extends BaseRepository {
             throw new NullPointerException(UploadRepository.class
                     + " create(). " + UploadModel.class + " => model is null ! ");
         }
+        if (model.getSize() == null) {
+            model.setSize(0);
+        }
         if (model.getOperator() == null) {
             model.setOperator("sys");
         }
@@ -196,6 +199,20 @@ public class UploadRepository extends BaseRepository {
     public Mono<UploadModel> findById(Integer id) {
         return r2dbcEntityTemplate.selectOne(Query.query(
                 Criteria.where(UploadModel.ID).is(id)), UploadModel.class);
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param model 模型对象
+     * @return Mono<UploadModel> 模型对象
+     */
+    public Mono<Long> update(UploadModel model) {
+        return r2dbcEntityTemplate.update(UploadModel.class)
+                .matching(Query.query(
+                        Criteria.where(UploadModel.ID).is(model.getId())
+                                .and(UploadModel.VERSION).is(model.getVersion())))
+                .apply(Update.update(UploadModel.SIZE, model.getSize()));
     }
 
 }

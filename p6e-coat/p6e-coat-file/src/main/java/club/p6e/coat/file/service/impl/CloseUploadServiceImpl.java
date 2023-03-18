@@ -52,7 +52,7 @@ public class CloseUploadServiceImpl implements CloseUploadService {
     public Mono<Map<String, Object>> execute(CloseUploadContext context) {
         return repository
                 .closeLock(context.getId(), 0)
-                .map(m -> {
+                .flatMap(m -> {
                     final String absolutePath = FileUtil.convertAbsolutePath(
                             FileUtil.composePath(properties.getPath(), m.getStorageLocation()));
                     final File[] files = FileUtil.readFolder(absolutePath);
@@ -69,9 +69,13 @@ public class CloseUploadServiceImpl implements CloseUploadService {
                             }
                         }
                     }
-                    final Map<String, Object> map = m.toMap();
-                    map.put("files", files);
-                    return map;
+                    final int fileLength = Long.valueOf(FileUtil.obtainFileLength(files)).intValue();
+                    return repository.update(m.setSize(fileLength))
+                            .map(l -> {
+                                final Map<String, Object> map = m.toMap();
+                                map.put("files", files);
+                                return map;
+                            });
                 });
     }
 
