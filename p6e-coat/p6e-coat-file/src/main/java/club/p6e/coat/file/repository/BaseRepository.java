@@ -9,6 +9,16 @@ package club.p6e.coat.file.repository;
 public class BaseRepository {
 
     /**
+     * 最大重试次数
+     */
+    public static final int MAX_RETRY_COUNT = 3;
+
+    /**
+     * 重试间隔时间
+     */
+    public static final long RETRY_INTERVAL_DATE = 5000;
+
+    /**
      * 大写字母转环为下划线分割
      *
      * @param text 文本内容
