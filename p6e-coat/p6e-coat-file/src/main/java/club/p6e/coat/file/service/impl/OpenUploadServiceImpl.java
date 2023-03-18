@@ -7,6 +7,7 @@ import club.p6e.coat.file.repository.UploadRepository;
 import club.p6e.coat.file.service.OpenUploadService;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.context.OpenUploadContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +21,16 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = OpenUploadService.class,
+        ignored = OpenUploadServiceImpl.class
+)
 public class OpenUploadServiceImpl implements OpenUploadService {
+
+    /**
+     * 源
+     */
+    private static final String SOURCE = "SLICE_UPLOAD";
 
     /**
      * 配置文件对象
@@ -55,9 +65,16 @@ public class OpenUploadServiceImpl implements OpenUploadService {
     @Override
     public Mono<Map<String, Object>> execute(OpenUploadContext context) {
         final UploadModel model = new UploadModel();
+        final Object operator = context.get("operator");
+        if (operator != null) {
+            model.setOperator(String.valueOf(operator));
+        }
+        final String name = context.getName();
         final String path = folderPathService.path();
-        final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(properties.getPath(), path));
-        model.setName(context.getName());
+        final String absolutePath = FileUtil.convertAbsolutePath(
+                FileUtil.composePath(properties.getPath(), path));
+        model.setName(name);
+        model.setSource(SOURCE);
         model.setStorageLocation(path);
         return repository
                 .create(model)

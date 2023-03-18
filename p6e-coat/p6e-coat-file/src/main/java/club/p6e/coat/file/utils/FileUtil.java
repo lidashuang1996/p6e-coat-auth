@@ -352,7 +352,7 @@ public final class FileUtil {
      * @return 文件名称
      */
     public static String generateName() {
-        return UUID.randomUUID().toString().replaceAll("-", "") + RANDOM.nextInt(9999);
+        return GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false);
     }
 
 

@@ -12,11 +12,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class DefaultAspectImpl implements
-        Aspect,
-        CloseUploadAspect,
-        // 下载操作的切面（钩子）的默认实现
-        DownloadAspect {
+public class DefaultCloseUploadAspectImpl implements CloseUploadAspect {
 
     @Override
     public Mono<Boolean> before(Map<String, Object> data) {

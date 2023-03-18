@@ -7,11 +7,13 @@ import club.p6e.coat.file.repository.UploadRepository;
 import club.p6e.coat.file.service.SliceUploadService;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.context.SliceUploadContext;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -22,8 +24,11 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = SliceUploadService.class,
+        ignored = SliceUploadServiceImpl.class
+)
 public class SliceUploadServiceImpl implements SliceUploadService {
-
 
     /**
      * 配置文件对象
@@ -34,8 +39,19 @@ public class SliceUploadServiceImpl implements SliceUploadService {
      * 上传存储库对象
      */
     private final UploadRepository uploadRepository;
+
+    /**
+     * 上传块存储库对象
+     */
     private final UploadChunkRepository uploadChunkRepository;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param properties            配置文件对象
+     * @param uploadRepository      上传存储库对象
+     * @param uploadChunkRepository 上传块存储库对象
+     */
     public SliceUploadServiceImpl(Properties properties,
                                   UploadRepository uploadRepository,
                                   UploadChunkRepository uploadChunkRepository) {
@@ -48,8 +64,8 @@ public class SliceUploadServiceImpl implements SliceUploadService {
     public Mono<Map<String, Object>> execute(SliceUploadContext context) {
         final Integer id = context.getId();
         final String signature = context.getSignature();
+        // 读取并清除文件对象
         final FilePart filePart = context.getFilePart();
-        // 读取完成就删除对文件的引用
         context.setFilePart(null);
         return uploadRepository
                 .findById(id)
@@ -65,40 +81,47 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                         .flatMap(file -> filePart.transferTo(file).then(Mono.just(file)))
                         // 验证文件数据
                         .flatMap(file -> {
-                            // 验证文件长度
-                            checkSize(file, properties.getMaxSize());
-                            // 验证文件签名
-                            return checkSignature(file, signature);
+                            final long size = properties.getMaxSize();
+                            return checkSize(file, size)
+                                    .flatMap(v -> checkSignature(file, signature))
+                                    .map(v -> file);
                         })
                         .flatMap(file -> {
                             final UploadChunkModel model = new UploadChunkModel();
-                            model.setName(file.getName());
                             model.setFid(m.getId());
-                            model.setAction("xxxx");
+                            model.setName(file.getName());
+                            model.setSize(Long.valueOf(file.length()).intValue());
+                            final Object operator = context.get("operator");
+                            if (operator == null) {
+                                if (m.getOperator() != null) {
+                                    model.setOperator(m.getOperator());
+                                }
+                            } else {
+                                model.setOperator(String.valueOf(operator));
+                            }
                             return uploadChunkRepository.create(model);
                         })
                 )
                 .map(UploadChunkModel::toMap);
     }
 
-    private static void checkSize(File file, long size) {
+    private static Mono<Void> checkSize(File file, long size) {
         if (file.length() > size) {
             FileUtil.deleteFile(file);
             throw new RuntimeException();
         }
+        return Mono.never();
     }
 
-    private static Mono<File> checkSignature(File file, String signature) {
+    private static Mono<Void> checkSignature(File file, String signature) {
         return FileUtil
                 .obtainMD5Signature(file)
-                .map(s -> {
-                    System.out.println(s);
-                    if (s.equals(signature)) {
-                        return file;
-                    } else {
+                .flatMap(s -> {
+                    if (!s.equals(signature)) {
                         FileUtil.deleteFile(file);
                         throw new RuntimeException();
                     }
+                    return Mono.never();
                 });
     }
 }

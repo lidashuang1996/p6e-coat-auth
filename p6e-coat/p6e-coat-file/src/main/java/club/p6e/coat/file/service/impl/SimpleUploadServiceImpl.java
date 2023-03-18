@@ -7,6 +7,7 @@ import club.p6e.coat.file.model.UploadModel;
 import club.p6e.coat.file.service.SimpleUploadService;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.repository.UploadRepository;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -21,7 +22,16 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = SimpleUploadService.class,
+        ignored = SimpleUploadServiceImpl.class
+)
 public class SimpleUploadServiceImpl implements SimpleUploadService {
+
+    /**
+     * 源
+     */
+    private static final String SOURCE = "SIMPLE_UPLOAD";
 
     /**
      * 配置文件对象
@@ -38,7 +48,15 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
      */
     private final UploadFolderStorageLocationPathService folderPathService;
 
-    public SimpleUploadServiceImpl(Properties properties, UploadRepository repository,
+    /**
+     * 构造方法初始化
+     *
+     * @param properties        配置文件对象
+     * @param repository        上传存储库对象
+     * @param folderPathService 上传文件夹本地存储路径服务对象
+     */
+    public SimpleUploadServiceImpl(Properties properties,
+                                   UploadRepository repository,
                                    UploadFolderStorageLocationPathService folderPathService) {
         this.properties = properties;
         this.repository = repository;
@@ -47,12 +65,20 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
 
     @Override
     public Mono<Map<String, Object>> execute(SimpleUploadContext context) {
+        // 读取并清除文件对象
         final FilePart filePart = context.getFilePart();
         context.setFilePart(null);
         final UploadModel model = new UploadModel();
+        final String name = filePart.filename();
         final String path = folderPathService.path();
-        final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(properties.getPath(), path));
-        model.setName(filePart.filename());
+        final String absolutePath = FileUtil.convertAbsolutePath(
+                FileUtil.composePath(properties.getPath(), path));
+        final Object operator = context.get("operator");
+        if (operator != null) {
+            model.setOperator(String.valueOf(operator));
+        }
+        model.setName(name);
+        model.setSource(SOURCE);
         model.setStorageLocation(path);
         return repository
                 .create(model)
@@ -65,16 +91,21 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
                     final File file = new File(FileUtil.composePath(absolutePath, filePart.filename()));
                     return filePart
                             .transferTo(file)
-                            .then(Mono.just(file.length()))
-                            .map(len -> {
-                                if (len > properties.getSimpleUpload().getMaxSize()) {
-                                    throw new RuntimeException();
-                                } else {
-                                    return m;
-                                }
+                            .then(Mono.just(file))
+                            .flatMap(f -> {
+                                final long size = properties.getSimpleUpload().getMaxSize();
+                                return checkSize(f, size).map(v -> m);
                             });
                 })
                 .map(UploadModel::toMap);
+    }
+
+    private static Mono<Void> checkSize(File file, long size) {
+        if (file.length() > size) {
+            FileUtil.deleteFile(file);
+            throw new RuntimeException();
+        }
+        return Mono.never();
     }
 
 }

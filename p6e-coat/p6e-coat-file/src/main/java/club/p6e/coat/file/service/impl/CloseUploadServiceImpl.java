@@ -5,6 +5,7 @@ import club.p6e.coat.file.repository.UploadRepository;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.context.CloseUploadContext;
 import club.p6e.coat.file.service.CloseUploadService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -19,6 +20,10 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = CloseUploadService.class,
+        ignored = CloseUploadServiceImpl.class
+)
 public class CloseUploadServiceImpl implements CloseUploadService {
 
     /**
@@ -34,6 +39,7 @@ public class CloseUploadServiceImpl implements CloseUploadService {
     /**
      * 构造方法初始化
      *
+     * @param properties 配置文件对象
      * @param repository 上传存储库对象
      */
     public CloseUploadServiceImpl(Properties properties, UploadRepository repository) {
@@ -45,7 +51,7 @@ public class CloseUploadServiceImpl implements CloseUploadService {
     @Override
     public Mono<Map<String, Object>> execute(CloseUploadContext context) {
         return repository
-                .closeLock(context.getId())
+                .closeLock(context.getId(), 0)
                 .map(m -> {
                     final String absolutePath = FileUtil.convertAbsolutePath(
                             FileUtil.composePath(properties.getPath(), m.getStorageLocation()));
