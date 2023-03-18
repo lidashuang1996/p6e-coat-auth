@@ -24,7 +24,6 @@ public class R2dbcConfig {
      *
      * @param connectionFactory ConnectionFactory 服务
      */
-    @SuppressWarnings("all")
     public R2dbcConfig(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
@@ -33,4 +32,5 @@ public class R2dbcConfig {
     public R2dbcEntityTemplate r2dbcEntityTemplate() {
         return new R2dbcEntityTemplate(connectionFactory);
     }
+
 }

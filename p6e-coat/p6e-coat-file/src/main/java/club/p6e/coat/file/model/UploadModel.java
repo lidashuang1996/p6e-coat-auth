@@ -21,10 +21,11 @@ import java.util.Map;
 @Accessors(chain = true)
 public class UploadModel implements Serializable {
 
-    public static final String TABLE = "hksi_file_upload";
+    public static final String TABLE = "p6e_file_upload";
 
     public static final String ID = "id";
     public static final String NAME = "name";
+    public static final String SIZE = "size";
     public static final String STORAGE_LOCATION = "storageLocation";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
@@ -35,6 +36,8 @@ public class UploadModel implements Serializable {
     @Id
     private Integer id;
     private String name;
+    private Integer size;
+    private String source;
     private String storageLocation;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
@@ -42,11 +45,12 @@ public class UploadModel implements Serializable {
     private Integer lock;
     private Integer version;
 
-
     public Map<String, Object> toMap() {
-        final Map<String, Object> map = new HashMap<>(8);
+        final Map<String, Object> map = new HashMap<>(10);
         map.put("id", id);
         map.put("name", name);
+        map.put("size", size);
+        map.put("source", source);
         map.put("storageLocation", storageLocation);
         map.put("createDate", createDate);
         map.put("updateDate", updateDate);
@@ -55,4 +59,5 @@ public class UploadModel implements Serializable {
         map.put("version", version);
         return map;
     }
+
 }

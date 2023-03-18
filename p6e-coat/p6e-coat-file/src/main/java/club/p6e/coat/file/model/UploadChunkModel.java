@@ -21,30 +21,32 @@ import java.util.Map;
 @Accessors(chain = true)
 public class UploadChunkModel implements Serializable {
 
-    public static final String TABLE = "hksi_file_upload_chunk";
+    public static final String TABLE = "p6e_file_upload_chunk";
 
     public static final String ID = "id";
     public static final String FID = "fid";
     public static final String NAME = "name";
+    public static final String SIZE = "size";
     public static final String DATE = "date";
-    public static final String ACTION = "action";
     public static final String OPERATOR = "operator";
 
     @Id
     private Integer id;
     private Integer fid;
     private String name;
-    private String action;
+    private Integer size;
     private LocalDateTime date;
     private String operator;
+
     public Map<String, Object> toMap() {
-        final Map<String, Object> map = new HashMap<>(8);
+        final Map<String, Object> map = new HashMap<>(6);
         map.put("id", id);
         map.put("fid", fid);
         map.put("name", name);
-        map.put("action", action);
+        map.put("size", size);
         map.put("date", date);
         map.put("operator", operator);
         return map;
     }
+
 }
