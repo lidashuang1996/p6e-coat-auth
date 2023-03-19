@@ -10,7 +10,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -284,6 +288,10 @@ public final class FileUtil {
         }
     }
 
+    public static Mono<Void> writeFile(Flux<DataBuffer> dataBufferFlux, File file) {
+        return DataBufferUtils.write(dataBufferFlux, file.toPath(), StandardOpenOption.WRITE);
+    }
+
     public static File[] readFolder(String folderPath) {
         return readFolder(new File(folderPath));
     }
@@ -370,5 +378,18 @@ public final class FileUtil {
             }
         }
         return length;
+    }
+
+    public static Mono<File> mergeFileSlice(File[] files, String filePath) {
+        if (files == null || filePath == null) {
+            return Mono.empty();
+        } else {
+            final File file = new File(filePath);
+            if (checkFileExist(file)) {
+                deleteFile(file);
+            }
+            return writeFile(Flux.just(file).flatMap(FileUtil::readFile), file)
+                    .map(v -> file);
+        }
     }
 }
