@@ -9,6 +9,7 @@ import java.util.Map;
  * @version 1.0
  */
 public final class SpringUtil {
+
     private static ApplicationContext APPLICATION;
 
     public static void init(ApplicationContext application) {
@@ -22,4 +23,5 @@ public final class SpringUtil {
     public static <T> Map<String, T> getBeans(Class<T> tClass) {
         return APPLICATION.getBeansOfType(tClass);
     }
+
 }

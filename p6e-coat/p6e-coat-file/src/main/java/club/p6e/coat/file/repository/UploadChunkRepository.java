@@ -1,7 +1,5 @@
 package club.p6e.coat.file.repository;
 
-import club.p6e.coat.file.aspect.DefaultSimpleUploadAspectImpl;
-import club.p6e.coat.file.aspect.SimpleUploadAspect;
 import club.p6e.coat.file.model.UploadChunkModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;

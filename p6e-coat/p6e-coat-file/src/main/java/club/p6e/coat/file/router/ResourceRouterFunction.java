@@ -1,6 +1,6 @@
 package club.p6e.coat.file.router;
 
-import club.p6e.coat.file.handler.DownloadHandlerFunction;
+import club.p6e.coat.file.handler.ResourceHandlerFunction;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -20,7 +20,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 )
 public class ResourceRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
-    public ResourceRouterFunction(DownloadHandlerFunction handlerFunction) {
+    public ResourceRouterFunction(ResourceHandlerFunction handlerFunction) {
         super(RequestPredicates.GET("/resource"), handlerFunction);
     }
 

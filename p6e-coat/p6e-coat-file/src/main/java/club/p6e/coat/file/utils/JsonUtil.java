@@ -10,8 +10,10 @@ import java.util.Map;
  */
 public class JsonUtil {
 
+    /**
+     * OBJECT_MAPPER 对象
+     */
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
 
     /**
      * 序列化对象
@@ -20,7 +22,11 @@ public class JsonUtil {
      * @return 序列化内容
      */
     public static String toJson(Object o) {
-        return "";
+        try {
+            return OBJECT_MAPPER.writeValueAsString(o);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     /**

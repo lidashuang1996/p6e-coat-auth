@@ -10,13 +10,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
-import java.util.Random;
 
 /**
  * 文件帮助类
@@ -35,6 +31,7 @@ public final class FileUtil {
      * 路径连接符号
      */
     private static final String PATH_CONNECT_CHAR = "/";
+    private static final String PATH_OPPOSE_CONNECT_CHAR = "\\";
 
     /**
      * 文件缓冲区大小
@@ -288,14 +285,33 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * 写入文件
+     *
+     * @param dataBufferFlux DataBuffer 对象
+     * @param file           文件对象
+     * @return Mono<Void> 对象
+     */
     public static Mono<Void> writeFile(Flux<DataBuffer> dataBufferFlux, File file) {
         return DataBufferUtils.write(dataBufferFlux, file.toPath(), StandardOpenOption.WRITE);
     }
 
+    /**
+     * 读取文件夹
+     *
+     * @param folderPath 文件夹路径
+     * @return 文件列表
+     */
     public static File[] readFolder(String folderPath) {
         return readFolder(new File(folderPath));
     }
 
+    /**
+     * 读取文件夹
+     *
+     * @param folder 文件夹对象
+     * @return 文件列表
+     */
     public static File[] readFolder(File folder) {
         if (folder.isDirectory()) {
             return folder.listFiles((f, n) -> f.isFile());
@@ -380,6 +396,13 @@ public final class FileUtil {
         return length;
     }
 
+    /**
+     * 合并文件分片
+     *
+     * @param files    文件列表
+     * @param filePath 合并后的文件路径
+     * @return 合并后的文件对象
+     */
     public static Mono<File> mergeFileSlice(File[] files, String filePath) {
         if (files == null || filePath == null) {
             return Mono.empty();
@@ -391,5 +414,57 @@ public final class FileUtil {
             return writeFile(Flux.just(file).flatMap(FileUtil::readFile), file)
                     .map(v -> file);
         }
+    }
+
+    /**
+     * 获取文件名称
+     *
+     * @param content 内容
+     * @return 文件名称
+     */
+    public static String name(String content) {
+        boolean bool = false;
+        final StringBuilder sb = new StringBuilder();
+        for (int j = content.length() - 1; j >= 0; j--) {
+            final String ch = String.valueOf(content.charAt(j));
+            if (FILE_CONNECT_CHAR.equals(ch)) {
+                if (bool) {
+                    return null;
+                } else {
+                    bool = true;
+                    sb.insert(0, ch);
+                }
+            } else if (PATH_CONNECT_CHAR.equals(ch)) {
+                return sb.toString();
+            } else {
+                sb.insert(0, ch);
+            }
+        }
+        return bool && !FILE_CONNECT_CHAR.equals(String.valueOf(sb.charAt(0))) ? sb.toString() : null;
+    }
+
+
+    /**
+     * 获取文件路径
+     *
+     * @param content 内容
+     * @return 文件路径
+     */
+    public static String path(String content) {
+        boolean bool = (name(content) == null);
+        content = content
+                .replaceAll(":", "")
+                .replaceAll("//", "")
+                .replaceAll("\\.", "");
+        final StringBuilder sb = new StringBuilder();
+        for (int j = content.length() - 1; j >= 0; j--) {
+            final String ch = String.valueOf(content.charAt(j));
+            if (!bool && PATH_CONNECT_CHAR.equals(ch)) {
+                bool = true;
+            } else if (bool) {
+                sb.insert(0, ch);
+            }
+        }
+        return sb.length() == 0 ? null : sb.toString();
     }
 }

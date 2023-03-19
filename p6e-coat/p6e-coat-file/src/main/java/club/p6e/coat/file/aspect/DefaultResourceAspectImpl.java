@@ -15,9 +15,9 @@ import java.util.Map;
 @Component
 @ConditionalOnMissingBean(
         value = ResourceAspect.class,
-        ignored = ResourceAspectImpl.class
+        ignored = DefaultResourceAspectImpl.class
 )
-public class ResourceAspectImpl implements ResourceAspect {
+public class DefaultResourceAspectImpl implements ResourceAspect {
 
     @Override
     public Mono<Boolean> before(Map<String, Object> data) {
