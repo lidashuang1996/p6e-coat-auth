@@ -72,7 +72,7 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
         final String name = filePart.filename();
         final String path = folderPathService.path();
         final String absolutePath = FileUtil.convertAbsolutePath(
-                FileUtil.composePath(properties.getPath(), path));
+                FileUtil.composePath(properties.getSimpleUpload().getPath(), path));
         final Object operator = context.get("operator");
         if (operator != null) {
             model.setOperator(String.valueOf(operator));

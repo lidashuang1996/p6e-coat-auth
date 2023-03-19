@@ -72,8 +72,8 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                 .flatMap(m -> Mono.just(m)
                         .map(um -> {
                             // 文件绝对路径
-                            final String absolutePath = FileUtil.convertAbsolutePath(
-                                    FileUtil.composePath(properties.getPath(), um.getStorageLocation()));
+                            final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(
+                                    properties.getSliceUpload().getPath(), um.getStorageLocation()));
                             // 文件对象
                             return new File(FileUtil.composePath(absolutePath, FileUtil.generateName()));
                         })
@@ -81,7 +81,7 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                         .flatMap(file -> filePart.transferTo(file).then(Mono.just(file)))
                         // 验证文件数据
                         .flatMap(file -> {
-                            final long size = properties.getMaxSize();
+                            final long size = properties.getSliceUpload().getMaxSize();
                             return checkSize(file, size)
                                     .flatMap(v -> checkSignature(file, signature))
                                     .map(v -> file);

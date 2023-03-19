@@ -72,7 +72,7 @@ public class OpenUploadServiceImpl implements OpenUploadService {
         final String name = context.getName();
         final String path = folderPathService.path();
         final String absolutePath = FileUtil.convertAbsolutePath(
-                FileUtil.composePath(properties.getPath(), path));
+                FileUtil.composePath(properties.getSliceUpload().getPath(), path));
         model.setName(name);
         model.setSource(SOURCE);
         model.setStorageLocation(path);

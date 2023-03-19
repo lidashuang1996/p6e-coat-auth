@@ -19,45 +19,94 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @Component
-@SuppressWarnings("all")
-@ConfigurationProperties(prefix = "hksi.badminton.file")
+@ConfigurationProperties(prefix = "p6e.coat.file")
 public class Properties implements Serializable {
 
     /**
-     * 基础的文件路径
+     * 分片上传配置
      */
-    private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+    private SliceUpload sliceUpload = new SliceUpload();
 
     /**
-     * 允许上传的文件大小的最大值
+     * 简单（小文件）上传配置
      */
-    private long maxSize = 1024 * 1024 * 20;
-
-    /**
-     * 允许上传的文件后缀
-     */
-    private String[] suffixes = new String[]{"chunk"};
-
-    private Map<String, Download> downloads = new HashMap<>();
-    private Map<String, Resource> resources = new HashMap<>();
-
     private SimpleUpload simpleUpload = new SimpleUpload();
 
+    /**
+     * 资源配置
+     */
+    private Map<String, Resource> resources = new HashMap<>();
 
+    /**
+     * 下载配置
+     */
+    private Map<String, Download> downloads = new HashMap<>();
+
+    /**
+     * 下载
+     */
     @Data
+    @Accessors(chain = true)
     public static class Download implements Serializable {
+
+        /**
+         * 基础的文件路径
+         */
         private String path;
+
+    }
+
+    /**
+     * 资源
+     */
+    @Data
+    @Accessors(chain = true)
+    public static class Resource implements Serializable {
+
+        /**
+         * 基础的文件路径
+         */
+        private String path;
+
+        /**
+         * 允许的文件后缀以及对应的媒体类型
+         */
+        private Map<String, MediaType> suffixes = new HashMap<>();
+
     }
 
     @Data
-    public static class Resource implements Serializable {
-        private String path;
-        private Map<String, MediaType> suffixes = new HashMap<>();
+    @Accessors(chain = true)
+    public static class SliceUpload implements Serializable {
+
+        /**
+         * 基础的文件路径
+         */
+        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+
+        /**
+         * 允许上传的文件大小的最大值
+         */
+        private long maxSize = 1024 * 1024 * 15;
+
     }
 
+    /**
+     * 简单（小文件）上传
+     */
     @Data
     public static class SimpleUpload implements Serializable {
+
+        /**
+         * 基础的文件路径
+         */
+        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+
+        /**
+         * 允许上传的文件大小的最大值
+         */
         private long maxSize = 1024 * 1024 * 15;
+
     }
 
 }

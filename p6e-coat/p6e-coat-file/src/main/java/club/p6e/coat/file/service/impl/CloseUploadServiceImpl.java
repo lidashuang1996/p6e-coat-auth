@@ -54,7 +54,7 @@ public class CloseUploadServiceImpl implements CloseUploadService {
                 .closeLock(context.getId(), 0)
                 .flatMap(m -> {
                     final String absolutePath = FileUtil.convertAbsolutePath(
-                            FileUtil.composePath(properties.getPath(), m.getStorageLocation()));
+                            FileUtil.composePath(properties.getSliceUpload().getPath(), m.getStorageLocation()));
                     final File[] files = FileUtil.readFolder(absolutePath);
                     for (int i = 0; i < files.length; i++) {
                         for (int j = i; j < files.length; j++) {

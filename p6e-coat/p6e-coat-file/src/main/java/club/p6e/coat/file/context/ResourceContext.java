@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 资源查看上下文对象
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -22,15 +24,10 @@ public class ResourceContext extends HashMap<String, Object> implements Serializ
      */
     private String path;
 
+    /**
+     * 服务请求对象
+     */
     private ServerRequest serverRequest;
-
-    public ServerRequest getServerRequest() {
-        return serverRequest;
-    }
-
-    public void setServerRequest(ServerRequest serverRequest) {
-        this.serverRequest = serverRequest;
-    }
 
     /**
      * 无参数构造
@@ -51,6 +48,9 @@ public class ResourceContext extends HashMap<String, Object> implements Serializ
         if (map.get("path") != null && map.get("path") instanceof final String content) {
             this.setPath(content);
         }
+        if (map.get("serverRequest") != null && map.get("serverRequest") instanceof final ServerRequest content) {
+            this.setServerRequest(content);
+        }
     }
 
     public String getNode() {
@@ -69,6 +69,15 @@ public class ResourceContext extends HashMap<String, Object> implements Serializ
     public void setPath(String path) {
         this.path = path;
         this.put("path", path);
+    }
+
+    public ServerRequest getServerRequest() {
+        return serverRequest;
+    }
+
+    public void setServerRequest(ServerRequest serverRequest) {
+        this.serverRequest = serverRequest;
+        this.put("serverRequest", serverRequest);
     }
 
     public Map<String, Object> toMap() {

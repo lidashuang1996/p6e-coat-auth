@@ -52,14 +52,14 @@ public class DefaultCloseUploadAspectImpl implements CloseUploadAspect {
                 && result.get("files") != null
                 && result.get("files") instanceof final File[] files) {
             final Object id = result.get("id");
-            final String path = FileUtil.composePath(storageLocation, name);
-            final String absolutePath = FileUtil.convertAbsolutePath(
-                    FileUtil.composePath(properties.getPath(), path));
+            final String filePath = FileUtil.composePath(storageLocation, name);
+            final String absoluteFilePath = FileUtil.convertAbsolutePath(
+                    FileUtil.composePath(properties.getSliceUpload().getPath(), filePath));
             result.clear();
             result.put("id", id);
-            result.put("path", path);
+            result.put("path", filePath);
             return FileUtil
-                    .mergeFileSlice(files, absolutePath)
+                    .mergeFileSlice(files, absoluteFilePath)
                     .map(f -> true);
         } else {
             if (result != null) {

@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 /**
- * 简单（小文件）上传操作的切面（钩子）的默认实现
+ * 资源查看操作的切面（钩子）的默认实现
  *
  * @author lidashuang
  * @version 1.0

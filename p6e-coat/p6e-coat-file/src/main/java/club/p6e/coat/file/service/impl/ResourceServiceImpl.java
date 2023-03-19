@@ -2,20 +2,20 @@ package club.p6e.coat.file.service.impl;
 
 import club.p6e.coat.file.Properties;
 import club.p6e.coat.file.context.ResourceContext;
-import club.p6e.coat.file.error.DownloadNodeException;
 import club.p6e.coat.file.service.ResourceService;
 import club.p6e.coat.file.utils.FileUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 资源查看服务
+ *
  * @author lidashuang
  * @version 1.0
  */
