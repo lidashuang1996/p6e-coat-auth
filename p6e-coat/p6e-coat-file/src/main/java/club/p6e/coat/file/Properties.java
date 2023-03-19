@@ -3,6 +3,7 @@ package club.p6e.coat.file;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -38,6 +39,7 @@ public class Properties implements Serializable {
     private String[] suffixes = new String[]{"chunk"};
 
     private Map<String, Download> downloads = new HashMap<>();
+    private Map<String, Resource> resources = new HashMap<>();
 
     private SimpleUpload simpleUpload = new SimpleUpload();
 
@@ -45,6 +47,12 @@ public class Properties implements Serializable {
     @Data
     public static class Download implements Serializable {
         private String path;
+    }
+
+    @Data
+    public static class Resource implements Serializable {
+        private String path;
+        private Map<String, MediaType> suffixes = new HashMap<>();
     }
 
     @Data
