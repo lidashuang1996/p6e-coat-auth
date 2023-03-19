@@ -2,6 +2,7 @@ package club.p6e.coat.file.service.impl;
 
 import club.p6e.coat.file.Properties;
 import club.p6e.coat.file.context.SimpleUploadContext;
+import club.p6e.coat.file.error.ParameterException;
 import club.p6e.coat.file.folder.UploadFolderStorageLocationPathService;
 import club.p6e.coat.file.model.UploadModel;
 import club.p6e.coat.file.service.SimpleUploadService;
@@ -69,8 +70,11 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
         final FilePart filePart = context.getFilePart();
         context.setFilePart(null);
         final UploadModel model = new UploadModel();
-        final String name = filePart.filename();
         final String path = folderPathService.path();
+        final String name = FileUtil.name(filePart.filename());
+        if (name == null) {
+            throw new ParameterException(this.getClass(), "<name> request parameter format error");
+        }
         final String absolutePath = FileUtil.convertAbsolutePath(
                 FileUtil.composePath(properties.getSimpleUpload().getPath(), path));
         final Object operator = context.get("operator");
