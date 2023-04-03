@@ -27,6 +27,11 @@ public abstract class CustomException extends RuntimeException {
     private final String sketch;
 
     /**
+     * 内容
+     */
+    private final String content;
+
+    /**
      * 转换
      *
      * @param exception 异常对象
@@ -66,14 +71,17 @@ public abstract class CustomException extends RuntimeException {
      *
      * @param sc      源 class
      * @param ec      异常 class
-     * @param content 错误的描述
+     * @param error   错误的描述
      * @param code    代码
      * @param sketch  简述
+     * @param content 内容
      */
-    public CustomException(Class<?> sc, Class<? extends CustomException> ec, String content, int code, String sketch) {
-        super(template(sc, ec, content, code, sketch));
+    public CustomException(Class<?> sc, Class<? extends CustomException> ec,
+                           String error, int code, String sketch, String content) {
+        super(template(sc, ec, error, code, sketch, content));
         this.code = code;
         this.sketch = sketch;
+        this.content = content;
     }
 
     /**
@@ -84,11 +92,14 @@ public abstract class CustomException extends RuntimeException {
      * @param throwable 异常对象
      * @param code      代码
      * @param sketch    简述
+     * @param content   内容
      */
-    public CustomException(Class<?> sc, Class<? extends CustomException> ec, Throwable throwable, int code, String sketch) {
+    public CustomException(Class<?> sc, Class<? extends CustomException> ec,
+                           Throwable throwable, int code, String sketch, String content) {
         super(template(sc, ec, throwable.getMessage(), code, sketch), throwable);
         this.code = code;
         this.sketch = sketch;
+        this.content = content;
     }
 
     /**
@@ -107,5 +118,14 @@ public abstract class CustomException extends RuntimeException {
      */
     public String getSketch() {
         return sketch;
+    }
+
+    /**
+     * 获取内容
+     *
+     * @return 描述的内容
+     */
+    public String getContent() {
+        return content;
     }
 }

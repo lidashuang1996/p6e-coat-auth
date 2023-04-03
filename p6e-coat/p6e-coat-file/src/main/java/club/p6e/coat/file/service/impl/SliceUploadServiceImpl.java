@@ -7,14 +7,15 @@ import club.p6e.coat.file.repository.UploadRepository;
 import club.p6e.coat.file.service.SliceUploadService;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.context.SliceUploadContext;
+import club.p6e.coat.file.utils.SpringUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * 分片上传服务
@@ -70,15 +71,22 @@ public class SliceUploadServiceImpl implements SliceUploadService {
         return uploadRepository
                 .findById(id)
                 .flatMap(m -> Mono.just(m)
-                        .map(um -> {
+                        .flatMap(um -> {
+                            final UploadRepository repository = SpringUtil.getBean(UploadRepository.class);
                             // 文件绝对路径
                             final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(
                                     properties.getSliceUpload().getPath(), um.getStorageLocation()));
-                            // 文件对象
-                            return new File(FileUtil.composePath(absolutePath, FileUtil.generateName()));
+                            final File absolutePathFile = new File(FileUtil.composePath(absolutePath, FileUtil.generateName()));
+                            return repository
+                                    // 获取锁
+                                    .acquireLock(um, 0)
+                                    // 写入文件数据
+                                    .flatMap(file -> filePart.transferTo(absolutePathFile).then(Mono.just(absolutePathFile)))
+                                    // 释放锁
+                                    .flatMap(file -> repository.releaseLock(um, 0))
+                                    // 转换为文件对象输出
+                                    .map(c -> absolutePathFile);
                         })
-                        // 写入文件数据
-                        .flatMap(file -> filePart.transferTo(file).then(Mono.just(file)))
                         // 验证文件数据
                         .flatMap(file -> {
                             final long size = properties.getSliceUpload().getMaxSize();

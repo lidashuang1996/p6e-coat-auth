@@ -11,6 +11,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.function.Consumer;
+
 /**
  * 分片上传操作处理程序函数
  *
@@ -61,7 +63,13 @@ public class SliceUploadHandlerFunction extends AspectHandlerFunction implements
                                             .flatMap(r -> after(aspect, context.toMap(), r));
                         })
                         // 结果返回
-                        .flatMap(r -> ServerResponse.ok().bodyValue(ResultContext.build(r)));
+                        .flatMap(r -> ServerResponse.ok().bodyValue(ResultContext.build(r)))
+                        .doOnError(new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) {
+                                System.out.println(throwable.getMessage());
+                            }
+                        });
     }
 
 }

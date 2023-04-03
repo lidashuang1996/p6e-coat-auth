@@ -25,8 +25,8 @@ public class DataBaseException extends CustomException {
      * @param sc      源 class
      * @param content 异常内容
      */
-    public DataBaseException(Class<?> sc, String content) {
-        super(sc, DataBaseException.class, content, DEFAULT_CODE, DEFAULT_SKETCH);
+    public DataBaseException(Class<?> sc, String error, String content) {
+        super(sc, DataBaseException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
