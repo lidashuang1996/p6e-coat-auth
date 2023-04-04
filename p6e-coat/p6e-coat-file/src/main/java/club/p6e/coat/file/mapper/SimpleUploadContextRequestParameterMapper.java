@@ -43,7 +43,7 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MediaType mediaType = httpRequest.getHeaders().getContentType();
         if (!MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
-            throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
+            throw new HttpMediaTypeException(this.getClass(), "fun execute(ServerRequest request).", "unrecognized media type [" + mediaType + "]");
         }
         // 读取 URL 参数并写入
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
@@ -61,7 +61,7 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
                         return newContext;
                     }
                     // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                    throw new ParameterException(this.getClass(),
+                    throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                             "<" + FORM_DATA_PARAMETER_FILE + "> request parameter is null");
                 });
     }

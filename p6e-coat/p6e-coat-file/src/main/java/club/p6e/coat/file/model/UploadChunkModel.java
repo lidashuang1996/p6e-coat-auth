@@ -34,7 +34,7 @@ public class UploadChunkModel implements Serializable {
     private Integer id;
     private Integer fid;
     private String name;
-    private Integer size;
+    private Long size;
     private LocalDateTime date;
     private String operator;
 

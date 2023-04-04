@@ -42,7 +42,7 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
     }
 
     @Override
-    public Mono<Object> execute(@RequestBody ServerRequest request) {
+    public Mono<Object> execute(ServerRequest request) {
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         final DownloadContext context = new DownloadContext();
@@ -51,7 +51,8 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
         if (nodes != null && nodes.size() > 0) {
             context.setNode(nodes.get(0));
         } else {
-            throw new ParameterException(this.getClass(),
+            throw new ParameterException(
+                    this.getClass(), "fun execute(ServerRequest request).",
                     "<" + NODE_PARAMETER_NAME + "> request parameter is null");
         }
         final List<String> paths = queryParams.get(PATH_PARAMETER_NAME);
@@ -62,11 +63,13 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
             if (name == null || path == null) {
                 context.setPath(FileUtil.composePath(path, name));
             } else {
-                throw new ParameterException(this.getClass(),
+                throw new ParameterException(
+                        this.getClass(), "fun execute(ServerRequest request).",
                         "<" + PATH_PARAMETER_NAME + "> request parameter format error");
             }
         } else {
-            throw new ParameterException(this.getClass(),
+            throw new ParameterException(
+                    this.getClass(), "fun execute(ServerRequest request).",
                     "<" + PATH_PARAMETER_NAME + "> request parameter is null");
         }
         return Mono.just(context);

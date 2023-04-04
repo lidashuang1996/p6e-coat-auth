@@ -74,7 +74,7 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
         final String path = folderPathService.path();
         final String name = FileUtil.name(filePart.filename());
         if (name == null) {
-            throw new ParameterException(this.getClass(), "<name> request parameter format error");
+            throw new ParameterException(this.getClass(), "fun execute(SimpleUploadContext context).","<name> request parameter format error");
         }
         final String absolutePath = FileUtil.convertAbsolutePath(
                 FileUtil.composePath(properties.getSimpleUpload().getPath(), path));

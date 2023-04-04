@@ -98,7 +98,7 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             final UploadChunkModel model = new UploadChunkModel();
                             model.setFid(m.getId());
                             model.setName(file.getName());
-                            model.setSize(Long.valueOf(file.length()).intValue());
+                            model.setSize(file.length());
                             final Object operator = context.get("operator");
                             if (operator == null) {
                                 if (m.getOperator() != null) {

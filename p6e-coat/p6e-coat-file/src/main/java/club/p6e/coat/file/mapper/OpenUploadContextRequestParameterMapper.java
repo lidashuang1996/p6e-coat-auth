@@ -48,7 +48,7 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
     }
 
     @Override
-    public Mono<Object> execute(@RequestBody ServerRequest request) {
+    public Mono<Object> execute(ServerRequest request) {
         final OpenUploadContext context = new OpenUploadContext();
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();

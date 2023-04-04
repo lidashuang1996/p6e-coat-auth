@@ -54,7 +54,7 @@ public class UploadRepository extends BaseRepository {
                     "fun create() -> " + UploadModel.class + " is null", "UploadModel object data is null");
         }
         if (model.getSize() == null) {
-            model.setSize(0);
+            model.setSize(0L);
         }
         if (model.getOperator() == null) {
             model.setOperator("sys");

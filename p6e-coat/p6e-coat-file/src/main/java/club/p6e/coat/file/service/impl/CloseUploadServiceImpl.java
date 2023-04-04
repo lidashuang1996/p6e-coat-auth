@@ -70,7 +70,7 @@ public class CloseUploadServiceImpl implements CloseUploadService {
                             }
                         }
                     }
-                    final int fileLength = Long.valueOf(FileUtil.obtainFileLength(files)).intValue();
+                    final long fileLength = FileUtil.obtainFileLength(files);
                     return repository.update(m.setSize(fileLength))
                             .map(l -> {
                                 final Map<String, Object> map = m.toMap();

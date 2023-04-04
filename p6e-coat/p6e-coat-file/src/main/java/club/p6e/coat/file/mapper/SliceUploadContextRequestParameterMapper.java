@@ -81,7 +81,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
         if (!MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
-            throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
+            throw new HttpMediaTypeException(this.getClass(), "fun execute(ServerRequest request).","Unrecognized media type [" + mediaType + "]");
         }
         // 初始化请求参数 ID
         initParameterId(request, context);
@@ -101,12 +101,12 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                                 newContext.setId(Integer.valueOf(content));
                             } catch (Exception e) {
                                 // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                                throw new ParameterException(this.getClass(),
+                                throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                         "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
                             }
                         } else {
                             // 如果没有读取到了 FORM DATA ID 请求参数那么就抛出参数异常
-                            throw new ParameterException(this.getClass(),
+                            throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                     "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
                         }
                     }
@@ -118,12 +118,12 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                                 newContext.setIndex(Integer.valueOf(content));
                             } catch (Exception e) {
                                 // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                                throw new ParameterException(this.getClass(),
+                                throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                         "<" + FORM_DATA_PARAMETER_INDEX + "> request parameter type is not int");
                             }
                         } else {
                             // 如果没有读取到了 FORM DATA INDEX 请求参数那么就抛出参数异常
-                            throw new ParameterException(this.getClass(),
+                            throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                     "<" + FORM_DATA_PARAMETER_INDEX + "> request parameter is null");
                         }
                     }
@@ -134,7 +134,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                             newContext.setSignature(content);
                         } else {
                             // 如果没有读取到了 FORM DATA SIGNATURE 请求参数那么就抛出参数异常
-                            throw new ParameterException(this.getClass(),
+                            throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                     "<" + FORM_DATA_PARAMETER_SIGNATURE + "> request parameter is null");
                         }
                     }
@@ -144,7 +144,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
                         newContext.setFilePart(fp);
                     } else {
                         // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                        throw new ParameterException(this.getClass(),
+                        throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
                                 "<" + FORM_DATA_PARAMETER_FILE + "> request parameter is null");
                     }
                     return newContext;

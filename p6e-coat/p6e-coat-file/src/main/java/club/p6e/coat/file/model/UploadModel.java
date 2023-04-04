@@ -37,7 +37,7 @@ public class UploadModel implements Serializable {
     @Id
     private Integer id;
     private String name;
-    private Integer size;
+    private Long size;
     private String source;
     private String storageLocation;
     private LocalDateTime createDate;

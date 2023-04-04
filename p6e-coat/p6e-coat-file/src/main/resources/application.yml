@@ -1,5 +1,9 @@
 spring:
   r2dbc:
-    url: r2dbc:pool:postgres://192.168.0.172:5432/hksi_badminton
+    url: r2dbc:pool:postgres://192.168.0.172:5432/lds
     username: postgres
     password: 'not4u2day'
+
+
+logging:
+  config: 'classpath:p6e-coat-logback.xml'

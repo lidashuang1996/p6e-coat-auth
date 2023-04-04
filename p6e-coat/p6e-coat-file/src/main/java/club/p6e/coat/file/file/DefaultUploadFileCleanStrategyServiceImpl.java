@@ -7,6 +7,7 @@ import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -22,7 +23,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0
  */
 @Component
-public class DefaultUploadFileCleanStrategy implements UploadFileCleanStrategy {
+@ConditionalOnBean(UploadFileCleanTask.class)
+public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileCleanStrategyService {
 
     /**
      * 分片 数据源
@@ -37,7 +39,7 @@ public class DefaultUploadFileCleanStrategy implements UploadFileCleanStrategy {
     /**
      * 日志系统
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUploadFileCleanStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUploadFileCleanStrategyServiceImpl.class);
 
     /**
      * "{{ht}" 小时删除
@@ -53,7 +55,7 @@ public class DefaultUploadFileCleanStrategy implements UploadFileCleanStrategy {
      * 构造方法初始化
      */
     @SuppressWarnings("all")
-    public DefaultUploadFileCleanStrategy() {
+    public DefaultUploadFileCleanStrategyServiceImpl() {
         this.ht = ThreadLocalRandom.current().nextInt(6);
         this.mt = ThreadLocalRandom.current().nextInt(6);
         LOGGER.info("[ FILE CLEAN ] INIT ==> HT: " + this.ht + " MT: "

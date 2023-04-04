@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class P6eDawenjian2023Application {
 
     public static void main(String[] args) {
-        SpringUtil.init(SpringApplication.run(P6eDawenjian2023Application.class, args));
+        SpringApplication.run(P6eDawenjian2023Application.class, args);
     }
 
 }

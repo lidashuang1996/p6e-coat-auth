@@ -76,7 +76,8 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                     return Mono.just(context);
                 } catch (Exception e) {
                     // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                    throw new ParameterException(this.getClass(),
+                    throw new ParameterException(
+                            this.getClass(), "fun execute(ServerRequest request).",
                             "<" + URL_PARAMETER_ID + "> request parameter type is not int");
                 }
             } else {
@@ -92,7 +93,8 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                                     return newContext;
                                 } else {
                                     // 如果没有读取到了 RAW JSON ID 请求参数那么就抛出参数异常
-                                    throw new ParameterException(this.getClass(),
+                                    throw new ParameterException(
+                                            this.getClass(), "fun execute(ServerRequest request).",
                                             "<" + RAW_JSON_PARAMETER_ID + "> request parameter is null");
                                 }
                             });
@@ -108,17 +110,20 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                                         return newContext;
                                     } catch (Exception e) {
                                         // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                                        throw new ParameterException(this.getClass(),
+                                        throw new ParameterException(
+                                                this.getClass(), "fun execute(ServerRequest request).",
                                                 "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
                                     }
                                 } else {
                                     // 如果没有读取到了 FORM DATA ID 请求参数那么就抛出参数异常
-                                    throw new ParameterException(this.getClass(),
+                                    throw new ParameterException(
+                                            this.getClass(), "fun execute(ServerRequest request).",
                                             "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
                                 }
                             });
                 } else {
-                    throw new HttpMediaTypeException(this.getClass(), "Unrecognized media type [" + mediaType + "]");
+                    throw new HttpMediaTypeException(
+                            this.getClass(), "fun execute(ServerRequest request).", "Unrecognized media type [" + mediaType + "]");
                 }
             }
         }

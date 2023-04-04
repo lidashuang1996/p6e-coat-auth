@@ -6,7 +6,7 @@ package club.p6e.coat.file.file;
  * @author lidashuang
  * @version 1.0
  */
-public interface UploadFileCleanStrategy {
+public interface UploadFileCleanStrategyService {
 
     /**
      * 执行文件清除策略
