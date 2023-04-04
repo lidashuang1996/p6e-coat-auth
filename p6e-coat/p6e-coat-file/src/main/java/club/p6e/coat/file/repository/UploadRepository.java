@@ -1,5 +1,6 @@
 package club.p6e.coat.file.repository;
 
+import club.p6e.coat.file.error.DataBaseException;
 import club.p6e.coat.file.model.UploadModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
@@ -49,8 +50,8 @@ public class UploadRepository extends BaseRepository {
      */
     public Mono<UploadModel> create(UploadModel model) {
         if (model == null) {
-            throw new NullPointerException(UploadRepository.class
-                    + " create(). " + UploadModel.class + " => model is null ! ");
+            throw new DataBaseException(this.getClass(),
+                    "fun create() -> " + UploadModel.class + " is null", "UploadModel object data is null");
         }
         if (model.getSize() == null) {
             model.setSize(0);

@@ -23,10 +23,11 @@ public class AspectContactException extends CustomException {
      * 请求参数参数异常
      *
      * @param sc      源 class
-     * @param content 异常内容
+     * @param error   异常内容
+     * @param content 描述内容
      */
-    public AspectContactException(Class<?> sc, String content) {
-        super(sc, AspectContactException.class, content, DEFAULT_CODE, DEFAULT_SKETCH);
+    public AspectContactException(Class<?> sc, String error, String content) {
+        super(sc, AspectContactException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -34,21 +35,23 @@ public class AspectContactException extends CustomException {
      *
      * @param sc        源 class
      * @param throwable 异常对象
+     * @param content   描述内容
      */
-    public AspectContactException(Class<?> sc, Throwable throwable) {
-        super(sc, AspectContactException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH);
+    public AspectContactException(Class<?> sc, Throwable throwable, String content) {
+        super(sc, AspectContactException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
      * 请求参数参数异常
      *
      * @param sc      源 class
-     * @param content 异常内容
+     * @param error   异常内容
      * @param code    代码
      * @param sketch  简述
+     * @param content 描述内容
      */
-    public AspectContactException(Class<?> sc, String content, int code, String sketch) {
-        super(sc, AspectContactException.class, content, code, sketch);
+    public AspectContactException(Class<?> sc, String error, int code, String sketch, String content) {
+        super(sc, AspectContactException.class, error, code, sketch, content);
     }
 
     /**
@@ -58,8 +61,10 @@ public class AspectContactException extends CustomException {
      * @param throwable 异常对象
      * @param code      代码
      * @param sketch    简述
+     * @param content   描述内容
      */
-    public AspectContactException(Class<?> sc, Throwable throwable, int code, String sketch) {
-        super(sc, AspectContactException.class, throwable, code, sketch);
+    public AspectContactException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
+        super(sc, AspectContactException.class, throwable, code, sketch, content);
     }
+
 }

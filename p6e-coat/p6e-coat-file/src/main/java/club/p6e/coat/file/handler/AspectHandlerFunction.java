@@ -117,8 +117,8 @@ public class AspectHandlerFunction {
                     if (b) {
                         return Mono.just(finalData);
                     } else {
-                        return Mono.error(new AspectContactException(
-                                this.getClass(), "Action before intercept return error"));
+                        return Mono.error(new AspectContactException(this.getClass(),
+                                "fun before() -> Action before intercept return error", "Action before intercept return error"));
                     }
                 });
     }
@@ -145,8 +145,8 @@ public class AspectHandlerFunction {
                     if (b) {
                         return Mono.just(finalResult);
                     } else {
-                        return Mono.error(new AspectContactException(
-                                this.getClass(), "Action after intercept return error"));
+                        return Mono.error(new AspectContactException(this.getClass(),
+                                "fun after() -> Action after intercept return error", "Action after intercept return error"));
                     }
                 });
     }

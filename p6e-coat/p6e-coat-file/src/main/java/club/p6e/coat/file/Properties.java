@@ -75,9 +75,11 @@ public class Properties implements Serializable {
 
     }
 
+    /**
+     * 简单（小文件）上传
+     */
     @Data
-    @Accessors(chain = true)
-    public static class SliceUpload implements Serializable {
+    public static class SimpleUpload implements Serializable {
 
         /**
          * 基础的文件路径
@@ -92,10 +94,11 @@ public class Properties implements Serializable {
     }
 
     /**
-     * 简单（小文件）上传
+     * 分片上传
      */
     @Data
-    public static class SimpleUpload implements Serializable {
+    @Accessors(chain = true)
+    public static class SliceUpload implements Serializable {
 
         /**
          * 基础的文件路径

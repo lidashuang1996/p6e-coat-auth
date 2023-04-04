@@ -2,6 +2,7 @@ package club.p6e.coat.file.service.impl;
 
 import club.p6e.coat.file.Properties;
 import club.p6e.coat.file.context.SimpleUploadContext;
+import club.p6e.coat.file.error.FileException;
 import club.p6e.coat.file.error.ParameterException;
 import club.p6e.coat.file.folder.UploadFolderStorageLocationPathService;
 import club.p6e.coat.file.model.UploadModel;
@@ -96,20 +97,19 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
                     return filePart
                             .transferTo(file)
                             .then(Mono.just(file))
-                            .flatMap(f -> {
+                            .map(f -> {
                                 final long size = properties.getSimpleUpload().getMaxSize();
-                                return checkSize(f, size).map(v -> m);
+                                if (file.length() > size) {
+                                    // 如果文件长度超过了最大的限制,那么就删除文件
+                                    FileUtil.deleteFile(file);
+                                    throw new FileException(this.getClass(),
+                                            "fun execute() -> File (" + f.getName() + ") upload exceeds the maximum length limit",
+                                            "File (" + f.getName() + ")upload exceeds the maximum length limit");
+                                }
+                                return m;
                             });
                 })
                 .map(UploadModel::toMap);
-    }
-
-    private static Mono<Void> checkSize(File file, long size) {
-        if (file.length() > size) {
-            FileUtil.deleteFile(file);
-            throw new RuntimeException();
-        }
-        return Mono.never();
     }
 
 }

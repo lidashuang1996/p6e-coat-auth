@@ -25,7 +25,7 @@ public class FileException extends CustomException {
      * @param sc      源 class
      * @param content 异常内容
      */
-    public FileException(Class<?> sc, String content) {
+    public FileException(Class<?> sc, String error, String content) {
         super(sc, FileException.class, content, DEFAULT_CODE, DEFAULT_SKETCH);
     }
 
