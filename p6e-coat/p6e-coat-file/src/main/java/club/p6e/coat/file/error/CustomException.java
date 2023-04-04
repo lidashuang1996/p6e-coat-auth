@@ -62,7 +62,7 @@ public abstract class CustomException extends RuntimeException {
      * @param sketch  简述
      * @return 模版的输出内容
      */
-    private static String template(Class<?> sc, Class<? extends CustomException> ec, String content, int code, String sketch) {
+    private static String template(Class<?> sc, Class<? extends CustomException> ec, String error, int code, String sketch, String content) {
         return "{ " + sketch + " <" + code + "> } ::: [ " + sc + " ] => (" + ec + ") ===> " + content;
     }
 
@@ -96,7 +96,7 @@ public abstract class CustomException extends RuntimeException {
      */
     public CustomException(Class<?> sc, Class<? extends CustomException> ec,
                            Throwable throwable, int code, String sketch, String content) {
-        super(template(sc, ec, throwable.getMessage(), code, sketch), throwable);
+        super(template(sc, ec, throwable.getMessage(), code, sketch, content), throwable);
         this.code = code;
         this.sketch = sketch;
         this.content = content;

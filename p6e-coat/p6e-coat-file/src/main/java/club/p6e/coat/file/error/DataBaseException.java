@@ -12,12 +12,12 @@ public class DataBaseException extends CustomException {
     /**
      * 默认的代码
      */
-    public static final int DEFAULT_CODE = 1000;
+    public static final int DEFAULT_CODE = 4000;
 
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "PARAMETER_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "DATABASE_EXCEPTION";
 
     /**
      * 请求参数参数异常
@@ -35,8 +35,8 @@ public class DataBaseException extends CustomException {
      * @param sc        源 class
      * @param throwable 异常对象
      */
-    public DataBaseException(Class<?> sc, Throwable throwable) {
-        super(sc, DataBaseException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH);
+    public DataBaseException(Class<?> sc, Throwable throwable, String content) {
+        super(sc, DataBaseException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -47,8 +47,8 @@ public class DataBaseException extends CustomException {
      * @param code    代码
      * @param sketch  简述
      */
-    public DataBaseException(Class<?> sc, String content, int code, String sketch) {
-        super(sc, DataBaseException.class, content, code, sketch);
+    public DataBaseException(Class<?> sc, String error, int code, String sketch, String content) {
+        super(sc, DataBaseException.class, error, code, sketch, content);
     }
 
     /**
@@ -59,7 +59,7 @@ public class DataBaseException extends CustomException {
      * @param code      代码
      * @param sketch    简述
      */
-    public DataBaseException(Class<?> sc, Throwable throwable, int code, String sketch) {
-        super(sc, DataBaseException.class, throwable, code, sketch);
+    public DataBaseException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
+        super(sc, DataBaseException.class, throwable, code, sketch, content);
     }
 }

@@ -1,8 +1,11 @@
 package club.p6e.coat.file.repository;
 
+import club.p6e.coat.file.error.DataBaseException;
 import club.p6e.coat.file.model.UploadChunkModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -43,14 +46,26 @@ public class UploadChunkRepository extends BaseRepository {
      */
     public Mono<UploadChunkModel> create(UploadChunkModel model) {
         if (model == null) {
-            throw new NullPointerException(UploadChunkModel.class
-                    + " create(). " + UploadChunkModel.class + " => model is null ! ");
+            throw new DataBaseException(this.getClass(),
+                    "fun create() -> " + UploadChunkModel.class + " is null", "UploadChunkModel object data is null");
         }
         if (model.getOperator() == null) {
             model.setOperator("sys");
         }
         model.setDate(LocalDateTime.now());
         return r2dbcEntityTemplate.insert(model);
+    }
+
+    /**
+     * 根据 FID 删除数据
+     *
+     * @param fid FID
+     * @return Mono<Long> 受影响的数据条数
+     */
+    public Mono<Long> deleteByFid(int fid) {
+        return r2dbcEntityTemplate.delete(Query.query(
+                Criteria.where(UploadChunkModel.FID).is(fid)
+        ), UploadChunkModel.class);
     }
 
 }

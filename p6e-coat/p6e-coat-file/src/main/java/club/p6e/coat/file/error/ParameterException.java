@@ -23,10 +23,11 @@ public class ParameterException extends CustomException {
      * 请求参数参数异常
      *
      * @param sc      源 class
-     * @param content 异常内容
+     * @param error   异常内容
+     * @param content 描述内容
      */
-    public ParameterException(Class<?> sc, String content) {
-        super(sc, ParameterException.class, content, DEFAULT_CODE, DEFAULT_SKETCH);
+    public ParameterException(Class<?> sc, String error, String content) {
+        super(sc, ParameterException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -34,32 +35,35 @@ public class ParameterException extends CustomException {
      *
      * @param sc        源 class
      * @param throwable 异常对象
+     * @param content   描述内容
      */
-    public ParameterException(Class<?> sc, Throwable throwable) {
-        super(sc, ParameterException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH);
+    public ParameterException(Class<?> sc, Throwable throwable, String content) {
+        super(sc, ParameterException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
      * 请求参数参数异常
      *
      * @param sc      源 class
-     * @param content 异常内容
+     * @param error   异常内容
      * @param code    代码
      * @param sketch  简述
+     * @param content 描述内容
      */
-    public ParameterException(Class<?> sc, String content, int code, String sketch) {
-        super(sc, ParameterException.class, content, code, sketch);
+    public ParameterException(Class<?> sc, String error, int code, String sketch, String content) {
+        super(sc, ParameterException.class, error, code, sketch, content);
     }
 
     /**
-     * 请求参数参数异常
+     * 切面切点返回异常
      *
      * @param sc        源 class
      * @param throwable 异常对象
      * @param code      代码
      * @param sketch    简述
+     * @param content   描述内容
      */
-    public ParameterException(Class<?> sc, Throwable throwable, int code, String sketch) {
-        super(sc, ParameterException.class, throwable, code, sketch);
+    public ParameterException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
+        super(sc, ParameterException.class, throwable, code, sketch, content);
     }
 }

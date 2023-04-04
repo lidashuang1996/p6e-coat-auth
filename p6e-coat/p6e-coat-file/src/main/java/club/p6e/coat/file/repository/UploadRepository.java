@@ -62,6 +62,7 @@ public class UploadRepository extends BaseRepository {
         model.setId(null);
         model.setLock(0);
         model.setVersion(0);
+        model.setRubbish(0);
         model.setCreateDate(LocalDateTime.now());
         model.setUpdateDate(LocalDateTime.now());
         return r2dbcEntityTemplate.insert(model);
@@ -70,34 +71,77 @@ public class UploadRepository extends BaseRepository {
     /**
      * 修改数据--锁增加 1
      *
-     * @param model 模型对象
-     * @return Mono<Long> 结果对象
+     * @param id ID
+     * @return Mono<Long> 受影响的数据条数
      */
-    public Mono<Long> acquireLock(UploadModel model) {
-        return r2dbcEntityTemplate.update(UploadModel.class)
-                .matching(Query.query(
-                        Criteria.where(UploadModel.ID).is(model.getId())
-                                .and(UploadModel.VERSION).is(model.getVersion())))
-                .apply(Update.update(UploadModel.VERSION, model.getVersion() + 1)
-                        .set(UploadModel.LOCK, model.getLock() + 1));
+    public Mono<Long> acquireLock(int id) {
+        return acquireLock(id, 0);
     }
 
     /**
      * 修改数据--锁增加 1
      *
-     * @param model 模型对象
+     * @param id    ID
      * @param retry 重试次数
-     * @return Mono<Long> 结果对象
+     * @return Mono<Long> 受影响的数据条数
      */
-    public Mono<Long> acquireLock(UploadModel model, int retry) {
+    private Mono<Long> acquireLock(int id, int retry) {
         if (retry == 0) {
-            return acquireLock(model)
-                    .flatMap(c -> c > 0 ? Mono.just(c) : acquireLock(model, (retry + 1)));
+            return acquireLock0(id)
+                    .flatMap(c -> c > 0 ? Mono.just(c) : acquireLock(id, (retry + 1)));
         } else if (retry <= MAX_RETRY_COUNT) {
             final long interval = RETRY_INTERVAL_DATE * ThreadLocalRandom.current().nextInt(100) / 100;
-            return Mono.delay(Duration.of(interval, ChronoUnit.MICROS))
-                    .flatMap(r -> acquireLock(model))
-                    .flatMap(c -> c > 0 ? Mono.just(c) : acquireLock(model, (retry + 1)));
+            return Mono.delay(Duration.of(interval, ChronoUnit.MILLIS))
+                    .flatMap(r -> acquireLock0(id))
+                    .flatMap(c -> c > 0 ? Mono.just(c) : acquireLock(id, (retry + 1)));
+        } else {
+            return Mono.just(0L);
+        }
+    }
+
+    /**
+     * 修改数据--锁增加 1
+     *
+     * @param id ID
+     * @return Mono<Long> 受影响的数据条数
+     */
+    private Mono<Long> acquireLock0(int id) {
+        return this.findById(id)
+                .flatMap(m -> r2dbcEntityTemplate
+                        .update(UploadModel.class)
+                        .matching(Query.query(
+                                Criteria.where(UploadModel.ID).is(m.getId())
+                                        .and(UploadModel.VERSION).is(m.getVersion())))
+                        .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
+                                .set(UploadModel.LOCK, m.getLock() + 1)));
+    }
+
+    /**
+     * 修改数据--锁减少 1
+     *
+     * @param id ID
+     * @return Mono<Long> 受影响的数据条数
+     */
+    public Mono<Long> releaseLock(int id) {
+        return releaseLock(id, 0);
+    }
+
+    /**
+     * 修改数据--锁减少 1
+     *
+     * @param id    ID
+     * @param retry 重试次数
+     * @return Mono<Long> 受影响的数据条数
+     */
+    private Mono<Long> releaseLock(int id, int retry) {
+        if (retry == 0) {
+            return releaseLock0(id)
+                    .flatMap(c -> c > 0 ? Mono.just(c) : releaseLock(id, (retry + 1)));
+        } else if (retry <= MAX_RETRY_COUNT) {
+            final long interval = RETRY_INTERVAL_DATE * ThreadLocalRandom.current().nextInt(100) / 100;
+            return Mono.delay(Duration.of(interval, ChronoUnit.MILLIS))
+                    .flatMap(r -> releaseLock0(id))
+                    .flatMap(c -> c > 0 ? Mono.just(c) : releaseLock(id, (retry + 1)));
         } else {
             return Mono.just(0L);
         }
@@ -106,68 +150,27 @@ public class UploadRepository extends BaseRepository {
     /**
      * 修改数据--锁减少 1
      *
-     * @param model 模型对象
-     * @return Mono<Long> 结果对象
+     * @param id ID
+     * @return Mono<Long> 受影响的数据条数
      */
-    public Mono<Long> releaseLock(UploadModel model) {
-        return r2dbcEntityTemplate.update(UploadModel.class)
-                .matching(Query.query(
-                        Criteria.where(UploadModel.ID).is(model.getId())
-                                .and(UploadModel.VERSION).is(model.getVersion())))
-                .apply(Update.update(UploadModel.VERSION, model.getVersion() + 1)
-                        .set(UploadModel.LOCK, model.getLock() - 1));
-    }
-
-    /**
-     * 修改数据--锁减少 1
-     *
-     * @param model 模型对象
-     * @param retry 重试次数
-     * @return Mono<Long> 结果对象
-     */
-    public Mono<Long> releaseLock(UploadModel model, int retry) {
-        if (retry == 0) {
-            return releaseLock(model)
-                    .flatMap(c -> c > 0 ? Mono.just(c) : releaseLock(model, (retry + 1)));
-        } else if (retry <= MAX_RETRY_COUNT) {
-            final long interval = RETRY_INTERVAL_DATE * ThreadLocalRandom.current().nextInt(100) / 100;
-            return Mono.delay(Duration.of(interval, ChronoUnit.MICROS))
-                    .flatMap(r -> releaseLock(model))
-                    .flatMap(c -> c > 0 ? Mono.just(c) : releaseLock(model, (retry + 1)));
-        } else {
-            return Mono.just(0L);
-        }
+    private Mono<Long> releaseLock0(int id) {
+        return this.findById(id)
+                .flatMap(m -> r2dbcEntityTemplate.update(UploadModel.class)
+                        .matching(Query.query(
+                                Criteria.where(UploadModel.ID).is(m.getId())
+                                        .and(UploadModel.VERSION).is(m.getVersion())))
+                        .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
+                                .set(UploadModel.LOCK, m.getLock() - 1)));
     }
 
     /**
      * 关闭锁
      *
      * @param id 模型 ID
-     * @return Mono<UploadModel> 模型对象
+     * @return Mono<UploadModel> 受影响的数据条数
      */
-    public Mono<UploadModel> closeLock(Integer id) {
-        return r2dbcEntityTemplate.selectOne(Query.query(
-                        Criteria.where(UploadModel.ID).is(id)), UploadModel.class)
-                .flatMap(m -> {
-                    if (m.getLock() == 0) {
-                        return r2dbcEntityTemplate.update(UploadModel.class)
-                                .matching(Query.query(
-                                        Criteria.where(UploadModel.ID).is(m.getId())
-                                                .and(UploadModel.VERSION).is(m.getVersion())))
-                                .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1).set(UploadModel.LOCK, -1))
-                                .flatMap(c -> {
-                                    if (c > 0) {
-                                        m.setLock(-1);
-                                        m.setVersion(m.getVersion());
-                                        return Mono.just(m);
-                                    } else {
-                                        return Mono.empty();
-                                    }
-                                });
-                    } else {
-                        return Mono.empty();
-                    }
-                });
+    public Mono<Long> closeLock(int id) {
+        return closeLock(id, 0);
     }
 
     /**
@@ -175,20 +178,41 @@ public class UploadRepository extends BaseRepository {
      *
      * @param id    模型 ID
      * @param retry 重试次数
-     * @return Mono<UploadModel> 模型对象
+     * @return Mono<UploadModel> 受影响的数据条数
      */
-    public Mono<UploadModel> closeLock(Integer id, int retry) {
+    private Mono<Long> closeLock(int id, int retry) {
         if (retry == 0) {
-            return closeLock(id)
-                    .switchIfEmpty(closeLock(id, (retry + 1)));
+            return closeLock0(id)
+                    .flatMap(c -> c > 0 ? Mono.just(c) : closeLock(id, (retry + 1)));
         } else if (retry <= MAX_RETRY_COUNT) {
             final long interval = RETRY_INTERVAL_DATE * ThreadLocalRandom.current().nextInt(100) / 100;
-            return Mono.delay(Duration.of(interval, ChronoUnit.MICROS))
-                    .flatMap(t -> closeLock(id))
-                    .switchIfEmpty(closeLock(id, (retry + 1)));
+            return Mono.delay(Duration.of(interval, ChronoUnit.MILLIS))
+                    .flatMap(t -> closeLock0(id))
+                    .flatMap(c -> c > 0 ? Mono.just(c) : closeLock(id, (retry + 1)));
         } else {
             return Mono.empty();
         }
+    }
+
+    /**
+     * 关闭锁
+     *
+     * @param id 模型 ID
+     * @return Mono<UploadModel> 受影响的数据条数
+     */
+    private Mono<Long> closeLock0(int id) {
+        return this.findById(id)
+                .flatMap(m -> {
+                    if (m.getLock() == 0) {
+                        return r2dbcEntityTemplate.update(UploadModel.class)
+                                .matching(Query.query(
+                                        Criteria.where(UploadModel.ID).is(m.getId())
+                                                .and(UploadModel.VERSION).is(m.getVersion())))
+                                .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1).set(UploadModel.LOCK, -1));
+                    } else {
+                        return Mono.just(0L);
+                    }
+                });
     }
 
     /**
@@ -197,23 +221,73 @@ public class UploadRepository extends BaseRepository {
      * @param id 模型 ID
      * @return Mono<UploadModel> 模型对象
      */
-    public Mono<UploadModel> findById(Integer id) {
+    public Mono<UploadModel> findById(int id) {
         return r2dbcEntityTemplate.selectOne(Query.query(
                 Criteria.where(UploadModel.ID).is(id)), UploadModel.class);
+    }
+
+    /**
+     * 根据 ID 或者创建时间范围查询数据
+     *
+     * @param id        模型 ID
+     * @param startDate 创建时间的开始时间
+     * @param endDate   创建时间的结束时间
+     * @return Mono<UploadModel> 模型对象
+     */
+    public Mono<UploadModel> findByCreateDateOne(Integer id, LocalDateTime startDate, LocalDateTime endDate) {
+        final Criteria criteria = Criteria.empty();
+        if (id != null) {
+            criteria.and(UploadModel.ID).greaterThan(id);
+        }
+        if (startDate != null) {
+            criteria.and(UploadModel.CREATE_DATE).greaterThan(startDate);
+        }
+        if (endDate != null) {
+            criteria.and(UploadModel.CREATE_DATE).lessThan(endDate);
+        }
+        return r2dbcEntityTemplate.selectOne(Query.query(criteria), UploadModel.class);
     }
 
     /**
      * 修改数据
      *
      * @param model 模型对象
-     * @return Mono<UploadModel> 模型对象
+     * @return Mono<UploadModel> 受影响的数据条数
      */
     public Mono<Long> update(UploadModel model) {
-        return r2dbcEntityTemplate.update(UploadModel.class)
-                .matching(Query.query(
-                        Criteria.where(UploadModel.ID).is(model.getId())
-                                .and(UploadModel.VERSION).is(model.getVersion())))
-                .apply(Update.update(UploadModel.SIZE, model.getSize()));
+        Update update = null;
+        if (model.getSize() != null) {
+            update = Update.update(UploadModel.SIZE, model.getSize());
+        }
+        if (model.getRubbish() != null) {
+            if (update == null) {
+                update = Update.update(UploadModel.RUBBISH, model.getLock());
+            } else {
+                update.set(UploadModel.RUBBISH, model.getRubbish());
+            }
+        }
+        if (update == null) {
+            return Mono.just(0L);
+        } else {
+            final Update fUpdate = update;
+            return this.findById(model.getId())
+                    .flatMap(m -> r2dbcEntityTemplate
+                            .update(UploadModel.class)
+                            .matching(Query.query(
+                                    Criteria.where(UploadModel.ID).is(m.getId())
+                                            .and(UploadModel.VERSION).is(m.getVersion())))
+                            .apply(fUpdate)
+                    );
+        }
     }
 
+    /**
+     * 根据 ID 删除数据
+     *
+     * @param id ID
+     * @return Mono<Long> 受影响的数据条数
+     */
+    public Mono<Long> delete(int id) {
+        return r2dbcEntityTemplate.delete(Query.query(Criteria.where(UploadModel.ID).is(id)), UploadModel.class);
+    }
 }

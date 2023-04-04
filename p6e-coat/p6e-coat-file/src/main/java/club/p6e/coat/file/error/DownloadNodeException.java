@@ -12,12 +12,12 @@ public class DownloadNodeException extends CustomException {
     /**
      * 默认的代码
      */
-    public static final int DEFAULT_CODE = 1000;
+    public static final int DEFAULT_CODE = 6000;
 
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "PARAMETER_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "DOWNLOAD_NODE_EXCEPTION";
 
     /**
      * 请求参数参数异常
@@ -25,8 +25,8 @@ public class DownloadNodeException extends CustomException {
      * @param sc      源 class
      * @param content 异常内容
      */
-    public DownloadNodeException(Class<?> sc, String content) {
-        super(sc, DownloadNodeException.class, content, DEFAULT_CODE, DEFAULT_SKETCH);
+    public DownloadNodeException(Class<?> sc, String error, String content) {
+        super(sc, DownloadNodeException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -35,8 +35,8 @@ public class DownloadNodeException extends CustomException {
      * @param sc        源 class
      * @param throwable 异常对象
      */
-    public DownloadNodeException(Class<?> sc, Throwable throwable) {
-        super(sc, DownloadNodeException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH);
+    public DownloadNodeException(Class<?> sc, Throwable throwable, String content) {
+        super(sc, DownloadNodeException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -47,8 +47,8 @@ public class DownloadNodeException extends CustomException {
      * @param code    代码
      * @param sketch  简述
      */
-    public DownloadNodeException(Class<?> sc, String content, int code, String sketch) {
-        super(sc, DownloadNodeException.class, content, code, sketch);
+    public DownloadNodeException(Class<?> sc, String error, int code, String sketch, String content) {
+        super(sc, DownloadNodeException.class, error, code, sketch, content);
     }
 
     /**
@@ -59,7 +59,7 @@ public class DownloadNodeException extends CustomException {
      * @param code      代码
      * @param sketch    简述
      */
-    public DownloadNodeException(Class<?> sc, Throwable throwable, int code, String sketch) {
-        super(sc, DownloadNodeException.class, throwable, code, sketch);
+    public DownloadNodeException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
+        super(sc, DownloadNodeException.class, throwable, code, sketch, content);
     }
 }

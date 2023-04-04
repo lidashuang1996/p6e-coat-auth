@@ -6,6 +6,7 @@ package club.p6e.coat.file.repository;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("all")
 public class BaseRepository {
 
     /**
@@ -19,7 +20,7 @@ public class BaseRepository {
     public static final long RETRY_INTERVAL_DATE = 5000;
 
     /**
-     * 大写字母转环为下划线分割
+     * 大写字母转为下划线分割
      *
      * @param text 文本内容
      * @return 转换内容

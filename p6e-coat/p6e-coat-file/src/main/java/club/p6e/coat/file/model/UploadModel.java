@@ -32,6 +32,7 @@ public class UploadModel implements Serializable {
     public static final String OPERATOR = "operator";
     public static final String LOCK = "lock";
     public static final String VERSION = "version";
+    public static final String RUBBISH = "rubbish";
 
     @Id
     private Integer id;
@@ -44,6 +45,7 @@ public class UploadModel implements Serializable {
     private String operator;
     private Integer lock;
     private Integer version;
+    private Integer rubbish;
 
     public Map<String, Object> toMap() {
         final Map<String, Object> map = new HashMap<>(10);
@@ -57,6 +59,7 @@ public class UploadModel implements Serializable {
         map.put("operator", operator);
         map.put("lock", lock);
         map.put("version", version);
+        map.put("rubbish", rubbish);
         return map;
     }
 

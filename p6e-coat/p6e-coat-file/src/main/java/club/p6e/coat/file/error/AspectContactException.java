@@ -2,7 +2,7 @@ package club.p6e.coat.file.error;
 
 /**
  * 自定义异常
- * 请求参数参数异常
+ * 切面切点返回异常
  *
  * @author lidashuang
  * @version 1.0
@@ -12,7 +12,7 @@ public class AspectContactException extends CustomException {
     /**
      * 默认的代码
      */
-    public static final int DEFAULT_CODE = 1000;
+    public static final int DEFAULT_CODE = 3000;
 
     /**
      * 默认的简述
@@ -20,7 +20,7 @@ public class AspectContactException extends CustomException {
     private static final String DEFAULT_SKETCH = "PARAMETER_EXCEPTION";
 
     /**
-     * 请求参数参数异常
+     * 切面切点返回异常
      *
      * @param sc      源 class
      * @param error   异常内容
@@ -31,7 +31,7 @@ public class AspectContactException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 切面切点返回异常
      *
      * @param sc        源 class
      * @param throwable 异常对象
@@ -42,7 +42,7 @@ public class AspectContactException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 切面切点返回异常
      *
      * @param sc      源 class
      * @param error   异常内容
@@ -55,7 +55,7 @@ public class AspectContactException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 切面切点返回异常
      *
      * @param sc        源 class
      * @param throwable 异常对象
