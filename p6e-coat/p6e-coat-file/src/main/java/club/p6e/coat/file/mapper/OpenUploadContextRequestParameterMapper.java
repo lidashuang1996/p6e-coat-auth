@@ -56,10 +56,11 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
         // 读取 URL 文件名称请求参数
         final List<String> names = queryParams.get(URL_PARAMETER_NAME);
         if (names != null && names.size() > 0) {
-            // 如果读取到了 URL 文件名称请求参数那么就写入到上下文对象中
+            // 如果读取到了 URL 文件名称请求参数那么就写入到上下文对象中Œ
             final String name = FileUtil.name(names.get(0));
             if (name == null) {
-                throw new ParameterException(this.getClass(),
+                throw new ParameterException(
+                        this.getClass(), "fun execute(ServerRequest request)",
                         "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
             }
             context.setName(name);
@@ -75,14 +76,16 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
                             if (rjName instanceof final String content) {
                                 final String name = FileUtil.name(content);
                                 if (name == null) {
-                                    throw new ParameterException(this.getClass(),
+                                    throw new ParameterException(
+                                            this.getClass(), "fun execute(ServerRequest request)",
                                             "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
                                 }
                                 newContext.setName(name);
                                 return newContext;
                             }
                             // 如果没有读取到了 RAW JSON 文件名称请求参数那么就抛出参数异常
-                            throw new ParameterException(this.getClass(),
+                            throw new ParameterException(
+                                    this.getClass(), "fun execute(ServerRequest request)",
                                     "<" + RAW_JSON_PARAMETER_NAME + "> request parameter is null");
                         });
             } else if (MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
@@ -94,19 +97,22 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
                                     && ol.get(0) instanceof final String content) {
                                 final String name = FileUtil.name(content);
                                 if (name == null) {
-                                    throw new ParameterException(this.getClass(),
+                                    throw new ParameterException(
+                                            this.getClass(), "fun execute(ServerRequest request)",
                                             "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
                                 }
                                 newContext.setName(FileUtil.name(content));
                                 return newContext;
                             }
                             // 如果没有读取到了 FORM DATA 文件名称请求参数那么就抛出参数异常
-                            throw new ParameterException(this.getClass(),
+                            throw new ParameterException(
+                                    this.getClass(), "fun execute(ServerRequest request)",
                                     "<" + FORM_DATA_PARAMETER_NAME + "> request parameter is null");
 
                         });
             } else {
-                throw new ParameterException(this.getClass(),
+                throw new ParameterException(
+                        this.getClass(), "fun execute(ServerRequest request)",
                         "<" + URL_PARAMETER_NAME + "> request parameter is null");
             }
         }

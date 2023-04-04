@@ -72,7 +72,8 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                             final Object ResourcePath = r.get("__path__");
                             if (ResourcePath == null) {
                                 // 如果不存在下载文件路径数据则抛出异常
-                                throw new FileException(this.getClass(), "Resource file path is null");
+                                throw new FileException(this.getClass(),
+                                        "fun handle(ServerRequest request).", "resource file path is null");
                             } else if (ResourcePath instanceof final String dps) {
                                 final File file = new File(dps);
                                 // 验证文件是否存在
@@ -80,12 +81,14 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                                     return file;
                                 } else {
                                     // 文件不存在抛出异常
-                                    throw new FileException(this.getClass(), "Resource file does not exist");
+                                    throw new FileException(this.getClass(),
+                                            "fun handle(ServerRequest request).", "resource file does not exist");
                                 }
                             } else {
                                 // 如果为其他类型的数据则抛出异常
                                 throw new FileException(this.getClass(),
-                                        "Resource file path data type not is <java.lang.String>");
+                                        "fun handle(ServerRequest request).",
+                                        "resource file path data type not is <java.lang.String>");
                             }
                         })
                         // 结果返回

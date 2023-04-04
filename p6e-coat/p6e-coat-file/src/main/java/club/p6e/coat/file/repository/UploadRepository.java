@@ -287,7 +287,7 @@ public class UploadRepository extends BaseRepository {
      * @param id ID
      * @return Mono<Long> 受影响的数据条数
      */
-    public Mono<Long> delete(int id) {
+    public Mono<Long> deleteById(int id) {
         return r2dbcEntityTemplate.delete(Query.query(Criteria.where(UploadModel.ID).is(id)), UploadModel.class);
     }
 }

@@ -105,10 +105,10 @@ public class DefaultUploadFileCleanStrategy implements UploadFileCleanStrategy {
                             }))
                     .flatMap(m -> uploadRepository
                             // 清除数据库的缓存数据
-                            .delete(m)
+                            .deleteById(m.getId())
                             .flatMap(c -> {
                                 if (c > 0) {
-                                    return uploadChunkRepository.delete(m.getId());
+                                    return uploadChunkRepository.deleteByFid(m.getId());
                                 } else {
                                     return Mono.empty();
                                 }

@@ -79,11 +79,11 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             final File absolutePathFile = new File(FileUtil.composePath(absolutePath, FileUtil.generateName()));
                             return repository
                                     // 获取锁
-                                    .acquireLock(um, 0)
+                                    .acquireLock(um.getId())
                                     // 写入文件数据
                                     .flatMap(file -> filePart.transferTo(absolutePathFile).then(Mono.just(absolutePathFile)))
                                     // 释放锁
-                                    .flatMap(file -> repository.releaseLock(um, 0))
+                                    .flatMap(file -> repository.releaseLock(um.getId()))
                                     // 转换为文件对象输出
                                     .map(c -> absolutePathFile);
                         })

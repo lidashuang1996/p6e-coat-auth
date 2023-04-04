@@ -71,7 +71,8 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                             final Object downloadPath = r.get("__path__");
                             if (downloadPath == null) {
                                 // 如果不存在下载文件路径数据则抛出异常
-                                throw new FileException(this.getClass(), "Download file path is null");
+                                throw new FileException(this.getClass(),
+                                        "fun handle(ServerRequest request).", "download file path is null");
                             } else if (downloadPath instanceof final String dps) {
                                 final File file = new File(dps);
                                 // 验证文件是否存在
@@ -79,12 +80,14 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                                     return file;
                                 } else {
                                     // 文件不存在抛出异常
-                                    throw new FileException(this.getClass(), "Download file does not exist");
+                                    throw new FileException(this.getClass(),
+                                            "fun handle(ServerRequest request).", "download file does not exist");
                                 }
                             } else {
                                 // 如果为其他类型的数据则抛出异常
                                 throw new FileException(this.getClass(),
-                                        "Download file path data type not is <java.lang.String>");
+                                        "fun handle(ServerRequest request).",
+                                        "download file path data type not is <java.lang.String>");
                             }
                         })
                         // 结果返回

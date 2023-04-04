@@ -51,7 +51,8 @@ public class CloseUploadServiceImpl implements CloseUploadService {
     @Override
     public Mono<Map<String, Object>> execute(CloseUploadContext context) {
         return repository
-                .closeLock(context.getId(), 0)
+                .closeLock(context.getId())
+                .flatMap(c -> repository.findById(context.getId()))
                 .flatMap(m -> {
                     final String absolutePath = FileUtil.convertAbsolutePath(
                             FileUtil.composePath(properties.getSliceUpload().getPath(), m.getStorageLocation()));
