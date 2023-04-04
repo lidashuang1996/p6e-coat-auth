@@ -1,7 +1,6 @@
 package club.p6e.coat.file.mapper;
 
 import club.p6e.coat.file.context.CloseUploadContext;
-import club.p6e.coat.file.error.HttpMediaTypeException;
 import club.p6e.coat.file.error.ParameterException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
@@ -34,12 +33,17 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
     private static final String URL_PARAMETER_ID = "id";
 
     /**
-     * URL ID 请求参数
+     * PATH URL ID 请求参数
+     */
+    private static final String PATH_URL_PARAMETER_ID = "id";
+
+    /**
+     * FORM DATA ID 请求参数
      */
     private static final String FORM_DATA_PARAMETER_ID = "id";
 
     /**
-     * RAW JSON 请求参数
+     * RAW JSON ID 请求参数
      */
     private static final String RAW_JSON_PARAMETER_ID = "id";
 
@@ -64,7 +68,16 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
         // 如果不是请求后缀标记
         // 那么请求的后缀是请求参数 ID
         if (!REQUEST_PATH_FINISH_MARK.equals(requestPathFinishContent)) {
-            context.setId(Integer.valueOf(requestPathFinishContent));
+            try {
+                context.setId(Integer.valueOf(requestPathFinishContent));
+            } catch (Exception e) {
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun execute(ServerRequest request). " +
+                                "<" + PATH_URL_PARAMETER_ID + "> Request parameter type not is int",
+                        "<" + PATH_URL_PARAMETER_ID + "> Request parameter type not is int"
+                ));
+            }
             return Mono.just(context);
         } else {
             // 读取 URL ID 请求参数
@@ -76,54 +89,70 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
                     return Mono.just(context);
                 } catch (Exception e) {
                     // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                    throw new ParameterException(
-                            this.getClass(), "fun execute(ServerRequest request).",
-                            "<" + URL_PARAMETER_ID + "> request parameter type is not int");
+                    return Mono.error(new ParameterException(
+                            this.getClass(),
+                            "fun execute(ServerRequest request). " +
+                                    "<" + URL_PARAMETER_ID + "> Request parameter type is not int",
+                            "<" + URL_PARAMETER_ID + "> Request parameter type is not int"
+                    ));
                 }
             } else {
                 // 读取请求的媒体类型
                 final MediaType mediaType = httpRequest.getHeaders().getContentType();
                 if (MediaType.APPLICATION_JSON.isCompatibleWith(mediaType)) {
                     return requestRawJsonMapper(request, context)
-                            .map(m -> {
+                            .flatMap(m -> {
                                 final CloseUploadContext newContext = new CloseUploadContext(m);
                                 final Object rjId = newContext.get(RAW_JSON_PREFIX + RAW_JSON_PARAMETER_ID);
                                 if (rjId instanceof final Integer content) {
                                     newContext.setId(content);
-                                    return newContext;
+                                    return Mono.just(newContext);
                                 } else {
                                     // 如果没有读取到了 RAW JSON ID 请求参数那么就抛出参数异常
-                                    throw new ParameterException(
-                                            this.getClass(), "fun execute(ServerRequest request).",
-                                            "<" + RAW_JSON_PARAMETER_ID + "> request parameter is null");
+                                    return Mono.error(new ParameterException(
+                                            this.getClass(),
+                                            "fun execute(ServerRequest request). " +
+                                                    "<" + RAW_JSON_PARAMETER_ID + "> Request parameter is null",
+                                            "<" + RAW_JSON_PARAMETER_ID + "> Request parameter is null"
+                                    ));
                                 }
                             });
                 } else if (MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
                     return requestFormDataMapper(request, context)
-                            .map(m -> {
+                            .flatMap(m -> {
                                 final CloseUploadContext newContext = new CloseUploadContext(m);
                                 final Object fdId = newContext.get(FORM_DATA_PREFIX + FORM_DATA_PARAMETER_ID);
                                 if (fdId instanceof final List<?> ol && ol.size() > 0
                                         && ol.get(0) instanceof final FormFieldPart filePart) {
                                     try {
                                         newContext.setId(Integer.valueOf(filePart.value()));
-                                        return newContext;
+                                        return Mono.just(newContext);
                                     } catch (Exception e) {
                                         // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常
-                                        throw new ParameterException(
-                                                this.getClass(), "fun execute(ServerRequest request).",
-                                                "<" + FORM_DATA_PARAMETER_ID + "> request parameter type is not int");
+                                        return Mono.error(new ParameterException(
+                                                this.getClass(),
+                                                "fun execute(ServerRequest request). " +
+                                                        "<" + FORM_DATA_PARAMETER_ID + "> Request parameter type is not int",
+                                                "<" + FORM_DATA_PARAMETER_ID + "> Request parameter type is not int"
+                                        ));
                                     }
                                 } else {
                                     // 如果没有读取到了 FORM DATA ID 请求参数那么就抛出参数异常
-                                    throw new ParameterException(
-                                            this.getClass(), "fun execute(ServerRequest request).",
-                                            "<" + FORM_DATA_PARAMETER_ID + "> request parameter is null");
+                                    return Mono.error(new ParameterException(
+                                            this.getClass(),
+                                            "fun execute(ServerRequest request). " +
+                                                    "<" + FORM_DATA_PARAMETER_ID + "> Request parameter is null",
+                                            "<" + FORM_DATA_PARAMETER_ID + "> Request parameter is null"
+                                    ));
                                 }
                             });
                 } else {
-                    throw new HttpMediaTypeException(
-                            this.getClass(), "fun execute(ServerRequest request).", "Unrecognized media type [" + mediaType + "]");
+                    return Mono.error(new ParameterException(
+                            this.getClass(),
+                            "fun execute(ServerRequest request). " +
+                                    "<" + URL_PARAMETER_ID + "> Request parameter is null",
+                            "<" + URL_PARAMETER_ID + "> Request parameter is null"
+                    ));
                 }
             }
         }

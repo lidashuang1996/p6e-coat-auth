@@ -37,7 +37,7 @@ public abstract class CustomException extends RuntimeException {
      * @param exception 异常对象
      * @return 异常对象
      */
-    public static Exception transformation(Exception exception) {
+    public static Throwable transformation(Throwable exception) {
         final CustomException customException = TRANSFORMER_CACHE.get(exception.getClass());
         return customException == null ? exception : customException;
     }

@@ -1,8 +1,8 @@
 spring:
   r2dbc:
-    url: r2dbc:pool:postgres://192.168.0.172:5432/lds
+    url: r2dbc:pool:postgres://182.254.180.56:5432/lds
     username: postgres
-    password: 'not4u2day'
+    password: 'Lds1234!@#$'
 
 
 logging:

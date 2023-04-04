@@ -1,6 +1,7 @@
 package club.p6e.coat.file.mapper;
 
 import club.p6e.coat.file.context.OpenUploadContext;
+import club.p6e.coat.file.error.HttpMediaTypeException;
 import club.p6e.coat.file.error.ParameterException;
 import club.p6e.coat.file.utils.FileUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -56,12 +57,15 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
         // 读取 URL 文件名称请求参数
         final List<String> names = queryParams.get(URL_PARAMETER_NAME);
         if (names != null && names.size() > 0) {
-            // 如果读取到了 URL 文件名称请求参数那么就写入到上下文对象中Œ
+            // 如果读取到了 URL 文件名称请求参数那么就写入到上下文对象中
             final String name = FileUtil.name(names.get(0));
             if (name == null) {
-                throw new ParameterException(
-                        this.getClass(), "fun execute(ServerRequest request)",
-                        "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun execute(ServerRequest request). " +
+                                "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error",
+                        "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error"
+                ));
             }
             context.setName(name);
             return Mono.just(context);
@@ -70,50 +74,65 @@ public class OpenUploadContextRequestParameterMapper extends RequestParameterMap
             final MediaType mediaType = httpRequest.getHeaders().getContentType();
             if (MediaType.APPLICATION_JSON.isCompatibleWith(mediaType)) {
                 return requestRawJsonMapper(request, context)
-                        .map(m -> {
+                        .flatMap(m -> {
                             final OpenUploadContext newContext = new OpenUploadContext(m);
                             final Object rjName = newContext.get(RAW_JSON_PREFIX + RAW_JSON_PARAMETER_NAME);
                             if (rjName instanceof final String content) {
                                 final String name = FileUtil.name(content);
                                 if (name == null) {
-                                    throw new ParameterException(
-                                            this.getClass(), "fun execute(ServerRequest request)",
-                                            "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
+                                    return Mono.error(new ParameterException(
+                                            this.getClass(),
+                                            "fun execute(ServerRequest request). " +
+                                                    "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error",
+                                            "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error"
+                                    ));
                                 }
                                 newContext.setName(name);
-                                return newContext;
+                                return Mono.just(newContext);
                             }
                             // 如果没有读取到了 RAW JSON 文件名称请求参数那么就抛出参数异常
-                            throw new ParameterException(
-                                    this.getClass(), "fun execute(ServerRequest request)",
-                                    "<" + RAW_JSON_PARAMETER_NAME + "> request parameter is null");
+                            return Mono.error(new ParameterException(
+                                    this.getClass(),
+                                    "fun execute(ServerRequest request). " +
+                                            "<" + RAW_JSON_PARAMETER_NAME + "> Request parameter is null",
+                                    "<" + RAW_JSON_PARAMETER_NAME + "> Request parameter is null"
+                            ));
                         });
             } else if (MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
                 return requestFormDataMapper(request, context)
-                        .map(m -> {
+                        .flatMap(m -> {
                             final OpenUploadContext newContext = new OpenUploadContext(m);
                             final Object fdName = newContext.get(FORM_DATA_PREFIX + FORM_DATA_PARAMETER_NAME);
                             if (fdName instanceof final List<?> ol && ol.size() > 0
                                     && ol.get(0) instanceof final String content) {
                                 final String name = FileUtil.name(content);
                                 if (name == null) {
-                                    throw new ParameterException(
-                                            this.getClass(), "fun execute(ServerRequest request)",
-                                            "<" + FORM_DATA_PARAMETER_NAME + "> request parameter format error");
+                                    return Mono.error(new ParameterException(
+                                            this.getClass(),
+                                            "fun execute(ServerRequest request)." +
+                                                    "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error",
+                                            "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter format error"
+                                    ));
                                 }
                                 newContext.setName(FileUtil.name(content));
-                                return newContext;
+                                return Mono.just(newContext);
                             }
                             // 如果没有读取到了 FORM DATA 文件名称请求参数那么就抛出参数异常
-                            throw new ParameterException(
-                                    this.getClass(), "fun execute(ServerRequest request)",
-                                    "<" + FORM_DATA_PARAMETER_NAME + "> request parameter is null");
+                            return Mono.error(new ParameterException(
+                                    this.getClass(),
+                                    "fun execute(ServerRequest request)" +
+                                            "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter is null",
+                                    "<" + FORM_DATA_PARAMETER_NAME + "> Request parameter is null"
+                            ));
 
                         });
             } else {
-                throw new ParameterException(
-                        this.getClass(), "fun execute(ServerRequest request)",
-                        "<" + URL_PARAMETER_NAME + "> request parameter is null");
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun execute(ServerRequest request) " +
+                                "<" + URL_PARAMETER_NAME + "> Request parameter is null",
+                        "<" + URL_PARAMETER_NAME + "> Request parameter is null"
+                ));
             }
         }
     }

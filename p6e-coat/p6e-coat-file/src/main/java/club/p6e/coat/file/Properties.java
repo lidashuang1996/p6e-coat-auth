@@ -84,7 +84,7 @@ public class Properties implements Serializable {
         /**
          * 基础的文件路径
          */
-        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+        private String path = "F://a/";
 
         /**
          * 允许上传的文件大小的最大值
@@ -103,7 +103,8 @@ public class Properties implements Serializable {
         /**
          * 基础的文件路径
          */
-        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+//        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+        private String path = "F://a/";
 
         /**
          * 允许上传的文件大小的最大值

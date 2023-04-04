@@ -1,8 +1,9 @@
 package club.p6e.coat.file.mapper;
 
+import club.p6e.coat.file.error.RequestParameterMapperException;
+import club.p6e.coat.file.error.TypeMismatchException;
 import club.p6e.coat.file.utils.JsonUtil;
 import club.p6e.coat.file.utils.SpringUtil;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.codec.multipart.FormFieldPart;
 import org.springframework.http.codec.multipart.Part;
@@ -68,16 +69,26 @@ public abstract class RequestParameterMapper {
         }
         final RequestParameterMapper mapper = CACHE.get(oClass);
         if (mapper == null) {
-            throw new NullPointerException(RequestParameterMapper.class
-                    + " execute(). CACHE.get(" + oClass.getName() + ") => mapper is null !");
+            return Mono.error(new RequestParameterMapperException(
+                    RequestParameterMapper.class,
+                    "fun execute(ServerRequest request, Class<T> oClass). " +
+                            "Unable to find a matching request parameter mapper [ " + oClass + " ]!!",
+                    "Unable to find a matching request parameter mapper"
+            ));
         } else {
             return mapper
                     .execute(request)
-                    .map(o -> {
+                    .flatMap(o -> {
                         if (o.getClass() == oClass) {
-                            return (T) o;
+                            return Mono.just((T) o);
                         } else {
-                            throw new TypeMismatchException(o, oClass);
+                            return Mono.error(new TypeMismatchException(
+                                    RequestParameterMapper.class,
+                                    "fun execute(ServerRequest request, Class<T> oClass). " +
+                                            "The type returned by the request parameter mapper does not match " +
+                                            "the preset type!! result type: " + o.getClass() + " , preset type: " + oClass,
+                                    "The type returned by the request parameter mapper does not match the preset type"
+                            ));
                         }
                     });
         }

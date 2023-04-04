@@ -2,7 +2,6 @@ package club.p6e.coat.file.file;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author lidashuang
  * @version 1.0
  */
-//@Component
 @EnableScheduling
 @EnableTransactionManagement
 public class UploadFileCleanTask {

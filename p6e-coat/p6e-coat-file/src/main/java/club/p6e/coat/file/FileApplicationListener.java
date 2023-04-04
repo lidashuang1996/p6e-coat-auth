@@ -28,17 +28,13 @@ public class FileApplicationListener implements ApplicationListener<ApplicationR
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        // http://patorjk.com/software/taag/#p=display&f=Ogre&t=P6e%20Coat%20File
-        System.out.println("""
-                   ___  __            ___            _       ___ _ _     \s
-                  / _ \\/ /_   ___    / __\\___   __ _| |_    / __(_) | ___\s
-                 / /_)/ '_ \\ / _ \\  / /  / _ \\ / _` | __|  / _\\ | | |/ _ \\
-                / ___/| (_) |  __/ / /__| (_) | (_| | |_  / /   | | |  __/
-                \\/     \\___/ \\___| \\____/\\___/ \\__,_|\\__| \\/    |_|_|\\___|
-                                                                         \s""");
-
         // 初始化上下文对象
         SpringUtil.init(event.getApplicationContext());
+        try {
+            SpringUtil.getBean(FileBannerService.class).execute();
+        } catch (Exception e) {
+            // 忽略异常
+        }
         // 打印配置文件的信息
         final Properties properties = SpringUtil.getBean(Properties.class);
         LOGGER.info("--------- " + properties.getClass() + " ---------");

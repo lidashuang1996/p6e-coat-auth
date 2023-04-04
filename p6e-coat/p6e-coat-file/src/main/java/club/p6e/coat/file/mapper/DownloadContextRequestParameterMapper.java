@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
@@ -51,9 +50,12 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
         if (nodes != null && nodes.size() > 0) {
             context.setNode(nodes.get(0));
         } else {
-            throw new ParameterException(
-                    this.getClass(), "fun execute(ServerRequest request).",
-                    "<" + NODE_PARAMETER_NAME + "> request parameter is null");
+            return Mono.error(new ParameterException(
+                    this.getClass(),
+                    "fun execute(ServerRequest request). " +
+                            "<" + PATH_PARAMETER_NAME + "> Request parameter format error",
+                    "<" + NODE_PARAMETER_NAME + "> Request parameter is null"
+            ));
         }
         final List<String> paths = queryParams.get(PATH_PARAMETER_NAME);
         if (paths != null && paths.size() > 0) {
@@ -61,16 +63,22 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
             final String name = FileUtil.name(pc);
             final String path = FileUtil.path(pc);
             if (name == null || path == null) {
-                context.setPath(FileUtil.composePath(path, name));
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun execute(ServerRequest request). " +
+                                "<" + PATH_PARAMETER_NAME + "> Request parameter format error",
+                        "<" + PATH_PARAMETER_NAME + "> Request parameter format error"
+                ));
             } else {
-                throw new ParameterException(
-                        this.getClass(), "fun execute(ServerRequest request).",
-                        "<" + PATH_PARAMETER_NAME + "> request parameter format error");
+                context.setPath(FileUtil.composePath(path, name));
             }
         } else {
-            throw new ParameterException(
-                    this.getClass(), "fun execute(ServerRequest request).",
-                    "<" + PATH_PARAMETER_NAME + "> request parameter is null");
+            return Mono.error(new ParameterException(
+                    this.getClass(),
+                    "fun execute(ServerRequest request). " +
+                            "<" + PATH_PARAMETER_NAME + "> Request parameter is null",
+                    "<" + PATH_PARAMETER_NAME + "> Request parameter is null"
+            ));
         }
         return Mono.just(context);
     }

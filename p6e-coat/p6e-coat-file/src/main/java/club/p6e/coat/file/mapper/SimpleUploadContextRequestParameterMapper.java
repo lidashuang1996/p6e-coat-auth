@@ -43,14 +43,19 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
         final ServerHttpRequest httpRequest = request.exchange().getRequest();
         final MediaType mediaType = httpRequest.getHeaders().getContentType();
         if (!MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
-            throw new HttpMediaTypeException(this.getClass(), "fun execute(ServerRequest request).", "unrecognized media type [" + mediaType + "]");
+            return Mono.error(new HttpMediaTypeException(
+                    this.getClass(),
+                    "fun execute(ServerRequest request). Unrecognized media type ["
+                            + mediaType + "], need media type [" + MediaType.MULTIPART_FORM_DATA + "]!!",
+                    "Unrecognized media type [" + mediaType + "], need media type [" + MediaType.MULTIPART_FORM_DATA + "]")
+            );
         }
         // 读取 URL 参数并写入
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
         // 读取 FROM DATA 参数并写入
         return requestFormDataMapper(request, context.toMap())
-                .map(m -> {
+                .flatMap(m -> {
                     final SimpleUploadContext newContext = new SimpleUploadContext(m);
                     // 读取 FORM DATA 文件请求参数
                     final Object o = newContext.get(FORM_DATA_PREFIX + FORM_DATA_PARAMETER_FILE);
@@ -58,11 +63,15 @@ public class SimpleUploadContextRequestParameterMapper extends RequestParameterM
                             && ol.get(0) instanceof final FilePart filePart) {
                         // 如果读取到了 FORM DATA 文件请求参数那么就写入到上下文对象中
                         newContext.setFilePart(filePart);
-                        return newContext;
+                        return Mono.just(newContext);
                     }
                     // 如果没有读取到了 FORM DATA 文件请求参数那么就抛出参数异常
-                    throw new ParameterException(this.getClass(), "fun execute(ServerRequest request).",
-                            "<" + FORM_DATA_PARAMETER_FILE + "> request parameter is null");
+                    return Mono.error(new ParameterException(
+                            this.getClass(),
+                            "fun execute(ServerRequest request). " +
+                                    "<" + FORM_DATA_PARAMETER_FILE + "> Request parameter is null",
+                            "<" + FORM_DATA_PARAMETER_FILE + "> Request parameter is null")
+                    );
                 });
     }
 
