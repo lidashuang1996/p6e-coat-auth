@@ -3,13 +3,10 @@ package club.p6e.coat.file.repository;
 import club.p6e.coat.file.model.UploadChunkModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.relational.core.query.Criteria;
-import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 文件块上传存储库
@@ -54,17 +51,6 @@ public class UploadChunkRepository extends BaseRepository {
         }
         model.setDate(LocalDateTime.now());
         return r2dbcEntityTemplate.insert(model);
-    }
-
-    /**
-     * 根据 FID 查询数据
-     *
-     * @param fid FID
-     * @return Mono<UploadChunkModel> 模型对象
-     */
-    public Mono<List<UploadChunkModel>> findByFid(Integer fid) {
-        return r2dbcEntityTemplate.select(Query.query(Criteria.where(
-                UploadChunkModel.FID).is(fid)), UploadChunkModel.class).collectList();
     }
 
 }

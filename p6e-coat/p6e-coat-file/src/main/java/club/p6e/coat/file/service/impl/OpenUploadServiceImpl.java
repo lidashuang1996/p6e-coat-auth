@@ -69,8 +69,8 @@ public class OpenUploadServiceImpl implements OpenUploadService {
         if (operator != null) {
             model.setOperator(String.valueOf(operator));
         }
-        final String name = context.getName();
         final String path = folderPathService.path();
+        final String name = FileUtil.name(context.getName());
         final String absolutePath = FileUtil.convertAbsolutePath(
                 FileUtil.composePath(properties.getSliceUpload().getPath(), path));
         model.setName(name);
