@@ -101,6 +101,11 @@ public class AspectHandlerFunction {
     }
 
     /**
+     * 操作人的标记名称
+     */
+    private static final String OPERATOR = "operator";
+
+    /**
      * 运行之前的切点处理
      *
      * @param aspect 切面对象
@@ -112,6 +117,9 @@ public class AspectHandlerFunction {
             data = new HashMap<>(0);
         }
         final Map<String, Object> finalData = data;
+        if (data.get(OPERATOR) != null) {
+            data.remove(OPERATOR);
+        }
         return aspect.before(finalData)
                 .flatMap(b -> {
                     if (b) {

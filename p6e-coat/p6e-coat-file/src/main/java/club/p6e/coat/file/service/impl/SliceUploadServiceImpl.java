@@ -119,12 +119,10 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             model.setName(f.getName());
                             model.setSize(f.length());
                             final Object operator = context.get("operator");
-                            if (operator == null) {
-                                if (m.getOperator() != null) {
-                                    model.setOperator(m.getOperator());
-                                }
-                            } else {
-                                model.setOperator(String.valueOf(operator));
+                            if (operator instanceof final String o) {
+                                model.setOperator(o);
+                            } else if (m.getOperator() != null) {
+                                model.setOperator(m.getOperator());
                             }
                             return uploadChunkRepository.create(model);
                         })

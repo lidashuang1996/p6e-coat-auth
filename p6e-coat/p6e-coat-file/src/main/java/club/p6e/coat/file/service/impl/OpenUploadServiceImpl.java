@@ -66,8 +66,8 @@ public class OpenUploadServiceImpl implements OpenUploadService {
     public Mono<Map<String, Object>> execute(OpenUploadContext context) {
         final UploadModel model = new UploadModel();
         final Object operator = context.get("operator");
-        if (operator != null) {
-            model.setOperator(String.valueOf(operator));
+        if (operator instanceof final String content) {
+            model.setOperator(content);
         }
         final String path = folderPathService.path();
         final String name = FileUtil.name(context.getName());

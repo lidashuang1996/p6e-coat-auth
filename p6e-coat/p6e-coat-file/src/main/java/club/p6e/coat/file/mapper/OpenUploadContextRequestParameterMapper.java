@@ -1,7 +1,6 @@
 package club.p6e.coat.file.mapper;
 
 import club.p6e.coat.file.context.OpenUploadContext;
-import club.p6e.coat.file.error.HttpMediaTypeException;
 import club.p6e.coat.file.error.ParameterException;
 import club.p6e.coat.file.utils.FileUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
 /**
+ * JSON 序列化和反序列化帮助类
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -45,6 +47,16 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * 反序列化 JSON 到对象
+     *
+     * @param json   json 内容
+     * @param kClass key 对象类型
+     * @param vClass value 对象类型
+     * @param <K>    key 对象类型
+     * @param <V>    value 对象类型
+     * @return 对象
+     */
     public static <K, V> Map<K, V> fromJsonToMap(String json, Class<K> kClass, Class<V> vClass) {
         try {
             return OBJECT_MAPPER.readValue(json, OBJECT_MAPPER.getTypeFactory().constructParametricType(Map.class, kClass, vClass));

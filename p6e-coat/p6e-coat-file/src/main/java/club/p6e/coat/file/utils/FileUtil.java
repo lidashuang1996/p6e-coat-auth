@@ -20,6 +20,7 @@ import java.security.MessageDigest;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("all")
 public final class FileUtil {
 
     /**
@@ -34,13 +35,19 @@ public final class FileUtil {
     private static final String PATH_OPPOSE_CONNECT_CHAR = "\\";
 
     /**
+     * HEX_CHARS
+     */
+    private static final char[] HEX_CHARS = new char[]
+            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    /**
      * 文件缓冲区大小
      */
     private static final int FILE_BUFFER_SIZE = 1024 * 1024 * 5;
     private static final DefaultDataBufferFactory DEFAULT_DATA_BUFFER_FACTORY = new DefaultDataBufferFactory();
 
     /**
-     * 注入日志对象
+     * 日志对象
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
@@ -342,15 +349,13 @@ public final class FileUtil {
                     .collectList()
                     .flatMap(l -> {
                         final byte[] md5Bytes = md.digest();
-                        final StringBuilder hexValue = new StringBuilder();
-                        for (final byte md5Byte : md5Bytes) {
-                            int val = ((int) md5Byte) & 0xff;
-                            if (val < 16) {
-                                hexValue.append("0");
-                            }
-                            hexValue.append(Integer.toHexString(val));
+                        final char[] chars = new char[32];
+                        for (int i = 0; i < chars.length; i += 2) {
+                            final byte b = md5Bytes[i / 2];
+                            chars[i] = HEX_CHARS[b >>> 4 & 15];
+                            chars[i + 1] = HEX_CHARS[b & 15];
                         }
-                        return Mono.just(hexValue.toString());
+                        return Mono.just(new String(chars));
                     });
         } else {
             return Mono.error(new RuntimeException());
@@ -412,7 +417,7 @@ public final class FileUtil {
                 deleteFile(file);
             }
             return writeFile(Flux.just(file).flatMap(FileUtil::readFile), file)
-                    .map(v -> file);
+                    .then(Mono.fromCallable(() -> file));
         }
     }
 
