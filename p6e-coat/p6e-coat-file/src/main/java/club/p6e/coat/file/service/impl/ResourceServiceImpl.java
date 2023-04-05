@@ -48,15 +48,14 @@ public class ResourceServiceImpl implements ResourceService {
         } else {
             final String path = context.getPath();
             final String node = context.getNode();
-            final ServerRequest request = context.getServerRequest();
             final String suffix = FileUtil.getSuffix(path);
             final Map<String, MediaType> suffixes = resource.getSuffixes();
             if (suffixes.get(suffix) != null) {
                 final MediaType mediaType = suffixes.get(suffix);
-                request.exchange().getResponse().getHeaders().setContentType(mediaType);
                 final Map<String, Object> result = new HashMap<>(3);
                 result.put("path", path);
                 result.put("node", node);
+                result.put("__media_type__", mediaType);
                 result.put("__path__", FileUtil.convertAbsolutePath(
                         FileUtil.composePath(resource.getPath(), context.getPath())
                 ));

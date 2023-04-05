@@ -1,13 +1,15 @@
 package club.p6e.coat.file.handler;
 
 import club.p6e.coat.file.aspect.ResourceAspect;
-import club.p6e.coat.file.aspect.ResourceAspect;
 import club.p6e.coat.file.context.ResourceContext;
 import club.p6e.coat.file.error.FileException;
+import club.p6e.coat.file.error.MediaTypeException;
 import club.p6e.coat.file.mapper.RequestParameterMapper;
 import club.p6e.coat.file.service.ResourceService;
 import club.p6e.coat.file.utils.FileUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * 资源操作处理程序函数
@@ -50,8 +53,9 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
         this.service = service;
     }
 
+    @NonNull
     @Override
-    public Mono<ServerResponse> handle(ServerRequest request) {
+    public Mono<ServerResponse> handle(@NonNull ServerRequest request) {
         return
                 // 通过请求参数映射器获取上下文对象
                 RequestParameterMapper.execute(request, ResourceContext.class)
@@ -67,33 +71,63 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                         })
                         // 获取返回结果中的文件路径
                         // 并将返回的文件路径转换为文件对象
-                        .map(r -> {
+                        .flatMap(r -> {
                             // 读取下载文件的绝对路径
-                            final Object ResourcePath = r.get("__path__");
-                            if (ResourcePath == null) {
+                            final Object resourcePath = r.get("__path__");
+                            final Object mediaType = r.get("__media_type__");
+                            if (resourcePath == null) {
                                 // 如果不存在下载文件路径数据则抛出异常
-                                throw new FileException(this.getClass(),
-                                        "fun handle(ServerRequest request).", "resource file path is null");
-                            } else if (ResourcePath instanceof final String dps) {
+                                return Mono.error(new FileException(
+                                        this.getClass(),
+                                        "fun handle(ServerRequest request). -> Resource file path is null.",
+                                        "Resource file path is null"
+                                ));
+                            } else if (resourcePath instanceof final String dps) {
                                 final File file = new File(dps);
                                 // 验证文件是否存在
                                 if (FileUtil.checkFileExist(file)) {
-                                    return file;
+                                    if (mediaType instanceof final MediaType my) {
+                                        return Mono.just(new ResourceModel(file, my));
+                                    } else {
+                                        return Mono.error(new MediaTypeException(
+                                                this.getClass(),
+                                                "fun handle(ServerRequest request). -> Resource file media type error.",
+                                                "Resource file media type error"
+                                        ));
+                                    }
                                 } else {
                                     // 文件不存在抛出异常
-                                    throw new FileException(this.getClass(),
-                                            "fun handle(ServerRequest request).", "resource file does not exist");
+                                    return Mono.error(new FileException(
+                                            this.getClass(),
+                                            "fun handle(ServerRequest request). -> Resource file not exist.",
+                                            "Resource file not exist"
+                                    ));
                                 }
                             } else {
                                 // 如果为其他类型的数据则抛出异常
-                                throw new FileException(this.getClass(),
-                                        "fun handle(ServerRequest request).",
-                                        "resource file path data type not is <java.lang.String>");
+                                return Mono.error(new FileException(
+                                        this.getClass(),
+                                        "fun handle(ServerRequest request). -> " +
+                                                "Download file path data type not is String.",
+                                        "Download file path data type not is String"
+                                ));
                             }
                         })
                         // 结果返回
-                        .flatMap(f -> request.exchange().getResponse().writeWith(FileUtil.readFile(f)))
-                        .flatMap(v -> ServerResponse.ok().build());
+                        .flatMap(m -> ServerResponse
+                                .ok()
+                                .contentType(m.mediaType())
+                                .body((response, context) -> response.writeWith(FileUtil.readFile(m.file())))
+                        );
+    }
+
+    /**
+     * 资源模型
+     *
+     * @param file      文件对象
+     * @param mediaType 媒体类型
+     */
+    private record ResourceModel(File file, MediaType mediaType) implements Serializable {
     }
 
 }

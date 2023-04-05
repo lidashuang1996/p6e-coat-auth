@@ -5,6 +5,7 @@ import club.p6e.coat.file.mapper.RequestParameterMapper;
 import club.p6e.coat.file.service.SliceUploadService;
 import club.p6e.coat.file.context.SliceUploadContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -47,8 +48,9 @@ public class SliceUploadHandlerFunction extends AspectHandlerFunction implements
         this.service = service;
     }
 
+    @NonNull
     @Override
-    public Mono<ServerResponse> handle(ServerRequest request) {
+    public Mono<ServerResponse> handle(@NonNull ServerRequest request) {
         return
                 // 通过请求参数映射器获取上下文对象
                 RequestParameterMapper.execute(request, SliceUploadContext.class)
@@ -63,13 +65,7 @@ public class SliceUploadHandlerFunction extends AspectHandlerFunction implements
                                             .flatMap(r -> after(aspect, context.toMap(), r));
                         })
                         // 结果返回
-                        .flatMap(r -> ServerResponse.ok().bodyValue(ResultContext.build(r)))
-                        .doOnError(new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) {
-                                System.out.println(throwable.getMessage());
-                            }
-                        });
+                        .flatMap(r -> ServerResponse.ok().bodyValue(ResultContext.build(r)));
     }
 
 }
