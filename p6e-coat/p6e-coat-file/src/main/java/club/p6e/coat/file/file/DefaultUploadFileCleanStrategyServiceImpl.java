@@ -76,7 +76,7 @@ public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileClea
         final LocalDateTime localDateTime = LocalDateTime.now().minusDays(7);
         while (status.get()) {
             uploadRepository
-                    .findByCreateDateOne(id.get(), null, localDateTime)
+                    .findByIdAndCreateDateOne(id.get(), null, localDateTime)
                     .map(m -> {
                         id.set(m.getId());
                         return m;

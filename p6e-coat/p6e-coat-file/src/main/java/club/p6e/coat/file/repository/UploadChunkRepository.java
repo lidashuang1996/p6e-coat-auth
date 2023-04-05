@@ -46,8 +46,11 @@ public class UploadChunkRepository extends BaseRepository {
      */
     public Mono<UploadChunkModel> create(UploadChunkModel model) {
         if (model == null) {
-            throw new DataBaseException(this.getClass(),
-                    "fun create() -> " + UploadChunkModel.class + " is null", "UploadChunkModel object data is null");
+            return Mono.error(new DataBaseException(
+                    this.getClass(),
+                    "fun create() -> " + UploadChunkModel.class + " is null",
+                    "UploadChunkModel object data is null"
+            ));
         }
         if (model.getOperator() == null) {
             model.setOperator("sys");

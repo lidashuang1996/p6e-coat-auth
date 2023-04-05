@@ -47,7 +47,6 @@ public class CloseUploadServiceImpl implements CloseUploadService {
         this.repository = repository;
     }
 
-
     @Override
     public Mono<Map<String, Object>> execute(CloseUploadContext context) {
         return repository

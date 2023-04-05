@@ -43,8 +43,12 @@ public class DownloadServiceImpl implements DownloadService {
     public Mono<Map<String, Object>> execute(DownloadContext context) {
         final Properties.Download download = properties.getDownloads().get(context.getNode());
         if (download == null) {
-            throw new DownloadNodeException(this.getClass(), "fun execute(DownloadContext context).",
-                    "fun execute(DownloadContext context). node => value is null");
+            return Mono.error(new DownloadNodeException(
+                    this.getClass(),
+                    "fun execute(DownloadContext context). " +
+                            "-> Unable to find corresponding download node.",
+                    "Unable to find corresponding download node")
+            );
         } else {
             final Map<String, Object> result = new HashMap<>(3);
             result.put("node", context.getNode());

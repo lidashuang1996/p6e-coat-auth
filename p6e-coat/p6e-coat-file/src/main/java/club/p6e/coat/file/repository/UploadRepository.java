@@ -50,8 +50,11 @@ public class UploadRepository extends BaseRepository {
      */
     public Mono<UploadModel> create(UploadModel model) {
         if (model == null) {
-            throw new DataBaseException(this.getClass(),
-                    "fun create() -> " + UploadModel.class + " is null", "UploadModel object data is null");
+            return Mono.error(new DataBaseException(
+                    this.getClass(),
+                    "fun create() -> " + UploadModel.class + " is null",
+                    "UploadModel object data is null"
+            ));
         }
         if (model.getSize() == null) {
             model.setSize(0L);
@@ -95,7 +98,11 @@ public class UploadRepository extends BaseRepository {
                     .flatMap(r -> acquireLock0(id))
                     .flatMap(c -> c > 0 ? Mono.just(c) : acquireLock(id, (retry + 1)));
         } else {
-            return Mono.just(0L);
+            return Mono.error(new DataBaseException(
+                    this.getClass(),
+                    "acquireLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "Exceeding maximum retry count error"
+            ));
         }
     }
 
@@ -143,7 +150,11 @@ public class UploadRepository extends BaseRepository {
                     .flatMap(r -> releaseLock0(id))
                     .flatMap(c -> c > 0 ? Mono.just(c) : releaseLock(id, (retry + 1)));
         } else {
-            return Mono.just(0L);
+            return Mono.error(new DataBaseException(
+                    this.getClass(),
+                    "releaseLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "Exceeding maximum retry count error"
+            ));
         }
     }
 
@@ -190,7 +201,11 @@ public class UploadRepository extends BaseRepository {
                     .flatMap(t -> closeLock0(id))
                     .flatMap(c -> c > 0 ? Mono.just(c) : closeLock(id, (retry + 1)));
         } else {
-            return Mono.empty();
+            return Mono.error(new DataBaseException(
+                    this.getClass(),
+                    "closeLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "Exceeding maximum retry count error"
+            ));
         }
     }
 
@@ -234,7 +249,7 @@ public class UploadRepository extends BaseRepository {
      * @param endDate   创建时间的结束时间
      * @return Mono<UploadModel> 模型对象
      */
-    public Mono<UploadModel> findByCreateDateOne(Integer id, LocalDateTime startDate, LocalDateTime endDate) {
+    public Mono<UploadModel> findByIdAndCreateDateOne(Integer id, LocalDateTime startDate, LocalDateTime endDate) {
         final Criteria criteria = Criteria.empty();
         if (id != null) {
             criteria.and(UploadModel.ID).greaterThan(id);
@@ -261,7 +276,7 @@ public class UploadRepository extends BaseRepository {
         }
         if (model.getRubbish() != null) {
             if (update == null) {
-                update = Update.update(UploadModel.RUBBISH, model.getLock());
+                update = Update.update(UploadModel.RUBBISH, model.getRubbish());
             } else {
                 update.set(UploadModel.RUBBISH, model.getRubbish());
             }
