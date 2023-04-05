@@ -1,6 +1,7 @@
 package club.p6e.coat.file.service.impl;
 
 import club.p6e.coat.file.Properties;
+import club.p6e.coat.file.error.FileException;
 import club.p6e.coat.file.model.UploadChunkModel;
 import club.p6e.coat.file.repository.UploadChunkRepository;
 import club.p6e.coat.file.repository.UploadRepository;
@@ -87,17 +88,36 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                                     .map(c -> absolutePathFile);
                         })
                         // 验证文件数据
-                        .flatMap(file -> {
+                        .flatMap(f -> {
                             final long size = properties.getSliceUpload().getMaxSize();
-                            return checkSize(file, size)
-                                    .flatMap(v -> checkSignature(file, signature))
-                                    .map(v -> file);
+                            if (f.length() > size) {
+                                FileUtil.deleteFile(f);
+                                return Mono.error(new FileException(this.getClass(),
+                                        "fun execute() -> File ("
+                                                + f.getName() + ") upload exceeds the maximum length limit",
+                                        "File (" + f.getName() + ") upload exceeds the maximum length limit")
+                                );
+                            }
+                            return Mono.just(f);
                         })
-                        .flatMap(file -> {
+                        .flatMap(f -> FileUtil
+                                .obtainMD5Signature(f)
+                                .flatMap(s -> {
+                                    if (!s.equals(signature)) {
+                                        FileUtil.deleteFile(f);
+                                        return Mono.error(new FileException(this.getClass(),
+                                                "fun execute() -> File ("
+                                                        + f.getName() + ") incorrect signature content",
+                                                "File (" + f.getName() + ") incorrect signature content")
+                                        );
+                                    }
+                                    return Mono.just(f);
+                                }))
+                        .flatMap(f -> {
                             final UploadChunkModel model = new UploadChunkModel();
                             model.setFid(m.getId());
-                            model.setName(file.getName());
-                            model.setSize(file.length());
+                            model.setName(f.getName());
+                            model.setSize(f.length());
                             final Object operator = context.get("operator");
                             if (operator == null) {
                                 if (m.getOperator() != null) {
@@ -112,23 +132,4 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                 .map(UploadChunkModel::toMap);
     }
 
-    private static Mono<Void> checkSize(File file, long size) {
-        if (file.length() > size) {
-            FileUtil.deleteFile(file);
-            throw new RuntimeException();
-        }
-        return Mono.never();
-    }
-
-    private static Mono<Void> checkSignature(File file, String signature) {
-        return FileUtil
-                .obtainMD5Signature(file)
-                .flatMap(s -> {
-                    if (!s.equals(signature)) {
-                        FileUtil.deleteFile(file);
-                        throw new RuntimeException();
-                    }
-                    return Mono.never();
-                });
-    }
 }

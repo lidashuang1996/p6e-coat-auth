@@ -74,7 +74,12 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
         final String path = folderPathService.path();
         final String name = FileUtil.name(filePart.filename());
         if (name == null) {
-            throw new ParameterException(this.getClass(), "fun execute(SimpleUploadContext context).","<name> request parameter format error");
+            return Mono.error(new ParameterException(
+                    this.getClass(),
+                    "fun execute(SimpleUploadContext context)." +
+                            "-> <name> Request parameter format error.",
+                    "<name> Request parameter format error")
+            );
         }
         final String absolutePath = FileUtil.convertAbsolutePath(
                 FileUtil.composePath(properties.getSimpleUpload().getPath(), path));
@@ -97,16 +102,18 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
                     return filePart
                             .transferTo(file)
                             .then(Mono.just(file))
-                            .map(f -> {
+                            .flatMap(f -> {
                                 final long size = properties.getSimpleUpload().getMaxSize();
-                                if (file.length() > size) {
+                                if (f.length() > size) {
                                     // 如果文件长度超过了最大的限制,那么就删除文件
-                                    FileUtil.deleteFile(file);
-                                    throw new FileException(this.getClass(),
-                                            "fun execute() -> File (" + f.getName() + ") upload exceeds the maximum length limit",
-                                            "File (" + f.getName() + ")upload exceeds the maximum length limit");
+                                    FileUtil.deleteFile(f);
+                                    return Mono.error(new FileException(this.getClass(),
+                                            "fun execute() -> File ("
+                                                    + f.getName() + ") upload exceeds the maximum length limit",
+                                            "File (" + f.getName() + ") upload exceeds the maximum length limit")
+                                    );
                                 }
-                                return m;
+                                return Mono.just(m);
                             });
                 })
                 .map(UploadModel::toMap);

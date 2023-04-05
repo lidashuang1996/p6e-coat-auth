@@ -2,6 +2,7 @@ package club.p6e.coat.file.service.impl;
 
 import club.p6e.coat.file.Properties;
 import club.p6e.coat.file.context.ResourceContext;
+import club.p6e.coat.file.error.ResourceNodeException;
 import club.p6e.coat.file.service.ResourceService;
 import club.p6e.coat.file.utils.FileUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -43,7 +44,12 @@ public class ResourceServiceImpl implements ResourceService {
     public Mono<Map<String, Object>> execute(ResourceContext context) {
         final Properties.Resource resource = properties.getResources().get(context.getNode());
         if (resource == null) {
-            throw new RuntimeException();
+            return Mono.error(new ResourceNodeException(
+                    this.getClass(),
+                    "fun execute(ResourceContext context). " +
+                            "-> Unable to find corresponding resource context node.",
+                    "Unable to find corresponding resource context node")
+            );
         } else {
             final String path = context.getPath();
             final String node = context.getNode();
@@ -60,7 +66,12 @@ public class ResourceServiceImpl implements ResourceService {
                 ));
                 return Mono.just(result);
             } else {
-                throw new RuntimeException();
+                return Mono.error(new ResourceNodeException(
+                        this.getClass(),
+                        "fun execute(ResourceContext context). " +
+                                "-> The media resource corresponding to the resource node does not exist.",
+                        "The media resource corresponding to the resource node does not exist")
+                );
             }
         }
     }
