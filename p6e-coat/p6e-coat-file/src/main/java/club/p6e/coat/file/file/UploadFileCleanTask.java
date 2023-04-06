@@ -29,7 +29,7 @@ public class UploadFileCleanTask {
      * 定时任务是初始化 5S 执行一次后，每次间隔 10 分钟执行一次
      */
 //    @Scheduled(initialDelay = 5_000, fixedDelay = 10 * 60_000)
-    @Scheduled(initialDelay = 3_000, fixedDelay = 10_000)
+    @Scheduled(initialDelay = 5_000, fixedDelay = 10_000)
     public void execute() {
         try {
             if (this.strategy.time()) {

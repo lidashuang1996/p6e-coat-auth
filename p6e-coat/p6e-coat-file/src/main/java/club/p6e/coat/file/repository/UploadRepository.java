@@ -273,12 +273,12 @@ public class UploadRepository extends BaseRepository {
      * @return Mono<UploadModel> 模型对象
      */
     public Mono<UploadModel> findByIdAndCreateDateOne(int id, LocalDateTime startDate, LocalDateTime endDate) {
-        final Criteria criteria = Criteria.where(UploadModel.ID).greaterThan(id);
+        Criteria criteria = Criteria.where(UploadModel.ID).greaterThan(id);
         if (startDate != null) {
-            criteria.and(UploadModel.CREATE_DATE).greaterThan(startDate);
+            criteria = criteria.and(UploadModel.CREATE_DATE).greaterThan(startDate);
         }
         if (endDate != null) {
-            criteria.and(UploadModel.CREATE_DATE).lessThan(endDate);
+            criteria = criteria.and(UploadModel.CREATE_DATE).lessThan(endDate);
         }
         return r2dbcEntityTemplate.select(Query.query(criteria).limit(1).offset(0), UploadModel.class).next();
     }
@@ -298,7 +298,7 @@ public class UploadRepository extends BaseRepository {
             if (update == null) {
                 update = Update.update(UploadModel.RUBBISH, model.getRubbish());
             } else {
-                update.set(UploadModel.RUBBISH, model.getRubbish());
+                update = update.set(UploadModel.RUBBISH, model.getRubbish());
             }
         }
         if (update == null) {

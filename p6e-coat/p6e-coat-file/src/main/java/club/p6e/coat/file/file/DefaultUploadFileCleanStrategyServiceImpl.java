@@ -75,12 +75,11 @@ public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileClea
         final AtomicBoolean status = new AtomicBoolean(true);
         // 删除 7 天以前的数据
         final LocalDateTime localDateTime = LocalDateTime.now().minusDays(7);
-        LOGGER.info("[ TASK ] Start executing file purge scheduled task.");
+        LOGGER.info("[ TASK ] Start executing file purge scheduled task. localDateTime => " + localDateTime);
         while (status.get()) {
             uploadRepository
                     .findByIdAndCreateDateOne(id.get(), null, localDateTime)
                     .map(m -> {
-                        System.out.println(m);
                         id.set(m.getId());
                         return m;
                     })

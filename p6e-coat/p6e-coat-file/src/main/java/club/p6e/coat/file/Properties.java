@@ -113,7 +113,6 @@ public class Properties implements Serializable {
 
     }
 
-
     public Properties() {
         this.downloads.put("test", new Download().setPath("/Users/admin/Documents/2023/coat/p6e-coat/"));
         final Resource resource = new Resource().setPath("/Users/admin/Documents/2023/coat/p6e-coat/");

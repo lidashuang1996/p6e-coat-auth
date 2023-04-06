@@ -1,7 +1,7 @@
 package club.p6e.coat.file.mapper;
 
 import club.p6e.coat.file.context.SliceUploadContext;
-import club.p6e.coat.file.error.HttpMediaTypeException;
+import club.p6e.coat.file.error.MediaTypeException;
 import club.p6e.coat.file.error.ParameterException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.MediaType;
@@ -81,7 +81,7 @@ public class SliceUploadContextRequestParameterMapper extends RequestParameterMa
         final MultiValueMap<String, String> queryParams = httpRequest.getQueryParams();
         context.putAll(queryParams);
         if (!MediaType.MULTIPART_FORM_DATA.isCompatibleWith(mediaType)) {
-            return Mono.error(new HttpMediaTypeException(
+            return Mono.error(new MediaTypeException(
                     this.getClass(),
                     "fun execute(ServerRequest request). Unrecognized media type ["
                             + mediaType + "], need media type [" + MediaType.MULTIPART_FORM_DATA + "]!!",
