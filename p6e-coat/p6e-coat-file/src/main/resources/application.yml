@@ -1,13 +1,11 @@
-spring:
-  r2dbc:
-    url: r2dbc:pool:postgres://182.254.180.56:5432/lds
-    username: postgres
-    password: 'Lds1234!@#$'
-  servlet:
-    multipart:
-      max-request-size: 15MB
-      max-file-size: 12MB
-
-logging:
-  config: 'classpath:p6e-coat-logback.xml'
-
+#spring:
+#  r2dbc:
+#    url: r2dbc:pool:postgres://ip:5432/db_name
+#    username: postgres
+#    password: ''
+#  servlet:
+#    multipart:
+#      max-request-size: 15MB
+#      max-file-size: 12MB
+#logging:
+#  config: 'classpath:p6e-coat-logback.xml'

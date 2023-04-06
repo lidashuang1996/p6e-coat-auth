@@ -84,7 +84,7 @@ public class Properties implements Serializable {
         /**
          * 基础的文件路径
          */
-        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
+        private String path;
 
         /**
          * 允许上传的文件大小的最大值
@@ -103,8 +103,7 @@ public class Properties implements Serializable {
         /**
          * 基础的文件路径
          */
-        private String path = "/Users/admin/Documents/2023/coat/p6e-coat/";
-//        private String path = "F://a/";
+        private String path;
 
         /**
          * 允许上传的文件大小的最大值
@@ -113,13 +112,4 @@ public class Properties implements Serializable {
 
     }
 
-    public Properties() {
-        this.downloads.put("test", new Download().setPath("/Users/admin/Documents/2023/coat/p6e-coat/"));
-        final Resource resource = new Resource().setPath("/Users/admin/Documents/2023/coat/p6e-coat/");
-        resource.getSuffixes().put("png", MediaType.IMAGE_PNG);
-        resource.getSuffixes().put("jpg", MediaType.IMAGE_JPEG);
-        resource.getSuffixes().put("jpeg", MediaType.IMAGE_JPEG);
-        resource.getSuffixes().put("mp4", MediaType.valueOf("video/mp4"));
-        this.resources.put("test", resource);
-    }
 }

@@ -8,21 +8,21 @@
         <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>club.p6e.coat.file</groupId>
     <artifactId>p6e-coat-file</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>p6e_dawenjian_2023</name>
-    <description>p6e_dawenjian_2023</description>
+    <version>0.0.1</version>
+    <name>p6e-coat-file</name>
+    <description>p6e-coat-file</description>
     <properties>
         <skipTests>true</skipTests>
         <java.version>17</java.version>
         <spring-boot.version>3.0.0</spring-boot.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <darvi.hksi.badminton.version>1.0.0</darvi.hksi.badminton.version>
-        <netty.version>4.1.81.Final</netty.version>
+        <netty.version>4.1.90.Final</netty.version>
         <r2dbc.postgresql>0.8.13.RELEASE</r2dbc.postgresql>
     </properties>
+
     <dependencies>
         <!-- lombok [START] -->
         <dependency>
@@ -32,27 +32,31 @@
         </dependency>
         <!-- lombok [END] -->
 
+        <!-- Spring Configuration [START] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- Spring Configuration [END] -->
 
+        <!-- Spring Web Flux [START] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.0</version>
         </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- Spring Web Flux [END] -->
 
         <!-- Spring Data [ START ] -->
         <!-- Spring Data R2DBC [ START ] -->
@@ -78,14 +82,16 @@
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
         <!--  Spring Data R2DBC PostGrepSQL [ END ] -->
         <!-- Spring Data [ END ] -->
 
-
+        <!-- Spring Test [ START ] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Spring Test [ END ] -->
     </dependencies>
 
     <build>

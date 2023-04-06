@@ -8,7 +8,7 @@ import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +24,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0
  */
 @Component
-@ConditionalOnBean(UploadFileCleanTask.class)
+@ConditionalOnMissingBean(
+        value = UploadFileCleanStrategyService.class,
+        ignored = DefaultUploadFileCleanStrategyServiceImpl.class
+)
 public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileCleanStrategyService {
 
     /**
@@ -147,8 +150,7 @@ public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileClea
     public boolean time() {
         final int hour = LocalDateTime.now().getHour();
         final int minute = LocalDateTime.now().getMinute();
-//        return this.ht == hour && this.mt == ((int) Math.floor(minute / 10F));
-        return true;
+        return this.ht == hour && this.mt == ((int) Math.floor(minute / 10F));
     }
 
 }

@@ -12,8 +12,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class P6eGatewayApplication {
 
     public static void main(String[] args) {
-        // DelegatingFilterProxy
-        UsernamePasswordAuthenticationFilter
         SpringApplication.run(P6eGatewayApplication.class, args);
     }
 
