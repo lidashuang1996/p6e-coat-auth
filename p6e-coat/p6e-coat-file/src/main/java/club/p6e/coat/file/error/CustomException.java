@@ -63,7 +63,7 @@ public abstract class CustomException extends RuntimeException {
      * @return 模版的输出内容
      */
     private static String template(Class<?> sc, Class<? extends CustomException> ec, String error, int code, String sketch, String content) {
-        return "{ " + sketch + " <" + code + "> } ::: [ " + sc + " ] => (" + ec + ") ===> " + content;
+        return "{ " + sketch + " <" + code + "> [" + content + "] } ::: [ " + sc + " ] => (" + ec + ") ===> " + error;
     }
 
     /**

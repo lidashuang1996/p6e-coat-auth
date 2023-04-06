@@ -17,7 +17,7 @@ public class AspectContactException extends CustomException {
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "PARAMETER_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "ASPECT_CONTACT_EXCEPTION";
 
     /**
      * 切面切点返回异常

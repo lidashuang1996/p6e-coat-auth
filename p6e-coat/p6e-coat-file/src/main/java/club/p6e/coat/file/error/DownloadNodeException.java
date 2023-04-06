@@ -2,7 +2,7 @@ package club.p6e.coat.file.error;
 
 /**
  * 自定义异常
- * 请求参数参数异常
+ * 下载节点异常
  *
  * @author lidashuang
  * @version 1.0
@@ -12,7 +12,7 @@ public class DownloadNodeException extends CustomException {
     /**
      * 默认的代码
      */
-    public static final int DEFAULT_CODE = 6000;
+    public static final int DEFAULT_CODE = 11000;
 
     /**
      * 默认的简述
@@ -20,7 +20,7 @@ public class DownloadNodeException extends CustomException {
     private static final String DEFAULT_SKETCH = "DOWNLOAD_NODE_EXCEPTION";
 
     /**
-     * 请求参数参数异常
+     * 下载节点异常
      *
      * @param sc      源 class
      * @param content 异常内容
@@ -30,7 +30,7 @@ public class DownloadNodeException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 下载节点异常
      *
      * @param sc        源 class
      * @param throwable 异常对象
@@ -40,7 +40,7 @@ public class DownloadNodeException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 下载节点异常
      *
      * @param sc      源 class
      * @param content 异常内容
@@ -52,7 +52,7 @@ public class DownloadNodeException extends CustomException {
     }
 
     /**
-     * 请求参数参数异常
+     * 下载节点异常
      *
      * @param sc        源 class
      * @param throwable 异常对象
@@ -62,4 +62,5 @@ public class DownloadNodeException extends CustomException {
     public DownloadNodeException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
         super(sc, DownloadNodeException.class, throwable, code, sketch, content);
     }
+
 }
