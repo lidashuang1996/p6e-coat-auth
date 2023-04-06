@@ -1,6 +1,7 @@
 package club.p6e.coat.file.file;
 
 import club.p6e.coat.file.Properties;
+import club.p6e.coat.file.error.DataBaseException;
 import club.p6e.coat.file.repository.UploadChunkRepository;
 import club.p6e.coat.file.repository.UploadRepository;
 import club.p6e.coat.file.utils.FileUtil;
@@ -74,57 +75,81 @@ public class DefaultUploadFileCleanStrategyServiceImpl implements UploadFileClea
         final AtomicBoolean status = new AtomicBoolean(true);
         // 删除 7 天以前的数据
         final LocalDateTime localDateTime = LocalDateTime.now().minusDays(7);
+        LOGGER.info("[ TASK ] Start executing file purge scheduled task.");
         while (status.get()) {
             uploadRepository
                     .findByIdAndCreateDateOne(id.get(), null, localDateTime)
                     .map(m -> {
+                        System.out.println(m);
                         id.set(m.getId());
                         return m;
                     })
-                    .switchIfEmpty(Mono
-                            .just(false)
-                            .flatMap(b -> {
-                                status.set(b);
-                                return Mono.empty();
-                            }))
                     .flatMap(m -> uploadRepository
                             .update(m.setRubbish(1))
                             .flatMap(c -> {
                                 if (c > 0) {
+                                    String fp = null;
                                     // 清除磁盘文件
                                     if (SLICE_SOURCE.equals(m.getSource())) {
-                                        FileUtil.deleteFolder(FileUtil.composePath(
-                                                sliceUpload.getPath(), m.getStorageLocation()));
+                                        fp = FileUtil.composePath(sliceUpload.getPath(), m.getStorageLocation());
+                                        FileUtil.deleteFolder(fp);
                                     }
                                     if (SIMPLE_UPLOAD.equals(m.getSource())) {
-                                        FileUtil.deleteFolder(FileUtil.composePath(
-                                                simpleUpload.getPath(), m.getStorageLocation()));
+                                        fp = FileUtil.composePath(simpleUpload.getPath(), m.getStorageLocation());
+                                        FileUtil.deleteFolder(fp);
                                     }
+                                    LOGGER.info("[ TASK ] delete folder => " + fp);
                                     return Mono.just(m);
                                 } else {
-                                    return Mono.empty();
+                                    return Mono.error(new DataBaseException(
+                                            this.getClass(),
+                                            "fun execute(). -> Database mark rubbish data [" + m.getId() + "] error",
+                                            "Database mark rubbish data [" + m.getId() + "] error"
+                                    ));
                                 }
                             }))
                     .flatMap(m -> uploadRepository
                             // 清除数据库的缓存数据
                             .deleteById(m.getId())
                             .flatMap(c -> {
+                                LOGGER.info("[ TASK ] db file delete result ( " + m.getId() + " ) => " + c);
                                 if (c > 0) {
-                                    return uploadChunkRepository.deleteByFid(m.getId());
+                                    return uploadChunkRepository
+                                            .deleteByFid(m.getId())
+                                            .map(cc -> {
+                                                LOGGER.info("[ TASK ] db file chunk delete result ( " + m.getId() + " ) => " + cc);
+                                                return cc;
+                                            });
                                 } else {
-                                    return Mono.empty();
+                                    return Mono.error(new DataBaseException(
+                                            this.getClass(),
+                                            "fun execute(). -> Database file data [" + m.getId() + "] delete error",
+                                            "Database file data [" + m.getId() + "] delete error"
+                                    ));
                                 }
                             }))
-                    .subscribe();
+                    .switchIfEmpty(Mono
+                            .just(0L)
+                            .map(c -> {
+                                status.set(false);
+                                return c;
+                            }))
+                    .onErrorResume(throwable -> {
+                        status.set(false);
+                        throwable.printStackTrace();
+                        return Mono.just(0L);
+                    })
+                    .block();
         }
+        LOGGER.info("[ TASK ] Complete executing file purge scheduled task.");
     }
 
     @Override
     public boolean time() {
         final int hour = LocalDateTime.now().getHour();
         final int minute = LocalDateTime.now().getMinute();
-        return this.ht == hour
-                || this.mt == ((int) Math.floor(minute / 10F));
+//        return this.ht == hour && this.mt == ((int) Math.floor(minute / 10F));
+        return true;
     }
 
 }

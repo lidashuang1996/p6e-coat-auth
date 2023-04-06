@@ -1,5 +1,6 @@
 package club.p6e.coat.file.utils;
 
+import club.p6e.coat.file.error.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileUrlResource;
@@ -33,7 +34,7 @@ public final class FileUtil {
      * 路径连接符号
      */
     private static final String PATH_CONNECT_CHAR = "/";
-    private static final String PATH_OPPOSE_CONNECT_CHAR = "\\";
+    private static final String PATH_OPPOSE_CONNECT_CHAR = "\\\\";
 
     /**
      * HEX_CHARS
@@ -191,6 +192,24 @@ public final class FileUtil {
     }
 
     /**
+     * 验证文件夹是否存在
+     *
+     * @param folder 文件夹对象
+     * @return 文件夹是否存在结果
+     */
+    public static boolean checkFolderExist(File folder) {
+        return folder != null && folder.exists() && folder.isDirectory();
+    }
+
+    /**
+     * @param folderPath 文件夹路径
+     * @return 文件夹是否存在结果
+     */
+    public static boolean checkFolderExist(String folderPath) {
+        return checkFileExist(new File(folderPath));
+    }
+
+    /**
      * 文件路径拼接
      *
      * @param left  拼接左边
@@ -289,7 +308,11 @@ public final class FileUtil {
                 return Flux.error(e);
             }
         } else {
-            return Flux.error(new RuntimeException());
+            return Flux.error(new FileException(
+                    FileUtil.class,
+                    "fun readFile(File file). -> The read content is not a file.",
+                    "The read content is not a file"
+            ));
         }
     }
 
@@ -301,7 +324,8 @@ public final class FileUtil {
      * @return Mono<Void> 对象
      */
     public static Mono<Void> writeFile(Flux<DataBuffer> dataBufferFlux, File file) {
-        return DataBufferUtils.write(dataBufferFlux, file.toPath(), StandardOpenOption.WRITE);
+        return DataBufferUtils.write(dataBufferFlux, file.toPath(),
+                StandardOpenOption.CREATE, StandardOpenOption.WRITE);
     }
 
     /**
@@ -324,7 +348,9 @@ public final class FileUtil {
         if (folder.isDirectory()) {
             final File[] files = folder.listFiles();
             if (files != null && files.length > 0) {
-                return Arrays.stream(files).filter(f -> f.isFile()).toList().toArray(new File[0]);
+                return Arrays.stream(files).filter(f -> {
+                    return f.isFile() && !f.getName().startsWith(".");
+                }).toList().toArray(new File[0]);
             } else {
                 return new File[0];
             }
@@ -364,7 +390,11 @@ public final class FileUtil {
                         return Mono.just(new String(chars));
                     });
         } else {
-            return Mono.error(new RuntimeException());
+            return Mono.error(new FileException(
+                    FileUtil.class,
+                    "fun readFile(File file). -> The read content is not a file.",
+                    "The read content is not a file"
+            ));
         }
     }
 
@@ -422,13 +452,9 @@ public final class FileUtil {
             if (checkFileExist(file)) {
                 deleteFile(file);
             }
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                return Mono.empty();
-            }
-            return writeFile(Flux.just(file).flatMap(FileUtil::readFile), file)
-                    .then(Mono.fromCallable(() -> file));
+            return writeFile(Flux.concat(
+                    Arrays.stream(files).map(f -> readFile(f)).toList().toArray(new Flux[0])
+            ), file).then(Mono.just(file));
         }
     }
 
@@ -444,13 +470,10 @@ public final class FileUtil {
         for (int j = content.length() - 1; j >= 0; j--) {
             final String ch = String.valueOf(content.charAt(j));
             if (FILE_CONNECT_CHAR.equals(ch)) {
-                if (bool) {
-                    return null;
-                } else {
-                    bool = true;
-                    sb.insert(0, ch);
-                }
-            } else if (PATH_CONNECT_CHAR.equals(ch)) {
+                bool = true;
+                sb.insert(0, ch);
+            } else if (PATH_CONNECT_CHAR.equals(ch)
+                    || PATH_OPPOSE_CONNECT_CHAR.equals(ch)) {
                 return sb.toString();
             } else {
                 sb.insert(0, ch);
@@ -469,9 +492,8 @@ public final class FileUtil {
     public static String path(String content) {
         boolean bool = (name(content) == null);
         content = content
-                .replaceAll(":", "")
-                .replaceAll("//", "")
-                .replaceAll("\\.", "");
+                .replaceAll(PATH_CONNECT_CHAR + PATH_CONNECT_CHAR, "")
+                .replaceAll(PATH_OPPOSE_CONNECT_CHAR + PATH_OPPOSE_CONNECT_CHAR, "");
         final StringBuilder sb = new StringBuilder();
         for (int j = content.length() - 1; j >= 0; j--) {
             final String ch = String.valueOf(content.charAt(j));

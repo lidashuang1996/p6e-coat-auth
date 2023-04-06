@@ -3,7 +3,11 @@ spring:
     url: r2dbc:pool:postgres://182.254.180.56:5432/lds
     username: postgres
     password: 'Lds1234!@#$'
-
+  servlet:
+    multipart:
+      max-request-size: 15MB
+      max-file-size: 12MB
 
 logging:
   config: 'classpath:p6e-coat-logback.xml'
+

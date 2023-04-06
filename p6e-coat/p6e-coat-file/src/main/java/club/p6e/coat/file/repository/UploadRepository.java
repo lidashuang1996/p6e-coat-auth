@@ -1,6 +1,7 @@
 package club.p6e.coat.file.repository;
 
 import club.p6e.coat.file.error.DataBaseException;
+import club.p6e.coat.file.error.FileException;
 import club.p6e.coat.file.model.UploadModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
@@ -100,7 +101,7 @@ public class UploadRepository extends BaseRepository {
         } else {
             return Mono.error(new DataBaseException(
                     this.getClass(),
-                    "acquireLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "fun acquireLock(int id, int retry). -> Exceeding maximum retry count error",
                     "Exceeding maximum retry count error"
             ));
         }
@@ -114,13 +115,23 @@ public class UploadRepository extends BaseRepository {
      */
     private Mono<Long> acquireLock0(int id) {
         return this.findById(id)
-                .flatMap(m -> r2dbcEntityTemplate
-                        .update(UploadModel.class)
-                        .matching(Query.query(
-                                Criteria.where(UploadModel.ID).is(m.getId())
-                                        .and(UploadModel.VERSION).is(m.getVersion())))
-                        .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
-                                .set(UploadModel.LOCK, m.getLock() + 1)));
+                .flatMap(m -> {
+                    if (m.getLock() >= 0) {
+                        return r2dbcEntityTemplate
+                                .update(UploadModel.class)
+                                .matching(Query.query(
+                                        Criteria.where(UploadModel.ID).is(m.getId())
+                                                .and(UploadModel.VERSION).is(m.getVersion())))
+                                .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
+                                        .set(UploadModel.LOCK, m.getLock() + 1));
+                    } else {
+                        return Mono.error(new FileException(
+                                this.getClass(),
+                                "fun acquireLock0(int id). The file sharding request has been closed.",
+                                "The file sharding request has been closed"
+                        ));
+                    }
+                });
     }
 
     /**
@@ -152,7 +163,7 @@ public class UploadRepository extends BaseRepository {
         } else {
             return Mono.error(new DataBaseException(
                     this.getClass(),
-                    "releaseLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "fun releaseLock(int id, int retry). -> Exceeding maximum retry count error",
                     "Exceeding maximum retry count error"
             ));
         }
@@ -203,7 +214,7 @@ public class UploadRepository extends BaseRepository {
         } else {
             return Mono.error(new DataBaseException(
                     this.getClass(),
-                    "closeLock(int id, int retry). -> Exceeding maximum retry count error",
+                    "fun closeLock(int id, int retry). -> Exceeding maximum retry count error",
                     "Exceeding maximum retry count error"
             ));
         }
@@ -218,7 +229,19 @@ public class UploadRepository extends BaseRepository {
     private Mono<Long> closeLock0(int id) {
         return this.findById(id)
                 .flatMap(m -> {
-                    if (m.getLock() == 0) {
+                    if (m.getLock() == -1) {
+                        return Mono.error(new FileException(
+                                this.getClass(),
+                                "fun closeLock0(int id). -> It is already in a closed state and cannot be closed again.",
+                                "It is already in a closed state and cannot be closed again"
+                        ));
+                    } else if (m.getLock() > 0) {
+                        return Mono.error(new FileException(
+                                this.getClass(),
+                                "fun closeLock0(int id). -> There are upload sharding requests and cannot be closed.",
+                                "There are upload sharding requests and cannot be closed"
+                        ));
+                    } else if (m.getLock() == 0) {
                         return r2dbcEntityTemplate.update(UploadModel.class)
                                 .matching(Query.query(
                                         Criteria.where(UploadModel.ID).is(m.getId())
@@ -249,18 +272,15 @@ public class UploadRepository extends BaseRepository {
      * @param endDate   创建时间的结束时间
      * @return Mono<UploadModel> 模型对象
      */
-    public Mono<UploadModel> findByIdAndCreateDateOne(Integer id, LocalDateTime startDate, LocalDateTime endDate) {
-        final Criteria criteria = Criteria.empty();
-        if (id != null) {
-            criteria.and(UploadModel.ID).greaterThan(id);
-        }
+    public Mono<UploadModel> findByIdAndCreateDateOne(int id, LocalDateTime startDate, LocalDateTime endDate) {
+        final Criteria criteria = Criteria.where(UploadModel.ID).greaterThan(id);
         if (startDate != null) {
             criteria.and(UploadModel.CREATE_DATE).greaterThan(startDate);
         }
         if (endDate != null) {
             criteria.and(UploadModel.CREATE_DATE).lessThan(endDate);
         }
-        return r2dbcEntityTemplate.selectOne(Query.query(criteria), UploadModel.class);
+        return r2dbcEntityTemplate.select(Query.query(criteria).limit(1).offset(0), UploadModel.class).next();
     }
 
     /**

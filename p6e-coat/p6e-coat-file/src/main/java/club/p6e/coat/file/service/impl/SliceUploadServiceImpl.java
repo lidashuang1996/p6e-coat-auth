@@ -84,6 +84,10 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             // 文件绝对路径
                             final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(
                                     properties.getSliceUpload().getPath(), um.getStorageLocation()));
+                            // 如果不存在文件夹就创建文件夹
+                            if (!FileUtil.checkFolderExist(absolutePath)) {
+                                FileUtil.createFolder(absolutePath);
+                            }
                             final File absolutePathFile = new File(
                                     FileUtil.composePath(absolutePath, index + "_" + FileUtil.generateName()));
                             return repository
