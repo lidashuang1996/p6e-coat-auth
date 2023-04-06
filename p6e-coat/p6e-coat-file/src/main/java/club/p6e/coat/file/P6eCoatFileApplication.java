@@ -2,7 +2,6 @@ package club.p6e.coat.file;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 应用入口
@@ -10,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author lidahsuang
  * @version 1.0
  */
-@EnableScheduling
+@EnableP6eFile
 @SpringBootApplication
 public class P6eCoatFileApplication {
 

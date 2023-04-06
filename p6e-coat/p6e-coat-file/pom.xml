@@ -8,7 +8,7 @@
         <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>club.p6e.coat.file</groupId>
+    <groupId>club.p6e.coat</groupId>
     <artifactId>p6e-coat-file</artifactId>
     <version>0.0.1</version>
     <name>p6e-coat-file</name>
@@ -99,6 +99,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
