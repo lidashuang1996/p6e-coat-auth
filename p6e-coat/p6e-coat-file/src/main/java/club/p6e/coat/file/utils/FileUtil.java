@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
+import java.util.Arrays;
 
 /**
  * 文件帮助类
@@ -151,7 +152,7 @@ public final class FileUtil {
      * @return 删除操作结果
      */
     public static boolean deleteFile(File file) {
-        if (file.isDirectory()) {
+        if (file.isFile()) {
             final boolean result = file.delete();
             LOGGER.debug("[ DeleteFile ] => " + file.getAbsolutePath() + " delete >>> " + result);
             return result;
@@ -266,7 +267,7 @@ public final class FileUtil {
                 if (FILE_CONNECT_CHAR.equals(ch)) {
                     return suffix.toString();
                 } else {
-                    suffix.append(ch);
+                    suffix.insert(0, ch);
                 }
             }
         }
@@ -321,7 +322,12 @@ public final class FileUtil {
      */
     public static File[] readFolder(File folder) {
         if (folder.isDirectory()) {
-            return folder.listFiles((f, n) -> f.isFile());
+            final File[] files = folder.listFiles();
+            if (files != null && files.length > 0) {
+                return Arrays.stream(files).filter(f -> f.isFile()).toList().toArray(new File[0]);
+            } else {
+                return new File[0];
+            }
         } else {
             return null;
         }
@@ -415,6 +421,11 @@ public final class FileUtil {
             final File file = new File(filePath);
             if (checkFileExist(file)) {
                 deleteFile(file);
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                return Mono.empty();
             }
             return writeFile(Flux.just(file).flatMap(FileUtil::readFile), file)
                     .then(Mono.fromCallable(() -> file));

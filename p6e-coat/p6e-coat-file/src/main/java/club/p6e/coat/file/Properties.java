@@ -113,4 +113,14 @@ public class Properties implements Serializable {
 
     }
 
+
+    public Properties() {
+        this.downloads.put("test", new Download().setPath("F://a/"));
+        final Resource resource = new Resource().setPath("F://a/");
+        resource.getSuffixes().put("png", MediaType.IMAGE_PNG);
+        resource.getSuffixes().put("jpg", MediaType.IMAGE_JPEG);
+        resource.getSuffixes().put("jpeg", MediaType.IMAGE_JPEG);
+        this.resources.put("test", resource);
+
+    }
 }

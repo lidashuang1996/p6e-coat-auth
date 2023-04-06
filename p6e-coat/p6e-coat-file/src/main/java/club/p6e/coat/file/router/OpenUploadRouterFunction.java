@@ -21,7 +21,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class OpenUploadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public OpenUploadRouterFunction(OpenUploadHandlerFunction handlerFunction) {
-        super(RequestPredicates.POST("/upload/open"), handlerFunction);
+        super(RequestPredicates.POST("/upload/slice/open"), handlerFunction);
     }
 
 }

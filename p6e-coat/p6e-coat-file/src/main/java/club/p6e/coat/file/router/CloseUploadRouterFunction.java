@@ -21,10 +21,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class CloseUploadRouterFunction extends BaseRouterFunction implements RouterFunction<ServerResponse> {
 
     public CloseUploadRouterFunction(CloseUploadHandlerFunction handlerFunction) {
-        super(RequestPredicates.POST("/upload/close")
-                .or(RequestPredicates.DELETE("/upload/close"))
-                .or(RequestPredicates.POST("/upload/close/{id}"))
-                .or(RequestPredicates.DELETE("/upload/close/{id}")), handlerFunction);
+        super(RequestPredicates.POST("/upload/slice/close")
+                .or(RequestPredicates.DELETE("/upload/slice/close"))
+                .or(RequestPredicates.POST("/upload/slice/close/{id}"))
+                .or(RequestPredicates.DELETE("/upload/slice/close/{id}")), handlerFunction);
     }
 
 }

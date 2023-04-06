@@ -63,14 +63,14 @@ public class ResourceContextRequestParameterMapper extends RequestParameterMappe
             final String path = FileUtil.path(pc);
             final String name = FileUtil.name(pc);
             if (name == null || path == null) {
-                context.setPath(FileUtil.composePath(path, name));
-            } else {
                 return Mono.error(new ParameterException(
                         this.getClass(),
                         "fun execute(ServerRequest request). " +
                                 "<" + PATH_PARAMETER_NAME + "> Request parameter format error",
                         "<" + PATH_PARAMETER_NAME + "> Request parameter format error"
                 ));
+            } else {
+                context.setPath(FileUtil.composePath(path, name));
             }
         } else {
             return Mono.error(new ParameterException(

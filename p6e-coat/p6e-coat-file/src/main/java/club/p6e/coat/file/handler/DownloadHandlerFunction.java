@@ -108,11 +108,9 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                         .flatMap(f -> {
                             String fc = "unknown";
                             final String fn = FileUtil.name(f.getName());
-                            final String fs = FileUtil.getSuffix(f.getName());
                             try {
                                 if (fn != null) {
-                                    fc = FileUtil.composeFile(
-                                            URLEncoder.encode(fn, StandardCharsets.UTF_8), fs);
+                                    fc = URLEncoder.encode(fn, StandardCharsets.UTF_8);
                                 }
                             } catch (Exception e) {
                                 // 忽略异常

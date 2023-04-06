@@ -9,6 +9,8 @@ import club.p6e.coat.file.service.SliceUploadService;
 import club.p6e.coat.file.utils.FileUtil;
 import club.p6e.coat.file.context.SliceUploadContext;
 import club.p6e.coat.file.utils.SpringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,11 @@ import java.util.Map;
         ignored = SliceUploadServiceImpl.class
 )
 public class SliceUploadServiceImpl implements SliceUploadService {
+
+    /**
+     * 日志对象
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SliceUploadServiceImpl.class);
 
     /**
      * 配置文件对象
@@ -64,6 +71,7 @@ public class SliceUploadServiceImpl implements SliceUploadService {
     @Override
     public Mono<Map<String, Object>> execute(SliceUploadContext context) {
         final Integer id = context.getId();
+        final Integer index = context.getIndex();
         final String signature = context.getSignature();
         // 读取并清除文件对象
         final FilePart filePart = context.getFilePart();
@@ -76,7 +84,8 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             // 文件绝对路径
                             final String absolutePath = FileUtil.convertAbsolutePath(FileUtil.composePath(
                                     properties.getSliceUpload().getPath(), um.getStorageLocation()));
-                            final File absolutePathFile = new File(FileUtil.composePath(absolutePath, FileUtil.generateName()));
+                            final File absolutePathFile = new File(
+                                    FileUtil.composePath(absolutePath, index + "_" + FileUtil.generateName()));
                             return repository
                                     // 获取锁
                                     .acquireLock(um.getId())
@@ -103,6 +112,8 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                         .flatMap(f -> FileUtil
                                 .obtainMD5Signature(f)
                                 .flatMap(s -> {
+                                    LOGGER.info("[" + f.getAbsolutePath() + "] " +
+                                            "signature => " + s + ", HTTP signature => " + signature);
                                     if (!s.equals(signature)) {
                                         FileUtil.deleteFile(f);
                                         return Mono.error(new FileException(this.getClass(),
