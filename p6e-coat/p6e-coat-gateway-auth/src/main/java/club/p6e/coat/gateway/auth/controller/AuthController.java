@@ -27,7 +27,7 @@ public class AuthController {
 
     @RequestMapping("/login")
     public Mono<ResultContext> login() {
-        return manager.authenticate(new UsernamePasswordAuthenticationToken("123456", "123456"))
+        return manager.authenticate(new UsernamePasswordAuthenticationToken("123456", "2e7605b59956f9cd7b34dbc3e6866d4a"))
                 .map(authentication -> {
                     return ResultContext.build("987654321");
                 });

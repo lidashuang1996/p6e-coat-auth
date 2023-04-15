@@ -2,7 +2,6 @@ package club.p6e.coat.gateway.auth;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -11,8 +10,7 @@ import java.nio.charset.StandardCharsets;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-public class AuthPasswordEncoder implements PasswordEncoder {
+public class P6ePasswordEncoder implements PasswordEncoder {
 
     private static final int M = 16;
     private static final BCryptPasswordEncoder B_CRYPT = new BCryptPasswordEncoder();

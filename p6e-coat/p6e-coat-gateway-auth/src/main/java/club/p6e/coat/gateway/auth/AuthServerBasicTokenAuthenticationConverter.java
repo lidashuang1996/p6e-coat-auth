@@ -40,6 +40,7 @@ public class AuthServerBasicTokenAuthenticationConverter implements ServerAuthen
                 token = query.getFirst(ACCESS_TOKEN_URL_QUERY2);
             }
         }
+        System.out.println("token " + token);
         if (token == null) {
             return Mono.empty();
         }
