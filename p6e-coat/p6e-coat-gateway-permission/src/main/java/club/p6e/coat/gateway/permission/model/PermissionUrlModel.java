@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class P6ePermissionModel implements Serializable {
+public class PermissionUrlModel implements Serializable {
     
     private Integer id;
     private String url;

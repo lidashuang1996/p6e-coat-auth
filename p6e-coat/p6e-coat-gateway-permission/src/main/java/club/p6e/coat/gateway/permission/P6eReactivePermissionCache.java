@@ -1,6 +1,9 @@
 package club.p6e.coat.gateway.permission;
 
+import club.p6e.coat.gateway.permission.model.PermissionModel;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +19,14 @@ public final class P6eReactivePermissionCache {
     private static final Map<String, Map<String, List<String>>> INDEX_CACHE = new HashMap<>();
     private static final Map<String, Map<String, List<String>>> SPECIAL_INDEX_CACHE = new HashMap<>();
 
-    public synchronized static void cache(
-            Map<String, PermissionDetails> data,
-            Map<String, Map<String, List<String>>> index
-    ) {
+    public synchronized static void cache(List<PermissionModel> list) {
         DATA_CACHE.clear();
         INDEX_CACHE.clear();
         SPECIAL_INDEX_CACHE.clear();
-        if (data != null && data.size() > 0) {
+        if (list != null && list.size() > 0) {
             DATA_CACHE.putAll(data);
         }
-        if (index != null && index.size() > 0) {
+        if (list != null && list.size() > 0) {
             INDEX_CACHE.putAll(index);
         }
     }
@@ -34,20 +34,27 @@ public final class P6eReactivePermissionCache {
     public static PermissionDetails execute(String url, String method, List<String> groups) {
         if (url != null && method != null && groups != null && groups.size() > 0) {
             Map<String, List<String>> data = INDEX_CACHE.get(url);
-            if (data == null) {
-                for (final String key : SPECIAL_INDEX_CACHE.keySet()) {
-                    if (executeSpecialMatch(url, key)) {
-                        data = SPECIAL_INDEX_CACHE.get(key);
-                        break;
-                    }
-                }
-            }
+            final Iterator<String> iterator = SPECIAL_INDEX_CACHE.keySet().iterator();
             if (data != null) {
                 final List<String> list = data.get(method);
                 if (list != null && list.size() > 0) {
                     for (final String item : list) {
                         if (groups.contains(item)) {
                             return DATA_CACHE.get(item);
+                        }
+                    }
+                }
+            }
+            while (iterator.hasNext()) {
+                final String key = iterator.next();
+                if (executeSpecialMatch(url, key)) {
+                    data = SPECIAL_INDEX_CACHE.get(key);
+                    final List<String> list = data.get(method);
+                    if (list != null && list.size() > 0) {
+                        for (final String item : list) {
+                            if (groups.contains(item)) {
+                                return DATA_CACHE.get(item);
+                            }
                         }
                     }
                 }
