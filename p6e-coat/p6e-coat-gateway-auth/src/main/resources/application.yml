@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: route1
+          uri: https://baidu.com
+          predicates:
+            - Path=/test/**
+          filters:
+            - AddRequestHeader=X-Custom-Header, CustomValue
