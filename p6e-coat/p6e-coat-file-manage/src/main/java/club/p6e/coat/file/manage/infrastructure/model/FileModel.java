@@ -51,7 +51,7 @@ public class FileModel implements Serializable {
     @Column(name = "[update_date]")
     private LocalDateTime updateDate;
     @Column(name = "[operator]")
-    private Integer operator;
+    private String operator;
     @Column(name = "[version]")
     private Integer version;
     @Column(name = "[is_delete]")

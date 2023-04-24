@@ -33,13 +33,13 @@ public class FolderModel implements Serializable {
     @Column(name = "[size]")
     private Long size;
     @Column(name = "[icon]")
-    private Integer icon;
+    private String icon;
     @Column(name = "[create_date]")
     private LocalDateTime createDate;
     @Column(name = "[update_date]")
     private LocalDateTime updateDate;
     @Column(name = "[operator]")
-    private Integer operator;
+    private String operator;
     @Column(name = "[version]")
     private Integer version;
     @Column(name = "[is_delete]")
