@@ -6,18 +6,28 @@ import club.p6e.coat.file.error.FileException;
 import club.p6e.coat.file.mapper.RequestParameterMapper;
 import club.p6e.coat.file.service.DownloadService;
 import club.p6e.coat.file.utils.FileUtil;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRange;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 下载操作处理程序函数
@@ -72,6 +82,8 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                         // 获取返回结果中的文件路径
                         // 并将返回的文件路径转换为文件对象
                         .flatMap(r -> {
+                            // Http Header Content-Range
+                            final List<HttpRange> ranges = request.headers().range();
                             // 读取下载文件的绝对路径
                             final Object downloadPath = r.get("__path__");
                             if (downloadPath == null) {
@@ -85,7 +97,7 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                                 final File file = new File(dps);
                                 // 验证文件是否存在
                                 if (FileUtil.checkFileExist(file)) {
-                                    return Mono.just(file);
+                                    return Mono.just(new Model().setFile(file).setRanges(ranges));
                                 } else {
                                     // 文件不存在抛出异常
                                     return Mono.error(new FileException(
@@ -105,9 +117,11 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                             }
                         })
                         // 结果返回
-                        .flatMap(f -> {
+                        .flatMap(m -> {
                             String fc = "unknown";
-                            final String fn = FileUtil.name(f.getName());
+                            final File file = m.getFile();
+                            final List<HttpRange> ranges = m.getRanges();
+                            final String fn = FileUtil.name(file.getName());
                             try {
                                 if (fn != null) {
                                     fc = URLEncoder.encode(fn, StandardCharsets.UTF_8);
@@ -121,13 +135,38 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                                         "Download file name parsing error"
                                 ));
                             }
-                            final ServerResponse.BodyBuilder builder =
-                                    ServerResponse.ok()
-                                            .header("Content-Disposition",
-                                                    "attachment; filename=" + fc)
-                                            .contentType(MediaType.APPLICATION_OCTET_STREAM);
-                            return builder.body((response, context) -> response.writeWith(FileUtil.readFile(f)));
+                            if (ranges != null && ranges.size() > 0) {
+                                final List<String> headers = new ArrayList<>();
+                                final List<Flux<DataBuffer>> fluxes = new ArrayList<>();
+                                for (HttpRange range : ranges) {
+                                    final long el = range.getRangeEnd(file.length());
+                                    final long sl = range.getRangeStart(file.length());
+                                    fluxes.add(FileUtil.readFile(file, sl, el));
+                                    headers.add(sl + "-" + el + "/" + file.length());
+                                }
+                                return ServerResponse.status(HttpStatus.PARTIAL_CONTENT)
+                                        .header(HttpHeaders.ACCEPT_RANGES, "bytes")
+                                        .header(HttpHeaders.CONTENT_RANGE, headers.toArray(new String[0]))
+                                        .header("Content-Disposition", "attachment; filename=" + fc)
+                                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                                        .body((response, context) -> response.writeWith(Flux.concat(fluxes)));
+                            } else {
+                                return ServerResponse.ok()
+                                        .header(HttpHeaders.ACCEPT_RANGES, "bytes")
+                                        .header("Content-Disposition", "attachment; filename=" + fc)
+                                        .contentType(MediaType.APPLICATION_OCTET_STREAM).body((response, context) -> response.writeWith(FileUtil.readFile(file)));
+                            }
                         });
+    }
+
+    /**
+     * 模型
+     */
+    @Data
+    @Accessors(chain = true)
+    private static class Model implements Serializable {
+        private File file;
+        private List<HttpRange> ranges;
     }
 
 }

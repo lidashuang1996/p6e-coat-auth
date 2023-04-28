@@ -7,17 +7,26 @@ import club.p6e.coat.file.error.MediaTypeException;
 import club.p6e.coat.file.mapper.RequestParameterMapper;
 import club.p6e.coat.file.service.ResourceService;
 import club.p6e.coat.file.utils.FileUtil;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRange;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 资源操作处理程序函数
@@ -72,6 +81,8 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                         // 获取返回结果中的文件路径
                         // 并将返回的文件路径转换为文件对象
                         .flatMap(r -> {
+                            // Http Header Content-Range
+                            final List<HttpRange> ranges = request.headers().range();
                             // 读取下载文件的绝对路径
                             final Object resourcePath = r.get("__path__");
                             final Object mediaType = r.get("__media_type__");
@@ -87,7 +98,7 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                                 // 验证文件是否存在
                                 if (FileUtil.checkFileExist(file)) {
                                     if (mediaType instanceof final MediaType my) {
-                                        return Mono.just(new ResourceModel(file, my));
+                                        return Mono.just(new ResourceModel().setFile(file).setMediaType(my));
                                     } else {
                                         return Mono.error(new MediaTypeException(
                                                 this.getClass(),
@@ -114,20 +125,44 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                             }
                         })
                         // 结果返回
-                        .flatMap(m -> ServerResponse
-                                .ok()
-                                .contentType(m.mediaType())
-                                .body((response, context) -> response.writeWith(FileUtil.readFile(m.file())))
-                        );
+                        .flatMap(m -> {
+                            final File file = m.getFile();
+                            final MediaType mediaType = m.getMediaType();
+                            final List<HttpRange> ranges = m.getRanges();
+                            if (ranges != null && ranges.size() > 0) {
+                                final List<String> headers = new ArrayList<>();
+                                final List<Flux<DataBuffer>> fluxes = new ArrayList<>();
+                                for (HttpRange range : ranges) {
+                                    final long sl = range.getRangeStart(file.length());
+                                    final long el = range.getRangeEnd(file.length());
+                                    fluxes.add(FileUtil.readFile(file, sl, el));
+                                    headers.add(sl + "-" + el + "/" + file.length());
+                                }
+                                return ServerResponse
+                                        .status(HttpStatus.PARTIAL_CONTENT)
+                                        .contentType(mediaType)
+                                        .header(HttpHeaders.ACCEPT_RANGES, "bytes")
+                                        .header(HttpHeaders.CONTENT_RANGE, headers.toArray(new String[0]))
+                                        .body((response, context) -> response.writeWith(Flux.concat(fluxes)));
+                            } else {
+                                return ServerResponse
+                                        .ok()
+                                        .contentType(mediaType)
+                                        .header(HttpHeaders.ACCEPT_RANGES, "bytes")
+                                        .body((response, context) -> response.writeWith(FileUtil.readFile(file)));
+                            }
+                        });
     }
 
     /**
      * 资源模型
-     *
-     * @param file      文件对象
-     * @param mediaType 媒体类型
      */
-    private record ResourceModel(File file, MediaType mediaType) implements Serializable {
+    @Data
+    @Accessors(chain = true)
+    private static class ResourceModel implements Serializable {
+        private File file;
+        private MediaType mediaType;
+        private List<HttpRange> ranges;
     }
 
 }

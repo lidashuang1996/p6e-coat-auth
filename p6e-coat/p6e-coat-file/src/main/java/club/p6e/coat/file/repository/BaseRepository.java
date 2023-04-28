@@ -6,7 +6,6 @@ package club.p6e.coat.file.repository;
  * @author lidashuang
  * @version 1.0
  */
-@SuppressWarnings("all")
 public class BaseRepository {
 
     /**

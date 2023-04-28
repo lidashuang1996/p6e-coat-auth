@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 文件帮助类
@@ -22,6 +23,7 @@ import java.util.Arrays;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public final class FileUtil {
 
     /**
@@ -299,10 +301,38 @@ public final class FileUtil {
      * @return Flux<DataBuffer> 读取的文件内容
      */
     public static Flux<DataBuffer> readFile(File file) {
+        return readFile(file, 0L, -1L);
+    }
+
+    /**
+     * 读取文件内容
+     *
+     * @param file 文件对象
+     * @return Flux<DataBuffer> 读取的文件内容
+     */
+    public static Flux<DataBuffer> readFile(File file, long position, long size) {
         if (file.isFile()) {
             try {
-                return DataBufferUtils.read(new FileUrlResource(
-                        file.getAbsolutePath()), DEFAULT_DATA_BUFFER_FACTORY, FILE_BUFFER_SIZE);
+                final long fSize = size >= 0 ? size : 1 + size + file.length();
+                final AtomicLong at = new AtomicLong(0);
+                return DataBufferUtils
+                        .read(new FileUrlResource(file.getAbsolutePath()), position, DEFAULT_DATA_BUFFER_FACTORY, FILE_BUFFER_SIZE)
+                        .map(b -> {
+                            if (at.get() >= fSize) {
+                                DataBufferUtils.release(b);
+                                return DEFAULT_DATA_BUFFER_FACTORY.allocateBuffer(0);
+                            } else {
+                                final int rp = b.readableByteCount();
+                                if (at.addAndGet(rp) >= fSize) {
+                                    final byte[] bytes = new byte[(int) (fSize - at.get() + rp)];
+                                    b.read(bytes);
+                                    DataBufferUtils.release(b);
+                                    return DEFAULT_DATA_BUFFER_FACTORY.wrap(bytes);
+                                } else {
+                                    return b;
+                                }
+                            }
+                        });
             } catch (IOException e) {
                 return Flux.error(e);
             }
