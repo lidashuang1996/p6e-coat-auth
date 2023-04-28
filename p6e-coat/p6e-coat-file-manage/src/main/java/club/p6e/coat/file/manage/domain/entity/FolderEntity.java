@@ -1,7 +1,7 @@
 package club.p6e.coat.file.manage.domain.entity;
 
 import club.p6e.coat.file.manage.infrastructure.error.GlobalExceptionContext;
-import club.p6e.coat.file.manage.infrastructure.es.EsFolderRepository;
+import club.p6e.coat.file.manage.infrastructure.es.EsRepository;
 import club.p6e.coat.file.manage.infrastructure.model.FolderModel;
 import club.p6e.coat.file.manage.infrastructure.repository.FolderRepository;
 import com.darvi.hksi.badminton.lib.AuthCore;
@@ -41,7 +41,7 @@ public class FolderEntity {
         // 获取事务对象
         final AuthCore auth = AuthCore.getThreadInstance();
         final FolderRepository FolderRepository = SpringUtil.getBean(FolderRepository.class);
-        final EsFolderRepository esFolderRepository = SpringUtil.getBean(EsFolderRepository.class);
+        final EsRepository esFolderRepository = SpringUtil.getBean(EsRepository.class);
         final TransactionDefinition transactionDefinition = SpringUtil.getBean(TransactionDefinition.class);
         final JpaTransactionManager jpaTransactionManager = SpringUtil.getBean(JpaTransactionManager.class);
         final TransactionStatus transactionStatus = jpaTransactionManager.getTransaction(transactionDefinition);

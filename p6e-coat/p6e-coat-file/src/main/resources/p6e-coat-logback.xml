@@ -106,10 +106,10 @@
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>
-        <!--        <appender-ref ref="LOG_FILE" />-->
-        <!--        <appender-ref ref="INFO_LOG_FILE" />-->
-        <!--        <appender-ref ref="WARN_LOG_FILE" />-->
-        <!--        <appender-ref ref="ERROR_LOG_FILE" />-->
+        <appender-ref ref="LOG_FILE"/>
+        <appender-ref ref="INFO_LOG_FILE"/>
+        <appender-ref ref="WARN_LOG_FILE"/>
+        <appender-ref ref="ERROR_LOG_FILE"/>
     </root>
 
 </configuration>

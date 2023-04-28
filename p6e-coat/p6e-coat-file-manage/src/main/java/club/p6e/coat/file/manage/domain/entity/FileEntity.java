@@ -2,7 +2,6 @@ package club.p6e.coat.file.manage.domain.entity;
 
 import club.p6e.coat.file.manage.Properties;
 import club.p6e.coat.file.manage.infrastructure.error.GlobalExceptionContext;
-import club.p6e.coat.file.manage.infrastructure.es.EsFileRepository;
 import club.p6e.coat.file.manage.infrastructure.model.FileModel;
 import club.p6e.coat.file.manage.infrastructure.model.FolderModel;
 import club.p6e.coat.file.manage.infrastructure.repository.FileRepository;
