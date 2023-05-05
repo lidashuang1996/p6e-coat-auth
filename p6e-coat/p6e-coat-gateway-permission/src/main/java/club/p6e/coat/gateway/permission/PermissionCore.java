@@ -120,8 +120,8 @@ public final class PermissionCore {
      */
     public static PermissionDetails execute(String url, String method, List<String> groups) {
         if (url != null && method != null && groups != null && groups.size() > 0) {
-            List<PathElement> pes = new ArrayList<>();
-            List<PathElement> nextPes = new ArrayList<>();
+            final List<PathElement> pes = new ArrayList<>();
+            final List<PathElement> nextPes = new ArrayList<>();
             pes.add(PE);
             final String[] us = url.split(PATH_CHAR);
             final List<PathElement> list = new ArrayList<>();

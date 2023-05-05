@@ -18,6 +18,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class PermissionDetails extends PermissionModel implements Serializable {
 
+    /**
+     * 构造方法初始化
+     *
+     * @param permission 权限模型对象
+     */
     public PermissionDetails(PermissionModel permission) {
         this.setUid(permission.getUid());
         this.setGid(permission.getUid());

@@ -5,12 +5,16 @@ import club.p6e.coat.gateway.permission.repository.PermissionRepository;
 import club.p6e.coat.gateway.permission.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 权限任务
@@ -18,12 +22,12 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
+@Component
+@ConditionalOnMissingBean(
+        value = PermissionTask.class,
+        ignored = PermissionTask.class
+)
 public final class PermissionTask {
-
-    /**
-     * 任务间隔
-     */
-    private static final int INTERVAL = 3 * 3600 * 1000;
 
     /**
      * 日志对象
@@ -31,18 +35,32 @@ public final class PermissionTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(PermissionTask.class);
 
     /**
+     * 配置文件对象
+     */
+    private final long interval;
+
+    /**
      * 上次更新的时间
      */
-    private static LocalDateTime LAST_UPDATE_TIME = LocalDateTime.MIN;
+    private LocalDateTime lastUpdateDateTime = LocalDateTime.of(2000, 1, 1, 0, 0, 0);
 
-    public static void execute() {
+    /**
+     * 构造方法初始化
+     */
+    public PermissionTask(Properties properties) {
+        this.interval = properties.getTask().getInterval()
+                + ThreadLocalRandom.current().nextInt(900_000);
+    }
+
+    @Scheduled(initialDelay = 5_000, fixedDelay = 60_000)
+    public void execute() {
         final LocalDateTime now = LocalDateTime.now();
         LOGGER.info("[TASK] Start updating data.");
-        LOGGER.info("[TASK] ==> NOW: " + now + " , LAST_UPDATE_TIME: " + LAST_UPDATE_TIME);
-        if (Duration.between(LAST_UPDATE_TIME, now).toMillis() > INTERVAL) {
+        LOGGER.info("[TASK] ==> NOW: " + now + " , LAST_UPDATE_TIME: " + lastUpdateDateTime);
+        if (Duration.between(lastUpdateDateTime, now).toMillis() > interval) {
             execute0().subscribe();
-            LAST_UPDATE_TIME = LocalDateTime.now();
-            LOGGER.info("[TASK] refresh LAST_UPDATE_TIME: " + LAST_UPDATE_TIME);
+            lastUpdateDateTime = LocalDateTime.now();
+            LOGGER.info("[TASK] refresh LAST_UPDATE_TIME: " + lastUpdateDateTime);
         } else {
             LOGGER.info("[TASK] Not exceeding the interval time, task closed !!");
         }
@@ -54,7 +72,7 @@ public final class PermissionTask {
      *
      * @return Mono/Boolean 是否读取写入成功
      */
-    private static Mono<Boolean> execute0() {
+    private Mono<Boolean> execute0() {
         final int page = 1;
         final int size = 20;
         final List<PermissionModel> list = new ArrayList<>();
@@ -76,7 +94,7 @@ public final class PermissionTask {
      * @param list 已经读取的数据
      * @return Mono/Boolean 是否读取成功
      */
-    private static Mono<Boolean> execute1(int page, int size, List<PermissionModel> list) {
+    private Mono<Boolean> execute1(int page, int size, List<PermissionModel> list) {
         return execute2(page, size, list)
                 .map(c -> c == size)
                 .flatMap(b -> b ? execute1(page + 1, size, list) : Mono.just(true))
@@ -91,7 +109,7 @@ public final class PermissionTask {
      * @param list 已经读取的数据
      * @return Mono/Integer 本次读取的数据长度
      */
-    private static Mono<Integer> execute2(int page, int size, List<PermissionModel> list) {
+    private Mono<Integer> execute2(int page, int size, List<PermissionModel> list) {
         LOGGER.info("[TASK] read data page: " + page + ", size:  " + size + " ::: [" + list.size() + "].");
         final PermissionRepository repository = SpringUtil.getBean(PermissionRepository.class);
         return repository

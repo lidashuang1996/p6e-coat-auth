@@ -23,8 +23,25 @@ public final class SpringUtil {
      *
      * @param application Spring Boot 的上下文对象
      */
+    @SuppressWarnings("ALL")
     public static void init(ApplicationContext application) {
         APPLICATION = application;
+    }
+
+    /**
+     * 通过 Spring Boot 的上下文对象判断 Bean 是否存在
+     *
+     * @param tClass Bean 的类型
+     * @return boolean 是否存在 Bean
+     */
+    @SuppressWarnings("ALL")
+    public static boolean existBean(Class<?> tClass) {
+        try {
+            APPLICATION.getBean(tClass);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -34,6 +51,7 @@ public final class SpringUtil {
      * @param <T>    Bean 的类型泛型
      * @return Bean 对象
      */
+    @SuppressWarnings("ALL")
     public static <T> T getBean(Class<T> tClass) {
         return APPLICATION.getBean(tClass);
     }
@@ -45,6 +63,7 @@ public final class SpringUtil {
      * @param <T>    Bean 的类型泛型
      * @return Bean 对象集合
      */
+    @SuppressWarnings("ALL")
     public static <T> Map<String, T> getBeans(Class<T> tClass) {
         return APPLICATION.getBeansOfType(tClass);
     }

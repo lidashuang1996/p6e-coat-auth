@@ -4,9 +4,10 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
+ * 权限模型
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -26,6 +27,5 @@ public class PermissionModel implements Serializable {
     private String gName;
     private String rConfig;
     private String rAttribute;
-
 
 }

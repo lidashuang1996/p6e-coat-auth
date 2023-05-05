@@ -16,9 +16,9 @@ import java.util.Map;
 @Component
 @ConditionalOnMissingBean(
         value = PermissionValidator.class,
-        ignored = DefaultPermissionValidator.class
+        ignored = PermissionValidatorImpl.class
 )
-public class DefaultPermissionValidator implements PermissionValidator {
+public class PermissionValidatorImpl implements PermissionValidator {
 
     /**
      * 验证是否具备权限
@@ -31,7 +31,7 @@ public class DefaultPermissionValidator implements PermissionValidator {
     @Override
     @SuppressWarnings("ALL")
     public Mono<PermissionDetails> execute(String url, String method, Map<String, Object> user) {
-        if (user != null && user.get("groups") instanceof final List<?> groups) {
+        if (user != null && user.get("permissionGroups") instanceof final List<?> groups) {
             final PermissionDetails details = PermissionCore.execute(url, method, (List<String>) groups);
             return details == null ? Mono.empty() : Mono.just(details);
         } else {
