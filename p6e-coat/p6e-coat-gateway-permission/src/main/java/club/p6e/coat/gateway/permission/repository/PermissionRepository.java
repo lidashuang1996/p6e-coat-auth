@@ -1,6 +1,6 @@
 package club.p6e.coat.gateway.permission.repository;
 
-import club.p6e.coat.gateway.permission.model.PermissionModel;
+import club.p6e.coat.gateway.permission.PermissionDetails;
 import club.p6e.coat.gateway.permission.utils.TransformationUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
@@ -81,7 +81,7 @@ public class PermissionRepository {
      * @param size 分页长度
      * @return Flux/PermissionModel 查询数据结果
      */
-    public Flux<PermissionModel> findByPermissionUrlTableAll(Integer page, Integer size) {
+    public Flux<PermissionDetails> findByPermissionUrlTableAll(Integer page, Integer size) {
         page = page == null ? 1 : (page <= 0 ? 1 : page);
         size = size == null ? 16 : (size <= 0 ? 16 : (size > 200 ? 200 : size));
         final String sql = SQL
@@ -93,7 +93,7 @@ public class PermissionRepository {
                 .fetch()
                 .all()
                 .map(m -> {
-                    final PermissionModel permission = new PermissionModel();
+                    final PermissionDetails permission = new PermissionDetails();
                     permission.setUid(TransformationUtil.objectToInteger(m.get("u_id")));
                     permission.setUUrl(TransformationUtil.objectToString(m.get("u_url")));
                     permission.setUBaseUrl(TransformationUtil.objectToString(m.get("u_base_url")));

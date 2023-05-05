@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.permission;
 
-import club.p6e.coat.gateway.permission.model.PermissionModel;
 import club.p6e.coat.gateway.permission.repository.PermissionRepository;
 import club.p6e.coat.gateway.permission.utils.SpringUtil;
 import org.slf4j.Logger;
@@ -52,7 +51,7 @@ public final class PermissionTask {
                 + ThreadLocalRandom.current().nextInt(900_000);
     }
 
-    @Scheduled(initialDelay = 5_000, fixedDelay = 60_000)
+    @Scheduled(initialDelay = 2_000, fixedDelay = 60_000)
     public void execute() {
         final LocalDateTime now = LocalDateTime.now();
         LOGGER.info("[TASK] Start updating data.");
@@ -75,7 +74,7 @@ public final class PermissionTask {
     private Mono<Boolean> execute0() {
         final int page = 1;
         final int size = 20;
-        final List<PermissionModel> list = new ArrayList<>();
+        final List<PermissionDetails> list = new ArrayList<>();
         return execute1(page, size, list)
                 .map(b -> {
                     if (b) {
@@ -94,7 +93,7 @@ public final class PermissionTask {
      * @param list 已经读取的数据
      * @return Mono/Boolean 是否读取成功
      */
-    private Mono<Boolean> execute1(int page, int size, List<PermissionModel> list) {
+    private Mono<Boolean> execute1(int page, int size, List<PermissionDetails> list) {
         return execute2(page, size, list)
                 .map(c -> c == size)
                 .flatMap(b -> b ? execute1(page + 1, size, list) : Mono.just(true))
@@ -109,7 +108,7 @@ public final class PermissionTask {
      * @param list 已经读取的数据
      * @return Mono/Integer 本次读取的数据长度
      */
-    private Mono<Integer> execute2(int page, int size, List<PermissionModel> list) {
+    private Mono<Integer> execute2(int page, int size, List<PermissionDetails> list) {
         LOGGER.info("[TASK] read data page: " + page + ", size:  " + size + " ::: [" + list.size() + "].");
         final PermissionRepository repository = SpringUtil.getBean(PermissionRepository.class);
         return repository

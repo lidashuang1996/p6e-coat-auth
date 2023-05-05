@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.permission;
 
-import club.p6e.coat.gateway.permission.model.PermissionModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.slf4j.Logger;
@@ -63,7 +62,7 @@ public final class PermissionCore {
      *
      * @param list 权限模型列表
      */
-    public synchronized static void cache(List<PermissionModel> list) {
+    public synchronized static void cache(List<PermissionDetails> list) {
         if (PE.getData() != null && PE.getData().size() > 0) {
             PE.getData().clear();
             LOGGER.info("[CACHE] Cache data cleared successfully.");
@@ -73,6 +72,24 @@ public final class PermissionCore {
             list.forEach(PermissionCore::loadPathElementData);
         }
         LOGGER.info("[CACHE] End writing cache.");
+        LOGGER.debug("----------------------------");
+        executeNodeTreePrinting(PE.getData(), 0);
+        LOGGER.debug("----------------------------");
+    }
+
+    /**
+     * 节点树打印
+     *
+     * @param map   数据对象
+     * @param index 层级索引
+     */
+    private static void executeNodeTreePrinting(Map<String, PathElement> map, int index) {
+        for (String key : map.keySet()) {
+            LOGGER.debug("         ".repeat(Math.max(0, index)) + key + "     >>>     " + map.get(key).getMapper());
+            if (map.get(key) != null && map.get(key).getData() != null && map.get(key).getData().size() > 0) {
+                executeNodeTreePrinting(map.get(key).getData(), index + 1);
+            }
+        }
     }
 
     /**
@@ -80,7 +97,7 @@ public final class PermissionCore {
      *
      * @param model 权限模型
      */
-    private static void loadPathElementData(PermissionModel model) {
+    private static void loadPathElementData(PermissionDetails model) {
         LOGGER.info("[CACHE] write ==> " + model);
         final String u = model.getUBaseUrl() + model.getUUrl();
         final String[] us = u.split(PATH_CHAR);
@@ -95,16 +112,9 @@ public final class PermissionCore {
      * @param us    路径节点数组
      * @param index 索引
      */
-    private static void writePathElementData(PathElement pe, PermissionModel model, String[] us, int index) {
-        if (index + 1 == us.length) {
-            pe.getMapper().computeIfAbsent(model.getUMethod(), k -> new ArrayList<>());
-            final List<PermissionDetails> list = pe.getMapper().get(model.getUMethod());
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getGWeight() < model.getGWeight()) {
-                    list.add(i, new PermissionDetails(model));
-                    break;
-                }
-            }
+    private static void writePathElementData(PathElement pe, PermissionDetails model, String[] us, int index) {
+        if (index == us.length) {
+            pe.getMapper().computeIfAbsent(model.getUMethod(), k -> new ArrayList<>()).add(model);
         } else {
             writePathElementData(pe.getData().computeIfAbsent(us[index], k -> new PathElement()), model, us, index + 1);
         }
@@ -146,20 +156,21 @@ public final class PermissionCore {
                 }
             }
             list.addAll(pes);
-            final List<PermissionDetails> pds = new ArrayList<>();
+            final Set<PermissionDetails> pdSet = new HashSet<>();
             for (final PathElement item : list) {
                 if (item.getMapper().get(ADAPTER_CHAR) != null) {
-                    pds.addAll(item.getMapper().get(ADAPTER_CHAR));
+                    pdSet.addAll(item.getMapper().get(ADAPTER_CHAR));
                 }
                 if (item.getMapper().get(method) != null) {
-                    pds.addAll(item.getMapper().get(method));
+                    pdSet.addAll(item.getMapper().get(method));
                 }
             }
-            pds.sort(Comparator.comparing(PermissionDetails::getGWeight));
+            final List<PermissionDetails> pdList = new ArrayList<>(pdSet);
+            pdList.sort(Comparator.comparing(PermissionDetails::getGWeight));
             for (final String group : groups) {
-                for (final PermissionDetails item : pds) {
+                for (final PermissionDetails item : pdList) {
                     if (group.contains(String.valueOf(item.getGid()))) {
-                        return item;
+                        return item.copy();
                     }
                 }
             }

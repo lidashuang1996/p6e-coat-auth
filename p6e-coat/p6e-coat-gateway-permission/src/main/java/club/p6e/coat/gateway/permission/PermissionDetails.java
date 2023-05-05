@@ -1,8 +1,6 @@
 package club.p6e.coat.gateway.permission;
 
-import club.p6e.coat.gateway.permission.model.PermissionModel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -15,27 +13,35 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-public class PermissionDetails extends PermissionModel implements Serializable {
+public class PermissionDetails implements Serializable {
 
-    /**
-     * 构造方法初始化
-     *
-     * @param permission 权限模型对象
-     */
-    public PermissionDetails(PermissionModel permission) {
-        this.setUid(permission.getUid());
-        this.setGid(permission.getUid());
-        this.setUUrl(permission.getUUrl());
-        this.setUBaseUrl(permission.getUBaseUrl());
-        this.setUMethod(permission.getUMethod());
-        this.setUName(permission.getUName());
-        this.setUConfig(permission.getUConfig());
-        this.setGMark(permission.getGMark());
-        this.setGName(permission.getGName());
-        this.setGWeight(permission.getGWeight());
-        this.setRConfig(permission.getRConfig());
-        this.setRAttribute(permission.getRAttribute());
+    private Integer uid;
+    private Integer gid;
+    private String uUrl;
+    private String uBaseUrl;
+    private String uMethod;
+    private String uName;
+    private String uConfig;
+    private Integer gWeight;
+    private String gMark;
+    private String gName;
+    private String rConfig;
+    private String rAttribute;
+
+    public PermissionDetails copy() {
+        final PermissionDetails result = new PermissionDetails();
+        result.setUid(uid);
+        result.setGid(gid);
+        result.setUUrl(uUrl);
+        result.setUBaseUrl(uBaseUrl);
+        result.setUMethod(uMethod);
+        result.setUName(uName);
+        result.setUConfig(uConfig);
+        result.setGWeight(gWeight);
+        result.setGMark(gMark);
+        result.setGName(gName);
+        result.setRConfig(rConfig);
+        result.setRAttribute(rAttribute);
+        return result;
     }
-
 }
