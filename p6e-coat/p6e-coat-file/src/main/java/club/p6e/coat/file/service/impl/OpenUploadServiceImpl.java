@@ -67,6 +67,7 @@ public class OpenUploadServiceImpl implements OpenUploadService {
         final UploadModel model = new UploadModel();
         final Object operator = context.get("operator");
         if (operator instanceof final String content) {
+            model.setOwner(content);
             model.setOperator(content);
         }
         final String path = folderPathService.path();

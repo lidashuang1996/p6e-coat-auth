@@ -24,6 +24,7 @@ public class JsonUtil {
      * @param o 对象
      * @return 序列化内容
      */
+    @SuppressWarnings("ALL")
     public static String toJson(Object o) {
         try {
             return OBJECT_MAPPER.writeValueAsString(o);
@@ -40,6 +41,7 @@ public class JsonUtil {
      * @param <T>    类型
      * @return 对象
      */
+    @SuppressWarnings("ALL")
     public static <T> T fromJson(String json, Class<T> tClass) {
         try {
             return OBJECT_MAPPER.readValue(json, tClass);
@@ -56,6 +58,7 @@ public class JsonUtil {
      * @param <T>         类型
      * @return 对象
      */
+    @SuppressWarnings("ALL")
     public static <T> T fromJson(InputStream inputStream, Class<T> tClass) {
         try {
             return OBJECT_MAPPER.readValue(inputStream, tClass);
@@ -74,6 +77,7 @@ public class JsonUtil {
      * @param <V>    value 对象类型
      * @return 对象
      */
+    @SuppressWarnings("ALL")
     public static <K, V> Map<K, V> fromJsonToMap(String json, Class<K> kClass, Class<V> vClass) {
         try {
             return OBJECT_MAPPER.readValue(json, OBJECT_MAPPER.getTypeFactory().constructParametricType(Map.class, kClass, vClass));

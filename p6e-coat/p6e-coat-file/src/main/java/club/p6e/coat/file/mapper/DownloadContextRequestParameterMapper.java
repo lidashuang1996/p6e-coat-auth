@@ -53,7 +53,7 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
             return Mono.error(new ParameterException(
                     this.getClass(),
                     "fun execute(ServerRequest request). " +
-                            "<" + PATH_PARAMETER_NAME + "> Request parameter format error",
+                            "<" + NODE_PARAMETER_NAME + "> Request parameter format error",
                     "<" + NODE_PARAMETER_NAME + "> Request parameter is null"
             ));
         }
@@ -62,7 +62,7 @@ public class DownloadContextRequestParameterMapper extends RequestParameterMappe
             final String pc = paths.get(0);
             final String name = FileUtil.name(pc);
             final String path = FileUtil.path(pc);
-            if (name == null || path == null) {
+            if (name == null) {
                 return Mono.error(new ParameterException(
                         this.getClass(),
                         "fun execute(ServerRequest request). " +

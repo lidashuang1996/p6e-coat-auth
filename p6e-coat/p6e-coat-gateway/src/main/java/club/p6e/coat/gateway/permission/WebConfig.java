@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.permission;
 
-import club.p6e.coat.gateway.permission.file.file.UploadFileCleanStrategyService;
-import club.p6e.coat.gateway.permission.file.file.UploadFileCleanTask;
+import club.p6e.coat.file.FileSliceCleanStrategyService;
+import club.p6e.coat.file.FileSliceCleanTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ public class WebConfig implements WebFluxConfigurer {
     }
 
     @Bean
-    public UploadFileCleanTask task(UploadFileCleanStrategyService service) {
-        return new UploadFileCleanTask(service);
+    public FileSliceCleanTask task(FileSliceCleanStrategyService service) {
+        return new FileSliceCleanTask(service);
     }
 
 }

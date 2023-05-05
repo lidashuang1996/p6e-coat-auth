@@ -27,6 +27,7 @@ public final class GeneratorUtil {
      *
      * @return UUID
      */
+    @SuppressWarnings("ALL")
     public static String uuid() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
@@ -36,6 +37,7 @@ public final class GeneratorUtil {
      *
      * @return 6 位随机数
      */
+    @SuppressWarnings("ALL")
     public static String random() {
         return random(6, false, false);
     }
@@ -46,6 +48,7 @@ public final class GeneratorUtil {
      * @param len 长度
      * @return 长度的随机数
      */
+    @SuppressWarnings("ALL")
     public static String random(int len, boolean isLetter, boolean isCase) {
         final StringBuilder sb = new StringBuilder();
         final int base = isLetter ? (isCase ? 62 : 36) : 10;

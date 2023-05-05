@@ -163,6 +163,7 @@
             xhr.onload = () => {
                 if (xhr.status === 200) {
                     document.getElementById('upload-slice-file-span').innerText = '100';
+					console.log(xhr);
                     resolve(JSON.parse(xhr.response))
                 } else {
                     resolve();

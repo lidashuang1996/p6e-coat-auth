@@ -1,8 +1,6 @@
 spring:
-  r2dbc:
-    url: r2dbc:pool:postgres://xxxx:5432/xx
-    username: postgres
-    password: ''
+  config:
+    import: D://env/p6e-coat-file-application.yml
   servlet:
     multipart:
       max-request-size: 15MB
@@ -15,18 +13,18 @@ p6e:
     file:
       downloads:
         test:
-          path: 'F://a/'
+          path: 'E://a/'
       resources:
         test:
-          path: 'F://a/'
+          path: 'E://a/'
           suffixes:
             jpg: image/jpeg
             png: image/png
             jpeg: image/jpeg
-            mp4: video/H264
+            mp4: video/mp4
       simple-upload:
-        path: 'F://a/'
+        path: 'E://a/'
         max-size: 15728640
       slice-upload:
-        path: 'F://a/'
+        path: 'E://a/'
         max-size: 15728640

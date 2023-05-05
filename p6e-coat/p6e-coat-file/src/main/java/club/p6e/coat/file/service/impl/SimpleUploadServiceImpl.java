@@ -84,8 +84,9 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
         final String absolutePath = FileUtil.convertAbsolutePath(
                 FileUtil.composePath(properties.getSimpleUpload().getPath(), path));
         final Object operator = context.get("operator");
-        if (operator != null) {
-            model.setOperator(String.valueOf(operator));
+        if (operator instanceof final String content) {
+            model.setOwner(content);
+            model.setOperator(content);
         }
         model.setName(name);
         model.setSource(SOURCE);
@@ -113,7 +114,10 @@ public class SimpleUploadServiceImpl implements SimpleUploadService {
                                             "File (" + f.getName() + ") upload exceeds the maximum length limit")
                                     );
                                 }
-                                return Mono.just(m);
+                                return Mono.just(f.length())
+                                        .flatMap(l -> repository.closeLock(m.getId()))
+                                        .flatMap(l -> repository.update(m.setSize(f.length())))
+                                        .flatMap(l -> repository.findById(m.getId()));
                             });
                 })
                 .map(UploadModel::toMap);

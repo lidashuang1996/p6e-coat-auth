@@ -98,7 +98,7 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                                 // 验证文件是否存在
                                 if (FileUtil.checkFileExist(file)) {
                                     if (mediaType instanceof final MediaType my) {
-                                        return Mono.just(new ResourceModel().setFile(file).setMediaType(my));
+                                        return Mono.just(new ResourceModel().setFile(file).setRanges(ranges).setMediaType(my));
                                     } else {
                                         return Mono.error(new MediaTypeException(
                                                 this.getClass(),
@@ -130,17 +130,20 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                             final MediaType mediaType = m.getMediaType();
                             final List<HttpRange> ranges = m.getRanges();
                             if (ranges != null && ranges.size() > 0) {
+                                long contentLength = 0;
                                 final List<String> headers = new ArrayList<>();
                                 final List<Flux<DataBuffer>> fluxes = new ArrayList<>();
                                 for (HttpRange range : ranges) {
                                     final long sl = range.getRangeStart(file.length());
                                     final long el = range.getRangeEnd(file.length());
-                                    fluxes.add(FileUtil.readFile(file, sl, el));
-                                    headers.add(sl + "-" + el + "/" + file.length());
+                                    contentLength = el - sl + 1;
+                                    fluxes.add(FileUtil.readFile(file, sl, contentLength));
+                                    headers.add("bytes " + sl + "-" + el + "/" + file.length());
                                 }
                                 return ServerResponse
                                         .status(HttpStatus.PARTIAL_CONTENT)
                                         .contentType(mediaType)
+                                        .contentLength(contentLength)
                                         .header(HttpHeaders.ACCEPT_RANGES, "bytes")
                                         .header(HttpHeaders.CONTENT_RANGE, headers.toArray(new String[0]))
                                         .body((response, context) -> response.writeWith(Flux.concat(fluxes)));
@@ -148,7 +151,6 @@ public class ResourceHandlerFunction extends AspectHandlerFunction implements Ha
                                 return ServerResponse
                                         .ok()
                                         .contentType(mediaType)
-                                        .header(HttpHeaders.ACCEPT_RANGES, "bytes")
                                         .body((response, context) -> response.writeWith(FileUtil.readFile(file)));
                             }
                         });

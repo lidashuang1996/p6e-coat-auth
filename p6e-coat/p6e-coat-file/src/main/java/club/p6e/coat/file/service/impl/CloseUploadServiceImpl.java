@@ -69,7 +69,11 @@ public class CloseUploadServiceImpl implements CloseUploadService {
                             }
                         }
                     }
+                    final Object operator = context.get("operator");
                     final long fileLength = FileUtil.obtainFileLength(files);
+                    if (operator instanceof final String content) {
+                        m.setOperator(content);
+                    }
                     return repository.update(m.setSize(fileLength))
                             .map(l -> {
                                 final Map<String, Object> map = m.toMap();

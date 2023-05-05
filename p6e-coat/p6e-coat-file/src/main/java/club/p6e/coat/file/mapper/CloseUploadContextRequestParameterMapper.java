@@ -81,11 +81,11 @@ public class CloseUploadContextRequestParameterMapper extends RequestParameterMa
             return Mono.just(context);
         } else {
             // 读取 URL ID 请求参数
-            final List<String> names = queryParams.get(URL_PARAMETER_ID);
-            if (names != null && names.size() > 0) {
+            final List<String> ids = queryParams.get(URL_PARAMETER_ID);
+            if (ids != null && ids.size() > 0) {
                 try {
                     // 如果读取到了 URL ID 那么就写入到上下文对象中
-                    context.setId(Integer.valueOf(names.get(0)));
+                    context.setId(Integer.valueOf(ids.get(0)));
                     return Mono.just(context);
                 } catch (Exception e) {
                     // 类型转换异常，请求参数不是我们需要的类型，抛出参数类型异常

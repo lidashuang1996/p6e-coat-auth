@@ -26,6 +26,8 @@ public class UploadModel implements Serializable {
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String SIZE = "size";
+    public static final String SOURCE = "source";
+    public static final String OWNER = "owner";
     public static final String STORAGE_LOCATION = "storageLocation";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
@@ -40,6 +42,7 @@ public class UploadModel implements Serializable {
     private Long size;
     private String source;
     private String storageLocation;
+    private String owner;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private String operator;
@@ -54,6 +57,7 @@ public class UploadModel implements Serializable {
         map.put("size", size);
         map.put("source", source);
         map.put("storageLocation", storageLocation);
+        map.put("owner", owner);
         map.put("createDate", createDate);
         map.put("updateDate", updateDate);
         map.put("operator", operator);

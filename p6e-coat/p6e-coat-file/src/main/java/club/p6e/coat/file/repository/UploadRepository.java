@@ -60,6 +60,9 @@ public class UploadRepository extends BaseRepository {
         if (model.getSize() == null) {
             model.setSize(0L);
         }
+        if (model.getOwner() == null) {
+            model.setOwner("sys");
+        }
         if (model.getOperator() == null) {
             model.setOperator("sys");
         }
@@ -123,7 +126,8 @@ public class UploadRepository extends BaseRepository {
                                         Criteria.where(UploadModel.ID).is(m.getId())
                                                 .and(UploadModel.VERSION).is(m.getVersion())))
                                 .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
-                                        .set(UploadModel.LOCK, m.getLock() + 1));
+                                        .set(UploadModel.LOCK, m.getLock() + 1)
+                                        .set(UploadModel.UPDATE_DATE, LocalDateTime.now()));
                     } else {
                         return Mono.error(new FileException(
                                 this.getClass(),
@@ -182,7 +186,8 @@ public class UploadRepository extends BaseRepository {
                                 Criteria.where(UploadModel.ID).is(m.getId())
                                         .and(UploadModel.VERSION).is(m.getVersion())))
                         .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
-                                .set(UploadModel.LOCK, m.getLock() - 1)));
+                                .set(UploadModel.LOCK, m.getLock() - 1)
+                                .set(UploadModel.UPDATE_DATE, LocalDateTime.now())));
     }
 
     /**
@@ -246,7 +251,9 @@ public class UploadRepository extends BaseRepository {
                                 .matching(Query.query(
                                         Criteria.where(UploadModel.ID).is(m.getId())
                                                 .and(UploadModel.VERSION).is(m.getVersion())))
-                                .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1).set(UploadModel.LOCK, -1));
+                                .apply(Update.update(UploadModel.VERSION, m.getVersion() + 1)
+                                        .set(UploadModel.LOCK, -1)
+                                        .set(UploadModel.UPDATE_DATE, LocalDateTime.now()));
                     } else {
                         return Mono.just(0L);
                     }
@@ -290,30 +297,25 @@ public class UploadRepository extends BaseRepository {
      * @return Mono<UploadModel> 受影响的数据条数
      */
     public Mono<Long> update(UploadModel model) {
-        Update update = null;
+        Update update = Update.update(UploadModel.UPDATE_DATE, LocalDateTime.now());
         if (model.getSize() != null) {
-            update = Update.update(UploadModel.SIZE, model.getSize());
+            update = update.set(UploadModel.SIZE, model.getSize());
         }
         if (model.getRubbish() != null) {
-            if (update == null) {
-                update = Update.update(UploadModel.RUBBISH, model.getRubbish());
-            } else {
-                update = update.set(UploadModel.RUBBISH, model.getRubbish());
-            }
+            update = update.set(UploadModel.RUBBISH, model.getRubbish());
         }
-        if (update == null) {
-            return Mono.just(0L);
-        } else {
-            final Update fUpdate = update;
-            return this.findById(model.getId())
-                    .flatMap(m -> r2dbcEntityTemplate
-                            .update(UploadModel.class)
-                            .matching(Query.query(
-                                    Criteria.where(UploadModel.ID).is(m.getId())
-                                            .and(UploadModel.VERSION).is(m.getVersion())))
-                            .apply(fUpdate)
-                    );
+        if (model.getOperator() != null) {
+            update = update.set(UploadModel.OPERATOR, model.getOperator());
         }
+        final Update fUpdate = update;
+        return this.findById(model.getId())
+                .flatMap(m -> r2dbcEntityTemplate
+                        .update(UploadModel.class)
+                        .matching(Query.query(
+                                Criteria.where(UploadModel.ID).is(m.getId())
+                                        .and(UploadModel.VERSION).is(m.getVersion())))
+                        .apply(fUpdate)
+                );
     }
 
     /**

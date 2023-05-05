@@ -62,7 +62,7 @@ public class ResourceContextRequestParameterMapper extends RequestParameterMappe
             final String pc = paths.get(0);
             final String path = FileUtil.path(pc);
             final String name = FileUtil.name(pc);
-            if (name == null || path == null) {
+            if (name == null) {
                 return Mono.error(new ParameterException(
                         this.getClass(),
                         "fun execute(ServerRequest request). " +

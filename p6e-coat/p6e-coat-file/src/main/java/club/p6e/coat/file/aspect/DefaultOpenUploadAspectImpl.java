@@ -26,7 +26,7 @@ public class DefaultOpenUploadAspectImpl implements OpenUploadAspect {
 
     @Override
     public Mono<Boolean> after(Map<String, Object> data, Map<String, Object> result) {
-        final Object id = data.get("id");
+        final Object id = result.get("id");
         result.clear();
         result.put("id", id);
         return Mono.just(true);

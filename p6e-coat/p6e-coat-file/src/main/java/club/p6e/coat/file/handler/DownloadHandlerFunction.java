@@ -136,25 +136,30 @@ public class DownloadHandlerFunction extends AspectHandlerFunction implements Ha
                                 ));
                             }
                             if (ranges != null && ranges.size() > 0) {
+                                long contentLength = 0;
                                 final List<String> headers = new ArrayList<>();
                                 final List<Flux<DataBuffer>> fluxes = new ArrayList<>();
                                 for (HttpRange range : ranges) {
                                     final long el = range.getRangeEnd(file.length());
                                     final long sl = range.getRangeStart(file.length());
-                                    fluxes.add(FileUtil.readFile(file, sl, el));
-                                    headers.add(sl + "-" + el + "/" + file.length());
+                                    contentLength = el - sl + 1;
+                                    fluxes.add(FileUtil.readFile(file, sl, contentLength));
+                                    headers.add("bytes " + sl + "-" + el + "/" + file.length());
                                 }
-                                return ServerResponse.status(HttpStatus.PARTIAL_CONTENT)
+                                return ServerResponse
+                                        .status(HttpStatus.PARTIAL_CONTENT)
+                                        .contentLength(contentLength)
+                                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
                                         .header(HttpHeaders.ACCEPT_RANGES, "bytes")
                                         .header(HttpHeaders.CONTENT_RANGE, headers.toArray(new String[0]))
                                         .header("Content-Disposition", "attachment; filename=" + fc)
-                                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
                                         .body((response, context) -> response.writeWith(Flux.concat(fluxes)));
                             } else {
                                 return ServerResponse.ok()
                                         .header(HttpHeaders.ACCEPT_RANGES, "bytes")
                                         .header("Content-Disposition", "attachment; filename=" + fc)
-                                        .contentType(MediaType.APPLICATION_OCTET_STREAM).body((response, context) -> response.writeWith(FileUtil.readFile(file)));
+                                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                                        .body((response, context) -> response.writeWith(FileUtil.readFile(file)));
                             }
                         });
     }

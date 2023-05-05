@@ -1,5 +1,6 @@
 package club.p6e.coat.file.service.impl;
 
+import club.p6e.coat.file.FileSignatureService;
 import club.p6e.coat.file.context.SliceUploadContext;
 import club.p6e.coat.file.error.FileException;
 import club.p6e.coat.file.Properties;
@@ -113,8 +114,9 @@ public class SliceUploadServiceImpl implements SliceUploadService {
                             }
                             return Mono.just(f);
                         })
-                        .flatMap(f -> FileUtil
-                                .obtainMD5Signature(f)
+                        .flatMap(f -> SpringUtil
+                                .getBean(FileSignatureService.class)
+                                .execute(f)
                                 .flatMap(s -> {
                                     LOGGER.info("[" + f.getAbsolutePath() + "] " +
                                             "signature => " + s + ", HTTP signature => " + signature);

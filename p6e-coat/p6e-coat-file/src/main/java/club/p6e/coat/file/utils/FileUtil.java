@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
-import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Predicate;
 
 /**
  * 文件帮助类
@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author lidashuang
  * @version 1.0
  */
-@SuppressWarnings("ALL")
 public final class FileUtil {
 
     /**
@@ -38,12 +37,6 @@ public final class FileUtil {
     private static final String PATH_OPPOSE_CONNECT_CHAR = "\\\\";
 
     /**
-     * HEX_CHARS
-     */
-    private static final char[] HEX_CHARS = new char[]
-            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-
-    /**
      * 文件缓冲区大小
      */
     private static final int FILE_BUFFER_SIZE = 1024 * 1024 * 5;
@@ -55,12 +48,33 @@ public final class FileUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
 
     /**
+     * 验证文件夹是否存在
+     *
+     * @param folder 文件夹对象
+     * @return 文件夹是否存在结果
+     */
+    @SuppressWarnings("ALL")
+    public static boolean checkFolderExist(File folder) {
+        return folder != null && folder.exists() && folder.isDirectory();
+    }
+
+    /**
+     * @param folderPath 文件夹路径
+     * @return 文件夹是否存在结果
+     */
+    @SuppressWarnings("ALL")
+    public static boolean checkFolderExist(String folderPath) {
+        return folderPath != null && !folderPath.isEmpty() && checkFolderExist(new File(folderPath));
+    }
+
+    /**
      * 创建文件夹
      *
      * @param folder 文件夹对象
      */
-    public static void createFolder(File folder) {
-        createFolder(folder, false);
+    @SuppressWarnings("ALL")
+    public static boolean createFolder(File folder) {
+        return createFolder(folder, false);
     }
 
     /**
@@ -69,20 +83,30 @@ public final class FileUtil {
      * @param folder      文件夹对象
      * @param deleteExist 是否删除存在的文件夹
      */
-    public static void createFolder(File folder, boolean deleteExist) {
-        boolean status = true;
+    @SuppressWarnings("ALL")
+    public static boolean createFolder(File folder, boolean deleteExist) {
+        if (folder == null) {
+            return false;
+        }
         final String absolutePath = folder.getAbsolutePath();
         if (folder.exists()) {
             LOGGER.debug("[ CreateFolder ] => " + absolutePath + " exists !");
             if (deleteExist) {
                 LOGGER.debug("[ CreateFolder ] => " + absolutePath + " exists >>> need delete !");
-                LOGGER.debug("[ CreateFolder ] => " + absolutePath + " delete >>> " + deleteFolder(folder));
+                if (deleteFolder(folder)) {
+                    LOGGER.debug("[ CreateFolder ] => " + absolutePath + " delete >>> success !");
+                } else {
+                    return false;
+                }
             } else {
-                status = false;
+                return true;
             }
         }
-        if (status) {
-            LOGGER.debug("[ CreateFolder ] => " + absolutePath + " mkdirs >>> " + folder.mkdirs());
+        if (folder.mkdirs()) {
+            LOGGER.debug("[ CreateFolder ] => " + absolutePath + " mkdirs >>> success !");
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -91,8 +115,9 @@ public final class FileUtil {
      *
      * @param folderPath 文件夹路径
      */
-    public static void createFolder(String folderPath) {
-        createFolder(folderPath, false);
+    @SuppressWarnings("ALL")
+    public static boolean createFolder(String folderPath) {
+        return createFolder(folderPath, false);
     }
 
     /**
@@ -101,8 +126,13 @@ public final class FileUtil {
      * @param folderPath  文件夹路径
      * @param deleteExist 是否删除存在的文件夹
      */
-    public static void createFolder(String folderPath, boolean deleteExist) {
-        createFolder(new File(folderPath), deleteExist);
+    @SuppressWarnings("ALL")
+    public static boolean createFolder(String folderPath, boolean deleteExist) {
+        if (folderPath == null) {
+            return false;
+        } else {
+            return createFolder(new File(folderPath), deleteExist);
+        }
     }
 
     /**
@@ -110,7 +140,11 @@ public final class FileUtil {
      *
      * @param folder 文件夹对象
      */
+    @SuppressWarnings("ALL")
     public static boolean deleteFolder(File folder) {
+        if (folder == null) {
+            return false;
+        }
         if (folder.isDirectory()) {
             boolean result = true;
             LOGGER.debug("[ DeleteFolder ] => " + folder.getAbsolutePath() + " >>> [START]");
@@ -143,36 +177,76 @@ public final class FileUtil {
      *
      * @param folderPath 文件夹路径
      */
+    @SuppressWarnings("ALL")
     public static boolean deleteFolder(String folderPath) {
-        return deleteFolder(new File(folderPath));
+        if (folderPath == null) {
+            return false;
+        } else {
+            return deleteFolder(new File(folderPath));
+        }
+
     }
 
     /**
-     * 删除文件
+     * 读取文件夹内容
      *
-     * @param file 文件对象
-     * @return 删除操作结果
+     * @param folderPath 文件夹路径
+     * @return 读取文件夹的内容
      */
-    public static boolean deleteFile(File file) {
-        if (file.isFile()) {
-            final boolean result = file.delete();
-            LOGGER.debug("[ DeleteFile ] => " + file.getAbsolutePath() + " delete >>> " + result);
-            return result;
+    @SuppressWarnings("ALL")
+    public static File[] readFolder(String folderPath) {
+        return readFolder(folderPath, null);
+    }
+
+    /**
+     * 读取文件夹内容
+     *
+     * @param folderPath 文件夹路径
+     * @param predicate  过滤器断言
+     * @return 读取文件夹的内容
+     */
+    @SuppressWarnings("ALL")
+    public static File[] readFolder(String folderPath, Predicate<? super File> predicate) {
+        if (checkFolderExist(folderPath)) {
+            return readFolder(new File(folderPath), predicate);
         } else {
-            LOGGER.debug("[ DeleteFile ] ERROR => " + file.getAbsolutePath() + " is not file.");
-            return false;
+            return new File[0];
         }
     }
 
     /**
-     * 删除文件
+     * 读取文件夹
      *
-     * @param filePath 文件路径
-     * @return 删除操作结果
+     * @param folder 文件夹对象
+     * @return 文件列表
      */
-    public static boolean deleteFile(String filePath) {
-        return deleteFile(new File(filePath));
+    @SuppressWarnings("ALL")
+    public static File[] readFolder(File folder) {
+        return readFolder(folder, null);
     }
+
+    /**
+     * 读取文件夹
+     *
+     * @param folder    文件夹对象
+     * @param predicate 过滤器断言
+     * @return 文件列表
+     */
+    @SuppressWarnings("ALL")
+    public static File[] readFolder(File folder, Predicate<? super File> predicate) {
+        if (folder != null && folder.isDirectory()) {
+            final File[] files = folder.listFiles();
+            if (files != null && files.length > 0) {
+                if (predicate == null) {
+                    return files;
+                } else {
+                    return Arrays.stream(files).filter(predicate).toList().toArray(new File[0]);
+                }
+            }
+        }
+        return new File[0];
+    }
+
 
     /**
      * 验证文件是否存在
@@ -180,6 +254,7 @@ public final class FileUtil {
      * @param file 文件对象
      * @return 文件是否存在结果
      */
+    @SuppressWarnings("ALL")
     public static boolean checkFileExist(File file) {
         return file != null && file.exists() && file.isFile();
     }
@@ -188,110 +263,42 @@ public final class FileUtil {
      * @param filePath 文件路径
      * @return 文件是否存在结果
      */
+    @SuppressWarnings("ALL")
     public static boolean checkFileExist(String filePath) {
-        return checkFileExist(new File(filePath));
+        return filePath != null && !filePath.isEmpty() && checkFileExist(new File(filePath));
     }
 
     /**
-     * 验证文件夹是否存在
+     * 删除文件
      *
-     * @param folder 文件夹对象
-     * @return 文件夹是否存在结果
+     * @param file 文件对象
+     * @return 删除操作结果
      */
-    public static boolean checkFolderExist(File folder) {
-        return folder != null && folder.exists() && folder.isDirectory();
-    }
-
-    /**
-     * @param folderPath 文件夹路径
-     * @return 文件夹是否存在结果
-     */
-    public static boolean checkFolderExist(String folderPath) {
-        return checkFileExist(new File(folderPath));
-    }
-
-    /**
-     * 文件路径拼接
-     *
-     * @param left  拼接左边
-     * @param right 拼接右边
-     * @return 拼接后的文件路径
-     */
-    public static String composePath(String left, String right) {
-        if (left == null || right == null) {
-            return "";
+    @SuppressWarnings("ALL")
+    public static boolean deleteFile(File file) {
+        if (file == null) {
+            return false;
         } else {
-            final StringBuilder result = new StringBuilder();
-            if (left.endsWith(PATH_CONNECT_CHAR)) {
-                result.append(left, 0, left.length() - 1);
+            if (file.isFile()) {
+                final boolean result = file.delete();
+                LOGGER.debug("[ DeleteFile ] => " + file.getAbsolutePath() + " delete >>> " + result);
+                return result;
             } else {
-                result.append(left);
-            }
-            result.append(PATH_CONNECT_CHAR);
-            if (right.startsWith(PATH_CONNECT_CHAR)) {
-                result.append(right, 1, right.length());
-            } else {
-                result.append(right);
-            }
-            return result.toString();
-        }
-    }
-
-    /**
-     * 路径转换为绝对路径
-     *
-     * @param path 待转换路径
-     * @return 转换为绝对路径
-     */
-    public static String convertAbsolutePath(String path) {
-        if (path == null) {
-            return "";
-        } else {
-            if (path.startsWith(PATH_CONNECT_CHAR)) {
-                return path;
-            } else {
-                return PATH_CONNECT_CHAR + path;
+                LOGGER.debug("[ DeleteFile ] ERROR => " + file.getAbsolutePath() + " is not file.");
+                return false;
             }
         }
     }
 
     /**
-     * 文件拼接
+     * 删除文件
      *
-     * @param left  文件名称
-     * @param right 文件后缀
-     * @return 拼接后的文件
+     * @param filePath 文件路径
+     * @return 删除操作结果
      */
-    public static String composeFile(String left, String right) {
-        if (left == null
-                || right == null
-                || left.isEmpty()
-                || right.isEmpty()) {
-            return null;
-        } else {
-            return left + FILE_CONNECT_CHAR + right;
-        }
-    }
-
-    /**
-     * 获取文件后缀
-     *
-     * @param content 文件名称
-     * @return 文件后缀
-     */
-    public static String getSuffix(String content) {
-        if (content != null && !content.isEmpty()) {
-            final StringBuilder suffix = new StringBuilder();
-            for (int i = content.length() - 1; i >= 0; i--) {
-                final String ch = String.valueOf(content.charAt(i));
-                if (FILE_CONNECT_CHAR.equals(ch)) {
-                    return suffix.toString();
-                } else {
-                    suffix.insert(0, ch);
-                }
-            }
-        }
-        return null;
+    @SuppressWarnings("ALL")
+    public static boolean deleteFile(String filePath) {
+        return filePath != null && !filePath.isEmpty() && deleteFile(new File(filePath));
     }
 
     /**
@@ -300,6 +307,7 @@ public final class FileUtil {
      * @param file 文件对象
      * @return Flux<DataBuffer> 读取的文件内容
      */
+    @SuppressWarnings("ALL")
     public static Flux<DataBuffer> readFile(File file) {
         return readFile(file, 0L, -1L);
     }
@@ -307,11 +315,14 @@ public final class FileUtil {
     /**
      * 读取文件内容
      *
-     * @param file 文件对象
+     * @param file     文件对象
+     * @param position 文件索引
+     * @param size     文件长度
      * @return Flux<DataBuffer> 读取的文件内容
      */
+    @SuppressWarnings("ALL")
     public static Flux<DataBuffer> readFile(File file, long position, long size) {
-        if (file.isFile()) {
+        if (file != null && checkFileExist(file)) {
             try {
                 final long fSize = size >= 0 ? size : 1 + size + file.length();
                 final AtomicLong at = new AtomicLong(0);
@@ -352,89 +363,76 @@ public final class FileUtil {
      * @param file           文件对象
      * @return Mono<Void> 对象
      */
+    @SuppressWarnings("ALL")
     public static Mono<Void> writeFile(Flux<DataBuffer> dataBufferFlux, File file) {
         return DataBufferUtils.write(dataBufferFlux, file.toPath(),
                 StandardOpenOption.CREATE, StandardOpenOption.WRITE);
     }
 
     /**
-     * 读取文件夹
+     * 文件拼接
      *
-     * @param folderPath 文件夹路径
-     * @return 文件列表
+     * @param left  文件名称
+     * @param right 文件后缀
+     * @return 拼接后的文件
      */
-    public static File[] readFolder(String folderPath) {
-        return readFolder(new File(folderPath));
-    }
-
-    /**
-     * 读取文件夹
-     *
-     * @param folder 文件夹对象
-     * @return 文件列表
-     */
-    public static File[] readFolder(File folder) {
-        if (folder.isDirectory()) {
-            final File[] files = folder.listFiles();
-            if (files != null && files.length > 0) {
-                return Arrays.stream(files).filter(f -> {
-                    return f.isFile() && !f.getName().startsWith(".");
-                }).toList().toArray(new File[0]);
-            } else {
-                return new File[0];
-            }
-        } else {
+    @SuppressWarnings("ALL")
+    public static String composeFile(String name, String suffix) {
+        if (name == null
+                || suffix == null
+                || name.isEmpty()
+                || suffix.isEmpty()) {
             return null;
-        }
-    }
-
-    /**
-     * 获取文件 MD5 签名
-     *
-     * @param file 文件对象
-     * @return 签名内容
-     */
-    public static Mono<String> obtainMD5Signature(File file) {
-        if (file.isFile()) {
-            final MessageDigest md;
-            try {
-                md = MessageDigest.getInstance("MD5");
-            } catch (Exception e) {
-                return Mono.error(e);
-            }
-            return readFile(file)
-                    .flatMap(buffer -> {
-                        md.update(buffer.toByteBuffer());
-                        return Mono.just(buffer.readPosition());
-                    })
-                    .collectList()
-                    .flatMap(l -> {
-                        final byte[] md5Bytes = md.digest();
-                        final char[] chars = new char[32];
-                        for (int i = 0; i < chars.length; i += 2) {
-                            final byte b = md5Bytes[i / 2];
-                            chars[i] = HEX_CHARS[b >>> 4 & 15];
-                            chars[i + 1] = HEX_CHARS[b & 15];
-                        }
-                        return Mono.just(new String(chars));
-                    });
         } else {
-            return Mono.error(new FileException(
-                    FileUtil.class,
-                    "fun readFile(File file). -> The read content is not a file.",
-                    "The read content is not a file"
-            ));
+            return name + FILE_CONNECT_CHAR + suffix;
         }
     }
 
     /**
-     * 获取文件 MD5 签名
+     * 文件路径拼接
      *
-     * @param filePath 文件路径
-     * @return 签名内容
+     * @param left  拼接左边
+     * @param right 拼接右边
+     * @return 拼接后的文件路径
      */
-    public static Mono<String> obtainMD5Signature(String filePath) {
-        return obtainMD5Signature(new File(filePath));
+    @SuppressWarnings("ALL")
+    public static String composePath(String left, String right) {
+        if (left == null || right == null) {
+            return null;
+        } else {
+            final StringBuilder result = new StringBuilder();
+            if (left.endsWith(PATH_CONNECT_CHAR)) {
+                result.append(left, 0, left.length() - 1);
+            } else {
+                result.append(left);
+            }
+            result.append(PATH_CONNECT_CHAR);
+            if (right.startsWith(PATH_CONNECT_CHAR)) {
+                result.append(right, 1, right.length());
+            } else {
+                result.append(right);
+            }
+            return result.toString();
+        }
+    }
+
+    /**
+     * 路径转换为绝对路径
+     *
+     * @param path 待转换路径
+     * @return 转换为绝对路径
+     */
+    @SuppressWarnings("ALL")
+    public static String convertAbsolutePath(String path) {
+        if (path == null) {
+            return null;
+        } else {
+            if (path.startsWith(PATH_CONNECT_CHAR)) {
+                return path;
+            } else {
+                return PATH_CONNECT_CHAR + path;
+            }
+        }
     }
 
     /**
@@ -442,8 +440,31 @@ public final class FileUtil {
      *
      * @return 文件名称
      */
+    @SuppressWarnings("ALL")
     public static String generateName() {
         return GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false);
+    }
+
+    /**
+     * 获取文件后缀
+     *
+     * @param content 文件名称
+     * @return 文件后缀
+     */
+    @SuppressWarnings("ALL")
+    public static String getSuffix(String content) {
+        if (content != null && !content.isEmpty()) {
+            final StringBuilder suffix = new StringBuilder();
+            for (int i = content.length() - 1; i >= 0; i--) {
+                final String ch = String.valueOf(content.charAt(i));
+                if (FILE_CONNECT_CHAR.equals(ch)) {
+                    return suffix.toString();
+                } else {
+                    suffix.insert(0, ch);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -452,6 +473,7 @@ public final class FileUtil {
      * @param files 文件对象
      * @return 文件的长度
      */
+    @SuppressWarnings("ALL")
     public static long obtainFileLength(File... files) {
         long length = 0;
         if (files == null || files.length == 0) {
@@ -473,8 +495,11 @@ public final class FileUtil {
      * @param filePath 合并后的文件路径
      * @return 合并后的文件对象
      */
+    @SuppressWarnings("ALL")
     public static Mono<File> mergeFileSlice(File[] files, String filePath) {
-        if (files == null || filePath == null) {
+        if (files == null
+                || filePath == null
+                || files.length == 0) {
             return Mono.empty();
         } else {
             final File file = new File(filePath);
@@ -482,7 +507,7 @@ public final class FileUtil {
                 deleteFile(file);
             }
             return writeFile(Flux.concat(
-                    Arrays.stream(files).map(f -> readFile(f)).toList().toArray(new Flux[0])
+                    Arrays.stream(files).map(FileUtil::readFile).toList()
             ), file).then(Mono.just(file));
         }
     }
@@ -493,6 +518,7 @@ public final class FileUtil {
      * @param content 内容
      * @return 文件名称
      */
+    @SuppressWarnings("ALL")
     public static String name(String content) {
         boolean bool = false;
         final StringBuilder sb = new StringBuilder();
@@ -508,7 +534,7 @@ public final class FileUtil {
                 sb.insert(0, ch);
             }
         }
-        return bool && !FILE_CONNECT_CHAR.equals(String.valueOf(sb.charAt(0))) ? sb.toString() : null;
+        return bool && sb.length() > 0 && !FILE_CONNECT_CHAR.equals(String.valueOf(sb.charAt(0))) ? sb.toString() : null;
     }
 
 
@@ -518,11 +544,16 @@ public final class FileUtil {
      * @param content 内容
      * @return 文件路径
      */
+    @SuppressWarnings("ALL")
     public static String path(String content) {
-        boolean bool = (name(content) == null);
         content = content
+                .replaceAll(FILE_CONNECT_CHAR + FILE_CONNECT_CHAR + PATH_CONNECT_CHAR, "")
+                .replaceAll(FILE_CONNECT_CHAR + FILE_CONNECT_CHAR + PATH_OPPOSE_CONNECT_CHAR, "")
+                .replaceAll(FILE_CONNECT_CHAR + PATH_CONNECT_CHAR, "")
+                .replaceAll(FILE_CONNECT_CHAR + PATH_OPPOSE_CONNECT_CHAR, "")
                 .replaceAll(PATH_CONNECT_CHAR + PATH_CONNECT_CHAR, "")
                 .replaceAll(PATH_OPPOSE_CONNECT_CHAR + PATH_OPPOSE_CONNECT_CHAR, "");
+        boolean bool = (name(content) == null);
         final StringBuilder sb = new StringBuilder();
         for (int j = content.length() - 1; j >= 0; j--) {
             final String ch = String.valueOf(content.charAt(j));
@@ -532,6 +563,7 @@ public final class FileUtil {
                 sb.insert(0, ch);
             }
         }
-        return sb.length() == 0 ? null : sb.toString();
+        return sb.toString();
     }
+
 }
