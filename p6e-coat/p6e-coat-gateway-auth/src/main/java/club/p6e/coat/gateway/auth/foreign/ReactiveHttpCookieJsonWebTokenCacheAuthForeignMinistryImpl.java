@@ -9,8 +9,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -51,7 +51,7 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getAccessTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             final String value = cookies.get(0).getValue().trim();
@@ -67,7 +67,7 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getRefreshTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             final String value = cookies.get(0).getValue().trim();
@@ -83,12 +83,12 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerRequest request, ServerResponse response) {
+    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
         return apply(request, response, verificationAccessToken(request));
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerRequest request, ServerResponse response) {
+    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
         // JWT 无法主动过期
         final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = verificationAccessToken(request);
         foreignMinistryVisaTemplate.setAttribute("$error", "JWT unable to actively expire.");
@@ -100,12 +100,13 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
                 ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
         refreshCookieBuilder.httpOnly(true);
         refreshCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-        response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
         return foreignMinistryVisaTemplate;
     }
 
     @Override
-    public Mono<Object> apply(ServerRequest request, ServerResponse response, AuthForeignMinistryVisaTemplate template) {
+    public Mono<Object> apply(ServerHttpRequest request, ServerHttpResponse response, AuthForeignMinistryVisaTemplate template) {
         final Date date = new Date(LocalDateTime.now()
                 .plusSeconds(COOKIE_EXPIRATION_TIME).toInstant(ZoneOffset.of("+8")).toEpochMilli());
         final String accessToken = JWT.create()
@@ -120,7 +121,7 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
                 ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken);
         accessCookieBuilder.httpOnly(true);
         accessCookieBuilder.maxAge(COOKIE_EXPIRATION_TIME);
-        response.cookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessCookieBuilder.build());
         final String refreshToken = JWT.create()
                 // 设置过期时间
                 .withExpiresAt(date)
@@ -133,7 +134,7 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
                 ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshToken);
         refreshCookieBuilder.httpOnly(true);
         refreshCookieBuilder.maxAge(COOKIE_EXPIRATION_TIME);
-        response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
         return Mono.just(SUCCESS_RESULT);
     }
 }

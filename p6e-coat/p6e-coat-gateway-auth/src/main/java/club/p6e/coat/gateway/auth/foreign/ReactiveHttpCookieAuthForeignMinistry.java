@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.foreign;
 
 import org.springframework.http.HttpCookie;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -77,12 +78,12 @@ public abstract class ReactiveHttpCookieAuthForeignMinistry {
     /**
      * 获取 COOKIE 对象
      *
-     * @param request  ServerRequest 对象
-     * @param name     名称
+     * @param request ServerRequest 对象
+     * @param name    名称
      * @return COOKIE 对象
      */
-    protected List<HttpCookie> getCookie(ServerRequest request, String name) {
-        final MultiValueMap<String, HttpCookie> cookies = request.cookies();
+    protected List<HttpCookie> getCookie(ServerHttpRequest request, String name) {
+        final MultiValueMap<String, HttpCookie> cookies = request.getCookies();
         final List<HttpCookie> list = cookies.get(name);
         return list == null || list.size() == 0 ? null : list;
     }
@@ -93,7 +94,7 @@ public abstract class ReactiveHttpCookieAuthForeignMinistry {
      * @param request HttpServletRequest 对象
      * @return ACCESS TOKEN COOKIE 内容
      */
-    protected List<HttpCookie> getAccessTokenCookie(ServerRequest request) {
+    protected List<HttpCookie> getAccessTokenCookie(ServerHttpRequest request) {
         return getCookie(request, AUTH_COOKIE_ACCESS_TOKEN_NAME);
     }
 
@@ -103,7 +104,7 @@ public abstract class ReactiveHttpCookieAuthForeignMinistry {
      * @param request HttpServletRequest 对象
      * @return REFRESH TOKEN COOKIE 内容
      */
-    protected List<HttpCookie> getRefreshTokenCookie(ServerRequest request) {
+    protected List<HttpCookie> getRefreshTokenCookie(ServerHttpRequest request) {
         return getCookie(request, AUTH_COOKIE_REFRESH_TOKEN_NAME);
     }
 

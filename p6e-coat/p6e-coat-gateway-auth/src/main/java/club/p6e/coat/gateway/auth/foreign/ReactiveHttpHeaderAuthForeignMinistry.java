@@ -1,7 +1,8 @@
 package club.p6e.coat.gateway.auth.foreign;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public abstract class ReactiveHttpHeaderAuthForeignMinistry {
      *
      * @return ACCESS TOKEN 内容
      */
-    protected String getAccessToken(ServerRequest request) {
+    protected String getAccessToken(ServerHttpRequest request) {
         String accessToken = getHeaderToken(request);
         if (accessToken == null) {
             accessToken = getParamValue(request, ACCESS_TOKEN_PARAM1, ACCESS_TOKEN_PARAM2);
@@ -85,7 +86,7 @@ public abstract class ReactiveHttpHeaderAuthForeignMinistry {
      *
      * @return REFRESH TOKEN 内容
      */
-    protected String getRefreshToken(ServerRequest request) {
+    protected String getRefreshToken(ServerHttpRequest request) {
         return getParamValue(request, REFRESH_TOKEN_PARAM1, REFRESH_TOKEN_PARAM2);
     }
 
@@ -95,11 +96,12 @@ public abstract class ReactiveHttpHeaderAuthForeignMinistry {
      * @param params 参数名称
      * @return 读取的参数名称对应的值
      */
-    protected String getParamValue(ServerRequest request, String... params) {
-        for (String param : params) {
-            final Optional<String> optional = request.queryParam(param);
-            if (optional.isPresent()) {
-                return optional.get();
+    protected String getParamValue(ServerHttpRequest request, String... params) {
+        final MultiValueMap<String, String> qp = request.getQueryParams();
+        for (final String key : params) {
+            final List<String> values = qp.get(key);
+            if (values != null && values.size() > 0) {
+                return values.get(0);
             }
         }
         return null;
@@ -110,8 +112,8 @@ public abstract class ReactiveHttpHeaderAuthForeignMinistry {
      *
      * @return 头部的令牌信息
      */
-    protected String getHeaderToken(ServerRequest request) {
-        final HttpHeaders headers = request.headers().asHttpHeaders();
+    protected String getHeaderToken(ServerHttpRequest request) {
+        final HttpHeaders headers = request.getHeaders();
         final List<String> list = headers.get(AUTH_HEADER);
         if (list != null && list.size() > 0) {
             final String content = list.get(0);

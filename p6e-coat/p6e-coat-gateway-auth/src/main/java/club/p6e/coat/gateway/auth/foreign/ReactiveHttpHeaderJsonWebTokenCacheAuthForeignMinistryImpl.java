@@ -8,8 +8,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -48,7 +48,7 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
@@ -63,7 +63,7 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
         final String refreshToken = getRefreshToken(request);
         if (refreshToken != null) {
             try {
@@ -78,12 +78,12 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerRequest request, ServerResponse response) {
+    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
         return apply(request, response, verificationAccessToken(request));
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerRequest request, ServerResponse response) {
+    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
         // JWT 无法主动过期
         final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = verificationAccessToken(request);
         foreignMinistryVisaTemplate.setAttribute("$error", "JWT unable to actively expire.");
@@ -91,7 +91,7 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Mono<Object> apply(ServerRequest request, ServerResponse response, AuthForeignMinistryVisaTemplate template) {
+    public Mono<Object> apply(ServerHttpRequest request, ServerHttpResponse response, AuthForeignMinistryVisaTemplate template) {
         final Date date = new Date(LocalDateTime.now()
                 .plusSeconds(EXPIRATION_TIME).toInstant(ZoneOffset.of("+8")).toEpochMilli());
         final String accessToken = JWT.create()

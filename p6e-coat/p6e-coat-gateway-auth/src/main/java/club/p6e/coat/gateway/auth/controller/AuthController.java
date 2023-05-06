@@ -13,13 +13,13 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
 import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -48,7 +48,7 @@ public class AuthController {
     @PostMapping("/login")
     public Mono<ResultContext> login(
             @RequestBody LoginContext.Request param,
-            ServerRequest request, ServerResponse response
+            ServerHttpRequest request, ServerHttpResponse response
     ) {
         if (properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null
@@ -73,7 +73,7 @@ public class AuthController {
     @PostMapping("/login/verification_code")
     public Mono<ResultContext> verificationCodeLogin(
             @RequestBody VerificationCodeLoginContext.Request param,
-            ServerRequest request, ServerResponse response
+            ServerHttpRequest request, ServerHttpResponse response
     ) {
         if (properties.getLogin().getVerificationCode().isEnable()) {
             if (param == null
@@ -98,7 +98,7 @@ public class AuthController {
     @PostMapping("/login/quick_response_code")
     public Mono<ResultContext> quickResponseCodeLogin(
             @RequestBody QRCodeLoginContext.Request param,
-            ServerRequest request, ServerResponse response
+            ServerHttpRequest request, ServerHttpResponse response
     ) {
         if (properties.getLogin().getQrCode().isEnable()) {
             if (param == null

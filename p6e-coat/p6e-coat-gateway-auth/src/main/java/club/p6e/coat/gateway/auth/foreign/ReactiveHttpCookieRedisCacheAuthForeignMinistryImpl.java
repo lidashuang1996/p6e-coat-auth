@@ -5,6 +5,8 @@ import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.AuthException;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -55,7 +57,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
 
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getAccessTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             try {
@@ -75,7 +77,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getAccessTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             try {
@@ -96,13 +98,13 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
 
 
     @Override
-    public Object refresh(ServerRequest request, ServerResponse response) {
+    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
         final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = delete(request, response);
         return apply(request, response, foreignMinistryVisaTemplate);
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerRequest request, ServerResponse response) {
+    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
         final List<HttpCookie> cookies = getAccessTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             try {
@@ -121,8 +123,8 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
                                     ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
                             refreshCookieBuilder.httpOnly(true);
                             refreshCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-                            response.cookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
-                            response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+                            response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
+                            response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
                             return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
                         }
                     } finally {
@@ -137,7 +139,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Mono<Object> apply(ServerRequest request, ServerResponse response, AuthForeignMinistryVisaTemplate template) {
+    public Mono<Object> apply(ServerHttpRequest request, ServerHttpResponse response, AuthForeignMinistryVisaTemplate template) {
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
         final AuthCache.Token token = cache.set(template.getId(), template.serialize(), accessToken, refreshToken);
@@ -149,8 +151,8 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
                 ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, token.getAccessToken());
         refreshCookieBuilder.httpOnly(true);
         refreshCookieBuilder.maxAge(COOKIE_EXPIRATION_TIME);
-        response.cookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
-        response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
+        response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
         return Mono.just(SUCCESS_RESULT);
     }
 

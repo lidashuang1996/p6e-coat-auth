@@ -4,9 +4,9 @@ import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.AuthException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
@@ -58,7 +58,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
@@ -77,7 +77,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerRequest request) {
+    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
         final String refreshToken = getRefreshToken(request);
         if (refreshToken != null) {
             try {
@@ -96,13 +96,13 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerRequest request, ServerResponse response) {
+    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
         final AuthForeignMinistryVisaTemplate template = delete(request, response);
         return apply(request, response, template);
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerRequest request, ServerResponse response) {
+    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
@@ -126,7 +126,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Mono<Object> apply(ServerRequest request, ServerResponse response, AuthForeignMinistryVisaTemplate template) {
+    public Mono<Object> apply(ServerHttpRequest request, ServerHttpResponse response, AuthForeignMinistryVisaTemplate template) {
         final String uid = template.getId();
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
