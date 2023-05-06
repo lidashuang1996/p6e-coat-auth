@@ -1,5 +1,7 @@
-package club.p6e.coat.gateway.auth;
+package club.p6e.coat.gateway.auth.generator.impl;
 
+import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
+import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
 import org.springframework.stereotype.Component;
 

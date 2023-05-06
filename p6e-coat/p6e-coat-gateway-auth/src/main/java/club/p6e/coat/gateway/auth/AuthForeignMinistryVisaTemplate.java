@@ -25,7 +25,6 @@ public class AuthForeignMinistryVisaTemplate {
         return authentication;
     }
 
-
     public static AuthForeignMinistryVisaTemplate deserialization(String content) {
         return AuthForeignMinistryVisaTemplate.create(null);
     }

@@ -13,44 +13,47 @@ import org.springframework.security.web.server.authentication.HttpStatusServerEn
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter;
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatcher;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
+import org.springframework.stereotype.Component;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
+@Component
 @Configuration
 @EnableWebFluxSecurity
 public class AuthSecurityConfiguration {
 
     @Bean
-    public SecurityWebFilterChain injectionSecurityWebFilterChainBean(ServerHttpSecurity http, AuthenticationWebFilter filter) {
-        return http.authorizeExchange().matchers(new ServerWebExchangeMatcher() {
-                    @Override
-                    public Mono<MatchResult> matches(ServerWebExchange exchange) {
-                        System.out.println(
-                                exchange.getRequest().getPath().value()
-                        );
-                        return (exchange.getRequest().getPath().value()).startsWith("/test") ? MatchResult.notMatch() : MatchResult.match();
-                    }
-                }).permitAll()
-                .anyExchange().authenticated()
+    public AuthenticationWebFilter injectionAuthenticationWebFilter(
+            ReactiveAuthenticationManager manager,
+            ServerAuthenticationConverter converter
+    ) {
+        final AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(manager);
+        authenticationWebFilter.setServerAuthenticationConverter(converter);
+        authenticationWebFilter.setAuthenticationFailureHandler(
+                new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)));
+        return authenticationWebFilter;
+    }
+
+    @Bean
+    public SecurityWebFilterChain injectionSecurityWebFilterChainBean(
+            ServerHttpSecurity http,
+            AuthenticationWebFilter filter,
+            ServerWebExchangeMatcher matcher
+    ) {
+        return http
+                .authorizeExchange()
+                .matchers(matcher)
+                .permitAll()
+                .anyExchange()
+                .authenticated()
                 .and()
                 .httpBasic().disable()
                 .formLogin().disable()
                 .csrf().disable()
                 .addFilterAt(filter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
-    }
-
-
-    @Bean
-    public AuthenticationWebFilter authenticationWebFilter(ReactiveAuthenticationManager manager, ServerAuthenticationConverter converter) {
-        AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(manager);
-        authenticationWebFilter.setServerAuthenticationConverter(converter);
-        authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)));
-        return authenticationWebFilter;
     }
 
 }

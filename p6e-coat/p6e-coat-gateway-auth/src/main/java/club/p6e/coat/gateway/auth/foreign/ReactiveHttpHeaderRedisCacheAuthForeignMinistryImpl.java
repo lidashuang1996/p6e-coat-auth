@@ -3,6 +3,8 @@ package club.p6e.coat.gateway.auth.foreign;
 import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.AuthException;
+import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
+import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;

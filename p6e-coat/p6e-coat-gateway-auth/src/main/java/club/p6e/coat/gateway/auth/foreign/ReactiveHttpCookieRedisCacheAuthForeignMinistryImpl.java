@@ -3,12 +3,12 @@ package club.p6e.coat.gateway.auth.foreign;
 import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.AuthException;
+import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
+import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

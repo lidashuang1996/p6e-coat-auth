@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.auth;
+package club.p6e.coat.gateway.auth.generator;
 
 /**
  * 生成令牌客户端认证令牌
