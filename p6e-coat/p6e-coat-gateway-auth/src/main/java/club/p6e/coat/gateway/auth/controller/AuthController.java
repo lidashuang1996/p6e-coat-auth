@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.controller;
 
 import club.p6e.coat.gateway.auth.AuthForeignMinistry;
 import club.p6e.coat.gateway.auth.AuthForeignMinistryVisaTemplate;
+import club.p6e.coat.gateway.auth.JsonSerializeDeserializeAuthentication;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.authentication.AccountPasswordAuthenticationVoucherToken;
 import club.p6e.coat.gateway.auth.authentication.QuickResponseCodeAuthenticationVoucherToken;
@@ -12,13 +13,13 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
 import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 /**
@@ -47,7 +48,7 @@ public class AuthController {
     @PostMapping("/login")
     public Mono<ResultContext> login(
             @RequestBody LoginContext.Request param,
-            HttpServletRequest request, HttpServletResponse response
+            ServerRequest request, ServerResponse response
     ) {
         if (properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null
@@ -62,7 +63,7 @@ public class AuthController {
             return authenticationManager
                     .authenticate(vt)
                     .flatMap(authentication -> authForeignMinistry.apply(
-                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                            request, response, AuthForeignMinistryVisaTemplate.create(new JsonSerializeDeserializeAuthentication(authentication))))
                     .map(ResultContext::build);
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
@@ -72,7 +73,7 @@ public class AuthController {
     @PostMapping("/login/verification_code")
     public Mono<ResultContext> verificationCodeLogin(
             @RequestBody VerificationCodeLoginContext.Request param,
-            HttpServletRequest request, HttpServletResponse response
+            ServerRequest request, ServerResponse response
     ) {
         if (properties.getLogin().getVerificationCode().isEnable()) {
             if (param == null
@@ -87,7 +88,7 @@ public class AuthController {
             return authenticationManager
                     .authenticate(vt)
                     .flatMap(authentication -> authForeignMinistry.apply(
-                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                            request, response, AuthForeignMinistryVisaTemplate.create(new JsonSerializeDeserializeAuthentication(authentication))))
                     .map(ResultContext::build);
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
@@ -97,7 +98,7 @@ public class AuthController {
     @PostMapping("/login/quick_response_code")
     public Mono<ResultContext> quickResponseCodeLogin(
             @RequestBody QRCodeLoginContext.Request param,
-            HttpServletRequest request, HttpServletResponse response
+            ServerRequest request, ServerResponse response
     ) {
         if (properties.getLogin().getQrCode().isEnable()) {
             if (param == null
@@ -110,7 +111,7 @@ public class AuthController {
             return authenticationManager
                     .authenticate(vt)
                     .flatMap(authentication -> authForeignMinistry.apply(
-                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                            request, response, AuthForeignMinistryVisaTemplate.create(new JsonSerializeDeserializeAuthentication(authentication))))
                     .map(ResultContext::build);
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));

@@ -1,5 +1,6 @@
-package club.p6e.coat.gateway.auth;
+package club.p6e.coat.gateway.auth.cache;
 
+import club.p6e.coat.gateway.auth.cache.support.ICache;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
  * @author lidashuang
  * @version 1.0
  */
-public interface AuthCache {
+public interface AuthCache extends ICache {
 
     /**
      * 令牌模型

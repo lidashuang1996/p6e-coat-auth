@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.foreign;
 
 import club.p6e.coat.gateway.auth.*;
+import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.AuthException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;

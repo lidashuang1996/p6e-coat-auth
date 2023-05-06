@@ -1,0 +1,91 @@
+2023-05-06 18:41:09 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 18:41:09 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 74516 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-06 18:41:09 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 18:41:10 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:41:10 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 18:41:10 [main] INFO - Finished Spring Data repository scanning in 11 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 18:41:10 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:41:10 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 18:41:10 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 18:41:10 [main] INFO - BeanFactory id=96a28d52-97ca-3635-8c1f-afc080842b2c
+2023-05-06 18:41:10 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authController' defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\controller\AuthController.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'reactiveHttpHeaderRedisCacheAuthForeignMinistryImpl' defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\foreign\ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'club.p6e.coat.gateway.auth.AuthCache' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2023-05-06 18:41:10 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-05-06 18:41:10 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.gateway.auth.foreign.ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl required a bean of type 'club.p6e.coat.gateway.auth.AuthCache' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.AuthCache' in your configuration.
+
+2023-05-06 18:52:48 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 18:52:48 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 90640 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-06 18:52:48 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 18:52:48 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:52:48 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 18:52:48 [main] INFO - Finished Spring Data repository scanning in 11 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 18:52:48 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:52:48 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 18:52:48 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 18:52:48 [main] INFO - BeanFactory id=47e6679c-66b0-3fec-ba45-7d06741d2445
+2023-05-06 18:52:49 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authController' defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\controller\AuthController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'org.springframework.security.authentication.ReactiveAuthenticationManager' available: expected single matching bean but found 2: authReactiveAuthenticationManager,injectionReactiveAuthenticationManagerBean
+2023-05-06 18:52:49 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-05-06 18:52:49 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 2 of constructor in club.p6e.coat.gateway.auth.controller.AuthController required a single bean, but 2 were found:
+	- authReactiveAuthenticationManager: defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]
+	- injectionReactiveAuthenticationManagerBean: defined by method 'injectionReactiveAuthenticationManagerBean' in class path resource [club/p6e/coat/gateway/auth/AuthSecurityConfiguration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-05-06 18:53:37 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 18:53:37 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 97044 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-06 18:53:37 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 18:53:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:53:38 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 18:53:38 [main] INFO - Finished Spring Data repository scanning in 12 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 18:53:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 18:53:38 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 18:53:38 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 18:53:38 [main] INFO - BeanFactory id=47e6679c-66b0-3fec-ba45-7d06741d2445
+2023-05-06 18:53:38 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authController' defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\controller\AuthController.class]: Unsatisfied dependency expressed through constructor parameter 2: No qualifying bean of type 'org.springframework.security.authentication.ReactiveAuthenticationManager' available: expected single matching bean but found 2: authReactiveAuthenticationManager,injectionReactiveAuthenticationManagerBean
+2023-05-06 18:53:38 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-05-06 18:53:38 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 2 of constructor in club.p6e.coat.gateway.auth.controller.AuthController required a single bean, but 2 were found:
+	- authReactiveAuthenticationManager: defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]
+	- injectionReactiveAuthenticationManagerBean: defined by method 'injectionReactiveAuthenticationManagerBean' in class path resource [club/p6e/coat/gateway/auth/AuthSecurityConfiguration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+

@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.foreign;
 
-import club.p6e.cloud.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.AuthForeignMinistry;
 import club.p6e.coat.gateway.auth.AuthForeignMinistryVisaTemplate;
 import club.p6e.coat.gateway.auth.JsonWebTokenCipher;
@@ -9,8 +8,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;

@@ -53,16 +53,5 @@ public class AuthSecurityConfiguration {
         authenticationWebFilter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)));
         return authenticationWebFilter;
     }
-
-    @Bean
-    public ReactiveUserDetailsService injectionReactiveUserDetailsServiceBean() {
-        return new AuthReactiveUserDetailsServiceImpl();
-    }
-
-    @Bean
-    public ReactiveAuthenticationManager injectionReactiveAuthenticationManagerBean(
-            PasswordEncoder passwordEncoder, ReactiveUserDetailsService reactiveUserDetailsService) {
-        return new AuthReactiveAuthenticationManager(passwordEncoder, reactiveUserDetailsService);
-    }
-
+    
 }

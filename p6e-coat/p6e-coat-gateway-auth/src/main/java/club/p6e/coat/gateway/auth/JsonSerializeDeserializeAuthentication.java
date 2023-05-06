@@ -14,23 +14,32 @@ import java.util.Map;
 public class JsonSerializeDeserializeAuthentication implements Authentication {
 
     private final String id;
+    private final boolean oauth2;
     private final Map<String, Object> details;
     private final Collection<? extends GrantedAuthority> authorities = AuthorityUtils.NO_AUTHORITIES;
 
     private boolean authenticated = true;
+
+    public JsonSerializeDeserializeAuthentication(Authentication authentication) {
+        this.id = ":1";
+        this.oauth2 = false;
+        this.details = null;
+    }
 
     public JsonSerializeDeserializeAuthentication(Map<String, Object> data) {
         if (data != null
                 && data.size() > 0
                 && data.get("id") instanceof final String content) {
             this.id = content;
+            this.oauth2 = false;
             this.details = data;
         }
         throw new RuntimeException();
     }
 
-    public JsonSerializeDeserializeAuthentication(String id, Map<String, Object> details) {
+    public JsonSerializeDeserializeAuthentication(String id, boolean oauth2, Map<String, Object> details) {
         this.id = id;
+        this.oauth2 = oauth2;
         this.details = details;
     }
 

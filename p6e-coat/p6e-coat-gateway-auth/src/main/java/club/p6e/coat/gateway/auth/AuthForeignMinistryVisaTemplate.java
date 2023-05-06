@@ -27,11 +27,11 @@ public class AuthForeignMinistryVisaTemplate {
 
 
     public static AuthForeignMinistryVisaTemplate deserialization(String content) {
-
+        return AuthForeignMinistryVisaTemplate.create(null);
     }
 
     public String serialize () {
-
+        return "";
     }
 
     public String getId() {

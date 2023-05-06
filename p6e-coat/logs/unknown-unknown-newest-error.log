@@ -1,0 +1,49 @@
+2023-05-06 18:41:10 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.gateway.auth.foreign.ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl required a bean of type 'club.p6e.coat.gateway.auth.AuthCache' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.AuthCache' in your configuration.
+
+2023-05-06 18:52:49 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 2 of constructor in club.p6e.coat.gateway.auth.controller.AuthController required a single bean, but 2 were found:
+	- authReactiveAuthenticationManager: defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]
+	- injectionReactiveAuthenticationManagerBean: defined by method 'injectionReactiveAuthenticationManagerBean' in class path resource [club/p6e/coat/gateway/auth/AuthSecurityConfiguration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-05-06 18:53:38 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 2 of constructor in club.p6e.coat.gateway.auth.controller.AuthController required a single bean, but 2 were found:
+	- authReactiveAuthenticationManager: defined in file [D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]
+	- injectionReactiveAuthenticationManagerBean: defined by method 'injectionReactiveAuthenticationManagerBean' in class path resource [club/p6e/coat/gateway/auth/AuthSecurityConfiguration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+

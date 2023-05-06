@@ -1,11 +1,15 @@
 package club.p6e.coat.gateway.auth.foreign;
 
 import club.p6e.coat.gateway.auth.*;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import club.p6e.coat.gateway.auth.cache.AuthCache;
+import club.p6e.coat.gateway.auth.error.AuthException;
+import org.springframework.http.HttpCookie;
+import org.springframework.http.ResponseCookie;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -51,102 +55,103 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
 
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(HttpServletRequest request) {
-        final Cookie cookie = getAccessTokenCookie(request);
-        if (cookie != null) {
+    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerRequest request) {
+        final List<HttpCookie> cookies = getAccessTokenCookie(request);
+        if (cookies != null && cookies.size() > 0) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(cookie.getValue().trim());
+                final String value = cookies.get(0).getValue().trim();
+                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(value);
                 if (tokenOptional.isPresent()) {
                     final Optional<String> userOptional = cache.get(tokenOptional.get().getUid());
                     if (userOptional.isPresent()) {
-                        return ForeignMinistryVisaTemplate.deserialization(userOptional.get());
+                        return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
                     }
                 }
             } catch (Exception e) {
-                throw GlobalExceptionContext.executeAuthException(
-                        this.getClass(), "fun verificationAccessToken(HttpServletRequest request).");
+                // 忽略异常
             }
         }
-        throw GlobalExceptionContext.executeAuthException(
-                this.getClass(), "fun verificationAccessToken(HttpServletRequest request).");
+        throw new AuthException(this.getClass(), "fun verificationAccessToken(HttpServletRequest request).", "");
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(HttpServletRequest request) {
-        final Cookie cookie = getRefreshTokenCookie(request);
-        if (cookie != null) {
+    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerRequest request) {
+        final List<HttpCookie> cookies = getAccessTokenCookie(request);
+        if (cookies != null && cookies.size() > 0) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getRefreshToken(cookie.getValue().trim());
+                final String value = cookies.get(0).getValue().trim();
+                final Optional<AuthCache.Token> tokenOptional = cache.getRefreshToken(value);
                 if (tokenOptional.isPresent()) {
                     final Optional<String> userOptional = cache.get(tokenOptional.get().getUid());
                     if (userOptional.isPresent()) {
-                        return ForeignMinistryVisaTemplate.deserialization(userOptional.get());
+                        return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
                     }
                 }
             } catch (Exception e) {
-                throw GlobalExceptionContext.executeAuthException(
-                        this.getClass(), "fun verificationRefreshToken(HttpServletRequest request).");
+                // 忽略异常
             }
         }
-        throw GlobalExceptionContext.executeAuthException(
-                this.getClass(), "fun verificationRefreshToken(HttpServletRequest request).");
+        throw new AuthException(this.getClass(), "fun verificationAccessToken(HttpServletRequest request).", "");
     }
 
 
     @Override
-    public Object refresh(HttpServletRequest request, HttpServletResponse response) {
-        final ForeignMinistryVisaTemplate foreignMinistryVisaTemplate = delete(request, response);
+    public Object refresh(ServerRequest request, ServerResponse response) {
+        final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = delete(request, response);
         return apply(request, response, foreignMinistryVisaTemplate);
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(HttpServletRequest request, HttpServletResponse response) {
-        final Cookie cookie = getAccessTokenCookie(request);
-        if (cookie != null) {
+    public AuthForeignMinistryVisaTemplate delete(ServerRequest request, ServerResponse response) {
+        final List<HttpCookie> cookies = getAccessTokenCookie(request);
+        if (cookies != null && cookies.size() > 0) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(cookie.getValue().trim());
+                final String value = cookies.get(0).getValue().trim();
+                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(value);
                 if (tokenOptional.isPresent()) {
                     final AuthCache.Token token = tokenOptional.get();
                     try {
                         final Optional<String> userOptional = cache.get(token.getUid());
                         if (userOptional.isPresent()) {
-                            final Cookie accessCookie = new Cookie(AUTH_COOKIE_ACCESS_TOKEN_NAME, COOKIE_EMPTY);
-                            accessCookie.setMaxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-                            accessCookie.setHttpOnly(true);
-                            final Cookie refreshCookie = new Cookie(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY);
-                            refreshCookie.setMaxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-                            refreshCookie.setHttpOnly(true);
-                            response.addCookie(accessCookie);
-                            response.addCookie(refreshCookie);
-                            return ForeignMinistryVisaTemplate.deserialization(userOptional.get());
+                            final ResponseCookie.ResponseCookieBuilder accessCookieBuilder =
+                                    ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
+                            accessCookieBuilder.httpOnly(true);
+                            accessCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
+                            final ResponseCookie.ResponseCookieBuilder refreshCookieBuilder =
+                                    ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
+                            refreshCookieBuilder.httpOnly(true);
+                            refreshCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
+                            response.cookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
+                            response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+                            return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
                         }
                     } finally {
                         cache.cleanToken(token.getAccessToken());
                     }
                 }
             } catch (Exception e) {
-                throw GlobalExceptionContext.executeAuthException(
-                        this.getClass(), "fun delete(HttpServletRequest request, HttpServletResponse response).");
+                // 忽略异常
             }
         }
-        throw GlobalExceptionContext.executeAuthException(
-                this.getClass(), "fun delete(HttpServletRequest request, HttpServletResponse response).");
+        throw new AuthException(this.getClass(), "fun verificationAccessToken(HttpServletRequest request).", "");
     }
 
     @Override
-    public Mono<Object> apply(HttpServletRequest request, HttpServletResponse response, ForeignMinistryVisaTemplate template) {
+    public Mono<Object> apply(ServerRequest request, ServerResponse response, AuthForeignMinistryVisaTemplate template) {
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
         final AuthCache.Token token = cache.set(template.getId(), template.serialize(), accessToken, refreshToken);
-        final Cookie accessCookie = new Cookie(AUTH_COOKIE_ACCESS_TOKEN_NAME, token.getAccessToken());
-        accessCookie.setHttpOnly(true);
-        accessCookie.setMaxAge(COOKIE_EXPIRATION_TIME);
-        final Cookie refreshCookie = new Cookie(AUTH_COOKIE_REFRESH_TOKEN_NAME, token.getAccessToken());
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setMaxAge(COOKIE_EXPIRATION_TIME);
-        response.addCookie(accessCookie);
-        response.addCookie(refreshCookie);
-        return SUCCESS_RESULT;
+        final ResponseCookie.ResponseCookieBuilder accessCookieBuilder =
+                ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, token.getAccessToken());
+        accessCookieBuilder.httpOnly(true);
+        accessCookieBuilder.maxAge(COOKIE_EXPIRATION_TIME);
+        final ResponseCookie.ResponseCookieBuilder refreshCookieBuilder =
+                ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, token.getAccessToken());
+        refreshCookieBuilder.httpOnly(true);
+        refreshCookieBuilder.maxAge(COOKIE_EXPIRATION_TIME);
+        response.cookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
+        response.cookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+        return Mono.just(SUCCESS_RESULT);
     }
 
 }
