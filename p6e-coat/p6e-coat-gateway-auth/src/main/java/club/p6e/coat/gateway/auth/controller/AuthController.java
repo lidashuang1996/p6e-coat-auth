@@ -1,8 +1,22 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.ResultContext;
+import club.p6e.coat.gateway.auth.AuthForeignMinistry;
+import club.p6e.coat.gateway.auth.AuthForeignMinistryVisaTemplate;
+import club.p6e.coat.gateway.auth.Properties;
+import club.p6e.coat.gateway.auth.authentication.AccountPasswordAuthenticationVoucherToken;
+import club.p6e.coat.gateway.auth.authentication.QuickResponseCodeAuthenticationVoucherToken;
+import club.p6e.coat.gateway.auth.authentication.VerificationCodeAuthenticationVoucherToken;
+import club.p6e.coat.gateway.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.context.QRCodeLoginContext;
+import club.p6e.coat.gateway.auth.context.ResultContext;
+import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
+import club.p6e.coat.gateway.auth.error.ParameterException;
+import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -14,18 +28,93 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private final ReactiveAuthenticationManager manager;
 
-    public AuthController(ReactiveAuthenticationManager manager) {
-        this.manager = manager;
+
+    private final Properties properties;
+    private final AuthForeignMinistry authForeignMinistry;
+    private final ReactiveAuthenticationManager authenticationManager;
+
+    public AuthController(
+            Properties properties,
+            AuthForeignMinistry authForeignMinistry,
+            ReactiveAuthenticationManager authenticationManager
+    ) {
+        this.properties = properties;
+        this.authForeignMinistry = authForeignMinistry;
+        this.authenticationManager = authenticationManager;
     }
 
-    @RequestMapping("/login")
-    public Mono<ResultContext> login() {
-        return manager.authenticate(new UsernamePasswordAuthenticationToken("123456", "2e7605b59956f9cd7b34dbc3e6866d4a"))
-                .map(authentication -> {
-                    return ResultContext.build("987654321");
-                });
+    @PostMapping("/login")
+    public Mono<ResultContext> login(
+            @RequestBody LoginContext.Request param,
+            HttpServletRequest request, HttpServletResponse response
+    ) {
+        if (properties.getLogin().getAccountPassword().isEnable()) {
+            if (param == null
+                    || param.getVoucher() == null
+                    || param.getAccount() == null
+                    || param.getPassword() == null) {
+                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            }
+            final AccountPasswordAuthenticationVoucherToken vt =
+                    AccountPasswordAuthenticationVoucherToken.create(
+                            param.getVoucher(), param.getAccount(), param.getPassword());
+            return authenticationManager
+                    .authenticate(vt)
+                    .flatMap(authentication -> authForeignMinistry.apply(
+                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                    .map(ResultContext::build);
+        } else {
+            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+        }
+    }
+
+    @PostMapping("/login/verification_code")
+    public Mono<ResultContext> verificationCodeLogin(
+            @RequestBody VerificationCodeLoginContext.Request param,
+            HttpServletRequest request, HttpServletResponse response
+    ) {
+        if (properties.getLogin().getVerificationCode().isEnable()) {
+            if (param == null
+                    || param.getKey() == null
+                    || param.getValue() == null
+                    || param.getVoucher() == null) {
+                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            }
+            final VerificationCodeAuthenticationVoucherToken vt =
+                    VerificationCodeAuthenticationVoucherToken.create(
+                            param.getVoucher(), param.getKey(), param.getValue());
+            return authenticationManager
+                    .authenticate(vt)
+                    .flatMap(authentication -> authForeignMinistry.apply(
+                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                    .map(ResultContext::build);
+        } else {
+            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+        }
+    }
+
+    @PostMapping("/login/quick_response_code")
+    public Mono<ResultContext> quickResponseCodeLogin(
+            @RequestBody QRCodeLoginContext.Request param,
+            HttpServletRequest request, HttpServletResponse response
+    ) {
+        if (properties.getLogin().getQrCode().isEnable()) {
+            if (param == null
+                    || param.getContent() == null
+                    || param.getVoucher() == null) {
+                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            }
+            final QuickResponseCodeAuthenticationVoucherToken vt =
+                    QuickResponseCodeAuthenticationVoucherToken.create(param.getVoucher(), param.getContent());
+            return authenticationManager
+                    .authenticate(vt)
+                    .flatMap(authentication -> authForeignMinistry.apply(
+                            request, response, AuthForeignMinistryVisaTemplate.create(authentication)))
+                    .map(ResultContext::build);
+        } else {
+            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+        }
     }
 
 }

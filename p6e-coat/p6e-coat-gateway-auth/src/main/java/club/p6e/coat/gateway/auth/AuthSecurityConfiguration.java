@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
  */
 @Configuration
 @EnableWebFluxSecurity
-public class P6eSecurityConfiguration {
+public class AuthSecurityConfiguration {
 
     @Bean
     public SecurityWebFilterChain injectionSecurityWebFilterChainBean(ServerHttpSecurity http, AuthenticationWebFilter filter) {
@@ -56,21 +56,13 @@ public class P6eSecurityConfiguration {
 
     @Bean
     public ReactiveUserDetailsService injectionReactiveUserDetailsServiceBean() {
-        return new P6eUserDetailsServiceImpl();
+        return new AuthReactiveUserDetailsServiceImpl();
     }
 
     @Bean
     public ReactiveAuthenticationManager injectionReactiveAuthenticationManagerBean(
             PasswordEncoder passwordEncoder, ReactiveUserDetailsService reactiveUserDetailsService) {
-        return new P6eReactiveAuthenticationManager(passwordEncoder, reactiveUserDetailsService);
-    }
-
-    /**
-     * 密码注入
-     */
-    @Bean
-    public PasswordEncoder injectionPasswordEncoderBean() {
-        return new P6ePasswordEncoder();
+        return new AuthReactiveAuthenticationManager(passwordEncoder, reactiveUserDetailsService);
     }
 
 }

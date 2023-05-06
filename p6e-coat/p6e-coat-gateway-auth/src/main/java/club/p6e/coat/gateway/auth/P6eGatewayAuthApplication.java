@@ -10,10 +10,10 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
  */
 @EnableWebFluxSecurity
 @SpringBootApplication
-public class P6eGatewayApplication {
+public class P6eGatewayAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(P6eGatewayApplication.class, args);
+        SpringApplication.run(P6eGatewayAuthApplication.class, args);
     }
 
 }

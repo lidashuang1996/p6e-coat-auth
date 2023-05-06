@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.auth;
+package club.p6e.coat.gateway.auth.context;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
