@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.permission.gateway.auth;
+package club.p6e.coat.gateway.auth;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.permission.gateway.auth;
+package club.p6e.coat.gateway.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

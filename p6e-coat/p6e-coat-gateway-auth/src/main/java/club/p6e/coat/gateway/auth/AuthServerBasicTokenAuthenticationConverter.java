@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.permission.gateway.auth;
+package club.p6e.coat.gateway.auth;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;

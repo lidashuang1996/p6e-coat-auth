@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.permission;
+package club.p6e.coat.gateway.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
-package club.p6e.coat.gateway.permission.gateway.auth.controller;
+package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.permission.gateway.auth.ResultContext;
+import club.p6e.coat.gateway.auth.ResultContext;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestMapping;
