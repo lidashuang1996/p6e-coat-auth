@@ -170,3 +170,123 @@ Consider marking one of the beans as @Primary, updating the consumer to accept m
 2023-05-06 20:04:51 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
 2023-05-06 20:04:52 [main] INFO - Netty started on port 8080
 2023-05-06 20:04:52 [main] INFO - Started P6eGatewayAuthApplication in 1.937 seconds (process running for 2.219)
+2023-05-06 21:25:14 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 21:25:14 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.6 with PID 13288 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-05-06 21:25:14 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 21:25:15 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:25:15 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 21:25:15 [main] INFO - Finished Spring Data repository scanning in 11 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 21:25:15 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:25:15 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 21:25:15 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 21:25:15 [main] INFO - BeanFactory id=2fc8fa23-5020-3294-bfc5-60f7830a2c13
+2023-05-06 21:25:15 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authReactiveAuthenticationManager' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'authReactiveUserDetailsServiceImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveUserDetailsServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userRepository' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\repository\UserRepository.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'r2dbcEntityTemplate' defined in class path resource [club/p6e/coat/gateway/auth/repository/R2dbcConfig.class]: Unsatisfied dependency expressed through method 'r2dbcEntityTemplate' parameter 0: Error creating bean with name 'connectionFactory' defined in class path resource [org/springframework/boot/autoconfigure/r2dbc/ConnectionFactoryConfigurations$PoolConfiguration$PooledConnectionFactoryConfiguration.class]: Failed to instantiate [io.r2dbc.pool.ConnectionPool]: Factory method 'connectionFactory' threw exception with message: Failed to determine a suitable R2DBC Connection URL
+2023-05-06 21:25:15 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-05-06 21:25:15 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a ConnectionFactory: 'url' attribute is not specified and no embedded database could be configured.
+
+Reason: Failed to determine a suitable R2DBC Connection URL
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-05-06 21:29:04 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 21:29:04 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.6 with PID 1620 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-05-06 21:29:04 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 21:29:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:29:05 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 21:29:05 [main] INFO - Finished Spring Data repository scanning in 9 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 21:29:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:29:05 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 21:29:05 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 21:29:05 [main] INFO - BeanFactory id=2fc8fa23-5020-3294-bfc5-60f7830a2c13
+2023-05-06 21:29:05 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authReactiveAuthenticationManager' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveAuthenticationManager.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'authReactiveUserDetailsServiceImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthReactiveUserDetailsServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userRepository' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\repository\UserRepository.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'r2dbcEntityTemplate' defined in class path resource [club/p6e/coat/gateway/auth/repository/R2dbcConfig.class]: Unsatisfied dependency expressed through method 'r2dbcEntityTemplate' parameter 0: Error creating bean with name 'connectionFactory' defined in class path resource [org/springframework/boot/autoconfigure/r2dbc/ConnectionFactoryConfigurations$PoolConfiguration$PooledConnectionFactoryConfiguration.class]: Failed to instantiate [io.r2dbc.pool.ConnectionPool]: Factory method 'connectionFactory' threw exception with message: Failed to determine a suitable R2DBC Connection URL
+2023-05-06 21:29:05 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-05-06 21:29:05 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a ConnectionFactory: 'url' attribute is not specified and no embedded database could be configured.
+
+Reason: Failed to determine a suitable R2DBC Connection URL
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-05-06 21:41:04 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 21:41:04 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.6 with PID 2816 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-05-06 21:41:04 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 21:41:04 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:41:04 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 21:41:04 [main] INFO - Finished Spring Data repository scanning in 10 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 21:41:04 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 21:41:04 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 21:41:04 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-05-06 21:41:04 [main] INFO - BeanFactory id=4a0b6ec2-6111-35b0-b67b-851e4ced5391
+2023-05-06 21:41:05 [main] INFO - [ P6E AUTH JSON WEB TOKEN ] DEFAULT SECRET ==> is5wfwixcxli211hq6j3mjhmnxgyrz65
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-05-06 21:41:05 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-05-06 21:41:05 [main] INFO - Netty started on port 8080
+2023-05-06 21:41:05 [main] INFO - Started P6eGatewayAuthApplication in 2.125 seconds (process running for 2.417)
+2023-05-06 23:10:40 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-06 23:10:40 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.6 with PID 14984 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-05-06 23:10:40 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-06 23:10:40 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 23:10:40 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-06 23:10:40 [main] INFO - Finished Spring Data repository scanning in 10 ms. Found 0 R2DBC repository interfaces.
+2023-05-06 23:10:41 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-06 23:10:41 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-06 23:10:41 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-06 23:10:41 [main] INFO - BeanFactory id=4a0b6ec2-6111-35b0-b67b-851e4ced5391
+2023-05-06 23:10:41 [main] INFO - [ P6E AUTH JSON WEB TOKEN ] DEFAULT SECRET ==> ppzk066splckak5yjnbkghhlpv033hn7
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-05-06 23:10:41 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-05-06 23:10:42 [main] INFO - Netty started on port 8080
+2023-05-06 23:10:42 [main] INFO - Started P6eGatewayAuthApplication in 2.15 seconds (process running for 2.421)

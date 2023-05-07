@@ -47,3 +47,41 @@ Action:
 
 Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
 
+2023-05-06 21:25:15 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a ConnectionFactory: 'url' attribute is not specified and no embedded database could be configured.
+
+Reason: Failed to determine a suitable R2DBC Connection URL
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-05-06 21:29:05 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a ConnectionFactory: 'url' attribute is not specified and no embedded database could be configured.
+
+Reason: Failed to determine a suitable R2DBC Connection URL
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
