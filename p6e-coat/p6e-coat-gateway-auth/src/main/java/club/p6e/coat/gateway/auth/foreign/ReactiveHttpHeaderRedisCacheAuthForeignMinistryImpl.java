@@ -6,6 +6,7 @@ import club.p6e.coat.gateway.auth.error.AuthException;
 import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -60,17 +61,14 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationAccessToken(ServerHttpRequest request) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(accessToken.trim());
-                if (tokenOptional.isPresent()) {
-                    final Optional<String> userOptional = cache.get(tokenOptional.get().getUid());
-                    if (userOptional.isPresent()) {
-                        return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
-                    }
-                }
+                return cache
+                        .getAccessToken(accessToken)
+                        .flatMap(t -> cache.get(t.getUid()))
+                        .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -79,17 +77,14 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationRefreshToken(ServerHttpRequest request) {
         final String refreshToken = getRefreshToken(request);
         if (refreshToken != null) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getRefreshToken(refreshToken.trim());
-                if (tokenOptional.isPresent()) {
-                    final Optional<String> userOptional = cache.get(tokenOptional.get().getUid());
-                    if (userOptional.isPresent()) {
-                        return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
-                    }
-                }
+                return cache
+                        .getRefreshToken(refreshToken)
+                        .flatMap(t -> cache.get(t.getUid()))
+                        .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -98,28 +93,24 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
-        final AuthForeignMinistryVisaTemplate template = delete(request, response);
-        return apply(request, response, template);
+    public Mono<Object> refresh(ServerHttpRequest request, ServerHttpResponse response) {
+        return delete(request, response)
+                .flatMap(t -> apply(request, response, t));
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
+    public Mono<AuthForeignMinistryVisaTemplate> delete(ServerHttpRequest request, ServerHttpResponse response) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
-                final Optional<AuthCache.Token> tokenOptional = cache.getAccessToken(accessToken.trim());
-                if (tokenOptional.isPresent()) {
-                    final AuthCache.Token token = tokenOptional.get();
-                    try {
-                        final Optional<String> userOptional = cache.get(token.getUid());
-                        if (userOptional.isPresent()) {
-                            return AuthForeignMinistryVisaTemplate.deserialization(userOptional.get());
-                        }
-                    } finally {
-                        cache.cleanToken(token.getAccessToken());
-                    }
-                }
+                return cache
+                        .getAccessToken(accessToken)
+                        .flatMap(t -> cache
+                                .get(t.getUid())
+                                .flatMap(s -> cache
+                                        .cleanToken(t.getAccessToken())
+                                        .map(l -> AuthForeignMinistryVisaTemplate.deserialization(s))
+                                ));
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -129,11 +120,11 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
 
     @Override
     public Mono<Object> apply(ServerHttpRequest request, ServerHttpResponse response, AuthForeignMinistryVisaTemplate template) {
-        final String uid = template.getId();
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
-        final AuthCache.Token token = cache.set(uid, template.serialize(), accessToken, refreshToken);
-        return Mono.just(executeResultHandler(token.getAccessToken(), token.getRefreshToken()));
+        return cache
+                .set(template.getId(), "", accessToken, refreshToken, template.serialize())
+                .map(t -> executeResultHandler(t.getAccessToken(), t.getRefreshToken()));
     }
 
 }

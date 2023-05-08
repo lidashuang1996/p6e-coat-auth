@@ -18,7 +18,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "p6e.auth")
 public class Properties {
 
-    private Mode mode = Mode.PHONE_OR_MAILBOX;
+    private Mode mode = Mode.ACCOUNT;
 
     private Login login = new Login();
     private Oauth2 oauth2 = new Oauth2();

@@ -21,9 +21,15 @@ public class JsonSerializeDeserializeAuthentication implements Authentication {
     private boolean authenticated = true;
 
     public JsonSerializeDeserializeAuthentication(Authentication authentication) {
-        this.id = ":1";
-        this.oauth2 = false;
-        this.details = null;
+        if (authentication instanceof final JsonSerializeDeserializeAuthentication jsonAuthentication) {
+            this.id = jsonAuthentication.getId();
+            this.oauth2 = false;
+            this.details = jsonAuthentication.getDetails();
+        } else {
+            this.id = "1";
+            this.oauth2 = false;
+            this.details = null;
+        }
     }
 
     public JsonSerializeDeserializeAuthentication(Map<String, Object> data) {

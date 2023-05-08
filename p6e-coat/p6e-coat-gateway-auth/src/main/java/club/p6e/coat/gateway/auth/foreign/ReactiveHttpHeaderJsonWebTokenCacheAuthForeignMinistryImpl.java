@@ -48,13 +48,13 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationAccessToken(ServerHttpRequest request) {
         final String accessToken = getAccessToken(request);
         if (accessToken != null) {
             try {
                 final DecodedJWT decoded = JWT.require(
                         Algorithm.HMAC256(cipher.getAccessTokenSecret())).build().verify(accessToken.trim());
-                return AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString());
+                return Mono.just(AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString()));
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -63,13 +63,13 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationRefreshToken(ServerHttpRequest request) {
         final String refreshToken = getRefreshToken(request);
         if (refreshToken != null) {
             try {
                 final DecodedJWT decoded = JWT.require(
                         Algorithm.HMAC256(cipher.getRefreshTokenSecret())).build().verify(refreshToken.trim());
-                return AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString());
+                return Mono.just(AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString()));
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -78,16 +78,18 @@ public class ReactiveHttpHeaderJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
-        return apply(request, response, verificationAccessToken(request));
+    public Mono<Object> refresh(ServerHttpRequest request, ServerHttpResponse response) {
+        return verificationAccessToken(request)
+                .flatMap(t -> apply(request, response, t));
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
-        // JWT 无法主动过期
-        final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = verificationAccessToken(request);
-        foreignMinistryVisaTemplate.setAttribute("$error", "JWT unable to actively expire.");
-        return foreignMinistryVisaTemplate;
+    public Mono<AuthForeignMinistryVisaTemplate> delete(ServerHttpRequest request, ServerHttpResponse response) {
+        return verificationAccessToken(request)
+                .map(t -> {
+                    t.setAttribute("$error", "JWT unable to actively expire.");
+                    return t;
+                });
     }
 
     @Override

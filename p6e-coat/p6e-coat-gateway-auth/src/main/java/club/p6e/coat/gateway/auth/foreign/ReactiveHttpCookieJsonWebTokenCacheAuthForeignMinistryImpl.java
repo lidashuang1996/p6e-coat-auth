@@ -51,14 +51,14 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationAccessToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getAccessTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             final String value = cookies.get(0).getValue().trim();
             try {
                 final DecodedJWT decoded = JWT.require(
                         Algorithm.HMAC256(cipher.getAccessTokenSecret())).build().verify(value);
-                return AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString());
+                return Mono.just(AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString()));
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -67,14 +67,14 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request) {
+    public Mono<AuthForeignMinistryVisaTemplate> verificationRefreshToken(ServerHttpRequest request) {
         final List<HttpCookie> cookies = getRefreshTokenCookie(request);
         if (cookies != null && cookies.size() > 0) {
             final String value = cookies.get(0).getValue().trim();
             try {
                 final DecodedJWT decoded = JWT.require(
                         Algorithm.HMAC256(cipher.getRefreshTokenSecret())).build().verify(value);
-                return AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString());
+                return Mono.just(AuthForeignMinistryVisaTemplate.deserialization(decoded.getClaim(CONTENT).asString()));
             } catch (Exception e) {
                 // 忽略异常
             }
@@ -83,26 +83,29 @@ public class ReactiveHttpCookieJsonWebTokenCacheAuthForeignMinistryImpl
     }
 
     @Override
-    public Object refresh(ServerHttpRequest request, ServerHttpResponse response) {
-        return apply(request, response, verificationAccessToken(request));
+    public Mono<Object> refresh(ServerHttpRequest request, ServerHttpResponse response) {
+        return verificationAccessToken(request)
+                .flatMap(t -> apply(request, response, t));
     }
 
     @Override
-    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response) {
-        // JWT 无法主动过期
-        final AuthForeignMinistryVisaTemplate foreignMinistryVisaTemplate = verificationAccessToken(request);
-        foreignMinistryVisaTemplate.setAttribute("$error", "JWT unable to actively expire.");
-        final ResponseCookie.ResponseCookieBuilder accessCookieBuilder =
-                ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
-        accessCookieBuilder.httpOnly(true);
-        accessCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-        final ResponseCookie.ResponseCookieBuilder refreshCookieBuilder =
-                ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
-        refreshCookieBuilder.httpOnly(true);
-        refreshCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
-        response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessCookieBuilder.build());
-        response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
-        return foreignMinistryVisaTemplate;
+    public Mono<AuthForeignMinistryVisaTemplate> delete(ServerHttpRequest request, ServerHttpResponse response) {
+        return verificationAccessToken(request)
+                .map(t -> {
+                    // JWT 无法主动过期
+                    t.setAttribute("$error", "JWT unable to actively expire.");
+                    final ResponseCookie.ResponseCookieBuilder accessCookieBuilder =
+                            ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
+                    accessCookieBuilder.httpOnly(true);
+                    accessCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
+                    final ResponseCookie.ResponseCookieBuilder refreshCookieBuilder =
+                            ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, COOKIE_EMPTY_CONTENT);
+                    refreshCookieBuilder.httpOnly(true);
+                    refreshCookieBuilder.maxAge(COOKIE_EMPTY_EXPIRATION_TIME);
+                    response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessCookieBuilder.build());
+                    response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
+                    return t;
+                });
     }
 
     @Override

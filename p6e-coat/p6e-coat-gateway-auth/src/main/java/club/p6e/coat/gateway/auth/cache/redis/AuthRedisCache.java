@@ -5,13 +5,14 @@ import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,11 +30,6 @@ import java.util.concurrent.TimeUnit;
 public class AuthRedisCache extends RedisCache implements AuthCache {
 
     /**
-     * 缓存源的名称
-     */
-    private static final String CACHE_SOURCE = "AUTH_SOURCE";
-
-    /**
      * 缓存对象
      */
     private final ReactiveStringRedisTemplate template;
@@ -48,111 +44,148 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
     }
 
     @Override
-    public Token set(String uid, String user, String accessToken, String refreshToken) {
-//        return cache.getStringRedisTemplate(CACHE_SOURCE).execute((RedisCallback<Token>) connection -> {
-//            final Token token = new Token()
-//                    .setUid(uid)
-//                    .setAccessToken(accessToken)
-//                    .setRefreshToken(refreshToken);
-//            final byte[] tokenBytes = JsonUtil.toJson(token).getBytes(StandardCharsets.UTF_8);
-//            connection.stringCommands().set((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8),
-//                    user.getBytes(StandardCharsets.UTF_8),
-//                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
-//                    RedisStringCommands.SetOption.UPSERT);
-//            connection.stringCommands().set((ACCESS_TOKEN_PREFIX + accessToken).getBytes(StandardCharsets.UTF_8),
-//                    tokenBytes,
-//                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
-//                    RedisStringCommands.SetOption.UPSERT);
-//            connection.stringCommands().set((REFRESH_TOKEN_PREFIX + refreshToken).getBytes(StandardCharsets.UTF_8),
-//                    tokenBytes,
-//                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
-//                    RedisStringCommands.SetOption.UPSERT);
-//            connection.listCommands().rPush(
-//                    (USER_TOKEN_PREFIX + uid).getBytes(StandardCharsets.UTF_8),
-//                    (ACCESS_TOKEN_PREFIX + accessToken).getBytes(StandardCharsets.UTF_8),
-//                    (REFRESH_TOKEN_PREFIX + refreshToken).getBytes(StandardCharsets.UTF_8)
-//            );
-//            connection.keyCommands().expire((USER_TOKEN_PREFIX + uid).getBytes(StandardCharsets.UTF_8), EXPIRATION_TIME);
-//            return token;
-//        });
-        return null;
+    public Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user) {
+        final Token token = new Token()
+                .setUid(uid)
+                .setDevice(device)
+                .setAccessToken(accessToken)
+                .setRefreshToken(refreshToken);
+        final String jc = JsonUtil.toJson(token);
+        System.out.println(token);
+        System.out.println(jc);
+        if (jc == null) {
+            throw new RuntimeException();
+        }
+        final byte[] jcBytes = jc.getBytes(StandardCharsets.UTF_8);
+        return template.execute(connection -> Flux.concat(
+                connection.stringCommands().set(
+                        ByteBuffer.wrap((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8)),
+                        ByteBuffer.wrap(user.getBytes(StandardCharsets.UTF_8)),
+                        Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                        RedisStringCommands.SetOption.UPSERT
+                ),
+                connection.stringCommands().set(
+                        ByteBuffer.wrap((ACCESS_TOKEN_PREFIX + accessToken).getBytes(StandardCharsets.UTF_8)),
+                        ByteBuffer.wrap(jcBytes),
+                        Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                        RedisStringCommands.SetOption.UPSERT
+                ),
+                connection.stringCommands().set(
+                        ByteBuffer.wrap((REFRESH_TOKEN_PREFIX + refreshToken).getBytes(StandardCharsets.UTF_8)),
+                        ByteBuffer.wrap(jcBytes),
+                        Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                        RedisStringCommands.SetOption.UPSERT
+                ),
+                connection.listCommands().rPush(
+                        ByteBuffer.wrap((USER_TOKEN_LIST_PREFIX + uid).getBytes(StandardCharsets.UTF_8)),
+                        List.of(ByteBuffer.wrap(jcBytes))
+                ).map(l -> l > 0)
+        )).collectList().map(l -> token);
     }
 
     @Override
-    public Optional<String> get(String uid) {
-//        return Optional.ofNullable(cache.getStringRedisTemplate(CACHE_SOURCE).opsForValue().get(USER_PREFIX + uid));
-        return null;
+    public Mono<String> get(String uid) {
+        return template
+                .opsForValue()
+                .get(ByteBuffer.wrap((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8)));
     }
 
     @Override
-    public Optional<Token> getAccessToken(String key) {
-//        final String content = cache.getStringRedisTemplate(CACHE_SOURCE).opsForValue().get(ACCESS_TOKEN_PREFIX + key);
-//        if (content != null) {
-//            try {
-//                return Optional.of(JsonUtil.fromJson(content, Token.class));
-//            } catch (Exception e) {
-//                // 忽略异常
-//            }
-//        }
-//        return Optional.empty();
-        return null;
+    public Mono<Token> getAccessToken(String content) {
+        return template
+                .opsForValue()
+                .get(ByteBuffer.wrap((ACCESS_TOKEN_PREFIX + content).getBytes(StandardCharsets.UTF_8)))
+                .flatMap(s -> {
+                    final Token token = JsonUtil.fromJson(s, Token.class);
+                    return token == null ? Mono.empty() : Mono.just(token);
+                });
     }
 
     @Override
-    public Optional<Token> getRefreshToken(String key) {
-//        final String content = cache.getStringRedisTemplate(CACHE_SOURCE).opsForValue().get(REFRESH_TOKEN_PREFIX + key);
-//        if (content != null) {
-//            try {
-//                return Optional.of(JsonUtil.fromJson(content, Token.class));
-//            } catch (Exception e) {
-//                // 忽略异常
-//            }
-//        }
-//        return Optional.empty();
-        return null;
+    public Mono<Token> getRefreshToken(String content) {
+        return template
+                .opsForValue()
+                .get(ByteBuffer.wrap((REFRESH_TOKEN_PREFIX + content).getBytes(StandardCharsets.UTF_8)))
+                .flatMap(s -> {
+                    final Token token = JsonUtil.fromJson(s, Token.class);
+                    return token == null ? Mono.empty() : Mono.just(token);
+                });
     }
 
     @Override
-    public void cleanToken(String token) {
-//        cache.getStringRedisTemplate(CACHE_SOURCE).execute((RedisCallback<Object>) connection -> {
-//            final byte[] bytes = connection.stringCommands().get(
-//                    (ACCESS_TOKEN_PREFIX + token).getBytes(StandardCharsets.UTF_8));
-//            if (bytes != null && bytes.length > 0) {
-//                final String content = new String(bytes, StandardCharsets.UTF_8);
-//                final Token t = JsonUtil.fromJson(content, Token.class);
-//                final byte[] abs = (ACCESS_TOKEN_PREFIX + t.getAccessToken()).getBytes(StandardCharsets.UTF_8);
-//                final byte[] rbs = (REFRESH_TOKEN_PREFIX + t.getRefreshToken()).getBytes(StandardCharsets.UTF_8);
-//                connection.keyCommands().del(abs);
-//                connection.keyCommands().del(rbs);
-//                connection.listCommands().lRem(
-//                        (USER_TOKEN_PREFIX + t.getUid()).getBytes(StandardCharsets.UTF_8), 0, abs);
-//                connection.listCommands().lRem(
-//                        (USER_TOKEN_PREFIX + t.getUid()).getBytes(StandardCharsets.UTF_8), 0, rbs);
-//            }
-//            return null;
-//        });
+    public Mono<Long> cleanToken(String content) {
+        return getAccessToken(content)
+                .flatMap(t -> {
+                    final String jc = JsonUtil.toJson(t);
+                    if (jc == null) {
+                        return Mono.error(new RuntimeException());
+                    }
+                    final byte[] jcBytes = jc.getBytes(StandardCharsets.UTF_8);
+                    return template
+                            .execute(
+                                    connection -> Flux.concat(
+                                            connection.keyCommands().del(ByteBuffer.wrap(
+                                                    (ACCESS_TOKEN_PREFIX + t.getAccessToken()).getBytes(StandardCharsets.UTF_8))),
+                                            connection.keyCommands().del(ByteBuffer.wrap(
+                                                    (REFRESH_TOKEN_PREFIX + t.getRefreshToken()).getBytes(StandardCharsets.UTF_8))),
+                                            connection
+                                                    .listCommands()
+                                                    .lRem(
+                                                            ByteBuffer.wrap((USER_TOKEN_LIST_PREFIX
+                                                                    + t.getUid()).getBytes(StandardCharsets.UTF_8)),
+                                                            1L,
+                                                            ByteBuffer.wrap(jcBytes)
+                                                    ))
+                            )
+                            .collectList()
+                            .map(l -> l.size() / 3L);
+                });
     }
 
     @Override
-    public void cleanTokenAll(String token) {
-//        template.getStringRedisTemplate(CACHE_SOURCE).execute((RedisCallback<Object>) connection -> {
-//            final byte[] bytes = connection.stringCommands().get(
-//                    (ACCESS_TOKEN_PREFIX + token).getBytes(StandardCharsets.UTF_8));
-//            if (bytes != null && bytes.length > 0) {
-//                final String content = new String(bytes, StandardCharsets.UTF_8);
-//                final Token t = JsonUtil.fromJson(content, Token.class);
-//                final List<byte[]> ls = connection.listCommands().lRange(
-//                        (USER_TOKEN_PREFIX + t.getUid()).getBytes(StandardCharsets.UTF_8), 0, -1);
-//                if (ls != null && ls.size() > 0) {
-//                    for (byte[] l : ls) {
-//                        connection.keyCommands().del(l);
-//                    }
-//                }
-//                connection.keyCommands().del((USER_PREFIX + t.getUid()).getBytes(StandardCharsets.UTF_8));
-//                connection.keyCommands().del((USER_TOKEN_PREFIX + t.getUid()).getBytes(StandardCharsets.UTF_8));
-//            }
-//            return null;
-//        });
+    public Mono<Long> cleaUserAll(String uid) {
+        return get(uid)
+                .flatMap(s -> template
+                        .execute(
+                                connection -> connection
+                                        .listCommands()
+                                        .lRange(
+                                                ByteBuffer.wrap((USER_TOKEN_LIST_PREFIX + uid).getBytes(StandardCharsets.UTF_8)),
+                                                0,
+                                                -1
+                                        )
+                                        .flatMap(b -> {
+                                            final Token token = JsonUtil.fromJson(new String(b.array()), Token.class);
+                                            return connection
+                                                    .keyCommands()
+                                                    .del(b)
+                                                    .map(l -> token == null ? new Token() : token);
+                                        })
+                                        .flatMap(t -> {
+                                            if (t != null && t.getAccessToken() != null) {
+                                                return Flux
+                                                        .concat(
+                                                                connection.keyCommands().del(ByteBuffer.wrap(
+                                                                        (ACCESS_TOKEN_PREFIX + t.getAccessToken()).getBytes(StandardCharsets.UTF_8))),
+                                                                connection.keyCommands().del(ByteBuffer.wrap(
+                                                                        (REFRESH_TOKEN_PREFIX + t.getRefreshToken()).getBytes(StandardCharsets.UTF_8)))
+                                                        )
+                                                        .collectList()
+                                                        .map(l -> l.size() / 2L);
+                                            } else {
+                                                return Mono.just(0L);
+                                            }
+                                        })
+                        )
+                        .collectList()
+                        .map(l -> l.stream().reduce(0L, Long::sum))
+                );
+    }
+
+    @Override
+    public Mono<Long> cleanTokenAll(String content) {
+        return getAccessToken(content)
+                .flatMap(t -> cleaUserAll(t.getUid()));
     }
 
 }

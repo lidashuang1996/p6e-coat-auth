@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
 @EnableWebFluxSecurity
 public class AuthSecurityConfiguration {
 
-    @Bean
-    public AuthenticationWebFilter injectionAuthenticationWebFilter(
+    public AuthenticationWebFilter createAuthenticationWebFilter(
             ReactiveAuthenticationManager manager,
             ServerAuthenticationConverter converter
     ) {
@@ -39,20 +38,17 @@ public class AuthSecurityConfiguration {
     @Bean
     public SecurityWebFilterChain injectionSecurityWebFilterChainBean(
             ServerHttpSecurity http,
-            AuthenticationWebFilter filter,
-            ServerWebExchangeMatcher matcher
+            ServerWebExchangeMatcher matcher,
+            ReactiveAuthenticationManager manager,
+            ServerAuthenticationConverter converter
     ) {
         return http
-                .authorizeExchange()
-                .matchers(matcher)
-                .permitAll()
-                .anyExchange()
-                .authenticated()
-                .and()
+                .securityMatcher(matcher)
                 .httpBasic().disable()
                 .formLogin().disable()
                 .csrf().disable()
-                .addFilterAt(filter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterAfter(createAuthenticationWebFilter(
+                        manager, converter), SecurityWebFiltersOrder.AUTHORIZATION)
                 .build();
     }
 

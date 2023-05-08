@@ -16,7 +16,7 @@ public interface AuthForeignMinistry {
      * @param request HttpServletRequest 请求对象
      * @return ForeignMinistryVisaTemplate 签证模板对象
      */
-    public AuthForeignMinistryVisaTemplate verificationAccessToken(ServerHttpRequest request);
+    public Mono<AuthForeignMinistryVisaTemplate> verificationAccessToken(ServerHttpRequest request);
 
     /**
      * 验证签证
@@ -24,7 +24,7 @@ public interface AuthForeignMinistry {
      * @param request HttpServletRequest 请求对象
      * @return ForeignMinistryVisaTemplate 签证模板对象
      */
-    public AuthForeignMinistryVisaTemplate verificationRefreshToken(ServerHttpRequest request);
+    public Mono<AuthForeignMinistryVisaTemplate> verificationRefreshToken(ServerHttpRequest request);
 
     /**
      * 刷新签证
@@ -33,7 +33,7 @@ public interface AuthForeignMinistry {
      * @param response HttpServletResponse 结果对象
      * @return 结果对象
      */
-    public Object refresh(ServerHttpRequest request, ServerHttpResponse response);
+    public Mono<Object> refresh(ServerHttpRequest request, ServerHttpResponse response);
 
     /**
      * 删除签证
@@ -42,7 +42,7 @@ public interface AuthForeignMinistry {
      * @param response HttpServletResponse 结果对象
      * @return ForeignMinistryVisaTemplate 签证模板对象
      */
-    public AuthForeignMinistryVisaTemplate delete(ServerHttpRequest request, ServerHttpResponse response);
+    public Mono<AuthForeignMinistryVisaTemplate> delete(ServerHttpRequest request, ServerHttpResponse response);
 
     /**
      * 生成签证

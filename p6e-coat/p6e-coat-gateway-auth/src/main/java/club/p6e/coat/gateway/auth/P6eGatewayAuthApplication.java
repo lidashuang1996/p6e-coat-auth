@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -13,7 +14,9 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 public class P6eGatewayAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(P6eGatewayAuthApplication.class, args);
+        SpringUtil.init(
+                SpringApplication.run(P6eGatewayAuthApplication.class, args)
+        );
     }
 
 }

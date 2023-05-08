@@ -1,5 +1,7 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.utils.JsonUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,10 @@ public class AuthForeignMinistryVisaTemplate {
     }
 
     public String serialize () {
-        return "";
+        final Map<String, Object> result = new HashMap<>();
+        result.putAll(authentication.getDetails());
+        result.putAll(attribute);
+        return JsonUtil.toJson(result);
     }
 
     public String getId() {

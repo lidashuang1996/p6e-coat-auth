@@ -1,13 +1,17 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.authentication.AccountPasswordAuthenticationVoucherToken;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 认证管理
@@ -32,6 +36,8 @@ public class AuthReactiveAuthenticationManager implements ReactiveAuthentication
      */
     private final ReactiveUserDetailsService reactiveUserDetailsService;
 
+    private final Map<Class<? extends Authentication>, ReactiveAuthenticationManager> map = Collections.synchronizedMap(new HashMap<>());
+
     /**
      * 构造方法初始化
      *
@@ -44,19 +50,45 @@ public class AuthReactiveAuthenticationManager implements ReactiveAuthentication
     ) {
         this.passwordEncoder = passwordEncoder;
         this.reactiveUserDetailsService = reactiveUserDetailsService;
+        this.map.put(AccountPasswordAuthenticationVoucherToken.class, createAccountPasswordReactiveAuthenticationManager());
     }
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-        System.out.println("authentication" + authentication);
-        String username = authentication.getName();
-        String password = passwordEncoder.encode(authentication.getCredentials().toString());
-        System.out.println("password " + password);
-        System.out.println("db password " + passwordEncoder.encode(password));
-        return reactiveUserDetailsService
-                .findByUsername(username)
-                .filter(u -> u.getPassword().equals(password))
-                .map(userDetails -> new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
+        for (final Class<? extends Authentication> key : map.keySet()) {
+            if (key.isAssignableFrom(authentication.getClass())) {
+                return map.get(key).authenticate(authentication);
+            }
+        }
+        return null;
+    }
+
+    protected ReactiveAuthenticationManager createAccountPasswordReactiveAuthenticationManager() {
+        return authentication -> {
+            if (authentication instanceof final AccountPasswordAuthenticationVoucherToken accountPasswordAuthentication) {
+                final String username = accountPasswordAuthentication.getName();
+                final String password = accountPasswordAuthentication.getCredentials().toString();
+                accountPasswordAuthentication.eraseCredentials();
+                return reactiveUserDetailsService
+                        .findByUsername(username)
+                        .filter(u -> u.getPassword().equals(passwordEncoder.encode(password)))
+                        .flatMap(details -> {
+                            if (details instanceof final AuthUserDetails authUserDetails) {
+                                System.out.println(details);
+                                return Mono.just(
+                                        new JsonSerializeDeserializeAuthentication(
+                                                String.valueOf(authUserDetails.getId()),
+                                                false,
+                                                authUserDetails.toMap()
+                                        )
+                                );
+                            } else {
+                                return Mono.error(new RuntimeException());
+                            }
+                        });
+            }
+            return null;
+        };
     }
 
 }

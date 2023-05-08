@@ -30,7 +30,6 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/auth")
 public class AuthController {
 
-
     private final Properties properties;
     private final AuthForeignMinistry authForeignMinistry;
     private final ReactiveAuthenticationManager authenticationManager;
@@ -63,7 +62,8 @@ public class AuthController {
             return authenticationManager
                     .authenticate(vt)
                     .flatMap(authentication -> authForeignMinistry.apply(
-                            request, response, AuthForeignMinistryVisaTemplate.create(new JsonSerializeDeserializeAuthentication(authentication))))
+                            request, response, AuthForeignMinistryVisaTemplate.create(
+                                    new JsonSerializeDeserializeAuthentication(authentication))))
                     .map(ResultContext::build);
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
