@@ -2,7 +2,6 @@ package club.p6e.coat.gateway.auth.context;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.http.codec.multipart.FilePart;
 
 import java.io.Serializable;
 

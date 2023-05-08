@@ -156,7 +156,7 @@ public class AuthUserDetails implements UserDetails, Serializable {
         result.put("nickname", nickname);
         result.put("avatar", avatar);
         result.put("describe", describe);
-        return result;
+        return Collections.unmodifiableMap(result);
     }
 
 }

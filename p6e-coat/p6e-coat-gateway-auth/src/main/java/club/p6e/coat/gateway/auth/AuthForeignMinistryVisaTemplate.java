@@ -46,4 +46,7 @@ public class AuthForeignMinistryVisaTemplate {
         attribute.put(key, value);
     }
 
+    public Map<String, Object> getAttribute() {
+        return attribute;
+    }
 }

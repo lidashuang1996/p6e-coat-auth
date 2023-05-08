@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
+ * 用户模型
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -33,6 +35,12 @@ public class UserRepository {
         this.template = template;
     }
 
+    /**
+     * 根据 ID 查询一条数据
+     *
+     * @param id ID
+     * @return Mono/UserModel 用户模型对象
+     */
     public Mono<UserModel> findOneById(Integer id) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ID).is(id).and(UserModel.IS_DELETE).is(0)),
@@ -40,6 +48,12 @@ public class UserRepository {
         );
     }
 
+    /**
+     * 根据账号查询一条数据
+     *
+     * @param account 账号
+     * @return Mono/UserModel 用户模型对象
+     */
     public Mono<UserModel> findOneByAccount(String account) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETE).is(0)),
@@ -47,6 +61,12 @@ public class UserRepository {
         );
     }
 
+    /**
+     * 根据手机号码查询一条数据
+     *
+     * @param phone 手机号码
+     * @return Mono/UserModel 用户模型对象
+     */
     public Mono<UserModel> findOneByPhone(String phone) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.PHONE).is(phone).and(UserModel.IS_DELETE).is(0)),
@@ -54,6 +74,12 @@ public class UserRepository {
         );
     }
 
+    /**
+     * 根据邮箱查询一条数据
+     *
+     * @param mailbox 邮箱
+     * @return Mono/UserModel 用户模型对象
+     */
     public Mono<UserModel> findOneByMailbox(String mailbox) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox).and(UserModel.IS_DELETE).is(0)),
@@ -61,12 +87,20 @@ public class UserRepository {
         );
     }
 
-    public Mono<UserModel> findOneByPhoneOrMailbox(String phone) {
+    /**
+     * 根据手机号码或者邮箱查询一条数据
+     *
+     * @param content ID
+     * @return Mono/UserModel 用户模型对象
+     */
+    public Mono<UserModel> findOneByPhoneOrMailbox(String content) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.PHONE).is(phone).and(UserModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserModel.IS_DELETE).is(0).or(Criteria.from(
+                        Criteria.where(UserModel.PHONE).is(content),
+                        Criteria.where(UserModel.MAILBOX).is(content)
+                ))),
                 UserModel.class
         );
     }
-
 
 }

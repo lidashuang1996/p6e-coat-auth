@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
+ * 用户认证模型
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -34,6 +36,12 @@ public class UserAuthRepository {
         this.template = template;
     }
 
+    /**
+     * 根据 ID 查询一条数据
+     *
+     * @param id ID
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
     public Mono<UserAuthModel> findOneById(Integer id) {
         return template.selectOne(
                 Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.IS_DELETE).is(0)),

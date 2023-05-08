@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.auth.generator;
 
 /**
- * 生成令牌客户端认证令牌
+ * 生成客户端认证令牌
  *
  * @author lidashuang
  * @version 1.0
