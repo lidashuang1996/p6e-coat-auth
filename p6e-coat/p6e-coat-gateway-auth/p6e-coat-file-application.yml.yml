@@ -1,5 +1,0 @@
-spring:
-  r2dbc:
-    url: r2dbc:pool:postgres://47.94.162.190/:5432/lds
-    username: postgres
-    password: 'not4u2day'
