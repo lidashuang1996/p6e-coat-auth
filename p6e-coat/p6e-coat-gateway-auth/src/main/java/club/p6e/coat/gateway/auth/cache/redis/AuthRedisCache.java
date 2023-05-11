@@ -84,7 +84,7 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
     }
 
     @Override
-    public Mono<String> get(String uid) {
+    public Mono<String> getUser(String uid) {
         return template
                 .opsForValue()
                 .get(ByteBuffer.wrap((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8)));
@@ -144,7 +144,7 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
 
     @Override
     public Mono<Long> cleaUserAll(String uid) {
-        return get(uid)
+        return getUser(uid)
                 .flatMap(s -> template
                         .execute(
                                 connection -> connection

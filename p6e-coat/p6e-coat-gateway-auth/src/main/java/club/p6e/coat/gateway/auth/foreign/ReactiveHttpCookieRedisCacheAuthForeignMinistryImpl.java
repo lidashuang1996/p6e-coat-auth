@@ -65,7 +65,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
                 final String value = cookies.get(0).getValue().trim();
                 return cache
                         .getAccessToken(value)
-                        .flatMap(t -> cache.get(t.getUid()))
+                        .flatMap(t -> cache.getUser(t.getUid()))
                         .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
@@ -82,7 +82,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
                 final String value = cookies.get(0).getValue().trim();
                 return cache
                         .getRefreshToken(value)
-                        .flatMap(t -> cache.get(t.getUid()))
+                        .flatMap(t -> cache.getUser(t.getUid()))
                         .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
@@ -117,7 +117,7 @@ public class ReactiveHttpCookieRedisCacheAuthForeignMinistryImpl
                             response.getCookies().set(AUTH_COOKIE_ACCESS_TOKEN_NAME, refreshCookieBuilder.build());
                             response.getCookies().set(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshCookieBuilder.build());
                             return cache
-                                    .get(t.getUid())
+                                    .getUser(t.getUid())
                                     .flatMap(s -> cache
                                             .cleanToken(t.getAccessToken())
                                             .map(l -> AuthForeignMinistryVisaTemplate.deserialization(s))

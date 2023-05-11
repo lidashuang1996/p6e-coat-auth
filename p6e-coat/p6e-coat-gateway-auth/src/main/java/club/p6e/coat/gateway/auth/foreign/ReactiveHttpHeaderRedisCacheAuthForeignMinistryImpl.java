@@ -67,7 +67,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
             try {
                 return cache
                         .getAccessToken(accessToken)
-                        .flatMap(t -> cache.get(t.getUid()))
+                        .flatMap(t -> cache.getUser(t.getUid()))
                         .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
@@ -83,7 +83,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
             try {
                 return cache
                         .getRefreshToken(refreshToken)
-                        .flatMap(t -> cache.get(t.getUid()))
+                        .flatMap(t -> cache.getUser(t.getUid()))
                         .map(AuthForeignMinistryVisaTemplate::deserialization);
             } catch (Exception e) {
                 // 忽略异常
@@ -106,7 +106,7 @@ public class ReactiveHttpHeaderRedisCacheAuthForeignMinistryImpl
                 return cache
                         .getAccessToken(accessToken)
                         .flatMap(t -> cache
-                                .get(t.getUid())
+                                .getUser(t.getUid())
                                 .flatMap(s -> cache
                                         .cleanToken(t.getAccessToken())
                                         .map(l -> AuthForeignMinistryVisaTemplate.deserialization(s))

@@ -56,12 +56,11 @@ public class AuthController {
      */
     public AuthController(
             Properties properties,
-            AuthForeignMinistry authForeignMinistry,
-            ReactiveAuthenticationManager authenticationManager
+            AuthForeignMinistry authForeignMinistry
     ) {
         this.properties = properties;
         this.authForeignMinistry = authForeignMinistry;
-        this.authenticationManager = authenticationManager;
+        this.authenticationManager = null;
     }
 
     /**

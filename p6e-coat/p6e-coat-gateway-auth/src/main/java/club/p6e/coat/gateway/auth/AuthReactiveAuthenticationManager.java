@@ -19,11 +19,11 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnMissingBean(
-        value = ReactiveAuthenticationManager.class,
-        ignored = AuthReactiveAuthenticationManager.class
-)
+//@Component
+//@ConditionalOnMissingBean(
+//        value = ReactiveAuthenticationManager.class,
+//        ignored = AuthReactiveAuthenticationManager.class
+//)
 public class AuthReactiveAuthenticationManager implements ReactiveAuthenticationManager {
 
     /**
