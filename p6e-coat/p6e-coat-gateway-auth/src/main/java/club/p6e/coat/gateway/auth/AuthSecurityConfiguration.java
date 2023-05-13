@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthorizationCodeReactiveAuthenticationManager;
+import org.springframework.security.oauth2.client.endpoint.WebClientReactiveAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultReactiveOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
@@ -53,13 +55,14 @@ public class AuthSecurityConfiguration {
             ReactiveClientRegistrationRepository clientRegistrationRepository
     ) {
 //        final AuthenticationWebFilter filter = createAuthenticationWebFilter(manager, converter);
-
-
         return http
                 .oauth2Login(new Customizer<ServerHttpSecurity.OAuth2LoginSpec>() {
                     @Override
                     public void customize(ServerHttpSecurity.OAuth2LoginSpec spec) {
+                        WebClientReactiveAuthorizationCodeTokenResponseClient accessTokenResponseClient =
+                                new WebClientReactiveAuthorizationCodeTokenResponseClient();
                         spec
+                                .authenticationManager(new OAuth2AuthorizationCodeReactiveAuthenticationManager(accessTokenResponseClient))
 //                                .authenticationManager(manager2)
                                 .authenticationConverter(new ServerAuthenticationConverter() {
                                     @Override

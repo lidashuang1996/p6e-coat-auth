@@ -184,39 +184,40 @@ public class Oauth2Controller {
                 || clientSecret == null) {
             return Mono.error(new ParameterException(this.getClass(), "", ""));
         }
-        OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
-                .clientId(clientRegistration.getClientId())
-                .redirectUri(clientRegistration.getRedirectUri())
-                .state("state")
-                .build();
-//        OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest
-//                .withClientRegistrationId(clientId)
-//                .principal("principal")
+//        OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
+//                .clientId(clientRegistration.getClientId())
+//                .redirectUri(clientRegistration.getRedirectUri())
+//                .state("state")
 //                .build();
-        authorizationRequest.getAuthorizationRequestUri();
-        return aaa()
-                .authorize(request)
-                .map(JsonUtil::toJson);
+////        OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest
+////                .withClientRegistrationId(clientId)
+////                .principal("principal")
+////                .build();
+//        authorizationRequest.getAuthorizationRequestUri();
+//        return aaa()
+//                .authorize(request)
+//                .map(JsonUtil::toJson);
 
 
 
 
 
-        // 使用授权码获取访问令牌并请求用户信息
-        @GetMapping("/userInfo")
-        public Mono<String> userInfo(@RequestParam("code") String code) {
-            ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId("your-client-registration-id");
-            ServerOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
-            OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest = new OAuth2AuthorizationCodeGrantRequest(
-                    clientRegistration, new AuthorizationCodeAuthenticationToken(clientRegistration, new AuthorizationCodeAuthenticationToken(code)));
-            return authorizedClientManager.authorize(authorizationCodeGrantRequest)
-                    .flatMap(authorizedClient -> WebClient.create().get()
-                            .uri("https://your-user-info-uri")
-                            .attributes(oauth2AuthorizedClient(authorizedClient))
-                            .retrieve()
-                            .bodyToMono(String.class));
-        }
+//        // 使用授权码获取访问令牌并请求用户信息
+//        @GetMapping("/userInfo")
+//        public Mono<String> userInfo(@RequestParam("code") String code) {
+//            ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId("your-client-registration-id");
+//            ServerOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServerOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+//            OAuth2AuthorizationCodeGrantRequest authorizationCodeGrantRequest = new OAuth2AuthorizationCodeGrantRequest(
+//                    clientRegistration, new AuthorizationCodeAuthenticationToken(clientRegistration, new AuthorizationCodeAuthenticationToken(code)));
+//            return authorizedClientManager.authorize(authorizationCodeGrantRequest)
+//                    .flatMap(authorizedClient -> WebClient.create().get()
+//                            .uri("https://your-user-info-uri")
+//                            .attributes(oauth2AuthorizedClient(authorizedClient))
+//                            .retrieve()
+//                            .bodyToMono(String.class));
+//        }
 
+        return null;
 
     }
 
