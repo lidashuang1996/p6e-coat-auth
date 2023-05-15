@@ -1,25 +1,25 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthForeignMinistry;
 import club.p6e.coat.gateway.auth.AuthForeignMinistryVisaTemplate;
+import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.JsonSerializeDeserializeAuthentication;
 import club.p6e.coat.gateway.auth.Properties;
-import club.p6e.coat.gateway.auth.authentication.AccountPasswordAuthenticationVoucherToken;
-import club.p6e.coat.gateway.auth.authentication.QuickResponseCodeAuthenticationVoucherToken;
-import club.p6e.coat.gateway.auth.authentication.VerificationCodeAuthenticationVoucherToken;
 import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
 import club.p6e.coat.gateway.auth.context.QRCodeLoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
 import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
+import club.p6e.coat.gateway.auth.service.AuthService;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -32,35 +32,19 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/auth")
 public class AuthController {
 
+    private final AuthService service;
     /**
      * 配置文件对象
      */
     private final Properties properties;
 
     /**
-     * 认证外交部
-     */
-    private final AuthForeignMinistry authForeignMinistry;
-
-    /**
-     * 认证管理器
-     */
-    private final ReactiveAuthenticationManager authenticationManager;
-
-    /**
      * 构造方法
      *
      * @param properties 配置文件对象
-     * @param authForeignMinistry
-     * @param authenticationManager
      */
-    public AuthController(
-            Properties properties,
-            AuthForeignMinistry authForeignMinistry
-    ) {
+    public AuthController(Properties properties) {
         this.properties = properties;
-        this.authForeignMinistry = authForeignMinistry;
-        this.authenticationManager = null;
     }
 
     /**
@@ -70,23 +54,26 @@ public class AuthController {
     public Mono<ResultContext> login(
             ServerHttpRequest request,
             ServerHttpResponse response,
+            ServerWebExchange exchange,
             @RequestBody AccountPasswordLoginContext.Request param
     ) {
         if (properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null
-                    || param.getVoucher() == null
                     || param.getAccount() == null
                     || param.getPassword() == null) {
                 return Mono.error(new ParameterException(this.getClass(), "", ""));
             }
-            final AccountPasswordAuthenticationVoucherToken vt =
-                    AccountPasswordAuthenticationVoucherToken.create(
-                            param.getVoucher(), param.getAccount(), param.getPassword());
-            return authenticationManager
-                    .authenticate(vt)
-                    .flatMap(authentication -> authForeignMinistry.apply(
-                            request, response, AuthForeignMinistryVisaTemplate.create((JsonSerializeDeserializeAuthentication) authentication)))
-                    .map(ResultContext::build);
+            return AuthVoucherContext
+                    .create(exchange)
+                    .map(v -> {
+                        return service.login();
+                    })
+//            final UserDetailsRepositoryReactiveAuthenticationManager manager =
+//                    new UserDetailsRepositoryReactiveAuthenticationManager(new InMemoryUserDetailsManager());
+//            return manager
+//                    .authenticate(vt)
+//                    .flatMap(authentication -> authForeignMinistry.apply(request, response, AuthForeignMinistryVisaTemplate.create((JsonSerializeDeserializeAuthentication) authentication)))
+//                    .map(ResultContext::build);
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
         }

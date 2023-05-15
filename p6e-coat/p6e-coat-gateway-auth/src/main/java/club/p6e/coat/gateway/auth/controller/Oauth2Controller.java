@@ -5,19 +5,29 @@ import club.p6e.coat.gateway.auth.oauth2.AuthReactiveClientRegistrationRepositor
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import jakarta.annotation.Resource;
+import org.springframework.boot.web.embedded.netty.NettyWebServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.*;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthorizationCodeAuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthorizationCodeReactiveAuthenticationManager;
+import org.springframework.security.oauth2.client.authentication.OAuth2LoginReactiveAuthenticationManager;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.endpoint.ReactiveOAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.WebClientReactiveAuthorizationCodeTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.WebClientReactiveJwtBearerTokenResponseClient;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.ReactiveOAuth2UserService;
 import org.springframework.security.oauth2.client.web.DefaultReactiveOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.endpoint.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -162,14 +173,19 @@ public class Oauth2Controller {
 
     @Resource
     AuthReactiveClientRegistrationRepository authReactiveClientRegistrationRepository;
+//
+//    @Resource
+//    ServerOAuth2AuthorizedClientRepository auth2AuthorizedClientService;
 
     @Resource
-    ServerOAuth2AuthorizedClientRepository auth2AuthorizedClientService;
+    ReactiveOAuth2AuthorizedClientManager manager;
 
-    public ReactiveOAuth2AuthorizedClientManager aaa() {
-        return new DefaultReactiveOAuth2AuthorizedClientManager(authReactiveClientRegistrationRepository, auth2AuthorizedClientService);
-    }
-
+    /**
+     http://127.0.0.1:8080/oauth2/token?scope=user_info&clientId=123456&redirectUri=http://127.0.0.1:9999&grantType=code&state=111&clientSecret=123456&code=code
+     *
+     * @param exchange
+     * @return
+     */
     @RequestMapping("/token")
     public Mono<Object> token(ServerWebExchange exchange) {
         final String code = getCode(exchange);
@@ -184,6 +200,28 @@ public class Oauth2Controller {
                 || clientSecret == null) {
             return Mono.error(new ParameterException(this.getClass(), "", ""));
         }
+        return authReactiveClientRegistrationRepository
+                .findByRegistrationId(clientId)
+                .flatMap(r -> {
+                    return manager.authorize(OAuth2AuthorizeRequest
+                            .withClientRegistrationId(clientId)
+                            .principal("principal")
+                            .build());
+                }).map(f -> {
+                    System.out.println(f);
+                    System.out.println(
+                            f.getAccessToken()
+                    );
+                    System.out.println(
+                            f.getRefreshToken()
+                    );
+                    System.out.println(
+                            f.getPrincipalName()
+                    );
+                    return f;
+                });
+
+
 //        OAuth2AuthorizationRequest authorizationRequest = OAuth2AuthorizationRequest.authorizationCode()
 //                .clientId(clientRegistration.getClientId())
 //                .redirectUri(clientRegistration.getRedirectUri())
@@ -197,9 +235,6 @@ public class Oauth2Controller {
 //        return aaa()
 //                .authorize(request)
 //                .map(JsonUtil::toJson);
-
-
-
 
 
 //        // 使用授权码获取访问令牌并请求用户信息
@@ -216,9 +251,6 @@ public class Oauth2Controller {
 //                            .retrieve()
 //                            .bodyToMono(String.class));
 //        }
-
-        return null;
-
     }
 
 }
