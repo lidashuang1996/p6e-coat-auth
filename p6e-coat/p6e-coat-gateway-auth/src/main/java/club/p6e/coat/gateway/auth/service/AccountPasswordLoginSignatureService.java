@@ -1,6 +1,8 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.cloud.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
+import reactor.core.publisher.Mono;
 
 /**
  * 账号密码登录的密码签名服务
@@ -25,6 +27,6 @@ public interface AccountPasswordLoginSignatureService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public LoginContext.AccountPasswordSignature.Dto execute(LoginContext.AccountPasswordSignature.Request param);
+    public Mono<AccountPasswordLoginContext.Signature.Dto> execute(AccountPasswordLoginContext.Signature.Request param);
 
 }

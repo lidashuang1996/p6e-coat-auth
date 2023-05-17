@@ -8,7 +8,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
  * @author lidashuang
  * @version 1.0
  */
-public interface AuthDynamicWebPathMatcher extends ServerWebExchangeMatcher {
+public interface AuthGatewayWebPathMatcher extends ServerWebExchangeMatcher {
 
     /**
      * 添加需要认证的路径

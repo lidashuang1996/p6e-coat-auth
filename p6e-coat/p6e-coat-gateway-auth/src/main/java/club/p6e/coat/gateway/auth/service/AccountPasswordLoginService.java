@@ -3,6 +3,7 @@ package club.p6e.coat.gateway.auth.service;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
 import org.springframework.security.core.userdetails.UserDetails;
+import reactor.core.publisher.Mono;
 
 /**
  * 账号密码登录服务
@@ -24,6 +25,6 @@ public interface AccountPasswordLoginService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public AuthUserDetails execute(AccountPasswordLoginContext.Request param);
+    public Mono<AuthUserDetails> execute(AccountPasswordLoginContext.Request param);
 
 }

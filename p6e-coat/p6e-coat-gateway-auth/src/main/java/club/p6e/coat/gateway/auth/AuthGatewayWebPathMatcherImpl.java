@@ -17,10 +17,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @Component
 @ConditionalOnMissingBean(
-        value = AuthDynamicWebPathMatcher.class,
-        ignored = AuthDynamicWebPathMatcherImpl.class
+        value = AuthGatewayWebPathMatcher.class,
+        ignored = AuthGatewayWebPathMatcherImpl.class
 )
-public class AuthDynamicWebPathMatcherImpl implements AuthDynamicWebPathMatcher {
+public class AuthGatewayWebPathMatcherImpl implements AuthGatewayWebPathMatcher {
 
     /**
      * 路径通配符
@@ -38,7 +38,7 @@ public class AuthDynamicWebPathMatcherImpl implements AuthDynamicWebPathMatcher 
     private final List<String[]> list = new CopyOnWriteArrayList<>();
     private final Map<String, String[]> map = Collections.synchronizedMap(new HashMap<>());
 
-    public AuthDynamicWebPathMatcherImpl() {
+    public AuthGatewayWebPathMatcherImpl() {
         register("/a/**");
 
 

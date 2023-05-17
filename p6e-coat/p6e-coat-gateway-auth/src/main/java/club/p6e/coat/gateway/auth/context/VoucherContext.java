@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.context;
 
+import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import lombok.Data;
 import org.springframework.http.codec.multipart.FilePart;
 
@@ -16,7 +17,7 @@ public class VoucherContext implements Serializable {
 
     @Data
     public static class Request implements Serializable {
-        private String voucher;
+        private AuthVoucherContext voucher;
     }
 
 }

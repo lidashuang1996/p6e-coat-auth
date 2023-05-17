@@ -17,10 +17,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @Component
 @ConditionalOnMissingBean(
-        value = AuthDynamicWebPathMatcher.class,
+        value = AuthGatewayWebPathMatcher.class,
         ignored = AuthWebPathMatcherImpl.class
 )
-public class AuthWebPathMatcherImpl implements AuthDynamicWebPathMatcher {
+public class AuthWebPathMatcherImpl implements AuthGatewayWebPathMatcher {
 
     /**
      * 路径通配符
