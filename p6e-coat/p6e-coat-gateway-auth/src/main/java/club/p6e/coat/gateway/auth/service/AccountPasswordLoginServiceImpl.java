@@ -11,6 +11,7 @@ import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -53,16 +54,15 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(AccountPasswordLoginContext.Request param) {
+    public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, AccountPasswordLoginContext.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getAccountPassword().isEnable()) {
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
-        final AuthVoucherContext avc = param.getVoucher();
         Mono<AccountPasswordLoginContext.Request> mono = Mono.just(param);
         if (properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
-            final String mark = avc.get(AuthVoucherContext.ACCOUNT_PASSWORD_CODEC_MARK);
+            final String mark = voucher.get(AuthVoucherContext.ACCOUNT_PASSWORD_CODEC_MARK);
             mono = Mono
                     .just(mark)
                     .flatMap(cache::get)

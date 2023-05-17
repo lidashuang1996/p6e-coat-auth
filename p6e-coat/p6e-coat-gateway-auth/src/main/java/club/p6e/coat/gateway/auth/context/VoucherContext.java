@@ -16,7 +16,6 @@ public class VoucherContext implements Serializable {
 
     @Data
     public static class Request implements Serializable {
-        private AuthVoucherContext voucher;
     }
 
 }

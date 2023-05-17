@@ -53,20 +53,19 @@ public class QuickResponseCodeObtainServiceImpl implements QuickResponseCodeObta
     }
 
     @Override
-    public Mono<QuickResponseCodeContext.Obtain.Dto> execute(QuickResponseCodeContext.Obtain.Request param) {
+    public Mono<QuickResponseCodeContext.Obtain.Dto> execute(AuthVoucherContext voucher, QuickResponseCodeContext.Obtain.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getQrCode().isEnable()) {
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
         final String qrc = generator.execute();
-        final AuthVoucherContext avc = param.getVoucher();
         final Map<String, String> map = new HashMap<>(2);
         map.put(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_MARK, qrc);
         map.put(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
         return cache
                 .set(qrc, QuickResponseCodeLoginCache.EMPTY_CONTENT)
-                .flatMap(b -> avc.set(map))
+                .flatMap(b -> voucher.set(map))
                 .map(c -> new QuickResponseCodeContext.Obtain.Dto().setContent(qrc));
     }
 }

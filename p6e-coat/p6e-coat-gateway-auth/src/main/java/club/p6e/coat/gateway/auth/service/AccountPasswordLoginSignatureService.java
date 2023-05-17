@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
+import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
 import reactor.core.publisher.Mono;
 
@@ -26,6 +27,6 @@ public interface AccountPasswordLoginSignatureService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<AccountPasswordLoginContext.Signature.Dto> execute(AccountPasswordLoginContext.Signature.Request param);
+    public Mono<AccountPasswordLoginContext.Signature.Dto> execute(AuthVoucherContext voucher, AccountPasswordLoginContext.Signature.Request param);
 
 }

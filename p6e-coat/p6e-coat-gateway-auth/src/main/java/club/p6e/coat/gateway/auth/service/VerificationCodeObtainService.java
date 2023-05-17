@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
+import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import reactor.core.publisher.Mono;
 
@@ -23,6 +24,6 @@ public interface VerificationCodeObtainService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(VerificationCodeLoginContext.Obtain.Request param);
+    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param);
 
 }

@@ -47,14 +47,13 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
     }
 
     @Override
-    public Mono<AccountPasswordLoginContext.Signature.Dto> execute(AccountPasswordLoginContext.Signature.Request param) {
+    public Mono<AccountPasswordLoginContext.Signature.Dto> execute(AuthVoucherContext voucher,AccountPasswordLoginContext.Signature.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getAccountPassword().isEnable()
                 || !properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
-        final AuthVoucherContext avc = param.getVoucher();
         final AuthAccountPasswordLoginTransmissionCodec.Model cm = codec.generate();
         final String cv = JsonUtil.toJson(cm);
         final String ck = GeneratorUtil.uuid() + GeneratorUtil.random();
@@ -63,7 +62,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
         map.put(AuthVoucherContext.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
         return cache
                 .set(ck, cv)
-                .flatMap(b -> avc.set(map))
+                .flatMap(b -> voucher.set(map))
                 .map(m -> new AccountPasswordLoginContext.Signature.Dto().setKey(cm.getPublicKey()));
     }
 }

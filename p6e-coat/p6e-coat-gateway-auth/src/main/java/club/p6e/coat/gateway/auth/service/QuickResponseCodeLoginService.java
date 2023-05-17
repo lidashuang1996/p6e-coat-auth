@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.context.QuickResponseCodeContext;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,6 @@ public interface QuickResponseCodeLoginService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<AuthUserDetails> execute(QuickResponseCodeContext.Request param);
+    public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param);
 
 }

@@ -1331,3 +1331,57 @@ Error starting ApplicationContext. To display the condition evaluation report re
 2023-05-17 18:00:51 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
 2023-05-17 18:00:52 [main] INFO - Netty started on port 8080
 2023-05-17 18:00:52 [main] INFO - Started P6eGatewayAuthApplication in 2.244 seconds (process running for 2.543)
+2023-05-17 18:14:56 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-17 18:14:56 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 6916 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-17 18:14:56 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-17 18:14:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-17 18:14:57 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-17 18:14:57 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-05-17 18:14:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-17 18:14:57 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-17 18:14:57 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-17 18:14:57 [main] INFO - BeanFactory id=9a721259-ec8d-30bd-8c97-636877eb2ca9
+2023-05-17 18:14:57 [main] INFO - [ P6E AUTH JSON WEB TOKEN ] DEFAULT SECRET ==> o59uxlpmywddhpx308kd1ljs7bavgtz4
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-05-17 18:14:58 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-05-17 18:14:58 [main] INFO - Netty started on port 8080
+2023-05-17 18:14:58 [main] INFO - Started P6eGatewayAuthApplication in 2.073 seconds (process running for 2.369)
+2023-05-17 18:16:13 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-17 18:16:13 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 24016 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-17 18:16:13 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-17 18:16:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-17 18:16:13 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-17 18:16:13 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
+2023-05-17 18:16:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-17 18:16:13 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-17 18:16:13 [main] INFO - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2023-05-17 18:16:13 [main] INFO - BeanFactory id=9a721259-ec8d-30bd-8c97-636877eb2ca9
+2023-05-17 18:16:14 [main] INFO - [ P6E AUTH JSON WEB TOKEN ] DEFAULT SECRET ==> 8lwmn0zb4o7holg44wkiu8i21wngrdhp
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-05-17 18:16:14 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-05-17 18:16:14 [main] INFO - Netty started on port 8080
+2023-05-17 18:16:14 [main] INFO - Started P6eGatewayAuthApplication in 1.981 seconds (process running for 2.284)

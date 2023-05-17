@@ -50,14 +50,13 @@ public class QuickResponseCodeLoginServiceImpl implements QuickResponseCodeLogin
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(QuickResponseCodeContext.Request param) {
+    public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getQrCode().isEnable()) {
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
-        final AuthVoucherContext avc = param.getVoucher();
-        final String qcm = avc.get(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_MARK);
+        final String qcm = voucher.get(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_MARK);
         return cache
                 .get(qcm)
                 .flatMap(c -> {

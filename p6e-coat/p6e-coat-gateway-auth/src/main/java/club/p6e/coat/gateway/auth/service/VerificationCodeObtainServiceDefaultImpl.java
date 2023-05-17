@@ -61,7 +61,7 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
     }
 
     @Override
-    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(VerificationCodeLoginContext.Obtain.Request param) {
+    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getVerificationCode().isEnable()) {
             throw new ServiceNotEnabledException(
@@ -80,7 +80,6 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
-        final AuthVoucherContext avc = param.getVoucher();
         final Map<String, String> map = new HashMap<>(4);
         map.put(AuthVoucherContext.ACCOUNT, account);
         map.put(AuthVoucherContext.ACCOUNT_TYPE, type.name());
@@ -95,7 +94,7 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                 })
                 .flatMap(s -> {
                     map.put(AuthVoucherContext.VERIFICATION_CODE_LOGIN_MARK, s);
-                    return avc
+                    return voucher
                             .set(map)
                             .map(c -> new VerificationCodeLoginContext.Obtain.Dto().setContent(s));
                 });

@@ -52,16 +52,15 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(VerificationCodeLoginContext.Request param) {
+    public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Request param) {
         // 读取配置文件判断服务是否启动
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getVerificationCode().isEnable()) {
             throw new ServiceNotEnabledException(
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
-        final AuthVoucherContext avc = param.getVoucher();
-        final String account = avc.get(AuthVoucherContext.ACCOUNT);
-        final String accountType = avc.get(AuthVoucherContext.ACCOUNT_TYPE);
+        final String account = voucher.get(AuthVoucherContext.ACCOUNT);
+        final String accountType = voucher.get(AuthVoucherContext.ACCOUNT_TYPE);
         if (account == null || accountType == null) {
             throw new RuntimeException();
         } else {

@@ -84,7 +84,6 @@ public class AuthController {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null
-                    || param.getVoucher() == null
                     || param.getAccount() == null
                     || param.getPassword() == null) {
                 return Mono.error(new ParameterException(
@@ -95,10 +94,7 @@ public class AuthController {
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        param.setVoucher(v);
-                        return accountPasswordLoginService.execute(param);
-                    })
+                    .flatMap(v -> accountPasswordLoginService.execute(v, param))
                     .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
             return Mono.error(new ServiceNotEnabledException(
@@ -118,8 +114,7 @@ public class AuthController {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()
                 && properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
-            if (param == null
-                    || param.getVoucher() == null) {
+            if (param == null) {
                 return Mono.error(new ParameterException(
                         this.getClass(),
                         "fun accountPasswordLoginSignature(ServerWebExchange exchange, AccountPasswordLoginContext.Request param)",
@@ -129,8 +124,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> {
-                        param.setVoucher(v);
-                        return accountPasswordLoginSignatureService.execute(param);
+                        return accountPasswordLoginSignatureService.execute(v, param);
                     })
                     .map(ResultContext::build);
         } else {
@@ -153,8 +147,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> {
-                        param.setVoucher(v);
-                        return verificationCodeLoginService.execute(param);
+                        return verificationCodeLoginService.execute(v, param);
                     })
                     .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
@@ -175,8 +168,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> {
-                        param.setVoucher(v);
-                        return verificationCodeObtainService.execute(param);
+                        return verificationCodeObtainService.execute(v, param);
                     })
                     .map(ResultContext::build);
         } else {
@@ -199,8 +191,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> {
-                        param.setVoucher(v);
-                        return quickResponseCodeLoginService.execute(param);
+                        return quickResponseCodeLoginService.execute(v, param);
                     })
                     .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
@@ -219,8 +210,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> {
-                        param.setVoucher(v);
-                        return quickResponseCodeObtainService.execute(param);
+                        return quickResponseCodeObtainService.execute(v, param);
                     })
                     .map(ResultContext::build);
         } else {
