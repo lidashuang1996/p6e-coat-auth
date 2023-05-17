@@ -44,6 +44,7 @@ public class AuthGatewayWebPathMatcherImpl implements AuthGatewayWebPathMatcher 
 
     @Override
     public Mono<MatchResult> matches(ServerWebExchange exchange) {
+        System.out.println("XXXXXXXXXXXXXXXXXX");
         final ServerHttpRequest request = exchange.getRequest();
         final List<PathContainer.Element> elements = request.getPath().elements();
         for (final String[] item : list) {
@@ -60,11 +61,14 @@ public class AuthGatewayWebPathMatcherImpl implements AuthGatewayWebPathMatcher 
                         break;
                     }
                 }
+                System.out.println("match  " + match);
                 if (match) {
+                    System.out.println("1111111111111111");
                     return MatchResult.match();
                 }
             }
         }
+        System.out.println("222222222222222");
         return MatchResult.notMatch();
     }
 

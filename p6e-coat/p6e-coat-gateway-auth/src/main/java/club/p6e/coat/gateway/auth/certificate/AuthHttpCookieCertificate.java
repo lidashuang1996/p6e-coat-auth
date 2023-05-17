@@ -13,8 +13,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public abstract class AuthHttpCookieCertificate
-        extends AuthCertificateAbstract implements AuthCertificate {
+public abstract class AuthHttpCookieCertificate {
 
     /**
      * COOKIE 清除内容

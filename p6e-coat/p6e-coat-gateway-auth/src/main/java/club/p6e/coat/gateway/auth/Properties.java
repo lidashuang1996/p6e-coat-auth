@@ -64,24 +64,24 @@ public class Properties {
 
         @Data
         public static class VerificationCode {
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         @Data
         public static class QrCode {
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         @Data
         public static class Other {
-            private boolean enable = false;
+            private boolean enable = true;
             private Map<String, Map<String, String>> config = new HashMap<>();
         }
     }
 
     @Data
     public static class Oauth2 {
-        private boolean enable = false;
+        private boolean enable = true;
         private Client client = new Client();
         private Password password = new Password();
         private AuthorizationCode authorizationCode = new AuthorizationCode();

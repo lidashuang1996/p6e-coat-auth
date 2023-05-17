@@ -9,12 +9,7 @@ import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.SignalType;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * 验证码登录服务的实现

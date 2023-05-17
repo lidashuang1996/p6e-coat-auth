@@ -2,12 +2,18 @@ package club.p6e.coat.gateway.auth.controller;
 
 import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.utils.TemplateParser;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 首页
@@ -18,6 +24,12 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("")
 public class IndexController {
+
+    /**
+     * IP 头部名称
+     */
+    @SuppressWarnings("ALL")
+    private static final String IP_HEADER_NAME = "P6e-IP";
 
     /**
      * 资源类型
@@ -43,11 +55,22 @@ public class IndexController {
     public Mono<Void> index(ServerWebExchange exchange) {
         final String c = content == null ? "@{voucher}" : content;
         final MediaType t = type == null ? MediaType.TEXT_PLAIN : type;
+        final ServerHttpRequest request = exchange.getRequest();
         final ServerHttpResponse response = exchange.getResponse();
+        final HttpHeaders headers = request.getHeaders();
+        final List<String> ips = headers.get(IP_HEADER_NAME);
+        String ip = "0.0.0.0";
+        if (ips != null && ips.size() > 0) {
+            ip = ips.get(0);
+        }
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(t);
+        final Map<String, String> map = new HashMap<>(2);
+        map.put(AuthVoucherContext.IP, ip);
+        map.put(AuthVoucherContext.INDEX, "true");
+        map.put(AuthVoucherContext.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
         return AuthVoucherContext
-                .create()
+                .create(map)
                 .map(v -> TemplateParser.execute(c, "voucher", v.getMark()))
                 .flatMap(r -> response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(r.getBytes()))));
     }

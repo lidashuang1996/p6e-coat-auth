@@ -35,15 +35,18 @@ public class AuthSecurityConfiguration {
             ServerHttpSecurity http,
             AuthGatewayWebPathMatcher gMatcher,
             AuthReactiveAuthenticationManager manager,
-            AuthServerAuthenticationConverter converter
+            AuthServerAuthenticationConverter converter,
+            AuthReactiveVoucherFilter voucherFilter,
+            AuthHttpHeaderInitWebFilter initFilter
     ) {
         return http
-                .securityMatcher(gMatcher)
+                .csrf().disable()
                 .httpBasic().disable()
                 .formLogin().disable()
-                .csrf().disable()
-                .addFilterBefore(createAuthenticationWebFilter(
-                        manager, converter), SecurityWebFiltersOrder.AUTHENTICATION)
+                .securityMatcher(gMatcher)
+//                .addFilterAt(initFilter, SecurityWebFiltersOrder.HTTP_HEADERS_WRITER)
+//                .addFilterAfter(voucherFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterBefore(createAuthenticationWebFilter(manager, converter), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 

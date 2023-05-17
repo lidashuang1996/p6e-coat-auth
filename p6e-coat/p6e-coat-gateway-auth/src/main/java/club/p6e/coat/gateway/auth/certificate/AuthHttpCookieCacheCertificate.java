@@ -9,8 +9,8 @@ import org.springframework.web.server.ServerWebExchange;
  * @version 1.0
  */
 @Component
-public class AuthHttpCookieRedisCacheCertificate
-        extends AuthHttpCookieCertificate implements AuthCertificate {
+public class AuthHttpCookieCacheCertificate
+        extends AuthCertificateAbstract  implements AuthCertificate {
 
     @Override
     public Object use(ServerWebExchange exchange, AuthUserDetails authUserDetails) {

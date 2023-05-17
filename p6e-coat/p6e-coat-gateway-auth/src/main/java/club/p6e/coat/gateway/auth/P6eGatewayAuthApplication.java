@@ -1,5 +1,8 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.controller.AuthController;
+import club.p6e.coat.gateway.auth.service.AccountPasswordLoginService;
+import club.p6e.coat.gateway.auth.service.AccountPasswordLoginSignatureService;
 import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +20,11 @@ public class P6eGatewayAuthApplication {
         SpringUtil.init(
                 SpringApplication.run(P6eGatewayAuthApplication.class, args)
         );
+
+        SpringUtil.getBean(AuthController.class)
+                .setAccountPasswordLoginService(SpringUtil.getBean(AccountPasswordLoginService.class));
+        SpringUtil.getBean(AuthController.class)
+                .setAccountPasswordLoginSignatureService(SpringUtil.getBean(AccountPasswordLoginSignatureService.class));
     }
 
 }

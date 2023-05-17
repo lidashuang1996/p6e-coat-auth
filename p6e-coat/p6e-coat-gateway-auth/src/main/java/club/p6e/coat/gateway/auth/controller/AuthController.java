@@ -80,6 +80,7 @@ public class AuthController {
     @PostMapping("/login/account_password")
     public Mono<Void> accountPasswordLogin(
             ServerWebExchange exchange, @RequestBody AccountPasswordLoginContext.Request param) {
+        System.out.println(":::::::::::::::::::::::::::::::::::::");
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null

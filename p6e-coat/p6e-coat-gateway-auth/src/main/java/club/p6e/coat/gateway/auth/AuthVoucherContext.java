@@ -1,9 +1,16 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.cache.VoucherCache;
+import club.p6e.coat.gateway.auth.generator.VoucherGenerator;
+import club.p6e.coat.gateway.auth.utils.SpringUtil;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,7 +20,9 @@ import java.util.Map;
 public class AuthVoucherContext implements Serializable {
 
     public static final String PRIVATE = "PRIVATE";
+    public static final String IP = "IP";
     public static final String INDEX = "INDEX";
+    public static final String INDEX_DATE = "INDEX_DATE";
     public static final String ACCOUNT_PASSWORD_LOGIN = "ACCOUNT_PASSWORD_LOGIN";
     public static final String ACCOUNT_PASSWORD_CODEC_DATE = "ACCOUNT_PASSWORD_CODEC_DATE";
     public static final String ACCOUNT_PASSWORD_CODEC_MARK = "ACCOUNT_PASSWORD_CODEC_MARK";
@@ -39,25 +48,114 @@ public class AuthVoucherContext implements Serializable {
     public static final String OAUTH2_USER_ID = "OAUTH2_USER_ID";
     public static final String OAUTH2_USER_INFO = "OAUTH2_USER_INFO";
 
+    /**
+     * 标记内容
+     */
+    private final String mark;
+
+    /**
+     * 凭证缓存对象
+     */
+    private final VoucherCache cache;
+
+    /**
+     * 数据对象
+     */
+    private final Map<String, String> data;
+
+    /**
+     * 初始化认证凭证上下文对象
+     *
+     * @param exchange 服务器交换对象
+     * @return Mono<AuthVoucherContext> 认证凭证上下文对象
+     */
     public static Mono<AuthVoucherContext> init(ServerWebExchange exchange) {
-        return Mono.just(new AuthVoucherContext());
+        final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
+        final ServerHttpRequest request = exchange.getRequest();
+        final String voucher = request.getQueryParams().getFirst("voucher");
+        if (StringUtils.hasText(voucher)) {
+            return cache
+                    .get(voucher)
+                    .map(m -> new AuthVoucherContext(voucher, m, cache))
+                    .switchIfEmpty(Mono.error(new RuntimeException()));
+        } else {
+            return Mono.error(new RuntimeException());
+        }
     }
 
-    public static Mono<AuthVoucherContext> create() {
-        return Mono.just(new AuthVoucherContext());
+    /**
+     * 创建认证凭证上下文对象
+     *
+     * @return Mono<AuthVoucherContext> 认证凭证上下文对象
+     */
+    public static Mono<AuthVoucherContext> create(Map<String, String> data) {
+        final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
+        final VoucherGenerator generator = SpringUtil.getBean(VoucherGenerator.class);
+        final String voucher = generator.execute();
+        return cache
+                .bind(voucher, data)
+                .map(b -> new AuthVoucherContext(voucher, data, cache));
     }
 
-    private String mark;
+    /**
+     * 构造函数私有化
+     */
+    private AuthVoucherContext(String mark, Map<String, String> data, VoucherCache cache) {
+        this.mark = mark;
+        this.cache = cache;
+        this.data = Collections.synchronizedMap(new HashMap<>());
+        if (data != null && data.size() > 0) {
+            for (final String key : data.keySet()) {
+                this.data.put(key, data.get(key));
+            }
+        }
+    }
 
+    /**
+     * 获取标记
+     *
+     * @return 标记内容
+     */
     public String getMark() {
         return mark;
     }
 
-    public Mono<AuthVoucherContext> set(Map<String, String> map) {
-        return Mono.just(new AuthVoucherContext());
+    /**
+     * 获取属性值
+     *
+     * @param key 属性键
+     * @return 属性值
+     */
+    public String get(String key) {
+        return data.get(key);
     }
 
-    public String get(String accountPasswordCodecMark) {
-        return "";
+    /**
+     * 获取数据
+     *
+     * @return 数据对象
+     */
+    public Map<String, String> getData() {
+        return data;
     }
+
+    /**
+     * 写入数据
+     *
+     * @param map 数据对象
+     * @return Mono<AuthVoucherContext> 认证凭证上下文对象
+     */
+    public Mono<AuthVoucherContext> set(Map<String, String> map) {
+        return cache
+                .bind(mark, map)
+                .map(b -> {
+                    if (b) {
+                        for (final String key : map.keySet()) {
+                            data.put(key, map.get(key));
+                        }
+                    }
+                    return this;
+                });
+    }
+
 }

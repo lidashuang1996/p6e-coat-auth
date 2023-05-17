@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.cache;
 
 import club.p6e.coat.gateway.auth.cache.support.ICache;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public interface VoucherCache extends ICache {
     /**
      * 过期的时间
      */
-    public static final long EXPIRATION_TIME = 60 * 60 * 24;
+    public static final long EXPIRATION_TIME = 60 * 30;
 
     /**
      * 条件注册的条件表达式
@@ -56,47 +57,11 @@ public interface VoucherCache extends ICache {
             "#{${p6e.auth.login.enable:false} || ${p6e.auth.oauth2.enable:false} || ${p6e.auth.register.enable:false}}";
 
     /**
-     * 创建
-     *
-     * @param content 会话编号
-     * @param key     键
-     * @param value   值
-     */
-    public void set(String content, String key, String value);
-    public void set(String content, Map<String, String> dataMap);
-
-    /**
-     * 绑定数据
-     *
-     * @param content 会话编号
-     * @param key     键
-     * @param value   值
-     */
-    public void bind(String content, String key, String value);
-
-    /**
-     * 绑定数据
-     *
-     * @param content 会话编号
-     * @param dataMap 需要绑定数据的键值对
-     */
-    public void bind(String content, Map<String, String> dataMap);
-
-    /**
      * 删除数据
      *
      * @param content 会话编号
      */
-    public void del(String content);
-
-    /**
-     * 读取子项数据
-     *
-     * @param content 会话编号
-     * @param key     会话子项名称
-     * @return 会话子项数据
-     */
-    public Optional<String> get(String content, String key);
+    public Mono<Long> del(String content);
 
     /**
      * 读取全部数据
@@ -104,6 +69,13 @@ public interface VoucherCache extends ICache {
      * @param content 会话编号
      * @return 会话全部数据
      */
-    public Optional<Map<String, String>> getAll(String content);
+    public Mono<Map<String, String>> get(String content);
+
+    /**
+     * 绑定数据
+     *
+     * @param content 会话编号
+     */
+    public Mono<Boolean> bind(String content, Map<String, String> data);
 
 }
