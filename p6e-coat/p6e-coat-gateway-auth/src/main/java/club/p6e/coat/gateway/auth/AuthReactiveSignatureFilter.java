@@ -15,7 +15,6 @@ import java.util.*;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthReactiveSignatureFilter extends AuthWebPathMatcherImpl implements WebFilter, AuthWebPathMatcher {
     private static final String SIGNATURE_URL_PARAM = "signature";
     private static final String DATE_URL_PARAM = "_";

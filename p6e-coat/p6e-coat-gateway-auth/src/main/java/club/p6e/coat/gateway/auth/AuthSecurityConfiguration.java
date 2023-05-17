@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.certificate.AuthCertificate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;

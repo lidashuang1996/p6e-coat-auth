@@ -1,11 +1,12 @@
 package club.p6e.coat.gateway.auth.launcher;
 
-import club.p6e.cloud.auth.utils.GeneratorUtil;
+import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -18,18 +19,18 @@ import java.util.Map;
 @Component
 @ConditionalOnMissingBean(
         value = SmsMessageLauncher.class,
-        ignored = SmsMessageLauncherDefaultImpl.class
+        ignored = SmsMessageLauncherImpl.class
 )
 @ConditionalOnExpression(MessageLauncher.CONDITIONAL_EXPRESSION)
-public class SmsMessageLauncherDefaultImpl implements SmsMessageLauncher {
+public class SmsMessageLauncherImpl implements SmsMessageLauncher {
 
     /**
      * 注入日志对象
      */
-    private final static Logger LOGGER = LoggerFactory.getLogger(SmsMessageLauncherDefaultImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(SmsMessageLauncherImpl.class);
 
     @Override
-    public String execute(String account, String template, Map<String, String> content) {
+    public Mono<String> execute(String account, String template, Map<String, String> content) {
         final String result = GeneratorUtil.uuid();
         LOGGER.info("\r\n" +
                 "\n" +
@@ -41,7 +42,7 @@ public class SmsMessageLauncherDefaultImpl implements SmsMessageLauncher {
                 "|   content   =>   " + content + "   |\n" +
                 "--------------------------------------------------------------------\n" +
                 "\n");
-        return result;
+        return Mono.just(result);
     }
 
 }

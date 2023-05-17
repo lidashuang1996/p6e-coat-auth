@@ -40,21 +40,6 @@ public class AuthGatewayWebPathMatcherImpl implements AuthGatewayWebPathMatcher 
 
     public AuthGatewayWebPathMatcherImpl() {
         register("/a/**");
-
-
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    Thread.sleep(20_000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.println("::::::::::::::::::::");
-                register("/b/**");
-            }
-        }.start();
     }
 
     @Override

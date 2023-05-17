@@ -30,8 +30,7 @@ public final class Launcher {
             case EMAIL -> {
                 return SpringUtil.getBean(EmailMessageLauncher.class).execute(account, template, content);
             }
-            default -> throw GlobalExceptionContext.executeTypeMismatchException(Launcher.class,
-                    "fun push(LauncherType type, String account, String template, Map<String, String> content).");
+            default -> throw new RuntimeException("fun push(LauncherType type, String account, String template, Map<String, String> content).");
         }
     }
 }

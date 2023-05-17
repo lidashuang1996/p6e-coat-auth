@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.auth.foreign;
+package club.p6e.coat.gateway.auth.certificate;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -7,7 +7,6 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * 外交部抽象类
@@ -16,7 +15,7 @@ import java.util.Optional;
  * @author lidashuang
  * @version 1.0
  */
-public abstract class ReactiveHttpHeaderAuthForeignMinistry {
+public abstract class AuthServerCertificateHttpLocalStorage {
 
     /**
      * 认证头名称

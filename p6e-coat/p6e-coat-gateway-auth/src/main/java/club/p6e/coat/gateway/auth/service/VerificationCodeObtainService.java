@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.cloud.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import reactor.core.publisher.Mono;
 

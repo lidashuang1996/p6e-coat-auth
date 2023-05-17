@@ -13,11 +13,6 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = QrCodeLoginGenerator.class,
-        ignored = QrCodeLoginGeneratorDefaultImpl.class
-)
-@ConditionalOnExpression(QrCodeLoginGenerator.CONDITIONAL_EXPRESSION)
 public class QrCodeLoginGeneratorDefaultImpl implements QrCodeLoginGenerator {
 
     @Override

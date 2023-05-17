@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class EmailMessageLauncherDefaultImpl implements EmailMessageLauncher {
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailMessageLauncherDefaultImpl.class);
 
     @Override
-    public String execute(String account, String template, Map<String, String> content) {
+    public Mono<String> execute(String account, String template, Map<String, String> content) {
         final String result = GeneratorUtil.uuid();
         LOGGER.info("\r\n" +
                 "\n" +
@@ -41,7 +42,7 @@ public class EmailMessageLauncherDefaultImpl implements EmailMessageLauncher {
                 "|   content   =>   " + content + "   |\n" +
                 "--------------------------------------------------------------------\n" +
                 "\n");
-        return result;
+        return Mono.just(result);
     }
 
 }

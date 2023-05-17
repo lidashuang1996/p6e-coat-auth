@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.controller;
 
+import club.p6e.coat.gateway.auth.certificate.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
@@ -30,6 +31,8 @@ public class AuthController {
      * 配置文件对象
      */
     private final Properties properties;
+
+    private final AuthCertificate authCertificateService;
 
     /**
      * 账号密码登录服务对象
@@ -66,15 +69,16 @@ public class AuthController {
      *
      * @param properties 配置文件对象
      */
-    public AuthController(Properties properties) {
+    public AuthController(Properties properties, AuthCertificate authCertificateService) {
         this.properties = properties;
+        this.authCertificateService = authCertificateService;
     }
 
     /**
      * 账号密码登录
      */
     @PostMapping("/login/account_password")
-    public Mono<ResultContext> accountPasswordLogin(
+    public Mono<Void> accountPasswordLogin(
             ServerWebExchange exchange, @RequestBody AccountPasswordLoginContext.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
@@ -94,7 +98,7 @@ public class AuthController {
                         param.setVoucher(v);
                         return accountPasswordLoginService.execute(param);
                     })
-                    .map(ResultContext::build);
+                    .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
             return Mono.error(new ServiceNotEnabledException(
                     this.getClass(),
@@ -137,7 +141,7 @@ public class AuthController {
      * 验证码登录
      */
     @PostMapping("/login/verification_code")
-    public Mono<ResultContext> verificationCodeLogin(
+    public Mono<Void> verificationCodeLogin(
             ServerWebExchange exchange, @RequestBody VerificationCodeLoginContext.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getVerificationCode().isEnable()) {
@@ -151,7 +155,7 @@ public class AuthController {
                         param.setVoucher(v);
                         return verificationCodeLoginService.execute(param);
                     })
-                    .map(ResultContext::build);
+                    .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
         }
@@ -183,7 +187,7 @@ public class AuthController {
      * 二维码登录
      */
     @PostMapping("/login/quick_response_code")
-    public Mono<ResultContext> quickResponseCodeLogin(
+    public Mono<Void> quickResponseCodeLogin(
             ServerWebExchange exchange, @RequestBody QuickResponseCodeContext.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable()) {
@@ -197,7 +201,7 @@ public class AuthController {
                         param.setVoucher(v);
                         return quickResponseCodeLoginService.execute(param);
                     })
-                    .map(ResultContext::build);
+                    .flatMap(r -> authCertificateService.execute(exchange, r));
         } else {
             return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
         }

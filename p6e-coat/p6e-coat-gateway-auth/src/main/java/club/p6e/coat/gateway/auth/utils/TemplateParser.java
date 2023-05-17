@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,8 +40,15 @@ public final class TemplateParser {
         return execute(content, data, false);
     }
 
-    public static String execute(String content, String ...data) {
-        return execute(content, data, false);
+    public static String execute(String content, String... data) {
+        if (data.length % 2 != 0) {
+            throw new RuntimeException();
+        }
+        final Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < data.length; i++) {
+            map.put(data[i], data[++i]);
+        }
+        return execute(content, map, false);
     }
 
     /**

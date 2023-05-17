@@ -1,5 +1,7 @@
 package club.p6e.coat.gateway.auth.launcher;
 
+import reactor.core.publisher.Mono;
+
 import java.util.Map;
 
 /**
@@ -31,6 +33,6 @@ public interface MessageLauncher {
      * @param content  内容
      * @return 推送消息的返回
      */
-    public String execute(String account, String template, Map<String, String> content);
+    public Mono<String> execute(String account, String template, Map<String, String> content);
 
 }

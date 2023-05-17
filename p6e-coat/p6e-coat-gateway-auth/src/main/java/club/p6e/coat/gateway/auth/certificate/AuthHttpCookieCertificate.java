@@ -1,10 +1,8 @@
-package club.p6e.coat.gateway.auth.foreign;
+package club.p6e.coat.gateway.auth.certificate;
 
 import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.util.List;
 
@@ -15,7 +13,8 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public abstract class ReactiveHttpCookieAuthForeignMinistry {
+public abstract class AuthHttpCookieCertificate
+        extends AuthCertificateAbstract implements AuthCertificate {
 
     /**
      * COOKIE 清除内容

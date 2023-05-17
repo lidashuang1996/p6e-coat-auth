@@ -57,7 +57,7 @@ public class QuickResponseCodeLoginServiceImpl implements QuickResponseCodeLogin
                     this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
         }
         final AuthVoucherContext avc = param.getVoucher();
-        final String qcm = avc.get(AuthVoucherContext.QUICK_RESPONSE_CODE_MARK);
+        final String qcm = avc.get(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_MARK);
         return cache
                 .get(qcm)
                 .flatMap(c -> {
