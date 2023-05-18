@@ -7,6 +7,7 @@ import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
 import club.p6e.coat.gateway.auth.context.QuickResponseCodeContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
 import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
 import club.p6e.coat.gateway.auth.service.*;
@@ -32,7 +33,7 @@ public class AuthController {
      */
     private final Properties properties;
 
-    private final AuthCertificate authCertificateService;
+    private final AuthCertificate certificate;
 
     /**
      * 账号密码登录服务对象
@@ -69,24 +70,23 @@ public class AuthController {
      *
      * @param properties 配置文件对象
      */
-    public AuthController(Properties properties, AuthCertificate authCertificateService) {
+    public AuthController(Properties properties, AuthCertificate certificate) {
         this.properties = properties;
-        this.authCertificateService = authCertificateService;
+        this.certificate = certificate;
     }
 
     /**
      * 账号密码登录
      */
     @PostMapping("/login/account_password")
-    public Mono<Void> accountPasswordLogin(
+    public Mono<ResultContext> accountPasswordLogin(
             ServerWebExchange exchange, @RequestBody AccountPasswordLoginContext.Request param) {
-        System.out.println(":::::::::::::::::::::::::::::::::::::");
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
             if (param == null
                     || param.getAccount() == null
                     || param.getPassword() == null) {
-                return Mono.error(new ParameterException(
+                return Mono.error(GlobalExceptionContext.executeParameterException(
                         this.getClass(),
                         "fun accountPasswordLogin(ServerWebExchange exchange, AccountPasswordLoginContext.Request param)",
                         "Request parameter<account/password> exception."
@@ -95,9 +95,9 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> accountPasswordLoginService.execute(v, param))
-                    .flatMap(r -> authCertificateService.execute(exchange, r));
+                    .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
                     this.getClass(),
                     "fun accountPasswordLogin(ServerWebExchange exchange, AccountPasswordLoginContext.Request param)",
                     "Account password login service not enabled exception."
@@ -117,18 +117,22 @@ public class AuthController {
             if (param == null) {
                 return Mono.error(new ParameterException(
                         this.getClass(),
-                        "fun accountPasswordLoginSignature(ServerWebExchange exchange, AccountPasswordLoginContext.Request param)",
-                        "Request parameter<account/password> exception."
+                        "fun accountPasswordLoginSignature(ServerWebExchange " +
+                                "exchange, AccountPasswordLoginContext.Signature.Request param)",
+                        "Request parameter exception."
                 ));
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        return accountPasswordLoginSignatureService.execute(v, param);
-                    })
+                    .flatMap(v -> accountPasswordLoginSignatureService.execute(v, param))
                     .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun accountPasswordLoginSignature(ServerWebExchange " +
+                            "exchange, AccountPasswordLoginContext.Signature.Request param)",
+                    "Account password signature service not enabled exception."
+            ));
         }
     }
 
@@ -136,22 +140,29 @@ public class AuthController {
      * 验证码登录
      */
     @PostMapping("/login/verification_code")
-    public Mono<Void> verificationCodeLogin(
+    public Mono<ResultContext> verificationCodeLogin(
             ServerWebExchange exchange, @RequestBody VerificationCodeLoginContext.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getVerificationCode().isEnable()) {
-            if (param == null
-                    || param.getCode() == null) {
-                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            if (param == null || param.getCode() == null) {
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun verificationCodeLogin(ServerWebExchange " +
+                                "exchange, VerificationCodeLoginContext.Request param)",
+                        "Request parameter<code> exception."
+                ));
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        return verificationCodeLoginService.execute(v, param);
-                    })
-                    .flatMap(r -> authCertificateService.execute(exchange, r));
+                    .flatMap(v -> verificationCodeLoginService.execute(v, param))
+                    .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun verificationCodeLogin(ServerWebExchange " +
+                            "exchange, VerificationCodeLoginContext.Request param)",
+                    "Verification code login service not enabled exception."
+            ));
         }
     }
 
@@ -161,18 +172,25 @@ public class AuthController {
             ServerWebExchange exchange, @RequestBody VerificationCodeLoginContext.Obtain.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
-            if (param == null
-                    || param.getAccount() == null) {
-                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            if (param == null || param.getAccount() == null) {
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun obtainLoginVerificationCode(ServerWebExchange " +
+                                "exchange, VerificationCodeLoginContext.Obtain.Request param)",
+                        "Request parameter<account> exception."
+                ));
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        return verificationCodeObtainService.execute(v, param);
-                    })
+                    .flatMap(v -> verificationCodeObtainService.execute(v, param))
                     .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun obtainLoginVerificationCode(ServerWebExchange " +
+                            "exchange, VerificationCodeLoginContext.Obtain.Request param)",
+                    "Verification code obtain service not enabled exception."
+            ));
         }
     }
 
@@ -180,22 +198,29 @@ public class AuthController {
      * 二维码登录
      */
     @PostMapping("/login/quick_response_code")
-    public Mono<Void> quickResponseCodeLogin(
+    public Mono<ResultContext> quickResponseCodeLogin(
             ServerWebExchange exchange, @RequestBody QuickResponseCodeContext.Request param) {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable()) {
-            if (param == null
-                    || param.getContent() == null) {
-                return Mono.error(new ParameterException(this.getClass(), "", ""));
+            if (param == null) {
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun quickResponseCodeLogin(ServerWebExchange " +
+                                "exchange, QuickResponseCodeContext.Request param)",
+                        "Request parameter exception."
+                ));
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        return quickResponseCodeLoginService.execute(v, param);
-                    })
-                    .flatMap(r -> authCertificateService.execute(exchange, r));
+                    .flatMap(v -> quickResponseCodeLoginService.execute(v, param))
+                    .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun quickResponseCodeLogin(ServerWebExchange " +
+                            "exchange, QuickResponseCodeContext.Request param)",
+                    "Quick response code login service not enabled exception."
+            ));
         }
     }
 
@@ -205,16 +230,24 @@ public class AuthController {
         if (properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable()) {
             if (param == null) {
-                return Mono.error(new ParameterException(this.getClass(), "", ""));
+                return Mono.error(new ParameterException(
+                        this.getClass(),
+                        "fun obtainLoginQuickResponseCode(ServerWebExchange " +
+                                "exchange, QuickResponseCodeContext.Obtain.Request param)",
+                        "Quick response code parameter exception."
+                ));
             }
             return AuthVoucherContext
                     .init(exchange)
-                    .flatMap(v -> {
-                        return quickResponseCodeObtainService.execute(v, param);
-                    })
+                    .flatMap(v -> quickResponseCodeObtainService.execute(v, param))
                     .map(ResultContext::build);
         } else {
-            return Mono.error(new ServiceNotEnabledException(this.getClass(), "", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun obtainLoginQuickResponseCode(ServerWebExchange " +
+                            "exchange, QuickResponseCodeContext.Obtain.Request param)",
+                    "Quick response code obtain service not enabled exception."
+            ));
         }
     }
 

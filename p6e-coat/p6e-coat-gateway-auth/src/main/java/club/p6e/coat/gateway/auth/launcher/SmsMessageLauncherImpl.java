@@ -17,11 +17,6 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = SmsMessageLauncher.class,
-        ignored = SmsMessageLauncherImpl.class
-)
-@ConditionalOnExpression(MessageLauncher.CONDITIONAL_EXPRESSION)
 public class SmsMessageLauncherImpl implements SmsMessageLauncher {
 
     /**

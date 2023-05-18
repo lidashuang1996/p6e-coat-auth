@@ -46,4 +46,10 @@ public class AuthPasswordEncoder implements PasswordEncoder {
         return encodedPassword.length() != 0 && encode(rawPassword).equals(encodedPassword);
     }
 
+    public static void main(String[] args) {
+        System.out.println(
+                new AuthPasswordEncoder().encode("123456")
+        );;
+    }
+
 }

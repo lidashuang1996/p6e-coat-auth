@@ -5,6 +5,7 @@ import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.QuickResponseCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.QuickResponseCodeContext;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
@@ -53,16 +54,29 @@ public class QuickResponseCodeLoginServiceImpl implements QuickResponseCodeLogin
     public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param) {
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getQrCode().isEnable()) {
-            throw new ServiceNotEnabledException(
-                    this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param)",
+                    "Quick response code login service not enabled exception."
+            ));
         }
         final String qcm = voucher.get(AuthVoucherContext.QUICK_RESPONSE_CODE_LOGIN_MARK);
         return cache
                 .get(qcm)
+                .switchIfEmpty(Mono.error(GlobalExceptionContext
+                        .exceptionQuickResponseCodeException(
+                                this.getClass(),
+                                "fun execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param)",
+                                "Quick response code does not exist or expired exception."
+                        )))
                 .flatMap(c -> {
                     if (QuickResponseCodeLoginCache.isEmpty(c)) {
-                        return Mono.error(new ServiceNotEnabledException(
-                                this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext
+                                .exceptionQuickResponseCodeException(
+                                        this.getClass(),
+                                        "fun execute(AuthVoucherContext voucher, QuickResponseCodeContext.Request param)",
+                                        "Quick response code data content is null."
+                                ));
                     } else {
                         return cache
                                 .del(qcm)

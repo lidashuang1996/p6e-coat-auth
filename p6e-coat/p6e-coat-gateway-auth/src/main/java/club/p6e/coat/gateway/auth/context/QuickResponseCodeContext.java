@@ -16,9 +16,7 @@ import java.io.Serializable;
 public class QuickResponseCodeContext implements Serializable {
 
     @Data
-    @EqualsAndHashCode(callSuper = true)
-    public static class Request extends VoucherContext.Request implements Serializable {
-        private String content;
+    public static class Request implements Serializable {
     }
 
     @Data

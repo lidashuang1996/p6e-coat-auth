@@ -59,7 +59,7 @@ public class Properties {
         @Data
         public static class AccountPassword {
             private boolean enable = true;
-            private boolean enableTransmissionEncryption = true;
+            private boolean enableTransmissionEncryption = false;
         }
 
         @Data

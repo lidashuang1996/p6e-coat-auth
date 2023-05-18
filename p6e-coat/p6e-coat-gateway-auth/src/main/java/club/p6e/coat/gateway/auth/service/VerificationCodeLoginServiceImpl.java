@@ -5,7 +5,7 @@ import club.p6e.coat.gateway.auth.AuthVoucherContext;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
-import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -56,22 +56,54 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
         // 读取配置文件判断服务是否启动
         if (!properties.getLogin().isEnable()
                 || !properties.getLogin().getVerificationCode().isEnable()) {
-            throw new ServiceNotEnabledException(
-                    this.getClass(), "fun execute(LoginContext.AccountPasswordSignature.Request param).", "");
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Request param)",
+                    "Verification code login service not enabled exception."
+            ));
         }
         final String account = voucher.get(AuthVoucherContext.ACCOUNT);
         final String accountType = voucher.get(AuthVoucherContext.ACCOUNT_TYPE);
         if (account == null || accountType == null) {
-            throw new RuntimeException();
+            return Mono.error(GlobalExceptionContext.exceptionDataFormatException(
+                    this.getClass(),
+                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Request param)",
+                    "Account format error."
+            ));
         } else {
             final String code = param.getCode();
+            System.out.println(account);
+            System.out.println(code);
             return cache
                     .get(account, accountType)
-                    .filter(l -> l.contains(code))
+                    .filter(l -> {
+
+                        System.out.println(
+                                l
+                        );
+
+                        System.out.println(
+                                l.contains(code)
+                        );
+
+                        return l.contains(code);
+                    })
+                    .switchIfEmpty(Mono.error(GlobalExceptionContext
+                            .exceptionVerificationCodeException(
+                                    this.getClass(),
+                                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Request param)",
+                                    "Verification code does not exist or expired exception."
+                            )))
                     .publishOn(Schedulers.boundedElastic())
                     .doFinally(signalType -> cache.del(account, accountType, code).block())
                     .flatMap(l -> service.findByUsername(account))
-                    .map(u -> (AuthUserDetails) u);
+                    .map(u -> (AuthUserDetails) u)
+                    .switchIfEmpty(Mono.error(GlobalExceptionContext
+                            .exceptionAccountException(
+                                    this.getClass(),
+                                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Request param)",
+                                    "Account data exception."
+                            )));
         }
     }
 }

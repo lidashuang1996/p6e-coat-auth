@@ -40,12 +40,12 @@ public class VerificationCodeLoginRedisCache implements VerificationCodeLoginCac
 
     @Override
     public Mono<Long> del(String key, String type) {
-        return template.delete(CACHE_PREFIX + key + DELIMITER + type);
+        return template.delete(CACHE_PREFIX + type + DELIMITER + key);
     }
 
     @Override
     public Mono<Long> del(String key, String type, String value) {
-        final byte[] bytes = (CACHE_PREFIX + key + DELIMITER + type).getBytes(StandardCharsets.UTF_8);
+        final byte[] bytes = (CACHE_PREFIX + type + DELIMITER + key).getBytes(StandardCharsets.UTF_8);
         return template
                 .execute(connection -> connection
                         .hashCommands()
@@ -75,7 +75,7 @@ public class VerificationCodeLoginRedisCache implements VerificationCodeLoginCac
 
     @Override
     public Mono<Boolean> set(String key, String type, String value) {
-        final byte[] bytes = (CACHE_PREFIX + key + DELIMITER + type).getBytes(StandardCharsets.UTF_8);
+        final byte[] bytes = (CACHE_PREFIX + type + DELIMITER + key).getBytes(StandardCharsets.UTF_8);
         return template
                 .execute(connection -> connection
                         .hashCommands()
@@ -91,7 +91,7 @@ public class VerificationCodeLoginRedisCache implements VerificationCodeLoginCac
 
     @Override
     public Mono<List<String>> get(String key, String type) {
-        final byte[] bytes = (CACHE_PREFIX + key + DELIMITER + type).getBytes(StandardCharsets.UTF_8);
+        final byte[] bytes = (CACHE_PREFIX + type + DELIMITER + key).getBytes(StandardCharsets.UTF_8);
         return template
                 .execute(connection -> connection
                         .hashCommands()

@@ -42,6 +42,39 @@ public class AuthUserDetails implements UserDetails, Serializable {
      */
     private final String password;
 
+    public AuthUserDetails (UserDetails details) {
+        if (details instanceof AuthUserDetails) {
+            AuthUserDetails d = (AuthUserDetails) details;
+            this.username = d.getUsername();
+            this.password = d.getPassword();
+            this.id = d.getId();
+            this.status = d.getStatus();
+            this.enabled = d.getEnabled();
+            this.account = d.getAccount();
+            this.phone = d.getPhone();
+            this.mailbox = d.getMailbox();
+            this.name = d.getName();
+            this.nickname = d.getNickname();
+            this.avatar = d.getAvatar();
+            this.describe = d.getDescribe();
+            this.mode = d.mode;
+        } else {
+            this.mode = "DEFAULT";
+            this.username = details.getUsername();
+            this.password = details.getPassword();
+            this.id = null;
+            this.status = null;
+            this.enabled = null;
+            this.account = null;
+            this.phone = null;
+            this.mailbox = null;
+            this.name = null;
+            this.nickname = null;
+            this.avatar = null;
+            this.describe = null;
+        }
+    }
+
     /**
      * @param username
      * @param um

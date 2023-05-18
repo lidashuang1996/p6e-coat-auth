@@ -17,11 +17,6 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = EmailMessageLauncher.class,
-        ignored = EmailMessageLauncherDefaultImpl.class
-)
-@ConditionalOnExpression(MessageLauncher.CONDITIONAL_EXPRESSION)
 public class EmailMessageLauncherDefaultImpl implements EmailMessageLauncher {
 
     /**

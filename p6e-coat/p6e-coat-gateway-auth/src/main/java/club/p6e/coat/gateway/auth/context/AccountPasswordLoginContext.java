@@ -35,9 +35,9 @@ public class AccountPasswordLoginContext implements Serializable {
     @Data
     @Accessors(chain = true)
     public static class Signature implements Serializable {
+
         @Data
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends VoucherContext.Request {
+        public static class Request {
         }
 
         @Data

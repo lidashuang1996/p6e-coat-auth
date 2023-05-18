@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth;
 
 import club.p6e.coat.gateway.auth.cache.VoucherCache;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.VoucherGenerator;
 import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -48,6 +49,8 @@ public class AuthVoucherContext implements Serializable {
     public static final String OAUTH2_USER_ID = "OAUTH2_USER_ID";
     public static final String OAUTH2_USER_INFO = "OAUTH2_USER_INFO";
 
+    private static final String VOUCHER_URL_PARAM_NAME = "voucher";
+
     /**
      * 标记内容
      */
@@ -72,14 +75,22 @@ public class AuthVoucherContext implements Serializable {
     public static Mono<AuthVoucherContext> init(ServerWebExchange exchange) {
         final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
         final ServerHttpRequest request = exchange.getRequest();
-        final String voucher = request.getQueryParams().getFirst("voucher");
+        final String voucher = request.getQueryParams().getFirst(VOUCHER_URL_PARAM_NAME);
         if (StringUtils.hasText(voucher)) {
             return cache
                     .get(voucher)
                     .map(m -> new AuthVoucherContext(voucher, m, cache))
-                    .switchIfEmpty(Mono.error(new RuntimeException()));
+                    .switchIfEmpty(Mono.error(GlobalExceptionContext.executeVoucherException(
+                            AuthVoucherContext.class,
+                            "fun init(ServerWebExchange exchange)",
+                            "Voucher request parameter does not data or expired exception."
+                    )));
         } else {
-            return Mono.error(new RuntimeException());
+            return Mono.error(GlobalExceptionContext.executeVoucherException(
+                    AuthVoucherContext.class,
+                    "fun init(ServerWebExchange exchange)",
+                    "Voucher request parameter does not exist exception."
+            ));
         }
     }
 

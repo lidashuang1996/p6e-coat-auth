@@ -46,8 +46,7 @@ public class AuthReactiveUserDetailsServiceImpl implements ReactiveUserDetailsSe
                 .flatMap(um ->
                         userAuthRepository
                                 .findOneById(um.getId())
-                                .map(uam -> (UserDetails) new AuthUserDetails(content, um, uam)))
-                .switchIfEmpty(Mono.error(new RuntimeException()));
+                                .map(uam -> (UserDetails) new AuthUserDetails(content, um, uam)));
     }
 
 }
