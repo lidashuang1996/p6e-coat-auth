@@ -13,25 +13,15 @@ import reactor.core.publisher.Mono;
 public abstract class AuthCertificateAbstract implements AuthCertificate {
 
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, Object o) {
+    public Mono<Object> execute(ServerWebExchange exchange, Object o) {
         if (o instanceof final AuthUserDetails d) {
-            return write(exchange, use(exchange, d));
+            return use(exchange, d);
         } else {
-            return write(exchange, o);
+            return Mono.just(o);
         }
     }
 
-    private Mono<Void> write(ServerWebExchange exchange, Object o) {
-        if (o == null) {
-            return Mono.empty();
-        }
-        String result = JsonUtil.toJson(o);
-        result = result == null ? "" : result;
-        final ServerHttpResponse response = exchange.getResponse();
-        return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(result.getBytes())));
-    }
-
-    public abstract Object use(ServerWebExchange exchange, AuthUserDetails authUserDetails);
+    public abstract Mono<Object> use(ServerWebExchange exchange, AuthUserDetails authUserDetails);
 
 }
 

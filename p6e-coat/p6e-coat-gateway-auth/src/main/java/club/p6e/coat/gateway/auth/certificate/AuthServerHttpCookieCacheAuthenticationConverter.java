@@ -1,7 +1,6 @@
 package club.p6e.coat.gateway.auth.certificate;
 
 import club.p6e.coat.gateway.auth.AuthServerAuthenticationConverter;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,14 +16,24 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthServerHttpCookieCacheAuthenticationConverter
         extends AuthHttpCookieCertificate implements AuthServerAuthenticationConverter {
 
-    private static final String USER_HEADER_NAME = "P6e-User-Info";
+    /**
+     * 用户信息的头部名称
+     */
+    protected static final String USER_HEADER_NAME = "P6e-User-Info";
 
-    private final AuthCache cache;
+    /**
+     * 认证缓存的对象
+     */
+    protected final AuthCache cache;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param cache 认证缓存的对象
+     */
     public AuthServerHttpCookieCacheAuthenticationConverter(AuthCache cache) {
         this.cache = cache;
     }
@@ -32,12 +41,12 @@ public class AuthServerHttpCookieCacheAuthenticationConverter
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
         final ServerHttpRequest request = exchange.getRequest();
-        final List<HttpCookie> httpCookies = getAccessTokenCookie(request);
-        if (httpCookies == null || httpCookies.size() == 0) {
+        final List<HttpCookie> accessTokenCookies = getAccessTokenCookie(request);
+        if (accessTokenCookies == null || accessTokenCookies.size() == 0) {
             return Mono.error(new RuntimeException());
         } else {
-            final HttpCookie httpCookie = httpCookies.get(0);
-            final String accessToken = httpCookie.getValue().trim();
+            final HttpCookie accessTokenCookie = accessTokenCookies.get(0);
+            final String accessToken = accessTokenCookie.getValue().trim();
             return Mono
                     .just(accessToken)
                     .flatMap(cache::getAccessToken)

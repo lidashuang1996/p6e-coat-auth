@@ -95,6 +95,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> accountPasswordLoginService.execute(v, param))
+                    .flatMap(o -> certificate.execute(exchange, o))
                     .map(ResultContext::build);
         } else {
             return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(

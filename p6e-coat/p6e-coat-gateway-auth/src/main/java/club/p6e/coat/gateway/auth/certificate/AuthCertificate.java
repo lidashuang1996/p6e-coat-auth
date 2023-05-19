@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
  */
 public interface AuthCertificate {
 
-    public Mono<Void> execute(ServerWebExchange exchange, Object o);
+    public Mono<Object> execute(ServerWebExchange exchange, Object o);
 
 }
 

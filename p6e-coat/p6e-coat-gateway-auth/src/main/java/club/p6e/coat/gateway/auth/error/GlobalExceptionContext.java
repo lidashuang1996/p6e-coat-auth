@@ -46,6 +46,10 @@ public final class GlobalExceptionContext {
         return new AccountException(sc, error, content);
     }
 
+    public static AuthException exceptionAuthException(Class<?> sc, String error, String content) {
+        return new AuthException(sc, error, content);
+    }
+
     public static VerificationCodeException exceptionVerificationCodeException(Class<?> sc, String error, String content) {
         return new VerificationCodeException(sc, error, content);
     }

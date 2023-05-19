@@ -1,5 +1,7 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.context.ResultContext;
+import club.p6e.coat.gateway.auth.error.CustomException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.WebProperties;
@@ -7,6 +9,7 @@ import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWeb
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
@@ -55,10 +58,17 @@ public class AuthExceptionConfig22 extends DefaultErrorWebExceptionHandler {
 
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
-        return route(all(), this::renderErrorResponse);
+        return route(all(), (request) -> this.renderErrorResponse(request, errorAttributes));
     }
 
-    protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
+    protected Mono<ServerResponse> renderErrorResponse(ServerRequest request, ErrorAttributes errorAttributes) {
+        final Throwable thread = errorAttributes.getError(request);
+        if (thread instanceof final CustomException ce) {
+            return ServerResponse
+                    .status(HttpStatus.OK)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(ResultContext.build(ce.getCode(), ce.getSketch(), ce.getContent())));
+        }
         final Map<String, Object> error = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.ALL));
         final Map<String, Object> result = new HashMap<>(6);
         result.put("path", error.get("path"));

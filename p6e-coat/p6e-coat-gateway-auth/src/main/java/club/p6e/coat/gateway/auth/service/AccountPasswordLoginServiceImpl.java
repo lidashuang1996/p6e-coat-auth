@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache;
+import club.p6e.coat.gateway.auth.certificate.AuthCertificate;
 import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
