@@ -17,9 +17,13 @@ public class AuthReactiveAuthenticationManager implements ReactiveAuthentication
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-        System.out.println("xxxxxxxxxxxxxxxxxxxx");
-        // 禁用此处认证
-        return Mono.error(new RuntimeException("Not support authentication."));
+        if (authentication instanceof AuthMarkAuthentication) {
+            return Mono.just(authentication);
+        } else {
+            System.out.println("xxxxxxxxxxauthenticateauthenticateauthenticatexxxxxxxxxx");
+            // 禁用此处认证
+            return Mono.error(new RuntimeException("Not support authentication."));
+        }
     }
 
 }

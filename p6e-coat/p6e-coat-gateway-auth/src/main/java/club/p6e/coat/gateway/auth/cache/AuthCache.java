@@ -47,7 +47,7 @@ public interface AuthCache extends ICache {
     /**
      * 过期的时间
      */
-    long EXPIRATION_TIME = 60 * 60 * 24;
+    long EXPIRATION_TIME = 60 * 60 * 3;
 
     /**
      * 用户缓存前缀

@@ -20,10 +20,6 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = ReactiveClientRegistrationRepository.class,
-        ignored = AuthReactiveClientRegistrationRepository.class
-)
 public class AuthReactiveClientRegistrationRepository implements ReactiveClientRegistrationRepository {
 
     private final Oauth2ClientRepository repository;

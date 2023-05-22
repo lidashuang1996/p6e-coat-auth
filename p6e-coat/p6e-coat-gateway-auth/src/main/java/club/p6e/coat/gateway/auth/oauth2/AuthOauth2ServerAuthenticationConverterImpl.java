@@ -1,7 +1,7 @@
-package club.p6e.coat.gateway.auth.certificate;
+package club.p6e.coat.gateway.auth.oauth2;
 
 import club.p6e.coat.gateway.auth.AuthMarkAuthentication;
-import club.p6e.coat.gateway.auth.AuthServerAuthenticationConverter;
+import club.p6e.coat.gateway.auth.AuthOauth2ServerAuthenticationConverter;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0
  */
 @Component
-public class AuthServerHttpLocalStorageCacheAuthenticationConverter implements AuthServerAuthenticationConverter {
+public class AuthOauth2ServerAuthenticationConverterImpl implements AuthOauth2ServerAuthenticationConverter {
 
     /**
      * 用户信息的头部名称
@@ -61,15 +61,14 @@ public class AuthServerHttpLocalStorageCacheAuthenticationConverter implements A
      *
      * @param cache 认证缓存的对象
      */
-    public AuthServerHttpLocalStorageCacheAuthenticationConverter(AuthCache cache) {
+    public AuthOauth2ServerAuthenticationConverterImpl(AuthCache cache) {
         this.cache = cache;
     }
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
         String accessToken = null;
-        final ServerWebExchange newExchange = initServerWebExchange(exchange);
-        final ServerHttpRequest request = newExchange.getRequest();
+        final ServerHttpRequest request = exchange.getRequest();
         final List<String> authorizations = request.getHeaders().get(AUTH_HEADER);
         if (authorizations != null && authorizations.size() > 0) {
             final String authorization = authorizations.get(0);
@@ -98,7 +97,7 @@ public class AuthServerHttpLocalStorageCacheAuthenticationConverter implements A
                     .flatMap(t -> cache
                             .getUser(t.getUid())
                             .map(u -> {
-                                newExchange.mutate().request(request.mutate().header(USER_HEADER_NAME, u).build()).build();
+                                exchange.mutate().request(request.mutate().header(USER_HEADER_NAME, u).build()).build();
                                 return new AuthMarkAuthentication(t.getUid(), u, List.of());
                             })
                     );

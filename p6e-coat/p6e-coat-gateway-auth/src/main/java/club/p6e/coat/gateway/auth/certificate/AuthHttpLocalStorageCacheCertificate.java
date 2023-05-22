@@ -25,7 +25,7 @@ public class AuthHttpLocalStorageCacheCertificate
      * 令牌过期时间
      * 令牌过期时间默认设置为 3600 秒
      */
-    protected static int EXPIRATION_TIME = 3600;
+    protected static int EXPIRATION_TIME = 10800;
 
     /**
      * 认证头类型

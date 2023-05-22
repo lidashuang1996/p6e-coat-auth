@@ -9,7 +9,6 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
-import club.p6e.coat.gateway.auth.error.ServiceNotEnabledException;
 import club.p6e.coat.gateway.auth.service.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -156,6 +155,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> verificationCodeLoginService.execute(v, param))
+                    .flatMap(o -> certificate.execute(exchange, o))
                     .map(ResultContext::build);
         } else {
             return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
@@ -214,6 +214,7 @@ public class AuthController {
             return AuthVoucherContext
                     .init(exchange)
                     .flatMap(v -> quickResponseCodeLoginService.execute(v, param))
+                    .flatMap(o -> certificate.execute(exchange, o))
                     .map(ResultContext::build);
         } else {
             return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
