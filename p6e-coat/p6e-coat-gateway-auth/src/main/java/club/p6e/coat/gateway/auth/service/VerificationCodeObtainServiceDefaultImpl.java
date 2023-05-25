@@ -1,16 +1,18 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthVoucherContext;
+import club.p6e.coat.gateway.auth.AuthVoucher;
+import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
+import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.CodeLoginGenerator;
-import club.p6e.coat.gateway.auth.Properties;
-import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.launcher.Launcher;
 import club.p6e.coat.gateway.auth.launcher.LauncherType;
+import club.p6e.coat.gateway.auth.model.UserModel;
+import club.p6e.coat.gateway.auth.repository.UserRepository;
 import club.p6e.coat.gateway.auth.utils.VerificationUtil;
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -23,6 +25,11 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
+//@ConditionalOnMissingBean(
+//        value = VerificationCodeObtainService.class,
+//        ignored = VerificationCodeObtainServiceDefaultImpl.class
+//)
+//@ConditionalOnExpression(VerificationCodeObtainService.CONDITIONAL_EXPRESSION)
 public class VerificationCodeObtainServiceDefaultImpl implements VerificationCodeObtainService {
 
     /**
@@ -38,92 +45,93 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
     /**
      * 用户存储库
      */
-    private final ReactiveUserDetailsService service;
+    private final UserRepository repository;
+
+    /**
+     * 验证码缓存对象
+     */
+    private final VerificationCodeLoginCache cache;
 
     /**
      * 验证码生产对象
      */
     private final CodeLoginGenerator generator;
 
-    private final VerificationCodeLoginCache cache;
 
     /**
      * 构造方法初始化
      *
-     * @param properties 配置文件对象
+     * @param properties         配置文件对象
+     * @param repository         用户存储库对象
+     * @param codeLoginCache     验证码缓存对象
+     * @param codeLoginGenerator 验证码生成器对象
      */
     public VerificationCodeObtainServiceDefaultImpl(
             Properties properties,
-            VerificationCodeLoginCache cache,
-            CodeLoginGenerator generator,
-            ReactiveUserDetailsService service
-    ) {
-        this.cache = cache;
+            UserRepository repository,
+            VerificationCodeLoginCache codeLoginCache,
+            CodeLoginGenerator codeLoginGenerator) {
         this.properties = properties;
-        this.service = service;
-        this.generator = generator;
+        this.repository = repository;
+        this.cache = codeLoginCache;
+        this.generator = codeLoginGenerator;
+    }
+
+    protected boolean isEnable() {
+        return properties.getLogin().isEnable()
+                && properties.getLogin().getVerificationCode().isEnable();
     }
 
     @Override
-    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(
-            AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param) {
-        if (!properties.getLogin().isEnable()
-                || !properties.getLogin().getVerificationCode().isEnable()) {
-            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                    this.getClass(),
-                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param)",
-                    "Verification code obtain service not enabled exception."
-            ));
-        }
-        String code;
-        LauncherType type;
+    public Mono<LoginContext.VerificationCodeObtain.Dto> execute(
+            ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param) {
+        Mono<UserModel> mono;
+        LauncherType type = null;
         final String account = param.getAccount();
-        if (VerificationUtil.phone(account)) {
-            type = LauncherType.SMS;
-            code = generator.execute(LauncherType.SMS.name());
-        } else if (VerificationUtil.mailbox(account)) {
-            type = LauncherType.EMAIL;
-            code = generator.execute(LauncherType.EMAIL.name());
-        } else {
-            return Mono.error(GlobalExceptionContext.exceptionDataFormatException(
-                    this.getClass(),
-                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param)",
-                    "Account format error."
-            ));
+        switch (properties.getMode()) {
+            case PHONE -> {
+                type = LauncherType.SMS;
+                mono = repository.findOneByPhone(account);
+            }
+            case MAILBOX -> {
+                type = LauncherType.EMAIL;
+                mono = repository.findOneByMailbox(account);
+            }
+            case PHONE_OR_MAILBOX -> {
+                if (VerificationUtil.phone(account)) {
+                    type = LauncherType.SMS;
+                } else if (VerificationUtil.mailbox(account)) {
+                    type = LauncherType.EMAIL;
+                }
+                mono = repository.findOneByPhoneOrMailbox(account);
+            }
+            default -> {
+                return Mono.error(GlobalExceptionContext.executeParameterException(
+                        this.getClass(), "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).", ""));
+            }
         }
-        final Map<String, String> map = new HashMap<>(4);
-        map.put(AuthVoucherContext.ACCOUNT, account);
-        map.put(AuthVoucherContext.ACCOUNT_TYPE, type.name());
-        map.put(AuthVoucherContext.VERIFICATION_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
-        return service
-                .findByUsername(account)
-                .switchIfEmpty(Mono.error(GlobalExceptionContext
-                        .exceptionAccountException(
-                                this.getClass(),
-                                "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param)",
-                                "Account does not exist exception."
-                        )))
-                .flatMap(c -> cache.set(account, type.name(), code))
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeCacheException(
-                        this.getClass(),
-                        "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param)",
-                        "Verification code login cache write [cache.set()] exception."
-                )))
-                .flatMap(b -> {
-                    final Map<String, String> tm = new HashMap<>(1);
-                    tm.put("code", code);
-                    return Launcher.push(type, account, CODE_LOGIN_TEMPLATE, tm);
-                })
-                .flatMap(s -> {
-                    map.put(AuthVoucherContext.VERIFICATION_CODE_LOGIN_MARK, s);
-                    return voucher
-                            .set(map)
-                            .switchIfEmpty(Mono.error(GlobalExceptionContext.executeCacheException(
-                                    this.getClass(),
-                                    "fun execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param)",
-                                    "Voucher write cache [cache.set()] exception."
-                            )))
-                            .map(c -> new VerificationCodeLoginContext.Obtain.Dto().setContent(s));
-                });
+        if (type == null) {
+            return Mono.error(GlobalExceptionContext.executeParameterException(
+                    this.getClass(), "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).", ""));
+        } else {
+            final LauncherType ft = type;
+            final Mono<UserModel> fm = mono;
+            final String code = generator.execute(type.name());
+            return AuthVoucher
+                    .init(exchange)
+                    .flatMap(v -> fm
+                            .flatMap(u -> cache.set(String.valueOf(u.getId()), ft.name(), code))
+                            .flatMap(u -> {
+                                final Map<String, String> tc = new HashMap<>(1);
+                                tc.put("code", code);
+                                return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc);
+                            })
+                            .flatMap(m -> {
+                                final Map<String, String> map = new HashMap<>();
+                                return v.set(map).map(vv -> m);
+                            }))
+                    .map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(m));
+        }
     }
 }
+

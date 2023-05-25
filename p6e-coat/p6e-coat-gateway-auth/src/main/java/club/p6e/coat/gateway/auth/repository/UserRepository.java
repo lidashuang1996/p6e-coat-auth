@@ -8,6 +8,8 @@ import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 /**
  * 用户模型
  *
@@ -95,10 +97,13 @@ public class UserRepository {
      */
     public Mono<UserModel> findOneByPhoneOrMailbox(String content) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.IS_DELETE).is(0).or(Criteria.from(
-                        Criteria.where(UserModel.PHONE).is(content),
-                        Criteria.where(UserModel.MAILBOX).is(content)
-                ))),
+                Query.query(Criteria.where(UserModel.IS_DELETE).is(0)
+                        .and(Criteria.empty().or(
+                                List.of(
+                                        Criteria.where(UserModel.PHONE).is(content),
+                                        Criteria.where(UserModel.MAILBOX).is(content)
+                                )
+                        ))),
                 UserModel.class
         );
     }

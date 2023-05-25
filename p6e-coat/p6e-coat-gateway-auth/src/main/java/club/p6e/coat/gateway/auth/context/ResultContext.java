@@ -83,7 +83,7 @@ public final class ResultContext implements Serializable {
      * @param message 消息
      * @param data    数据的对象
      */
-    private ResultContext(Integer code, String message, Object data) {
+    public ResultContext(Integer code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;

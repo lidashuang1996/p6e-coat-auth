@@ -1,10 +1,7 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthUserDetails;
-import club.p6e.coat.gateway.auth.AuthVoucherContext;
-import club.p6e.coat.gateway.auth.context.AccountPasswordLoginContext;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.server.ServerWebExchange;
+import club.p6e.coat.gateway.auth.context.LoginContext;
 import reactor.core.publisher.Mono;
 
 /**
@@ -18,8 +15,7 @@ public interface AccountPasswordLoginService {
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION = "" +
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.account-password.enable:false}}";
+    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.account-password.enable:false}}";
 
     /**
      * 执行账号密码登录操作
@@ -27,6 +23,6 @@ public interface AccountPasswordLoginService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<AuthUserDetails> execute(AuthVoucherContext voucher, AccountPasswordLoginContext.Request param);
+    public Mono<AuthUserDetails> execute(LoginContext.AccountPassword.Request param);
 
 }

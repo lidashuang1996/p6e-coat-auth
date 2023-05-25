@@ -1,7 +1,8 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthVoucherContext;
-import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
+
+import club.p6e.coat.gateway.auth.context.LoginContext;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -15,7 +16,7 @@ public interface VerificationCodeObtainService {
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION =
+    String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
 
     /**
@@ -24,6 +25,7 @@ public interface VerificationCodeObtainService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<VerificationCodeLoginContext.Obtain.Dto> execute(AuthVoucherContext voucher, VerificationCodeLoginContext.Obtain.Request param);
+    public Mono<LoginContext.VerificationCodeObtain.Dto> execute(
+            ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param);
 
 }
