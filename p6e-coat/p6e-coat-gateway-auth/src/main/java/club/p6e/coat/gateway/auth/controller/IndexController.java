@@ -1,16 +1,13 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
-
 /**
- * 主页的控制器
+ * 主页
  *
  * @author lidashuang
  * @version 1.0
@@ -38,7 +35,6 @@ public interface IndexController {
      * 执行内容加载
      *
      * @param exchange ServerWebExchange 对象
-     * @param vm       凭证初始化缓存对象
      * @return Mono/Void 对象
      */
     public Mono<Void> execute(ServerWebExchange exchange);

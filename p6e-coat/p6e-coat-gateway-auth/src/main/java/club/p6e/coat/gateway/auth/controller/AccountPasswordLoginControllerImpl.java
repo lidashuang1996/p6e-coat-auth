@@ -12,7 +12,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 账号密码登录的默认实现
+ * 账号密码登录的实现
  *
  * @author lidashuang
  * @version 1.0
@@ -37,7 +37,7 @@ public class AccountPasswordLoginControllerImpl implements
     private final AccountPasswordLoginService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
      * @param service    账号密码登录的服务对象
      * @param properties 配置文件对象
@@ -69,7 +69,6 @@ public class AccountPasswordLoginControllerImpl implements
     }
 
     @Override
-    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
         return Mono
                 .just(isEnable())

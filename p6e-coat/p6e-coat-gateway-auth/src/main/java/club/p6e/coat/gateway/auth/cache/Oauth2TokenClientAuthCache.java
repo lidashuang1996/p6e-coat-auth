@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.cache;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -71,7 +72,7 @@ public interface Oauth2TokenClientAuthCache {
     /**
      * 客户端 ACCESS TOKEN 缓存前缀
      */
-    public static final String CLIENT_ACCESS_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:CLIENT:ACCESS_TOKEN:";
+    public static final String CLIENT_TOKEN_LIST_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:LIST:";
 
     /**
      * 客户端 REFRESH TOKEN 缓存前缀
@@ -89,7 +90,7 @@ public interface Oauth2TokenClientAuthCache {
      * @param scope 客户端的作用域
      * @return 令牌对象
      */
-    public Token set(String cid, String client, String scope, String accessToken, String refreshToken);
+    public Mono<Token> set(String cid, String client, String scope, String accessToken, String refreshToken);
 
     /**
      * 读取信息
@@ -97,7 +98,7 @@ public interface Oauth2TokenClientAuthCache {
      * @param cid 客户端ID
      * @return 客户端信息
      */
-    public Optional<String> get(String cid);
+    public Mono<String> getClient(String cid);
 
     /**
      * 读取令牌
@@ -105,7 +106,7 @@ public interface Oauth2TokenClientAuthCache {
      * @param token 令牌
      * @return 令牌对象
      */
-    public Optional<Token> getAccessToken(String token);
+    public Mono<Token> getAccessToken(String token);
 
     /**
      * 读取刷新令牌
@@ -113,13 +114,13 @@ public interface Oauth2TokenClientAuthCache {
      * @param token 刷新令牌
      * @return 令牌对象
      */
-    public Optional<Token> getRefreshToken(String token);
+    public Mono<Token> getRefreshToken(String token);
 
     /**
      * 清除令牌
      *
      * @param token 令牌
      */
-    public void cleanToken(String token);
+    public Mono<Long> cleanToken(String token);
 
 }

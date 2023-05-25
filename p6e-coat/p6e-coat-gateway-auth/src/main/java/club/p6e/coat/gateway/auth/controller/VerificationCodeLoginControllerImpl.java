@@ -1,10 +1,8 @@
 package club.p6e.coat.gateway.auth.controller;
 
-
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
-import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.VerificationCodeLoginService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
@@ -24,7 +22,7 @@ import reactor.core.publisher.Mono;
 //        ignored = VerificationCodeLoginControllerDefaultImpl.class
 //)
 //@ConditionalOnExpression(VerificationCodeLoginController.CONDITIONAL_EXPRESSION)
-public class VerificationCodeLoginControllerDefaultImpl implements
+public class VerificationCodeLoginControllerImpl implements
         VerificationCodeLoginController<LoginContext.VerificationCode.Request, AuthUserDetails> {
 
     /**
@@ -43,8 +41,7 @@ public class VerificationCodeLoginControllerDefaultImpl implements
      * @param properties 配置文件对象
      * @param service    验证码登录的服务对象
      */
-    public VerificationCodeLoginControllerDefaultImpl(
-            Properties properties, VerificationCodeLoginService service) {
+    public VerificationCodeLoginControllerImpl(Properties properties, VerificationCodeLoginService service) {
         this.service = service;
         this.properties = properties;
     }
@@ -66,7 +63,7 @@ public class VerificationCodeLoginControllerDefaultImpl implements
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
                                 "fun execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param)",
-                                "Account password login service not enabled exception."
+                                "Verification code login service not enabled exception."
                         )))
                 .flatMap(service::execute);
     }

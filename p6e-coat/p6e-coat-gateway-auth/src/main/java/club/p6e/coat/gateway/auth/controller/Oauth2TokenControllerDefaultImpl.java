@@ -29,7 +29,7 @@ import java.util.List;
 //        value = Oauth2TokenController.class,
 //        ignored = Oauth2TokenControllerDefaultImpl.class
 //)
-@ConditionalOnExpression(Oauth2TokenController.CONDITIONAL_EXPRESSION)
+//@ConditionalOnExpression(Oauth2TokenController.CONDITIONAL_EXPRESSION)
 public class Oauth2TokenControllerDefaultImpl
         implements Oauth2TokenController<Oauth2Context.Token.Request, ResultContext> {
 
@@ -47,12 +47,9 @@ public class Oauth2TokenControllerDefaultImpl
      * 构造方法
      *
      * @param properties 配置文件对象
-     * @param aspects    OAUTH2 TOKEN 切面
      * @param service    OAUTH2 TOKEN 服务
      */
-    public Oauth2TokenControllerDefaultImpl(
-            Properties properties,
-            Oauth2TokenService service) {
+    public Oauth2TokenControllerDefaultImpl(Properties properties, Oauth2TokenService service) {
         this.service = service;
         this.properties = properties;
     }
@@ -77,8 +74,8 @@ public class Oauth2TokenControllerDefaultImpl
                 .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Token.Request param)",
+                                "Oauth2 token service not enabled exception."
                         )))
                 .flatMap(f -> service.execute(exchange, param))
                 .map(ResultContext::build);

@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.controller;
 
+import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
@@ -20,16 +21,11 @@ public interface VerificationCodeLoginController<P, R extends AuthUser> {
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION =
+    String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
 
-    /**
-     * 执行操作
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    @PostMapping()
+    @AuthCertificate
+    @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

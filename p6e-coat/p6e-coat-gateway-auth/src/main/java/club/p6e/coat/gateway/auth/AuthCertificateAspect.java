@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.reactivestreams.Publisher;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -27,15 +28,15 @@ public class AuthCertificateAspect {
     public void pointcut() {
     }
 
-    @Around("pointcut()")
     @SuppressWarnings("ALL")
+    @Around("pointcut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         final Object r = joinPoint.proceed();
         if (r instanceof Publisher) {
             if (r instanceof Mono) {
                 return ((Mono<?>) r).flatMap(v -> {
                     if (v instanceof final AuthUser user) {
-                        return execute(user);
+                        return execute(getServerWebExchange(joinPoint), user);
                     } else {
                         return Mono.just(v);
                     }
@@ -44,7 +45,7 @@ public class AuthCertificateAspect {
             if (r instanceof Flux) {
                 return ((Flux<?>) r).flatMap(v -> {
                     if (v instanceof final AuthUser user) {
-                        return execute(user);
+                        return execute(getServerWebExchange(joinPoint), user);
                     } else {
                         return Mono.just(v);
                     }
@@ -56,14 +57,26 @@ public class AuthCertificateAspect {
         }
     }
 
+    protected ServerWebExchange getServerWebExchange(ProceedingJoinPoint joinPoint) {
+        final Object[] args = joinPoint.getArgs();
+        if (args != null) {
+            for (final Object arg : args) {
+                if (arg instanceof ServerWebExchange) {
+                    return (ServerWebExchange) arg;
+                }
+            }
+        }
+        throw new RuntimeException();
+    }
+
     /**
      * 执行认证
      *
      * @param user
      * @return
      */
-    protected Mono<Object> execute(AuthUser user) {
-        return ca.issue(user);
+    protected Mono<Object> execute(ServerWebExchange exchange, AuthUser user) {
+        return ca.present(exchange, user);
     }
 
 }

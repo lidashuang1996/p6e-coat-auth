@@ -98,7 +98,7 @@ public interface Oauth2TokenUserAuthCache {
      * @param uid 用户ID
      * @return 用户信息
      */
-    public Optional<String> get(String uid);
+    public Mono<String> getUser(String uid);
 
     /**
      * 读取令牌
@@ -106,7 +106,7 @@ public interface Oauth2TokenUserAuthCache {
      * @param token 令牌
      * @return 令牌对象
      */
-    public Optional<Token> getAccessToken(String token);
+    public Mono<Token> getAccessToken(String token);
 
     /**
      * 读取刷新令牌
@@ -114,13 +114,6 @@ public interface Oauth2TokenUserAuthCache {
      * @param token 刷新令牌
      * @return 令牌对象
      */
-    public Optional<Token> getRefreshToken(String token);
-
-    /**
-     * 清除令牌
-     *
-     * @param token 令牌
-     */
-    public void cleanToken(String token);
+    public Mono<Token> getRefreshToken(String token);
 
 }

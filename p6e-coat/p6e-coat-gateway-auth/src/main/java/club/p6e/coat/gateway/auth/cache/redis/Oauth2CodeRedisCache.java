@@ -56,7 +56,7 @@ public class Oauth2CodeRedisCache implements Oauth2CodeCache {
     }
 
     @Override
-    public Mono<Map<String, String>> get(String key, String kv) {
+    public Mono<Map<String, String>> get(String key) {
         return template
                 .opsForHash()
                 .entries(CACHE_PREFIX + key)
@@ -66,7 +66,6 @@ public class Oauth2CodeRedisCache implements Oauth2CodeCache {
                     list.forEach(item -> map.put((String) item.getKey(), (String) item.getValue()));
                     return map;
                 });
-
     }
 
 

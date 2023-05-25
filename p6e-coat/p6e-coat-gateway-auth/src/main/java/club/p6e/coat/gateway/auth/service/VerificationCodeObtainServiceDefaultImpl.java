@@ -48,14 +48,14 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
     private final UserRepository repository;
 
     /**
-     * 验证码缓存对象
-     */
-    private final VerificationCodeLoginCache cache;
-
-    /**
      * 验证码生产对象
      */
     private final CodeLoginGenerator generator;
+
+    /**
+     * 验证码缓存对象
+     */
+    private final VerificationCodeLoginCache cache;
 
 
     /**
@@ -67,13 +67,11 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
      * @param codeLoginGenerator 验证码生成器对象
      */
     public VerificationCodeObtainServiceDefaultImpl(
-            Properties properties,
-            UserRepository repository,
-            VerificationCodeLoginCache codeLoginCache,
-            CodeLoginGenerator codeLoginGenerator) {
+            Properties properties, UserRepository repository,
+            VerificationCodeLoginCache codeLoginCache, CodeLoginGenerator codeLoginGenerator) {
+        this.cache = codeLoginCache;
         this.properties = properties;
         this.repository = repository;
-        this.cache = codeLoginCache;
         this.generator = codeLoginGenerator;
     }
 
@@ -85,6 +83,13 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
     @Override
     public Mono<LoginContext.VerificationCodeObtain.Dto> execute(
             ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param) {
+        if (!isEnable()) {
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                    "Verification code login code obtain service not enabled exception."
+            ));
+        }
         Mono<UserModel> mono;
         LauncherType type = null;
         final String account = param.getAccount();
@@ -106,13 +111,19 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                 mono = repository.findOneByPhoneOrMailbox(account);
             }
             default -> {
-                return Mono.error(GlobalExceptionContext.executeParameterException(
-                        this.getClass(), "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).", ""));
+                return Mono.error(GlobalExceptionContext.executeServiceNotSupportException(
+                        this.getClass(),
+                        "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                        "Verification code obtain service not supported. [" + account + "]"
+                ));
             }
         }
         if (type == null) {
-            return Mono.error(GlobalExceptionContext.executeParameterException(
-                    this.getClass(), "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).", ""));
+            return Mono.error(GlobalExceptionContext.executeServiceNotSupportException(
+                    this.getClass(),
+                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                    "Verification code obtain <type> service not supported. [" + account + "]"
+            ));
         } else {
             final LauncherType ft = type;
             final Mono<UserModel> fm = mono;
@@ -121,10 +132,18 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                     .init(exchange)
                     .flatMap(v -> fm
                             .flatMap(u -> cache.set(String.valueOf(u.getId()), ft.name(), code))
-                            .flatMap(u -> {
-                                final Map<String, String> tc = new HashMap<>(1);
-                                tc.put("code", code);
-                                return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc);
+                            .flatMap(b -> {
+                                if (b) {
+                                    final Map<String, String> tc = new HashMap<>(1);
+                                    tc.put("code", code);
+                                    return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc);
+                                } else {
+                                    return Mono.error(GlobalExceptionContext.executeCacheException(
+                                            this.getClass(),
+                                            "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                                            "Verification code obtain cache error."
+                                    ));
+                                }
                             })
                             .flatMap(m -> {
                                 final Map<String, String> map = new HashMap<>();
@@ -133,5 +152,6 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                     .map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(m));
         }
     }
+
 }
 

@@ -10,25 +10,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 主页的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
 @Component
 public class IndexControllerImpl implements IndexController {
 
-    private IndexService service;
+    /**
+     * 主页的服务对象
+     */
+    private final IndexService service;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param service 主页的服务对象
+     */
     public IndexControllerImpl(IndexService service) {
         this.service = service;
     }
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
+        // 设置凭证里面的信息
         final Map<String, String> m = new HashMap<>();
         m.put(AuthVoucher.INDEX, "true");
         m.put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
         return service.execute(exchange, m);
     }
-
 
 }

@@ -19,17 +19,10 @@ public interface Oauth2AuthController<P, R> {
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION =
+    String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.oauth2.enable:false} && ${p6e.auth.oauth2.authorization-code.enable:false}}";
 
-    /**
-     * [ POST/GET ]
-     * 获取 OAUTH2 认证首页页面内容
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    @RequestMapping(value = "", method = {RequestMethod.POST, RequestMethod.GET})
+    @GetMapping("")
     public Mono<Void> execute(ServerWebExchange exchange, P param);
 
 }

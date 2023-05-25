@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.controller;
 
-
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
@@ -8,8 +7,6 @@ import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.VerificationCodeObtainService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
 import org.springframework.stereotype.Component;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -25,7 +22,7 @@ import reactor.core.publisher.Mono;
 //        ignored = VerificationCodeObtainControllerDefaultImpl.class
 //)
 //@ConditionalOnExpression(VerificationCodeObtainController.CONDITIONAL_EXPRESSION)
-public class VerificationCodeObtainControllerDefaultImpl implements
+public class VerificationCodeObtainControllerImpl implements
         VerificationCodeObtainController<LoginContext.VerificationCodeObtain.Request, ResultContext> {
 
     /**
@@ -44,9 +41,7 @@ public class VerificationCodeObtainControllerDefaultImpl implements
      * @param properties 配置文件对象
      * @param service    验证码获取的服务对象
      */
-    public VerificationCodeObtainControllerDefaultImpl(
-            Properties properties,
-            VerificationCodeObtainService service) {
+    public VerificationCodeObtainControllerImpl(Properties properties, VerificationCodeObtainService service) {
         this.service = service;
         this.properties = properties;
     }

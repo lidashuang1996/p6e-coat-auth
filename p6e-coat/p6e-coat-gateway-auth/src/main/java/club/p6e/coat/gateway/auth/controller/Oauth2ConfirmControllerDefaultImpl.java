@@ -49,9 +49,7 @@ public class Oauth2ConfirmControllerDefaultImpl
      * @param properties 配置文件对象
      * @param service    OAUTH2 CODE 模式确认的服务对象
      */
-    public Oauth2ConfirmControllerDefaultImpl(
-            Properties properties,
-            Oauth2ConfirmService service) {
+    public Oauth2ConfirmControllerDefaultImpl(Properties properties, Oauth2ConfirmService service) {
         this.service = service;
         this.properties = properties;
     }
@@ -85,11 +83,11 @@ public class Oauth2ConfirmControllerDefaultImpl
                 .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 confirm service not enabled exception."
                         )))
                 .flatMap(f -> service.execute(exchange, param))
-                .map();
+                .map(ResultContext::build);
     }
 
 }

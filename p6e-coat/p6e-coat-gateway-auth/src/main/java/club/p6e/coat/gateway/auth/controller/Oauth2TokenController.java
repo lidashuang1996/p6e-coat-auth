@@ -30,7 +30,7 @@ public interface Oauth2TokenController<P, R> {
      * @param param 请求对象
      * @return 结果对象
      */
-    @PostMapping()
+    @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, P param);
 
 }

@@ -1,18 +1,13 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
-import club.p6e.coat.gateway.auth.service.IndexService;
 import club.p6e.coat.gateway.auth.service.Oauth2AuthService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * OAUTH2 认证的默认实现
@@ -44,9 +39,7 @@ public class Oauth2AuthControllerDefaultImpl
      *
      * @param properties 配置文件对象
      */
-    public Oauth2AuthControllerDefaultImpl(
-            Properties properties,
-            Oauth2AuthService service) {
+    public Oauth2AuthControllerDefaultImpl(Properties properties, Oauth2AuthService service) {
         this.service = service;
         this.properties = properties;
     }
@@ -79,12 +72,10 @@ public class Oauth2AuthControllerDefaultImpl
                 .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
+                                "Oauth2 auth service not enabled exception."
                         )))
-                .flatMap(f -> {
-                    return service.execute(exchange, param);
-                });
+                .flatMap(f -> service.execute(exchange, param));
 
     }
 

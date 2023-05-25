@@ -22,13 +22,7 @@ public interface QrCodeCallbackController<P, R> {
     String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.qr-code.enable:false}}";
 
-    /**
-     * 执行操作
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    @PostMapping()
+    @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

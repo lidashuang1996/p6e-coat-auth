@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.service;
 
-
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;

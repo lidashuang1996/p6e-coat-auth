@@ -23,15 +23,8 @@ public interface Oauth2ConfirmController<P, R> {
     public final static String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.oauth2.enable:false} && ${p6e.auth.oauth2.authorization-code.enable:false}}";
 
-    /**
-     * [ POST ]
-     * JSON/BODY
-     * 执行确认
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    @PostMapping()
+
+    @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

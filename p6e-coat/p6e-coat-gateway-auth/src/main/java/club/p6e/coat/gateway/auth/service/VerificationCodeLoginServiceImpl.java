@@ -107,9 +107,10 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
 
     @Override
     public Mono<AuthUserDetails> execute(LoginContext.VerificationCode.Request param) {
-        return Mono
-                .just(isEnable())
-                .filter(b -> b)
-                .flatMap(c -> cache.get())
+//        return Mono
+//                .just(isEnable())
+//                .filter(b -> b)
+//                .flatMap(c -> cache.get())
+        return null;
     }
 }

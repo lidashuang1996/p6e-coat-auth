@@ -27,6 +27,10 @@ public class AuthUserDetails implements AuthUser {
     private
     String password;
 
+    public AuthUserDetails(String content) {
+
+    }
+
     public AuthUserDetails(UserModel u, UserAuthModel a) {
         this.id = u.getId();
         this.status = u.getStatus();

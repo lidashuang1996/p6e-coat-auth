@@ -23,11 +23,11 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = Oauth2AuthService.class,
-        ignored = Oauth2AuthServiceDefaultImpl.class
-)
-@ConditionalOnExpression(Oauth2AuthService.CONDITIONAL_EXPRESSION)
+//@ConditionalOnMissingBean(
+//        value = Oauth2AuthService.class,
+//        ignored = Oauth2AuthServiceDefaultImpl.class
+//)
+//@ConditionalOnExpression(Oauth2AuthService.CONDITIONAL_EXPRESSION)
 public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
 
     /**
