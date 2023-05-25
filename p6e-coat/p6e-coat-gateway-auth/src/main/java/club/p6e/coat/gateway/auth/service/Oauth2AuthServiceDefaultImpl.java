@@ -5,7 +5,6 @@ import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.VoucherGenerator;
-import club.p6e.coat.gateway.auth.model.Oauth2ClientModel;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -16,7 +15,6 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * OAUTH2 认证服务的默认实现
@@ -58,10 +56,9 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
     /**
      * 构造方法初始化
      *
-     * @param generator    凭证生产器
-     * @param properties   配置文件对象
-     * @param conversation 凭证会话对象
-     * @param repository   OAUTH CLIENT2 存储库
+     * @param generator  凭证生产器
+     * @param properties 配置文件对象
+     * @param repository OAUTH CLIENT2 存储库
      */
     public Oauth2AuthServiceDefaultImpl(
             Properties properties,
