@@ -29,11 +29,11 @@ import java.util.Optional;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = Oauth2TokenService.class,
-        ignored = Oauth2TokenServiceDefaultImpl.class
-)
-@ConditionalOnExpression(Oauth2TokenService.CONDITIONAL_EXPRESSION)
+//@ConditionalOnMissingBean(
+//        value = Oauth2TokenService.class,
+//        ignored = Oauth2TokenServiceDefaultImpl.class
+//)
+//@ConditionalOnExpression(Oauth2TokenService.CONDITIONAL_EXPRESSION)
 public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
 
     /**

@@ -45,8 +45,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
         }
 
     }
@@ -94,8 +93,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
         }
 
         /**
@@ -119,8 +117,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
             private String code;
         }
 
@@ -253,8 +250,7 @@ public class LoginContext implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private String mark;
-            private String uid;
+            private String content;
         }
 
         /**

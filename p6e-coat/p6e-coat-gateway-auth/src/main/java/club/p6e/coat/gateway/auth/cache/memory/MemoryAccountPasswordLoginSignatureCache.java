@@ -8,7 +8,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class MemoryAccountPasswordLoginSignatureCache
         extends MemoryCache implements AccountPasswordLoginSignatureCache {
 

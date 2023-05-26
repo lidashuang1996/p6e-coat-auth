@@ -41,16 +41,9 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange, Map<String, String> vm) {
-        final Map<String, String> m;
-        if (vm == null) {
-            m = new HashMap<>();
-            m.put(AuthVoucher.INDEX, "true");
-            m.put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
-        } else {
-            m = vm;
-        }
-        return AuthVoucher.create(m).flatMap(voucher -> write(
-                exchange, TemplateParser.execute(templateContent, "voucher", voucher.getMark())));
+        return AuthVoucher
+                .create(vm)
+                .flatMap(voucher -> write(exchange, TemplateParser.execute(templateContent, "voucher", voucher.getMark())));
     }
 
     /**

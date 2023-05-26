@@ -60,16 +60,20 @@ public class ParameterValidator {
         }
         validatorList.sort(Comparator.comparingInt(ParameterValidatorInterface::order));
         System.out.println(validatorList);
-        return Flux
-                .just(validatorList)
-                .flatMap(Flux::fromIterable)
-                .flatMap(v -> v.execute(exchange, param))
-                .filter(b -> b)
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeParameterException(
-                        ParameterValidator.class,
-                        "fun execute(ServerWebExchange exchange, Object param)",
-                        "Request parameter validation exception."
-                ))).then();
+        if (validatorList.size() > 0) {
+            return Flux
+                    .just(validatorList)
+                    .flatMap(Flux::fromIterable)
+                    .flatMap(v -> v.execute(exchange, param))
+                    .filter(b -> b)
+                    .switchIfEmpty(Mono.error(GlobalExceptionContext.executeParameterException(
+                            ParameterValidator.class,
+                            "fun execute(ServerWebExchange exchange, Object param)",
+                            "Request parameter validation exception."
+                    ))).then();
+        } else {
+            return Mono.just(true).then();
+        }
     }
 
     /**

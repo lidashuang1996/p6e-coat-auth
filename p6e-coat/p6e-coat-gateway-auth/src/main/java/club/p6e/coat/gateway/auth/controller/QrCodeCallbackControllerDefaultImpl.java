@@ -65,7 +65,7 @@ public class QrCodeCallbackControllerDefaultImpl
                                 "fun execute(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param)",
                                 "QrCode callback service not enabled exception."
                         )))
-                .flatMap(service::execute)
+                .flatMap(p -> service.execute(exchange, p))
                 .map(ResultContext::build);
     }
 }

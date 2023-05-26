@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.controller;
 
+import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
@@ -56,6 +57,7 @@ public class VerificationCodeLoginControllerImpl implements
     }
 
     @Override
+    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
         return Mono
                 .just(isEnable())
@@ -65,6 +67,6 @@ public class VerificationCodeLoginControllerImpl implements
                                 "fun execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param)",
                                 "Verification code login service not enabled exception."
                         )))
-                .flatMap(service::execute);
+                .flatMap(p -> service.execute(exchange, p));
     }
 }

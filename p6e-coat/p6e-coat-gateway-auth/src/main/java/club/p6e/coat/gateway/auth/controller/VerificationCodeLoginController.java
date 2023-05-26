@@ -24,7 +24,6 @@ public interface VerificationCodeLoginController<P, R extends AuthUser> {
     String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
 
-    @AuthCertificate
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 

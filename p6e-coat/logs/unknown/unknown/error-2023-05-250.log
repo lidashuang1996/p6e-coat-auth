@@ -1,0 +1,45 @@
+2023-05-25 17:17:54 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in club.p6e.coat.gateway.auth.controller.Oauth2AuthControllerDefaultImpl required a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2AuthService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2AuthService' in your configuration.
+
+2023-05-25 21:02:04 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in club.p6e.coat.gateway.auth.controller.Oauth2TokenControllerDefaultImpl required a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2TokenService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2TokenService' in your configuration.
+
+2023-05-25 21:23:48 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in club.p6e.coat.gateway.auth.controller.Oauth2TokenControllerDefaultImpl required a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2TokenService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.service.Oauth2TokenService' in your configuration.
+

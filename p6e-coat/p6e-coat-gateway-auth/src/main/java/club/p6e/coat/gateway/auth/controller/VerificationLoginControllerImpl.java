@@ -77,7 +77,7 @@ public class VerificationLoginControllerImpl
                                     final HttpHeaders httpHeaders = request.getHeaders();
                                     final List<String> list = httpHeaders.get(USER_HEADER_NAME);
                                     if (list != null && list.size() > 0) {
-                                        return Mono.just(new AuthUserDetails(list.get(0)));
+                                        return Mono.just(AuthUserDetails.create(list.get(0)));
                                     } else {
                                         return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                                 this.getClass(),

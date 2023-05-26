@@ -131,7 +131,7 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
             return AuthVoucher
                     .init(exchange)
                     .flatMap(v -> fm
-                            .flatMap(u -> cache.set(String.valueOf(u.getId()), ft.name(), code))
+                            .flatMap(u -> cache.set(account, ft.name(), code))
                             .flatMap(b -> {
                                 if (b) {
                                     final Map<String, String> tc = new HashMap<>(1);
@@ -141,12 +141,16 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                                     return Mono.error(GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
                                             "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                                            "Verification code obtain cache error."
+                                            "Verification code obtain write cache error."
                                     ));
                                 }
                             })
                             .flatMap(m -> {
-                                final Map<String, String> map = new HashMap<>();
+                                final Map<String, String> map = new HashMap<>(4);
+                                map.put(AuthVoucher.ACCOUNT, account);
+                                map.put(AuthVoucher.ACCOUNT_TYPE, ft.name());
+                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_MARK, m);
+                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
                                 return v.set(map).map(vv -> m);
                             }))
                     .map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(m));

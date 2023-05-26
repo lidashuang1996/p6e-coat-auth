@@ -66,7 +66,7 @@ public class QrCodeObtainControllerDefaultImpl
                                 "fun execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param)",
                                 "QrCode login code obtain service not enabled exception."
                         )))
-                .flatMap(service::execute)
+                .flatMap(p -> service.execute(exchange, p))
                 .map(ResultContext::build);
     }
 }

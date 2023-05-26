@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.controller;
 
+import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
@@ -19,11 +20,11 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = QrCodeLoginController.class,
-        ignored = QrCodeLoginControllerDefaultImpl.class
-)
-@ConditionalOnExpression(QrCodeLoginController.CONDITIONAL_EXPRESSION)
+//@ConditionalOnMissingBean(
+//        value = QrCodeLoginController.class,
+//        ignored = QrCodeLoginControllerDefaultImpl.class
+//)
+//@ConditionalOnExpression(QrCodeLoginController.CONDITIONAL_EXPRESSION)
 public class QrCodeLoginControllerDefaultImpl
         implements QrCodeLoginController<LoginContext.QrCode.Request, AuthUserDetails> {
 
@@ -63,6 +64,7 @@ public class QrCodeLoginControllerDefaultImpl
     }
 
     @Override
+    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
         return Mono
                 .just(isEnable())
@@ -72,7 +74,7 @@ public class QrCodeLoginControllerDefaultImpl
                                 "fun execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param)",
                                 "QrCode login service not enabled exception."
                         )))
-                .flatMap(service::execute);
+                .flatMap(p -> service.execute(exchange, p));
     }
 
 }

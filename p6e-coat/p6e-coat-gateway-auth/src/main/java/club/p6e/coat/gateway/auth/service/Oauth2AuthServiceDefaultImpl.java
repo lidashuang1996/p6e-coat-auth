@@ -6,8 +6,6 @@ import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.VoucherGenerator;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -80,12 +78,18 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                 // 如果启用 CODE 模型就执行 CODE 类型的代码
                 return executeCodeType(exchange, param);
             } else {
-                return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                        this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                return Mono.error(GlobalExceptionContext.executeTypeNotSupportedException(
+                        this.getClass(),
+                        "fun execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
+                        "Oauth2 auth type [" + responseType + "] not supported exception."
+                ));
             }
         }
         return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                this.getClass(),
+                "fun execute(Oauth2Context.Auth.Request param).",
+                "Oauth2 auth service not enabled exception."
+        ));
     }
 
     /**

@@ -22,10 +22,21 @@ public final class GlobalExceptionContext {
         return new ServiceNotEnabledException(sc, error, content);
     }
 
+    public static ServiceNotEnabledException executeTypeNotSupportedException(Class<?> sc, String error, String content) {
+        return new ServiceNotEnabledException(sc, error, content);
+    }
+
     public static CacheException executeCacheException(Class<?> sc, String error, String content) {
         return new CacheException(sc, error, content);
     }
 
+    public static QrCodeDataNullException executeQrCodeDataNullException(Class<?> sc, String error, String content) {
+        return new QrCodeDataNullException(sc, error, content);
+    }
+
+    public static CacheException executeUserNotExistException(Class<?> sc, String error, String content) {
+        return new CacheException(sc, error, content);
+    }
 
     public static VoucherException executeVoucherException(Class<?> sc, String error, String content) {
         return new VoucherException(sc, error, content);

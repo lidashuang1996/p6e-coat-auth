@@ -1,17 +1,15 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.repository.UserRepository;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * 验证码登录服务的实现
@@ -58,59 +56,56 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
         this.repository = repository;
     }
 
-//    @Override
-//    public LoginContext.VerificationCode.Dto execute(LoginContext.VerificationCode.Request param) {
-//        // 读取配置文件判断服务是否启动
-//        if (!properties.getLogin().isEnable()
-//                || !properties.getLogin().getVerificationCode().isEnable()) {
-//            throw GlobalExceptionContext.executeServiceNotEnableException(
-//                    this.getClass(), "fun execute(LoginContext.VerificationCode.Request param).");
-//        }
-//        final String userId = param.getVoucherMap() == null ?
-//                null : param.getVoucherMap().get(VoucherConversation.USER_ID);
-//        final String accountType = param.getVoucherMap() == null ?
-//                null : param.getVoucherMap().get(VoucherConversation.ACCOUNT_TYPE);
-//        if (userId == null || accountType == null) {
-//            throw GlobalExceptionContext.executeVoucherException(
-//                    this.getClass(), "fun execute(LoginContext.VerificationCode.Request param).");
-//        } else {
-//            final String code = param.getCode();
-//            final Optional<List<String>> codeListOptional = cache.get(accountType, userId);
-//            if (codeListOptional.isEmpty()) {
-//                throw GlobalExceptionContext.executeCodeLoginException(
-//                        this.getClass(), "fun execute(LoginContext.VerificationCode.Request param).");
-//            } else {
-//                if (codeListOptional.get().contains(code)) {
-//                    try {
-//                        final Optional<UserModel> userOptional = repository.findById(Integer.valueOf(userId));
-//                        if (userOptional.isEmpty()) {
-//                            throw GlobalExceptionContext.executeUserNotExistException(
-//                                    this.getClass(), "fun execute(LoginContext.VerificationCode.Request param).");
-//                        } else {
-//                            return CopyUtil.run(userOptional.get(), LoginContext.VerificationCode.Dto.class);
-//                        }
-//                    } finally {
-//                        cache.del(accountType, userId, code);
-//                    }
-//                } else {
-//                    throw GlobalExceptionContext.executeCodeLoginException(
-//                            this.getClass(), "fun execute(LoginContext.VerificationCode.Request param).");
-//                }
-//            }
-//        }
-//    }
-
     protected boolean isEnable() {
         return properties.getLogin().isEnable()
                 && properties.getLogin().getVerificationCode().isEnable();
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(LoginContext.VerificationCode.Request param) {
-//        return Mono
-//                .just(isEnable())
-//                .filter(b -> b)
-//                .flatMap(c -> cache.get())
-        return null;
+    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
+        if (!isEnable()) {
+            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    this.getClass(),
+                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                    "Verification code login code obtain service not enabled exception."
+            ));
+        }
+        final String code = param.getCode();
+        return AuthVoucher
+                .init(exchange)
+                .flatMap(v -> {
+                    final String account = v.get(AuthVoucher.ACCOUNT);
+                    final String accountType = v.get(AuthVoucher.ACCOUNT_TYPE);
+                    return cache
+                            .get(account, accountType)
+                            .switchIfEmpty(Mono.error(
+                                    GlobalExceptionContext.executeCacheException(
+                                            this.getClass(),
+                                            "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                                            "Verification code login cache data does not exist or expire exception."
+                                    )))
+                            .flatMap(list -> {
+                                if (list != null && list.size() > 0) {
+                                    final int index = list.indexOf(code);
+                                    if (index >= 0) {
+                                        return cache.del(account, accountType, code);
+                                    }
+                                }
+                                return Mono.error(
+                                        GlobalExceptionContext.executeCacheException(
+                                                this.getClass(),
+                                                "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                                                "Verification code login cache data does not exist or expire exception."
+                                        ));
+                            })
+                            .flatMap(r -> switch (Properties.Mode.create(accountType)) {
+                                case PHONE -> repository.findOneByPhone(account);
+                                case MAILBOX -> repository.findOneByMailbox(account);
+                                case ACCOUNT -> repository.findOneByAccount(account);
+                                case PHONE_OR_MAILBOX -> repository.findOneByPhoneOrMailbox(account);
+                            })
+                            .map(AuthUserDetails::new);
+                });
+
     }
 }

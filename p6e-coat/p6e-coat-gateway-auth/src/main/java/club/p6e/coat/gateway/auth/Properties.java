@@ -45,7 +45,17 @@ public class Properties {
         PHONE,
         MAILBOX,
         ACCOUNT,
-        PHONE_OR_MAILBOX
+        PHONE_OR_MAILBOX;
+
+
+        public static Mode create(String mode) {
+            return switch (mode) {
+                case "PHONE" -> PHONE;
+                case "MAILBOX" -> MAILBOX;
+                case "ACCOUNT" -> ACCOUNT;
+                default -> PHONE_OR_MAILBOX;
+            };
+        }
     }
 
     @Data
@@ -59,7 +69,7 @@ public class Properties {
         @Data
         public static class AccountPassword {
             private boolean enable = true;
-            private boolean enableTransmissionEncryption = false;
+            private boolean enableTransmissionEncryption = true;
         }
 
         @Data

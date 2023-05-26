@@ -1,12 +1,15 @@
 package club.p6e.coat.gateway.auth.service;
 
+import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.QrCodeLoginGenerator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -58,28 +61,35 @@ public class QrCodeObtainServiceDefaultImpl implements QrCodeObtainService {
         this.properties = properties;
     }
 
-//    @Override
-//    public LoginContext.QrCodeObtain.Dto execute(LoginContext.QrCodeObtain.Request param) {
-//
-//        // 二维码数据写入缓存
-//        final String voucher = param.getVoucher();
-//        final String qrCode = generator.execute();
-//        cache.set(qrCode, QrCodeLoginCache.EMPTY_CONTENT);
-//        // 给当前会话绑定更多数据
-//        final Map<String, String> voucherContent = new HashMap<>(2);
-//        voucherContent.put(VoucherConversation.QR_CODE_VALUE, qrCode);
-//        voucherContent.put(VoucherConversation.QR_CODE_LOGIN, String.valueOf(System.currentTimeMillis()));
-//        conversation.bind(voucher, voucherContent);
-//        return new LoginContext.QrCodeObtain.Dto().setContent(qrCode);
-//    }
-
     protected boolean isEnable() {
         return properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable();
     }
 
     @Override
-    public Mono<LoginContext.QrCodeObtain.Dto> execute(LoginContext.QrCodeObtain.Request param) {
-        return Mono.just(new LoginContext.QrCodeObtain.Dto().setContent("123321312213321"));
+    public Mono<LoginContext.QrCodeObtain.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param) {
+        return AuthVoucher
+                .init(exchange)
+                .flatMap(v -> {
+                    final String qrCode = generator.execute();
+                    return cache
+                            .set(qrCode, QrCodeLoginCache.EMPTY_CONTENT)
+                            .flatMap(b -> {
+                                if (b) {
+                                    final Map<String, String> map = new HashMap<>(2);
+                                    map.put(AuthVoucher.QUICK_RESPONSE_CODE_LOGIN_MARK, qrCode);
+                                    map.put(AuthVoucher.QUICK_RESPONSE_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
+                                    return v.set(map).map(nv -> new LoginContext.QrCodeObtain.Dto().setContent(qrCode));
+                                } else {
+                                    return Mono.error(
+                                            GlobalExceptionContext.executeCacheException(
+                                                    this.getClass(),
+                                                    "fun execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param)",
+                                                    "QrCode obtain login cache data write exception."
+                                            ));
+                                }
+                            });
+                });
     }
+
 }

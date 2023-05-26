@@ -30,6 +30,8 @@ public class AuthVoucher implements Serializable {
     public static final String ACCOUNT_PASSWORD_CODEC_MARK = "ACCOUNT_PASSWORD_CODEC_MARK";
     public static final String ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public static final String ACCOUNT = "ACCOUNT";
+
+    public static final String USER_ID = "USER_ID";
     public static final String USER_NAME = "USER_NAME";
     public static final String VERIFICATION_CODE_LOGIN_DATE = "VERIFICATION_CODE_LOGIN_DATE";
     public static final String VERIFICATION_CODE_LOGIN_MARK = "VERIFICATION_CODE_LOGIN_MARK";
@@ -75,9 +77,11 @@ public class AuthVoucher implements Serializable {
      * @return Mono<AuthVoucherContext> 认证凭证上下文对象
      */
     public static Mono<AuthVoucher> init(ServerWebExchange exchange) {
+        System.out.println("AuthVoucher init");
         final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
         final ServerHttpRequest request = exchange.getRequest();
         final String voucher = request.getQueryParams().getFirst(VOUCHER_URL_PARAM_NAME);
+        System.out.println("AuthVoucher init  " + voucher);
         if (StringUtils.hasText(voucher)) {
             return cache
                     .get(voucher)
@@ -88,6 +92,7 @@ public class AuthVoucher implements Serializable {
                             "Voucher request parameter does not data or expired exception."
                     )));
         } else {
+            System.out.println("Voucher request parameter does not exist exception.");
             return Mono.error(GlobalExceptionContext.executeVoucherException(
                     AuthVoucher.class,
                     "fun init(ServerWebExchange exchange)",
@@ -107,7 +112,12 @@ public class AuthVoucher implements Serializable {
         final String voucher = generator.execute();
         return cache
                 .bind(voucher, data)
-                .map(b -> new AuthVoucher(voucher, data, cache));
+                .flatMap(b -> b ? Mono.just(new AuthVoucher(voucher, data, cache)) : Mono.error(
+                        GlobalExceptionContext.executeVoucherException(
+                                AuthVoucher.class,
+                                "fun create(Map<String, String> data)",
+                                "Voucher create data cache exception."
+                        )));
     }
 
     /**

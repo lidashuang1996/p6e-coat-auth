@@ -40,10 +40,7 @@ public class QrCodeLoginCallbackParameterValidator implements ParameterValidator
 
     @Override
     public Mono<Boolean> execute(ServerWebExchange exchange, Object data) {
-        if (data instanceof final LoginContext.QrCodeCallback.Request param) {
-            return Mono.just(param.getMark() != null);
-        }
-        return Mono.just(false);
+        return Mono.just(true);
     }
 
 }

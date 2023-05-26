@@ -69,6 +69,7 @@ public class AccountPasswordLoginControllerImpl implements
     }
 
     @Override
+    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
         return Mono
                 .just(isEnable())
@@ -78,7 +79,7 @@ public class AccountPasswordLoginControllerImpl implements
                                 "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
                                 "Account password login service not enabled exception."
                         )))
-                .flatMap(service::execute);
+                .flatMap(p -> service.execute(exchange, p));
     }
 
 }

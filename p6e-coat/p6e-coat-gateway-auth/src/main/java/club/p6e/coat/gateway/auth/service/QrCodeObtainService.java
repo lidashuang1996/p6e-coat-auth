@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.service;
 
 
 import club.p6e.coat.gateway.auth.context.LoginContext;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,6 +25,6 @@ public interface QrCodeObtainService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<LoginContext.QrCodeObtain.Dto> execute(LoginContext.QrCodeObtain.Request param);
+    public Mono<LoginContext.QrCodeObtain.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param);
 
 }
