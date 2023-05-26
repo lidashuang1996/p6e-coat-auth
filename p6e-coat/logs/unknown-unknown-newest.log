@@ -1734,3 +1734,29 @@ Original Stack Trace:
 		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.85.Final.jar:4.1.85.Final]
 		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.85.Final.jar:4.1.85.Final]
 		at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2023-05-26 14:53:10 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-05-26 14:53:10 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 8360 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-05-26 14:53:10 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-05-26 14:53:11 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-26 14:53:11 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-05-26 14:53:11 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
+2023-05-26 14:53:11 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-05-26 14:53:11 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-05-26 14:53:11 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-05-26 14:53:11 [main] INFO - BeanFactory id=5e35cd92-d30a-3ee0-8736-9e59b1b491f6
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-05-26 14:53:12 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-05-26 14:53:12 [main] INFO - Netty started on port 8080
+2023-05-26 14:53:12 [main] INFO - Started P6eGatewayAuthApplication in 2.202 seconds (process running for 2.48)

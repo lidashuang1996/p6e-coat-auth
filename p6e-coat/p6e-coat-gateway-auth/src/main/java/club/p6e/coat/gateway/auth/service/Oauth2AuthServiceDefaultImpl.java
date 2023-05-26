@@ -153,17 +153,26 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
         return repository
                 .findOneByClientId(clientId)
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                        this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", "")))
+                        this.getClass(),
+                        "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
+                        "")
+                ))
                 .flatMap(m -> {
                     // 验证作用域
                     if (!verificationScope(m.getScope(), scope)) {
                         return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                                this.getClass(),
+                                "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
+                                ""
+                        ));
                     }
                     // 验证重定向
                     if (!verificationRedirectUri(m.getRedirectUri(), redirectUri)) {
                         return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                                this.getClass(),
+                                "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
+                                "")
+                        );
                     }
                     final String state = param.getState();
                     final Map<String, String> map = new HashMap<>(5);
