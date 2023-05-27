@@ -4,7 +4,6 @@ import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
-import club.p6e.coat.gateway.auth.generator.VoucherGenerator;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -39,31 +38,22 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
     private final Properties properties;
 
     /**
-     * 凭证生产器
-     */
-    private final VoucherGenerator generator;
-
-    /**
      * OAUTH CLIENT2 存储库
      */
     private final Oauth2ClientRepository repository;
-
 
     private final IndexService service;
 
     /**
      * 构造方法初始化
      *
-     * @param generator  凭证生产器
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
     public Oauth2AuthServiceDefaultImpl(
             Properties properties,
             IndexService service,
-            VoucherGenerator generator,
             Oauth2ClientRepository repository) {
-        this.generator = generator;
         this.repository = repository;
         this.properties = properties;
         this.service = service;
@@ -85,7 +75,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                 ));
             }
         }
-        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+        return Mono.error(GlobalExceptionContext.executeTypeNotSupportedException(
                 this.getClass(),
                 "fun execute(Oauth2Context.Auth.Request param).",
                 "Oauth2 auth service not enabled exception."
@@ -99,7 +89,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
      * @param content 内容
      * @return 验证结果
      */
-    private boolean verificationScope(String source, String content) {
+    private boolean checkScope(String source, String content) {
         if (source == null || content == null) {
             return false;
         } else {
@@ -128,7 +118,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
      * @param content 内容
      * @return 验证结果
      */
-    private boolean verificationRedirectUri(String source, String content) {
+    private boolean checkRedirectUri(String source, String content) {
         if (source != null && content != null) {
             final List<String> sList = List.of(source.split(","));
             for (final String si : sList) {
@@ -152,27 +142,27 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
         final String redirectUri = param.getRedirectUri();
         return repository
                 .findOneByClientId(clientId)
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
                         this.getClass(),
                         "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                        "")
-                ))
+                        "Oauth2 code type mode client id exception."
+                )))
                 .flatMap(m -> {
                     // 验证作用域
-                    if (!verificationScope(m.getScope(), scope)) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    if (!checkScope(m.getScope(), scope)) {
+                        return Mono.error(GlobalExceptionContext.executeOauth2ScopeException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                                ""
+                                "Oauth2 code type mode check scope exception."
                         ));
                     }
                     // 验证重定向
-                    if (!verificationRedirectUri(m.getRedirectUri(), redirectUri)) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                    if (!checkRedirectUri(m.getRedirectUri(), redirectUri)) {
+                        return Mono.error(GlobalExceptionContext.executeOauth2RedirectUriException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                                "")
-                        );
+                                "Oauth2 code type mode check redirect uri exception."
+                        ));
                     }
                     final String state = param.getState();
                     final Map<String, String> map = new HashMap<>(5);
@@ -183,9 +173,9 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                     map.put(AuthVoucher.OAUTH2_CLIENT_ID, clientId);
                     map.put(AuthVoucher.OAUTH2_REDIRECT_URI, redirectUri);
                     map.put(AuthVoucher.OAUTH2_CLIENT_NAME, m.getClientName());
-                    map.put(AuthVoucher.OAUTH2_CLIENT_AVATAR, "def");
+                    map.put(AuthVoucher.OAUTH2_CLIENT_AVATAR, m.getClientAvatar());
                     map.put(AuthVoucher.OAUTH2_CLIENT_DESCRIBE, m.getClientDescribe());
-                    map.put(AuthVoucher.OAUTH2_CLIENT_RECONFIRM, String.valueOf(m.getSecondaryConfirmation()));
+                    map.put(AuthVoucher.OAUTH2_CLIENT_RECONFIRM, String.valueOf(m.getReconfirm()));
                     map.put(AuthVoucher.OAUTH2_RESPONSE_TYPE, CODE_TYPE);
                     return Mono.just(map);
                 })

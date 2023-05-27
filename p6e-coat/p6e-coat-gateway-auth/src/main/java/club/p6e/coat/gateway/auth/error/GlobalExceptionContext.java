@@ -9,6 +9,18 @@ package club.p6e.coat.gateway.auth.error;
  */
 public final class GlobalExceptionContext {
 
+    public static Oauth2ParameterException executeOauth2ParameterException(Class<?> sc, String error, String content) {
+        return new Oauth2ParameterException(sc, error, content);
+    }
+    public static Oauth2ScopeException executeOauth2ScopeException(Class<?> sc, String error, String content) {
+        return new Oauth2ScopeException(sc, error, content);
+    }
+    public static Oauth2ClientException executeOauth2ClientException(Class<?> sc, String error, String content) {
+        return new Oauth2ClientException(sc, error, content);
+    }
+    public static Oauth2RedirectUriException executeOauth2RedirectUriException(Class<?> sc, String error, String content) {
+        return new Oauth2RedirectUriException(sc, error, content);
+    }
     public static ParameterException executeParameterException(Class<?> sc, String error, String content) {
         return new ParameterException(sc, error, content);
     }

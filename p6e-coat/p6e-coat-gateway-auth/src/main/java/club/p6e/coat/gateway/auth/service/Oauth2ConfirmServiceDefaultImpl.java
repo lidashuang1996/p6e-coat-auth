@@ -5,8 +5,6 @@ import club.p6e.coat.gateway.auth.cache.Oauth2CodeCache;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.Oauth2CodeGenerator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -63,28 +61,46 @@ public class Oauth2ConfirmServiceDefaultImpl implements Oauth2ConfirmService {
                     final String userId = v.get(AuthVoucher.OAUTH2_USER_ID);
                     final String userInfo = v.get(AuthVoucher.OAUTH2_USER_INFO);
                     if (oauth2 == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data oauth2 exception."
+                        ));
                     }
                     if (scope == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data scope exception."
+                        ));
                     }
                     if (clientId == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data client id exception."
+                        ));
                     }
                     if (redirectUri == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data redirect uri exception."
+                        ));
                     }
                     if (userId == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data user id exception."
+                        ));
                     }
                     if (userInfo == null) {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(), "fun execute(Oauth2Context.Auth.Request param).", ""));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                "Oauth2 cache data user info exception."
+                        ));
                     }
                     final String code = generator.execute();
                     final Map<String, String> map = new HashMap<>(5);
@@ -95,10 +111,16 @@ public class Oauth2ConfirmServiceDefaultImpl implements Oauth2ConfirmService {
                     map.put(Oauth2CodeCache.OAUTH2_REDIRECT_URI, redirectUri);
                     return cache
                             .set(code, map)
-                            .map(b -> new Oauth2Context.Confirm.Dto()
-                                    .setCode(code)
-                                    .setState(state)
-                                    .setRedirectUri(redirectUri));
+                            .flatMap(b -> b ?
+                                    Mono.just(new Oauth2Context.Confirm.Dto()
+                                            .setCode(code)
+                                            .setState(state)
+                                            .setRedirectUri(redirectUri)) :
+                                    Mono.error(GlobalExceptionContext.executeCacheException(
+                                            this.getClass(),
+                                            "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
+                                            "Oauth2 cache data write exception."
+                                    )));
                 });
     }
 

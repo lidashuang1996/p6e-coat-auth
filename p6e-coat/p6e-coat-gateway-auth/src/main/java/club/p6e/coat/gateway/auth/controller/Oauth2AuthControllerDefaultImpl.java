@@ -69,6 +69,7 @@ public class Oauth2AuthControllerDefaultImpl
     public Mono<Void> execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param) {
         return Mono
                 .just(isEnable())
+                // http://127.0.0.1:8080/oauth2/auth?responseType=code&clientId=123456&redirectUri=http://127.0.0.1:9999/cb&scope=user_info&state=888
                 .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),

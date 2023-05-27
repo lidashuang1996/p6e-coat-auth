@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 @Component
-@ConditionalOnExpression(Oauth2AuthParameterValidator.CONDITIONAL_EXPRESSION)
+//@ConditionalOnExpression(Oauth2AuthParameterValidator.CONDITIONAL_EXPRESSION)
 public class Oauth2AuthParameterValidator implements ParameterValidatorInterface {
 
     /**

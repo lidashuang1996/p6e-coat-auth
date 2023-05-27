@@ -42,10 +42,11 @@ public class Oauth2ClientModel implements Serializable {
     private String type;
     private String scope;
     private String redirectUri;
-    private Integer secondaryConfirmation;
+    private Integer reconfirm;
     private String clientId;
     private String clientSecret;
     private String clientName;
+    private String clientAvatar;
     private String clientDescribe;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
@@ -60,10 +61,11 @@ public class Oauth2ClientModel implements Serializable {
         result.put("type", type);
         result.put("scope", scope);
         result.put("redirectUri", redirectUri);
-        result.put("secondaryConfirmation", secondaryConfirmation);
+        result.put("reconfirm", reconfirm);
         result.put("clientId", clientId);
         result.put("clientSecret", clientSecret);
         result.put("clientName", clientName);
+        result.put("clientAvatar", clientAvatar);
         result.put("clientDescribe", clientDescribe);
         result.put("createDate", createDate);
         result.put("updateDate", updateDate);

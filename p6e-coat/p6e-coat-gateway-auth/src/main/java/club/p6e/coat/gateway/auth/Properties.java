@@ -98,23 +98,23 @@ public class Properties {
 
         @Data
         public static class AuthorizationCode {
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         @Data
         public static class Password {
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         @Data
         public static class Client {
-            private boolean enable = false;
+            private boolean enable = true;
         }
     }
 
     @Data
     public static class Register {
-        private boolean enable = false;
+        private boolean enable = true;
     }
 
 
