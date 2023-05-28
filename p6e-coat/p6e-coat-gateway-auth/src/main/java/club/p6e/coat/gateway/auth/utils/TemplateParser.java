@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.utils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public final class TemplateParser {
     }
 
     public static String execute(String content, String... data) {
+        System.out.println(Arrays.toString(data));
         if (data.length % 2 != 0) {
             throw new RuntimeException();
         }

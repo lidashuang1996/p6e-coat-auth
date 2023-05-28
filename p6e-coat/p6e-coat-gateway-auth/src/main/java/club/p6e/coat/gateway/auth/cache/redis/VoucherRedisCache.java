@@ -53,10 +53,12 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
 
     @Override
     public Mono<Boolean> bind(String content, Map<String, String> data) {
+        System.out.println(data);
         return template
                 .opsForHash()
                 .putAll(CACHE_PREFIX + content, data)
                 .flatMap(b -> {
+                    System.out.println("bb " + b);
                     if (b) {
                         return template.expire(CACHE_PREFIX + content,
                                 Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS));

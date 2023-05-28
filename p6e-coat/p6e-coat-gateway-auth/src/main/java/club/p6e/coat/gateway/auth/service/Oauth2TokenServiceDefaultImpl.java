@@ -211,6 +211,7 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
                                                 refreshToken
                                         ).map(t -> new Oauth2Context.Token.UserDto()
                                                 .setOpenId(openId)
+                                                .setType("Bearer")
                                                 .setAccessToken(t.getAccessToken())
                                                 .setRefreshToken(t.getRefreshToken())
                                                 .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
@@ -290,6 +291,7 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
                             final String codeContentUserInfo = map.get(Oauth2CodeCache.OAUTH2_USER_INFO);
                             final String codeContentClientId = map.get(Oauth2CodeCache.OAUTH2_CLIENT_ID);
                             final String codeContentRedirectUri = map.get(Oauth2CodeCache.OAUTH2_REDIRECT_URI);
+                            System.out.println("OAUTH2 TOKEN >> " + map);
                             if (!m.getClientSecret().equals(clientSecret)) {
                                 return Mono.error(
                                         GlobalExceptionContext.executeServiceNotEnabledException(

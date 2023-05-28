@@ -110,6 +110,7 @@ public class AuthVoucher implements Serializable {
         final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
         final VoucherGenerator generator = SpringUtil.getBean(VoucherGenerator.class);
         final String voucher = generator.execute();
+        System.out.println("voucher  " + voucher);
         return cache
                 .bind(voucher, data)
                 .flatMap(b -> b ? Mono.just(new AuthVoucher(voucher, data, cache)) : Mono.error(
@@ -132,6 +133,7 @@ public class AuthVoucher implements Serializable {
                 this.data.put(key, data.get(key));
             }
         }
+        System.out.println("AuthVoucher >>>> " + this);
     }
 
     /**

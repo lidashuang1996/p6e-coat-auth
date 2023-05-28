@@ -1,10 +1,8 @@
-package club.p6e.coat.gateway.permission;
+package club.p6e.coat.gateway;
 
-import club.p6e.coat.file.EnableP6eFile;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableP6eFile
 @SpringBootApplication
 public class P6eGatewayApplication {
 

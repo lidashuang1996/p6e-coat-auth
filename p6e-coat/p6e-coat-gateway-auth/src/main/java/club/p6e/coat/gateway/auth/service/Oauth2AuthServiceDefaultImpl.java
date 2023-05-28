@@ -169,6 +169,8 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                     if (state != null) {
                         map.put(AuthVoucher.OAUTH2_STATE, state);
                     }
+                    map.put(AuthVoucher.OAUTH2, "true");
+                    map.put(AuthVoucher.OAUTH2_DATE, String.valueOf(System.currentTimeMillis()));
                     map.put(AuthVoucher.OAUTH2_SCOPE, scope);
                     map.put(AuthVoucher.OAUTH2_CLIENT_ID, clientId);
                     map.put(AuthVoucher.OAUTH2_REDIRECT_URI, redirectUri);

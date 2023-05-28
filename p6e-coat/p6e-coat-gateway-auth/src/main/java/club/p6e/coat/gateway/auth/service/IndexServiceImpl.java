@@ -43,7 +43,10 @@ public class IndexServiceImpl implements IndexService {
     public Mono<Void> execute(ServerWebExchange exchange, Map<String, String> vm) {
         return AuthVoucher
                 .create(vm)
-                .flatMap(voucher -> write(exchange, TemplateParser.execute(templateContent, "voucher", voucher.getMark())));
+                .flatMap(voucher -> {
+                    System.out.println("execute voucher " + voucher);
+                    return write(exchange, TemplateParser.execute(templateContent, "voucher", voucher.getMark()));
+                });
     }
 
     /**
@@ -54,6 +57,7 @@ public class IndexServiceImpl implements IndexService {
      * @return Mono/Void 对象
      */
     protected Mono<Void> write(ServerWebExchange exchange, String content) {
+        System.out.println("write :::: " + content);
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(mediaType);

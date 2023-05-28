@@ -38,9 +38,15 @@
             <scope>test</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>club.p6e.coat</groupId>-->
+<!--            <artifactId>p6e-coat-file</artifactId>-->
+<!--            <version>0.0.1</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>club.p6e.coat</groupId>
-            <artifactId>p6e-coat-file</artifactId>
+            <artifactId>p6e-coat-gateway-auth</artifactId>
             <version>0.0.1</version>
         </dependency>
 

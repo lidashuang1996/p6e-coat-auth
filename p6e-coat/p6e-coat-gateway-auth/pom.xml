@@ -8,9 +8,9 @@
         <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>club.p6e.coat</groupId>
     <artifactId>p6e-coat-gateway-auth</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>p6e-coat-gateway-auth</name>
     <description>p6e-coat-gateway-auth</description>
     <properties>
