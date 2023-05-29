@@ -9,3 +9,4 @@
 2023-05-28 13:58:18 [reactor-tcp-nio-1] WARN - Error: SEVERITY_LOCALIZED=FATAL, SEVERITY_NON_LOCALIZED=FATAL, CODE=3D000, MESSAGE=database ":5432/lds" does not exist, FILE=postinit.c, LINE=879, ROUTINE=InitPostgres
 2023-05-28 13:58:18 [reactor-tcp-nio-1] WARN - Error: SEVERITY_LOCALIZED=FATAL, SEVERITY_NON_LOCALIZED=FATAL, CODE=3D000, MESSAGE=database ":5432/lds" does not exist, FILE=postinit.c, LINE=879, ROUTINE=InitPostgres
 2023-05-28 13:58:18 [reactor-tcp-nio-1] WARN - Error: SEVERITY_LOCALIZED=FATAL, SEVERITY_NON_LOCALIZED=FATAL, CODE=3D000, MESSAGE=database ":5432/lds" does not exist, FILE=postinit.c, LINE=879, ROUTINE=InitPostgres
+2023-05-29 16:34:25 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'

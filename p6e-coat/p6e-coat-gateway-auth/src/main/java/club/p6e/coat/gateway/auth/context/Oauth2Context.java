@@ -1,7 +1,5 @@
 package club.p6e.coat.gateway.auth.context;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -228,8 +226,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**
@@ -251,8 +247,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**
@@ -274,8 +268,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**
@@ -299,8 +291,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**
@@ -322,8 +312,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**
@@ -345,8 +333,6 @@ public class Oauth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
-            private HttpServletRequest request;
-            private HttpServletResponse response;
         }
 
         /**

@@ -25,12 +25,9 @@ import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 自定义日志过滤器
@@ -100,8 +97,7 @@ public class LogWebFilter implements WebFilter, Ordered {
         // 请求日志处理
         final ServerHttpRequest request = new LogServerHttpRequestDecorator(exchange, model);
         // 结果日志处理
-        final ServerHttpResponse response =
-                new LogServerHttpResponseDecorator(exchange, model, USER_INFO_HEADER, logCallback);
+        final ServerHttpResponse response = new LogServerHttpResponseDecorator(exchange, model, USER_INFO_HEADER, logCallback);
         // 继续执行
         return chain.filter(exchange.mutate().request(request).response(response).build());
     }
@@ -145,22 +141,21 @@ public class LogWebFilter implements WebFilter, Ordered {
         public LogServerHttpRequestDecorator(ServerWebExchange exchange, Model model) {
             super(exchange.getRequest());
             final ServerHttpRequest request = exchange.getRequest();
-            this.model = model;
             this.request = request;
             model.setId(request.getId());
             model.setIp(IpUtil.obtain(request));
             model.setPath(request.getPath().value());
-            model.setRequestDateTime(LocalDateTime.now());
+            model.setRequestDateTime(System.currentTimeMillis());
             model.setRequestMethod(request.getMethod().name());
             model.setRequestCookies(JsonUtil.toJson(request.getCookies()));
             model.setRequestHeaders(JsonUtil.toJson(request.getHeaders()));
             model.setRequestQueryParams(JsonUtil.toJson(request.getQueryParams()));
+            this.model = model;
         }
 
         @NonNull
         @Override
         public Flux<DataBuffer> getBody() {
-            final AtomicLong aCountLong = new AtomicLong(0);
             final Map<String, String> rbm = new HashMap<>(3);
             final List<String> types = request.getHeaders().get(HttpHeaders.CONTENT_TYPE);
             final DataBuffer content = DATA_BUFFER_FACTORY.allocateBuffer(1024 * 5);
@@ -171,8 +166,9 @@ public class LogWebFilter implements WebFilter, Ordered {
             }
             return DataBufferUtils.join(super.getBody())
                     .map(b -> {
-                        final byte[] bytes = b.toByteBuffer().array();
-                        aCountLong.addAndGet(bytes.length);
+                        final byte[] bytes = new byte[b.readableByteCount()];
+                        b.read(bytes);
+                        DataBufferUtils.release(b);
                         if (bytes.length <= content.writableByteCount()) {
                             content.write(bytes);
                         } else {
@@ -181,15 +177,11 @@ public class LogWebFilter implements WebFilter, Ordered {
                             System.arraycopy(write, 0, bytes, 0, wl);
                             content.write(write);
                         }
-                        return DATA_BUFFER_FACTORY.wrap(bytes);
-                    })
-                    .map(b -> {
-                        rbm.put("size", String.valueOf(aCountLong.get()));
+                        rbm.put("size", String.valueOf(bytes.length));
                         rbm.put("content", new String(content.toByteBuffer().array(), StandardCharsets.UTF_8)
                                 .replaceAll("\r", "").replaceAll("\n", ""));
                         model.setRequestBody(JsonUtil.toJson(rbm));
-                        DataBufferUtils.release(content);
-                        return b;
+                        return DATA_BUFFER_FACTORY.wrap(bytes);
                     })
                     .flux();
         }
@@ -246,7 +238,6 @@ public class LogWebFilter implements WebFilter, Ordered {
         @NonNull
         @Override
         public Mono<Void> writeWith(@NonNull Publisher<? extends DataBuffer> body) {
-            final AtomicLong aCountLong = new AtomicLong(0);
             final Map<String, String> rbm = new HashMap<>(3);
             final DataBuffer content = DATA_BUFFER_FACTORY.allocateBuffer(1024 * 5);
             final List<String> types = response.getHeaders().get(HttpHeaders.CONTENT_TYPE);
@@ -262,9 +253,10 @@ public class LogWebFilter implements WebFilter, Ordered {
             }
             // ===== USER INFO ========================================
             return super.writeWith(DataBufferUtils.join(body)
-                    .map(b -> {
-                        final byte[] bytes = b.toByteBuffer().array();
-                        aCountLong.addAndGet(bytes.length);
+                    .flatMap(b -> {
+                        final byte[] bytes = new byte[b.readableByteCount()];
+                        b.read(bytes);
+                        DataBufferUtils.release(b);
                         if (bytes.length > content.writableByteCount()) {
                             final int wl = content.writableByteCount();
                             final byte[] write = new byte[wl];
@@ -273,22 +265,15 @@ public class LogWebFilter implements WebFilter, Ordered {
                         } else {
                             content.write(bytes);
                         }
-                        return DATA_BUFFER_FACTORY.wrap(bytes);
-                    })
-                    .flatMap(b -> {
-                        rbm.put("size", String.valueOf(aCountLong.get()));
+                        rbm.put("size", String.valueOf(bytes.length));
                         rbm.put("content", new String(content.toByteBuffer().array(), StandardCharsets.UTF_8)
                                 .replaceAll("\r", "").replaceAll("\n", ""));
                         model.setResponseBody(JsonUtil.toJson(rbm));
-                        model.setResponseDateTime(LocalDateTime.now());
+                        model.setResponseDateTime(System.currentTimeMillis());
                         model.setResponseHeaders(JsonUtil.toJson(response.getHeaders()));
                         model.setResponseCookies(JsonUtil.toJson(response.getCookies()));
-                        if (model.getRequestDateTime() != null && model.getResponseDateTime() != null) {
-                            final long s = model.getRequestDateTime().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-                            final long e = model.getResponseDateTime().toInstant(ZoneOffset.of("+8")).toEpochMilli();
-                            model.setIntervalDateTime(e - s);
-                        }
-                        return logCallback.execute(model).map(m -> b);
+                        model.setIntervalDateTime(model.getResponseDateTime() - model.getRequestDateTime());
+                        return logCallback.execute(model).map(m -> DATA_BUFFER_FACTORY.wrap(bytes));
                     }));
         }
     }
@@ -298,10 +283,11 @@ public class LogWebFilter implements WebFilter, Ordered {
      */
     @Data
     @Accessors(chain = true)
+    @SuppressWarnings("ALL")
     public static class Model implements Serializable {
         private volatile String id;
         private volatile String path;
-        private volatile LocalDateTime requestDateTime;
+        private volatile long requestDateTime;
         private volatile String requestMethod;
         private volatile String requestCookies;
         private volatile String requestHeaders;
@@ -310,7 +296,7 @@ public class LogWebFilter implements WebFilter, Ordered {
         private volatile String responseBody;
         private volatile String responseHeaders;
         private volatile String responseCookies;
-        private volatile LocalDateTime responseDateTime;
+        private volatile long responseDateTime;
         private volatile long intervalDateTime;
         private volatile String ip;
         private volatile String user;
@@ -319,7 +305,6 @@ public class LogWebFilter implements WebFilter, Ordered {
         public String toString() {
             return JsonUtil.toJson(this);
         }
-
     }
 
 }

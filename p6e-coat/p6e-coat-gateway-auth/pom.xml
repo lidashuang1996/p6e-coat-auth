@@ -3,62 +3,42 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>club.p6e.coat</groupId>
+        <artifactId>p6e-coat-parent</artifactId>
         <version>3.0.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>club.p6e.coat</groupId>
+
     <artifactId>p6e-coat-gateway-auth</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>p6e-coat-gateway-auth</name>
     <description>p6e-coat-gateway-auth</description>
-    <properties>
-        <java.version>17</java.version>
 
+    <properties>
         <skipTests>true</skipTests>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>3.0.0</spring-boot.version>
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
-        <lombok.version>1.18.24</lombok.version>
-        <google.gson.version>2.10</google.gson.version>
-        <netty.version>4.1.86.Final</netty.version>
+        <java.auth.jwt>4.4.0</java.auth.jwt>
+        <netty.version>4.1.92.Final</netty.version>
         <r2dbc.postgresql>0.8.13.RELEASE</r2dbc.postgresql>
-        <alibaba.nacos.version>2.2.1-RC</alibaba.nacos.version>
-
-        <skipTests>true</skipTests>
-        <java.version>17</java.version>
-        <spring-boot.version>3.0.0</spring-boot.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <darvi.hksi.badminton.version>1.0.0</darvi.hksi.badminton.version>
-        <netty.version>4.1.85.Final</netty.version>
-        <r2dbc.postgresql>0.8.13.RELEASE</r2dbc.postgresql>
-
-        <java.auth.jwt>3.10.3</java.auth.jwt>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
-        <!-- Spring Cloud Gateway [START] -->
+        <!-- Spring Gateway [START] -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <!-- Spring Cloud Gateway [END] -->
+        <!-- Spring Gateway [END] -->
+
+        <!-- Spring Aop [START] -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!-- Spring Aop [END] -->
 
         <!-- Spring Reactive Redis [START] -->
         <dependency>
@@ -67,23 +47,12 @@
         </dependency>
         <!-- Spring Reactive Redis [END] -->
 
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+        <!-- Spring Data [ START ] -->
+        <!-- Spring Data R2DBC [ START ] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
         </dependency>
-
-
         <!-- Spring Data R2DBC [ END ] -->
         <!-- Spring Data R2DBC PostGrepSQL [ START ] -->
         <dependency>
@@ -104,14 +73,6 @@
         </dependency>
         <!--  Spring Data R2DBC PostGrepSQL [ END ] -->
         <!-- Spring Data [ END ] -->
-        <!-- Spring Data [ START ] -->
-        <!-- Spring Data R2DBC [ START ] -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
-        </dependency>
-        <!-- Spring Data R2DBC [ END ] -->
-        <!-- Spring Data R2DBC PostGrepSQL [ START ] -->
 
         <!-- Java JWT [START] -->
         <dependency>
@@ -119,47 +80,23 @@
             <artifactId>java-jwt</artifactId>
             <version>${java.auth.jwt}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
         <!-- Java JWT [END] -->
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <excludes>-->
-<!--                        <exclude>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                        </exclude>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
