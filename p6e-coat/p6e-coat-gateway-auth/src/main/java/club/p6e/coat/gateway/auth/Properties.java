@@ -14,7 +14,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Data
-@Component
+@Component("club.p6e.coat.gateway.auth.Properties")
 @ConfigurationProperties(prefix = "p6e.auth")
 public class Properties {
 

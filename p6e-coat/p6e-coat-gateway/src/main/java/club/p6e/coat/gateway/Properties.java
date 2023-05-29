@@ -16,20 +16,16 @@ import java.io.Serializable;
 @Data
 @Component
 @Accessors(chain = true)
-@ConfigurationProperties(prefix = "smart.construction.gateway")
+@ConfigurationProperties(prefix = "club.p6e.coat.gateway")
 public class Properties implements Serializable {
+
     /**
      * 版本号
      */
-    private String version = "20230101@V1.0";
+    private String version = "20240101@V1.0";
 
     /**
-     * 自定义请求头前缀
-     */
-    private String headerPrefix = "SC-";
-
-    /**
-     * REFERER
+     * Referer
      */
     private Referer referer = new Referer();
 
@@ -44,6 +40,7 @@ public class Properties implements Serializable {
     @Data
     @Accessors(chain = true)
     public static class Referer {
+
         /**
          * 是否启动
          */
@@ -53,6 +50,7 @@ public class Properties implements Serializable {
          * 白名单
          */
         private String[] whiteList = new String[]{"*"};
+
     }
 
     /**
@@ -61,9 +59,11 @@ public class Properties implements Serializable {
     @Data
     @Accessors(chain = true)
     public static class CrossDomain {
+
         /**
          * 是否启动
          */
         private boolean enabled = false;
+
     }
 }

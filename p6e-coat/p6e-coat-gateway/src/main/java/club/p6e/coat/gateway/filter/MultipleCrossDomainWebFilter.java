@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.filter;
 
+import club.p6e.coat.gateway.WebFilterOrder;
 import org.reactivestreams.Publisher;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 自定义返回头清除过滤器
+ * Multiple Cross Domain 过滤器
  *
  * @author lidashuang
  * @version 1.0
@@ -28,16 +29,16 @@ public class MultipleCrossDomainWebFilter implements WebFilter, Ordered {
     /**
      * 执行顺序
      */
-    private static final int ORDER = -2900;
+    protected static final WebFilterOrder ORDER = WebFilterOrder.MULTIPLE_CROSS_DOMAIN_FILTER;
 
     /**
-     * 替换删除的请求头
+     * Cross Domain 请求头前缀
      */
-    private static final String ACCESS_CONTROL_PREFIX = "Access-Control";
+    protected static final String ACCESS_CONTROL_PREFIX = "Access-Control";
 
     @Override
     public int getOrder() {
-        return ORDER;
+        return ORDER.getOrder();
     }
 
     @NonNull
@@ -50,13 +51,14 @@ public class MultipleCrossDomainWebFilter implements WebFilter, Ordered {
             public Mono<Void> writeWith(@NonNull Publisher<? extends DataBuffer> body) {
                 final HttpHeaders httpHeaders = response.getHeaders();
                 final Set<String> httpHeaderNames = httpHeaders.keySet();
-                for (String httpHeaderName : httpHeaderNames) {
-                    final List<String> httpHeaderValue = httpHeaders.get(httpHeaderName);
-                    // 主要是消除多次跨域的问题
-                    if (httpHeaderValue != null
-                            && httpHeaderValue.size() > 0
-                            && httpHeaderName.startsWith(ACCESS_CONTROL_PREFIX)) {
-                        httpHeaders.set(httpHeaderName, httpHeaderValue.get(0));
+                for (final String httpHeaderName : httpHeaderNames) {
+                    if (httpHeaderName.startsWith(ACCESS_CONTROL_PREFIX)) {
+                        final List<String> httpHeaderValue = httpHeaders.get(httpHeaderName);
+                        if (httpHeaderValue != null && httpHeaderValue.size() > 0) {
+                            httpHeaders.set(httpHeaderName, httpHeaderValue.get(0));
+                        } else {
+                            httpHeaders.remove(httpHeaderName);
+                        }
                     }
                 }
                 return super.writeWith(body);
@@ -64,4 +66,5 @@ public class MultipleCrossDomainWebFilter implements WebFilter, Ordered {
         };
         return chain.filter(exchange.mutate().response(responseDecorator).build());
     }
+
 }

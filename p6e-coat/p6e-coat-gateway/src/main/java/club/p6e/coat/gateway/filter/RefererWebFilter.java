@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.filter;
 
 import club.p6e.coat.gateway.Properties;
+import club.p6e.coat.gateway.WebFilterOrder;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.lang.NonNull;
@@ -13,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
- * 自定义 REFERER 滤器服务
+ * Referer 过滤器
  *
  * @author lidashuang
  * @version 1.0
@@ -24,22 +25,22 @@ public class RefererWebFilter implements WebFilter, Ordered {
     /**
      * 执行顺序
      */
-    private static final int ORDER = -2600;
+    protected static final WebFilterOrder ORDER = WebFilterOrder.REFERER;
 
     /**
-     * REFERER
+     * Referer 头名称
      */
-    private static final String REFERER_HEADER = "Referer";
+    protected static final String REFERER_HEADER = "Referer";
 
     /**
-     * REFERER 通用内容
+     * Referer 适配内容
      */
-    private static final String REFERER_HEADER_GENERAL_CONTENT = "*";
+    protected static final String REFERER_HEADER_ADAPTIVE_CONTENT = "*";
 
     /**
      * 配置文件对象
      */
-    private final Properties properties;
+    protected final Properties properties;
 
     /**
      * 构造方法初始化
@@ -52,7 +53,7 @@ public class RefererWebFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return ORDER;
+        return ORDER.getOrder();
     }
 
     @NonNull
@@ -64,20 +65,22 @@ public class RefererWebFilter implements WebFilter, Ordered {
         final ServerHttpRequest request = exchange.getRequest();
         final List<String> refererList = request.getHeaders().get(REFERER_HEADER);
         if (refererList != null && refererList.size() > 0) {
-            final String r = refererList.get(0);
-            final String referer = r == null ? "" : r;
-            for (final String w : properties.getReferer().getWhiteList()) {
-                if (REFERER_HEADER_GENERAL_CONTENT.equalsIgnoreCase(w) || referer.startsWith(w)) {
-                    return chain.filter(exchange);
+            for (final String s : refererList) {
+                for (final String w : properties.getReferer().getWhiteList()) {
+                    if (!(REFERER_HEADER_ADAPTIVE_CONTENT.equalsIgnoreCase(w) || s.startsWith(w))) {
+                        return Mono.empty();
+                    }
                 }
             }
+            return chain.filter(exchange);
         } else {
             for (final String w : properties.getReferer().getWhiteList()) {
-                if (REFERER_HEADER_GENERAL_CONTENT.equalsIgnoreCase(w)) {
+                if (REFERER_HEADER_ADAPTIVE_CONTENT.equalsIgnoreCase(w)) {
                     return chain.filter(exchange);
                 }
             }
         }
         return Mono.empty();
     }
+
 }

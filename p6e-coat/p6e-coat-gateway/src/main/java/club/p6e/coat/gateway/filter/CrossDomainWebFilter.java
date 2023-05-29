@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.filter;
 
 import club.p6e.coat.gateway.Properties;
+import club.p6e.coat.gateway.WebFilterOrder;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,10 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
- * 跨域过滤器
+ * Cross Domain 过滤器
  *
  * @author lidashuang
  * @version 1.0
@@ -27,27 +29,27 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
     /**
      * 执行顺序
      */
-    private static final int ORDER = -2700;
+    protected static final WebFilterOrder ORDER = WebFilterOrder.CROSS_DOMAIN_FILTER;
 
     /**
      * 跨域配置 ACCESS_CONTROL_MAX_AGE
      */
-    private static final long ACCESS_CONTROL_MAX_AGE = 3600L;
+    protected static final long ACCESS_CONTROL_MAX_AGE = 3600L;
 
     /**
      * 跨域配置 ACCESS_CONTROL_ALLOW_ORIGIN
      */
-    private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "*";
+    protected static final String ACCESS_CONTROL_ALLOW_ORIGIN = "*";
 
     /**
      * 跨域配置 ACCESS_CONTROL_ALLOW_ORIGIN
      */
-    private static final boolean ACCESS_CONTROL_ALLOW_CREDENTIALS = true;
+    protected static final boolean ACCESS_CONTROL_ALLOW_CREDENTIALS = true;
 
     /**
      * 跨域配置 ACCESS_CONTROL_ALLOW_HEADERS
      */
-    private static final String[] ACCESS_CONTROL_ALLOW_HEADERS = new String[]{
+    protected static final String[] ACCESS_CONTROL_ALLOW_HEADERS = new String[]{
             "Authorization",
             "Content-Type",
             "Depth",
@@ -60,24 +62,28 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
             "X-File-Type",
             "Cache-Control",
             "Origin",
-            "Client"
+            "Client",
+            "Cookie",
+            "Referer"
     };
 
     /**
      * 跨域配置 ACCESS_CONTROL_ALLOW_METHODS
      */
-    private static final HttpMethod[] ACCESS_CONTROL_ALLOW_METHODS = new HttpMethod[]{
+    protected static final HttpMethod[] ACCESS_CONTROL_ALLOW_METHODS = new HttpMethod[]{
             HttpMethod.GET,
             HttpMethod.POST,
             HttpMethod.PUT,
             HttpMethod.DELETE,
             HttpMethod.OPTIONS,
+            HttpMethod.HEAD,
+            HttpMethod.PATCH,
     };
 
     /**
      * 配置文件对象
      */
-    private final Properties properties;
+    protected final Properties properties;
 
     /**
      * 构造方法初始化
@@ -90,7 +96,7 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return ORDER;
+        return ORDER.getOrder();
     }
 
     @NonNull
@@ -99,19 +105,13 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
         if (!properties.getCrossDomain().isEnabled()) {
             return chain.filter(exchange);
         }
-
         final ServerHttpRequest request = exchange.getRequest();
         final ServerHttpResponse response = exchange.getResponse();
-
-        response.getHeaders().setAccessControlMaxAge(ACCESS_CONTROL_MAX_AGE);
-
-        response.getHeaders().setAccessControlAllowCredentials(ACCESS_CONTROL_ALLOW_CREDENTIALS);
-        response.getHeaders().setAccessControlAllowHeaders(Arrays.asList(ACCESS_CONTROL_ALLOW_HEADERS));
-        response.getHeaders().setAccessControlAllowMethods(Arrays.asList(ACCESS_CONTROL_ALLOW_METHODS));
-        final String origin = request.getHeaders().getOrigin();
-        response.getHeaders().setAccessControlAllowOrigin(origin == null ? ACCESS_CONTROL_ALLOW_ORIGIN : origin);
-
-        // OPTIONS 请求直接返回成功
+        response.getHeaders().setAccessControlMaxAge(getAccessControlMaxAge());
+        response.getHeaders().setAccessControlAllowHeaders(getAccessControlAllowHeaders());
+        response.getHeaders().setAccessControlAllowMethods(getAccessControlAllowMethods());
+        response.getHeaders().setAccessControlAllowOrigin(getAccessControlAllowOrigin(request));
+        response.getHeaders().setAccessControlAllowCredentials(getAccessControlAllowCredentials());
         if (HttpMethod.OPTIONS.matches(request.getMethod().name().toUpperCase())) {
             response.setStatusCode(HttpStatus.OK);
             return Mono.empty();
@@ -119,5 +119,52 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
             return chain.filter(exchange);
         }
     }
+
+    /**
+     * 获取 AccessControlMaxAge
+     *
+     * @return AccessControlMaxAge
+     */
+    protected long getAccessControlMaxAge() {
+        return ACCESS_CONTROL_MAX_AGE;
+    }
+
+    /**
+     * 获取 AccessControlAllowCredentials
+     *
+     * @return AccessControlAllowCredentials
+     */
+    protected boolean getAccessControlAllowCredentials() {
+        return ACCESS_CONTROL_ALLOW_CREDENTIALS;
+    }
+
+    /**
+     * 获取 AccessControlAllowHeaders
+     *
+     * @return AccessControlAllowHeaders
+     */
+    protected List<String> getAccessControlAllowHeaders() {
+        return Arrays.asList(ACCESS_CONTROL_ALLOW_HEADERS);
+    }
+
+    /**
+     * 获取 AccessControlAllowMethods
+     *
+     * @return AccessControlAllowMethods
+     */
+    protected List<HttpMethod> getAccessControlAllowMethods() {
+        return Arrays.asList(ACCESS_CONTROL_ALLOW_METHODS);
+    }
+
+    /**
+     * 获取 AccessControlAllowOrigin
+     *
+     * @return AccessControlAllowOrigin
+     */
+    protected String getAccessControlAllowOrigin(ServerHttpRequest request) {
+        final String origin = request.getHeaders().getOrigin();
+        return origin == null ? ACCESS_CONTROL_ALLOW_ORIGIN : origin;
+    }
+
 }
 
