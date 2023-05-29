@@ -1,6 +1,9 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.VoucherCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -11,12 +14,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 凭证会话默认的实现
+ * 凭证缓存的实现
  *
  * @author lidashuang
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = VoucherCache.class,
+        ignored = VoucherRedisCache.class
+)
+@ConditionalOnExpression(VoucherCache.CONDITIONAL_EXPRESSION)
 public class VoucherRedisCache extends RedisCache implements VoucherCache {
 
     /**
@@ -34,15 +42,15 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
     }
 
     @Override
-    public Mono<Long> del(String content) {
-        return template.delete(CACHE_PREFIX + content);
+    public Mono<Long> del(String key) {
+        return template.delete(CACHE_PREFIX + key);
     }
 
     @Override
-    public Mono<Map<String, String>> get(String content) {
+    public Mono<Map<String, String>> get(String key) {
         return template
                 .opsForHash()
-                .entries(CACHE_PREFIX + content)
+                .entries(CACHE_PREFIX + key)
                 .collectList()
                 .map(list -> {
                     final Map<String, String> map = new HashMap<>(list.size());
@@ -52,15 +60,13 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
     }
 
     @Override
-    public Mono<Boolean> bind(String content, Map<String, String> data) {
-        System.out.println(data);
+    public Mono<Boolean> set(String key, Map<String, String> data) {
         return template
                 .opsForHash()
-                .putAll(CACHE_PREFIX + content, data)
+                .putAll(CACHE_PREFIX + key, data)
                 .flatMap(b -> {
-                    System.out.println("bb " + b);
                     if (b) {
-                        return template.expire(CACHE_PREFIX + content,
+                        return template.expire(CACHE_PREFIX + key,
                                 Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS));
                     } else {
                         return Mono.just(false);

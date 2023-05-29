@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -22,7 +23,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class VerificationCodeLoginRedisCache implements VerificationCodeLoginCache {
+public class VerificationCodeLoginRedisCache extends RedisCache implements VerificationCodeLoginCache {
 
     /**
      * 缓存对象

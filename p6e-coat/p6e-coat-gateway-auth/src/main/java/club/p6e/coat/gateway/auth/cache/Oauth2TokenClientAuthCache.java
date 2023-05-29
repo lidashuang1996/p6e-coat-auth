@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 /**
  * OAUTH2 客户端令牌信息缓存
@@ -20,7 +19,7 @@ public interface Oauth2TokenClientAuthCache {
      */
     @Data
     @Accessors(chain = true)
-    public static class Token implements Serializable {
+    class Token implements Serializable {
 
         /**
          * CID
@@ -45,60 +44,52 @@ public interface Oauth2TokenClientAuthCache {
     }
 
     /**
-     * 分割符号
-     */
-    public static final String DELIMITER = ":";
-
-    /**
      * 过期的时间
      */
-    public static final long EXPIRATION_TIME = 60 * 15;
+    long EXPIRATION_TIME = 900L;
 
     /**
      * 客户端缓存前缀
      */
-    public static final String CLIENT_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:CLIENT:";
+    String CLIENT_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:CLIENT:";
 
     /**
      * ACCESS TOKEN 缓存前缀
      */
-    public static final String ACCESS_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:ACCESS_TOKEN:";
+    String ACCESS_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:ACCESS_TOKEN:";
 
     /**
      * REFRESH TOKEN 缓存前缀
      */
-    public static final String REFRESH_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:REFRESH_TOKEN:";
+    String REFRESH_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:REFRESH_TOKEN:";
 
     /**
      * 客户端 ACCESS TOKEN 缓存前缀
      */
-    public static final String CLIENT_TOKEN_LIST_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:LIST:";
-
-    /**
-     * 客户端 REFRESH TOKEN 缓存前缀
-     */
-    public static final String CLIENT_REFRESH_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:CLIENT:REFRESH_TOKEN:";
+    String CLIENT_TOKEN_LIST_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:TOKEN_LIST:";
 
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
+    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
 
     /**
-     * @param cid   客户端ID
-     * @param client  客户端信息
-     * @param scope 客户端的作用域
+     * @param cid          客户端ID
+     * @param scope        客户端的作用域
+     * @param accessToken  Access Token
+     * @param refreshToken Refresh Token
+     * @param client       客户端信息
      * @return 令牌对象
      */
-    public Mono<Token> set(String cid, String client, String scope, String accessToken, String refreshToken);
+    Mono<Token> set(String cid, String scope, String accessToken, String refreshToken, String client);
 
     /**
      * 读取信息
      *
-     * @param cid 客户端ID
+     * @param cid 客户端编号
      * @return 客户端信息
      */
-    public Mono<String> getClient(String cid);
+    Mono<String> getClient(String cid);
 
     /**
      * 读取令牌
@@ -106,7 +97,7 @@ public interface Oauth2TokenClientAuthCache {
      * @param token 令牌
      * @return 令牌对象
      */
-    public Mono<Token> getAccessToken(String token);
+    Mono<Token> getAccessToken(String token);
 
     /**
      * 读取刷新令牌
@@ -114,13 +105,14 @@ public interface Oauth2TokenClientAuthCache {
      * @param token 刷新令牌
      * @return 令牌对象
      */
-    public Mono<Token> getRefreshToken(String token);
+    Mono<Token> getRefreshToken(String token);
 
     /**
      * 清除令牌
      *
      * @param token 令牌
+     * @return 清除的令牌条数
      */
-    public Mono<Long> cleanToken(String token);
+    Mono<Long> cleanToken(String token);
 
 }

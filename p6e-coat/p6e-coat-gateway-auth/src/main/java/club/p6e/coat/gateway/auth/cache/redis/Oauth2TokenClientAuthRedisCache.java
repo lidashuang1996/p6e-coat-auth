@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.cache.Oauth2TokenClientAuthCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 //        ignored = Oauth2TokenClientAuthRedisCache.class
 //)
 //@ConditionalOnExpression(Oauth2TokenClientCONDITIONAL_EXPRESSION)
-public class Oauth2TokenClientAuthRedisCache implements Oauth2TokenClientAuthCache {
+public class Oauth2TokenClientAuthRedisCache extends RedisCache implements Oauth2TokenClientAuthCache {
 
     /**
      * 缓存源的名称

@@ -16,39 +16,42 @@ public interface VoucherCache extends ICache {
     /**
      * 缓存前缀
      */
-    public static final String CACHE_PREFIX = "VOUCHER:";
+    String CACHE_PREFIX = "VOUCHER:";
 
     /**
      * 过期的时间
      */
-    public static final long EXPIRATION_TIME = 60 * 30;
+    long EXPIRATION_TIME = 900L;
 
     /**
      * 条件注册的条件表达式
      */
-    public static final String CONDITIONAL_EXPRESSION =
+    String CONDITIONAL_EXPRESSION =
             "#{${p6e.auth.login.enable:false} || ${p6e.auth.oauth2.enable:false} || ${p6e.auth.register.enable:false}}";
 
     /**
      * 删除数据
      *
-     * @param content 会话编号
+     * @param key 键
+     * @return 删除数据的条数
      */
-    public Mono<Long> del(String content);
+    Mono<Long> del(String key);
 
     /**
-     * 读取全部数据
+     * 读取数据
      *
-     * @param content 会话编号
-     * @return 会话全部数据
+     * @param key 键
+     * @return 值
      */
-    public Mono<Map<String, String>> get(String content);
+    Mono<Map<String, String>> get(String key);
 
     /**
-     * 绑定数据
+     * 写入数据
      *
-     * @param content 会话编号
+     * @param key  键
+     * @param data 值
+     * @return 是否写入数据成功
      */
-    public Mono<Boolean> bind(String content, Map<String, String> data);
+    Mono<Boolean> set(String key, Map<String, String> data);
 
 }

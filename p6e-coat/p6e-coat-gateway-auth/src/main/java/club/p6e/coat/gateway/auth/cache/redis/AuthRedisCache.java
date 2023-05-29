@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.AuthCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.redis.connection.RedisStringCommands;

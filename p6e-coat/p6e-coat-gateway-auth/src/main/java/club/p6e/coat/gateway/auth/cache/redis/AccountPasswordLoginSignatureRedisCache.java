@@ -1,6 +1,9 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -16,6 +19,11 @@ import java.time.temporal.ChronoUnit;
  * @version 1.0
  */
 @Component
+@ConditionalOnMissingBean(
+        value = AccountPasswordLoginSignatureCache.class,
+        ignored = AccountPasswordLoginSignatureRedisCache.class
+)
+@ConditionalOnExpression(AccountPasswordLoginSignatureCache.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginSignatureRedisCache extends RedisCache implements AccountPasswordLoginSignatureCache {
 
     /**

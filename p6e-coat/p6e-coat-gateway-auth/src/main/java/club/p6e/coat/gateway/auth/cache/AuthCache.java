@@ -47,7 +47,7 @@ public interface AuthCache extends ICache {
     /**
      * 过期的时间
      */
-    long EXPIRATION_TIME = 60 * 60 * 3;
+    long EXPIRATION_TIME = 3600 * 3L;
 
     /**
      * 用户缓存前缀
@@ -57,7 +57,7 @@ public interface AuthCache extends ICache {
     /**
      * 用户令牌缓存前缀
      */
-    String USER_TOKEN_LIST_PREFIX = "AUTH:USER:TOKEN:";
+    String USER_TOKEN_LIST_PREFIX = "AUTH:USER:TOKEN_LIST";
 
     /**
      * ACCESS TOKEN 缓存前缀

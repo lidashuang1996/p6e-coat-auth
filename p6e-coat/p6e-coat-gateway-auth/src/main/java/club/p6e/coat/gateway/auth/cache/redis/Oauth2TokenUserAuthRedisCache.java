@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.Oauth2TokenUserAuthCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
@@ -28,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 //        ignored = Oauth2TokenUserAuthRedisCache.class
 //)
 //@ConditionalOnExpression(Oauth2TokenUserCONDITIONAL_EXPRESSION)
-public class Oauth2TokenUserAuthRedisCache implements Oauth2TokenUserAuthCache {
+public class Oauth2TokenUserAuthRedisCache extends RedisCache implements Oauth2TokenUserAuthCache {
 
     /**
      * 缓存源的名称

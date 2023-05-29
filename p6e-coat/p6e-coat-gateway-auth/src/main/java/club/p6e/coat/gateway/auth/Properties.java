@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Data
 @Component("club.p6e.coat.gateway.auth.Properties")
-@ConfigurationProperties(prefix = "p6e.auth")
+@ConfigurationProperties(prefix = "club.p6e.cloud.gateway.auth")
 public class Properties {
 
     private Mode mode = Mode.PHONE_OR_MAILBOX;

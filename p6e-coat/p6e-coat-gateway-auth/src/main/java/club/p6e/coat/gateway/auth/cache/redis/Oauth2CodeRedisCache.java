@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.cache.redis;
 
 import club.p6e.coat.gateway.auth.cache.Oauth2CodeCache;
+import club.p6e.coat.gateway.auth.cache.redis.support.RedisCache;
 import org.reactivestreams.Publisher;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +31,7 @@ import java.util.Optional;
 //        ignored = Oauth2CodeRedisCache.class
 //)
 //@ConditionalOnExpression(Oauth2CodeCache.CONDITIONAL_EXPRESSION)
-public class Oauth2CodeRedisCache implements Oauth2CodeCache {
+public class Oauth2CodeRedisCache extends RedisCache implements Oauth2CodeCache {
     /**
      * 缓存对象
      */

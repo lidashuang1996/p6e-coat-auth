@@ -3,7 +3,6 @@ package club.p6e.coat.gateway.auth.cache;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 验证码登录的缓存
@@ -21,7 +20,7 @@ public interface VerificationCodeLoginCache {
     /**
      * 过期的时间
      */
-    public static final long EXPIRATION_TIME = 300;
+    public static final long EXPIRATION_TIME = 300L;
 
     /**
      * 验证码登录的缓存前缀
@@ -35,38 +34,41 @@ public interface VerificationCodeLoginCache {
             "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
 
     /**
-     * 删除
+     * 删除数据
      *
-     * @param type 类型
      * @param key  键
+     * @param type 类型
+     * @return 删除数据的条数
      */
     public Mono<Long> del(String key, String type);
 
     /**
-     * 删除
+     * 删除数据
      *
-     * @param type  类型
      * @param key   键
+     * @param type  类型
      * @param value 值
+     * @return 删除数据的条数
      */
     public Mono<Long> del(String key, String type, String value);
 
     /**
-     * 写入
+     * 读取数据
+     *
+     * @param key  键
+     * @param type 类型
+     * @return 读取的列表数据
+     */
+    public Mono<List<String>> get(String key, String type);
+
+    /**
+     * 写入数据
      *
      * @param type  类型
      * @param key   键
      * @param value 值
+     * @return 是否写入数据成功
      */
     public Mono<Boolean> set(String key, String type, String value);
-
-    /**
-     * 读取
-     *
-     * @param type 类型
-     * @param key  键
-     * @return 读取的内容
-     */
-    public Mono<List<String>> get(String key, String type);
 
 }

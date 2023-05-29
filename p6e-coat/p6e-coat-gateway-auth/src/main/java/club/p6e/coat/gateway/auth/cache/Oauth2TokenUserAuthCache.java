@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 /**
  * OAUTH2 用户令牌信息缓存
@@ -20,7 +19,7 @@ public interface Oauth2TokenUserAuthCache {
      */
     @Data
     @Accessors(chain = true)
-    public static class Token implements Serializable {
+    static class Token implements Serializable {
 
         /**
          * UID
@@ -33,7 +32,7 @@ public interface Oauth2TokenUserAuthCache {
         private String scope;
 
         /**
-         * ACCESS TOKEN1
+         * ACCESS TOKEN
          */
         private String accessToken;
 
@@ -45,52 +44,44 @@ public interface Oauth2TokenUserAuthCache {
     }
 
     /**
-     * 分割符号
-     */
-    public static final String DELIMITER = ":";
-
-    /**
      * 过期的时间
      */
-    public static final long EXPIRATION_TIME = 60 * 15;
+    long EXPIRATION_TIME = 900L;
 
     /**
      * 用户缓存前缀
      */
-    public static final String USER_PREFIX = "OAUTH2:USER_AUTH_TOKEN:USER:";
+    String USER_PREFIX = "OAUTH2:USER_AUTH_TOKEN:USER:";
 
     /**
      * ACCESS TOKEN 缓存前缀
      */
-    public static final String ACCESS_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:ACCESS_TOKEN:";
+    String ACCESS_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:ACCESS_TOKEN:";
 
     /**
      * REFRESH TOKEN 缓存前缀
      */
-    public static final String REFRESH_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:REFRESH_TOKEN:";
+    String REFRESH_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:REFRESH_TOKEN:";
 
     /**
      * 用户 ACCESS TOKEN 缓存前缀
      */
-    public static final String USER_ACCESS_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:USER:ACCESS_TOKEN:";
-
-    /**
-     * 用户 REFRESH TOKEN 缓存前缀
-     */
-    public static final String USER_REFRESH_TOKEN_PREFIX = "OAUTH2:USER_AUTH_TOKEN:USER:REFRESH_TOKEN:";
+    String USER_TOKEN_LIST_PREFIX = "OAUTH2:USER_AUTH_TOKEN:TOKEN_LIST:";
 
     /**
      * 条件注册的条件表达式
      */
-    public final static String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
+    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
 
     /**
-     * @param uid   用户ID
-     * @param user  用户信息
-     * @param scope 用户的作用域
+     * @param uid          用户ID
+     * @param scope        用户的作用域
+     * @param accessToken  Access Token
+     * @param refreshToken Refresh Token
+     * @param user         用户的信息
      * @return 令牌对象
      */
-    public Mono<Token> set(String uid, String user, String scope, String accessToken, String refreshToken);
+    Mono<Token> set(String uid, String scope, String accessToken, String refreshToken, String user);
 
     /**
      * 读取信息
@@ -98,7 +89,7 @@ public interface Oauth2TokenUserAuthCache {
      * @param uid 用户ID
      * @return 用户信息
      */
-    public Mono<String> getUser(String uid);
+    Mono<String> getUser(String uid);
 
     /**
      * 读取令牌
@@ -106,7 +97,7 @@ public interface Oauth2TokenUserAuthCache {
      * @param token 令牌
      * @return 令牌对象
      */
-    public Mono<Token> getAccessToken(String token);
+    Mono<Token> getAccessToken(String token);
 
     /**
      * 读取刷新令牌
@@ -114,6 +105,14 @@ public interface Oauth2TokenUserAuthCache {
      * @param token 刷新令牌
      * @return 令牌对象
      */
-    public Mono<Token> getRefreshToken(String token);
+    Mono<Token> getRefreshToken(String token);
+
+    /**
+     * 清除令牌
+     *
+     * @param token 令牌
+     * @return 清除的令牌条数
+     */
+    Mono<Long> cleanToken(String token);
 
 }
