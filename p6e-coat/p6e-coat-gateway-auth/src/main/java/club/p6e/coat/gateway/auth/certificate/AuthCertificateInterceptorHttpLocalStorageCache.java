@@ -47,7 +47,7 @@ public class AuthCertificateInterceptorHttpLocalStorageCache
             }
         }
         if (accessToken == null) {
-            accessToken = getParamValue(request);
+            accessToken = getAccessTokenParam(request);
         }
         if (accessToken == null) {
             return Mono.error(GlobalExceptionContext.exceptionAuthException(

@@ -110,4 +110,9 @@ public class Oauth2TokenUserAuthRedisCache extends RedisCache implements Oauth2T
                     return token == null ? Mono.empty() : Mono.just(token);
                 });
     }
+
+    @Override
+    public Mono<Long> cleanToken(String token) {
+        return null;
+    }
 }

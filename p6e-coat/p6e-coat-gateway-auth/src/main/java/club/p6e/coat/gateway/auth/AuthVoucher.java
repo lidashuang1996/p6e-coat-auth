@@ -112,7 +112,7 @@ public class AuthVoucher implements Serializable {
         final String voucher = generator.execute();
         System.out.println("voucher  " + voucher);
         return cache
-                .bind(voucher, data)
+                .set(voucher, data)
                 .flatMap(b -> b ? Mono.just(new AuthVoucher(voucher, data, cache)) : Mono.error(
                         GlobalExceptionContext.executeVoucherException(
                                 AuthVoucher.class,
@@ -172,7 +172,7 @@ public class AuthVoucher implements Serializable {
      */
     public Mono<AuthVoucher> set(Map<String, String> map) {
         return cache
-                .bind(mark, map)
+                .set(mark, map)
                 .map(b -> {
                     if (b) {
                         for (final String key : map.keySet()) {

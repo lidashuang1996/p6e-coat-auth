@@ -55,14 +55,14 @@ public abstract class AuthCertificateInterceptorBaseHttp {
     /**
      * AUTH COOKIE REFRESH TOKEN 名称
      */
-    protected static String AUTH_COOKIE_REFRESH_TOKEN_NAME = "P6E_AUTH_ACCESS_TOKEN";
+    protected static String AUTH_COOKIE_REFRESH_TOKEN_NAME = "P6E_AUTH_REFRESH_TOKEN";
 
     /**
      * 获取请求参数对应的值
      *
      * @return 结果值
      */
-    protected String getParamAccessToken(ServerHttpRequest request) {
+    protected String getAccessTokenParam(ServerHttpRequest request) {
         final MultiValueMap<String, String> qp = request.getQueryParams();
         for (final String key : List.of(ACCESS_TOKEN_PARAM1, ACCESS_TOKEN_PARAM2)) {
             final List<String> values = qp.get(key);
@@ -75,7 +75,7 @@ public abstract class AuthCertificateInterceptorBaseHttp {
 
     protected Mono<Boolean> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken) {
         final ResponseCookie accessTokenCookie = ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken).build();
-        final ResponseCookie refreshTokenCookie = ResponseCookie.from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken).build();
+        final ResponseCookie refreshTokenCookie = ResponseCookie.from(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshToken).build();
         response.addCookie(accessTokenCookie);
         response.addCookie(refreshTokenCookie);
         return Mono.just(true);
@@ -109,7 +109,7 @@ public abstract class AuthCertificateInterceptorBaseHttp {
             }
         }
         if (accessToken == null) {
-            accessToken = getParamAccessToken(request);
+            accessToken = getAccessTokenParam(request);
         }
         if (accessToken == null) {
             return Mono.error(GlobalExceptionContext.exceptionAuthException(
