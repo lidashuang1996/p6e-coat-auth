@@ -1,0 +1,12 @@
+spring:
+  config:
+    import: D:\\env\p6e-coat-file-application.yml
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+logging:
+  config: 'classpath:p6e-coat-logback.xml'
+
