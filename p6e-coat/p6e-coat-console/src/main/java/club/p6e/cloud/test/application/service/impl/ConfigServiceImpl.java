@@ -4,9 +4,7 @@ import club.p6e.cloud.test.application.service.ConfigService;
 import club.p6e.cloud.test.domain.aggregate.ConfigListAggregate;
 import club.p6e.cloud.test.domain.entity.ConfigEntity;
 import club.p6e.cloud.test.infrastructure.context.ConfigContext;
-import club.p6e.cloud.test.infrastructure.context.UserContext;
 import club.p6e.cloud.test.infrastructure.model.ConfigModel;
-import club.p6e.cloud.test.infrastructure.model.UserModel;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
