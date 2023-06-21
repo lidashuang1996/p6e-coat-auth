@@ -17,4 +17,5 @@ public interface DictionaryService {
 
     DictionaryContext.Dto update(DictionaryContext.Request request);
 
+    DictionaryContext.Type.Dto type(DictionaryContext.Type.Request request);
 }

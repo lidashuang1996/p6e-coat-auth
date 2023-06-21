@@ -1,24 +1,18 @@
 package club.p6e.cloud.test.infrastructure.context;
 
-import com.darvi.hksi.badminton.lib.Searchable;
 import com.darvi.hksi.badminton.lib.SearchableContext;
-import com.darvi.hksi.badminton.lib.Sortable;
 import com.darvi.hksi.badminton.lib.SortableContext;
 import com.darvi.hksi.badminton.lib.context.BaseContext;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lidashuang
@@ -108,6 +102,23 @@ public class DictionaryContext implements Serializable {
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
         private String operator;
+    }
+
+    public static class Type implements Serializable {
+        @Data
+        @Accessors(chain = true)
+        @EqualsAndHashCode(callSuper = true)
+        public static class Request extends BaseContext.PagingParam implements Serializable {
+            private String type;
+            private String language;
+            private List<String> types = new ArrayList<>();
+        }
+
+        @Data
+        @Accessors(chain = true)
+        public static class Dto implements Serializable {
+            private Map<String, Map<String, String>> data = new HashMap<>();
+        }
     }
 
 }

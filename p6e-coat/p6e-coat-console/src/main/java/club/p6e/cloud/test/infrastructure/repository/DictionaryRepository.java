@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @author lidashuang
  * @version 1.0
  */
-public interface DictionaryRepository extends JpaRepository<DictionaryModel, Integer>, JpaSpecificationExecutor<DictionaryModel> {
+public interface DictionaryRepository extends
+        JpaRepository<DictionaryModel, Integer>,
+        JpaSpecificationExecutor<DictionaryModel> {
 }

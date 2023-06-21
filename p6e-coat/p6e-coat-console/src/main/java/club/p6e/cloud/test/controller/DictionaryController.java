@@ -8,6 +8,8 @@ import com.darvi.hksi.badminton.lib.context.ResultContext;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 /**
  * @author lidashuang
  * @version 1.0
@@ -130,6 +132,30 @@ public class DictionaryController {
     public ResultContext delete(@PathVariable Integer id) {
         final DictionaryContext.Dto result = server.delete(new DictionaryContext.Request().setId(id));
         return ResultContext.build(CopyUtil.run(result, DictionaryContext.Vo.class));
+    }
+
+    @GetMapping("/type")
+    public ResultContext getType(DictionaryContext.Type.Request request) {
+        return postType(request);
+    }
+
+    @PostMapping("/type")
+    public ResultContext postType(@RequestBody DictionaryContext.Type.Request request) {
+        if (request == null || (request.getType() != null && request.getTypes() != null)) {
+            throw GlobalExceptionContext.executeParameterException(
+                    this.getClass(),
+                    "fun postType(@RequestBody DictionaryContext.Type.Request request)",
+                    "Request sort validation exception."
+            );
+        }
+        if (request.getTypes() == null) {
+            request.setTypes(new ArrayList<>());
+        }
+        if (request.getType() != null) {
+            request.getTypes().add(request.getType());
+        }
+        final DictionaryContext.Type.Dto result = server.type(request);
+        return ResultContext.build(result.getData());
     }
 
 }

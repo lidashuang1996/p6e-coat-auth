@@ -10,6 +10,8 @@ import club.p6e.cloud.test.infrastructure.model.DictionaryModel;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * @author lidashuang
  * @version 1.0
@@ -52,5 +54,11 @@ public class DictionaryServiceImpl implements DictionaryService {
         return CopyUtil.run(DictionaryEntity.findById(request.getId()).update(
                 CopyUtil.run(request, DictionaryModel.class)
         ).getModel(), DictionaryContext.Dto.class);
+    }
+
+    @Override
+    public DictionaryContext.Type.Dto type(DictionaryContext.Type.Request request) {
+        return new DictionaryContext.Type.Dto().setData(
+                DictionaryEntity.type(request.getTypes(), request.getLanguage()));
     }
 }

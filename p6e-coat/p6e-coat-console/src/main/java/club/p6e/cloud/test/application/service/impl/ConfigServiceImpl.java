@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author lidashuang
  * @version 1.0
  */
-@Service("bbbbbbbbbbbbbbbbbbb")
+@Service
 public class ConfigServiceImpl implements ConfigService {
     @Override
     public ConfigContext.ListDto list(ConfigContext.Request request) {
