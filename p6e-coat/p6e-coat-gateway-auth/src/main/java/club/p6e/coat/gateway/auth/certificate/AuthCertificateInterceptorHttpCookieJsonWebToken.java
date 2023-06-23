@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthCertificateInterceptorHttpCookieJsonWebToken
         extends AuthCertificateInterceptorBaseHttp implements AuthCertificateInterceptor {
 

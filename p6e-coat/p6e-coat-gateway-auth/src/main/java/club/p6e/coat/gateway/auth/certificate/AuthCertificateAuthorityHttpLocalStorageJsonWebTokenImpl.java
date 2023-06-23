@@ -25,7 +25,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
         extends AuthCertificateInterceptorBaseHttp implements AuthCertificateAuthority {
 

@@ -4,6 +4,7 @@ import club.p6e.coat.gateway.auth.AuthCertificateAuthority;
 import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
@@ -87,10 +88,10 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl implements AuthCe
                                                 client.put("clientReconfirm", clientReconfirm);
                                                 m.put("oauth2", client);
                                                 return m;
-                                            });
+                                            }).map(ResultContext::build);
                                 });
                     } else {
-                        return mono;
+                        return mono.map(ResultContext::build);
                     }
                 });
     }

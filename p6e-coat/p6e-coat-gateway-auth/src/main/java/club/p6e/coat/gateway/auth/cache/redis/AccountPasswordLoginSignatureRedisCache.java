@@ -19,11 +19,6 @@ import java.time.temporal.ChronoUnit;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = AccountPasswordLoginSignatureCache.class,
-        ignored = AccountPasswordLoginSignatureRedisCache.class
-)
-@ConditionalOnExpression(AccountPasswordLoginSignatureCache.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginSignatureRedisCache extends RedisCache implements AccountPasswordLoginSignatureCache {
 
     /**
