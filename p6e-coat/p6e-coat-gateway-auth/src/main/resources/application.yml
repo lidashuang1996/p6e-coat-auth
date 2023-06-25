@@ -9,6 +9,6 @@ spring:
           filters:
             - AddRequestHeader=X-Custom-Header, CustomValue
   config:
-    import: D:\\env\p6e-coat-file-application.yml
+    import: /opt/p6e/auth/p6e-auth-application.yml
 logging:
   config: 'classpath:p6e-coat-logback.xml'

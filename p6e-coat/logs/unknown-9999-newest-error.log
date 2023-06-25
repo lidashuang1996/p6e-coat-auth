@@ -1,0 +1,10 @@
+2023-06-23 10:45:28 [http-nio-9999-exec-5] ERROR - Request method 'POST' is not supported
+2023-06-23 10:45:28 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-23 10:45:35 [http-nio-9999-exec-4] ERROR - Request method 'POST' is not supported
+2023-06-23 10:45:35 [http-nio-9999-exec-3] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-23 10:46:26 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
+2023-06-23 10:46:26 [http-nio-9999-exec-6] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-23 10:49:36 [http-nio-9999-exec-7] ERROR - Request method 'POST' is not supported
+2023-06-23 10:49:36 [http-nio-9999-exec-1] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-23 10:54:44 [http-nio-9999-exec-3] ERROR - Request method 'POST' is not supported
+2023-06-23 10:54:44 [http-nio-9999-exec-10] ERROR - Request method 'POST' is not supported

@@ -14,7 +14,6 @@ import java.util.Date;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthCertificateInterceptorHttpLocalStorageJsonWebToken implements AuthCertificateInterceptor {
 
     /**

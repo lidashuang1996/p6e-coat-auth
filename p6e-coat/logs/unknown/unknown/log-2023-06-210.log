@@ -1,0 +1,455 @@
+2023-06-21 23:40:51 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:40:51 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 21588 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:40:51 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:40:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:40:52 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:40:52 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:40:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:40:52 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:40:52 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:40:52 [main] INFO - BeanFactory id=83c20455-754a-330e-ba55-b9d2c783a28a
+2023-06-21 23:40:52 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authCertificateAspect' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthCertificateAspect.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'club.p6e.coat.gateway.auth.AuthCertificateAuthority' available: expected single matching bean but found 2: authCertificateAuthorityHttpLocalStorageCacheImpl,authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
+2023-06-21 23:40:52 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-21 23:40:52 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.gateway.auth.AuthCertificateAspect required a single bean, but 2 were found:
+	- authCertificateAuthorityHttpLocalStorageCacheImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageCacheImpl.class]
+	- authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-06-21 23:42:44 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:42:44 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 13240 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:42:44 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:42:44 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:42:44 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:42:44 [main] INFO - Finished Spring Data repository scanning in 14 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:42:44 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:42:44 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:42:44 [main] INFO - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:42:44 [main] INFO - BeanFactory id=83c20455-754a-330e-ba55-b9d2c783a28a
+2023-06-21 23:42:45 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authCertificateAspect' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthCertificateAspect.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'club.p6e.coat.gateway.auth.AuthCertificateAuthority' available: expected single matching bean but found 2: authCertificateAuthorityHttpLocalStorageCacheImpl,authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
+2023-06-21 23:42:45 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-21 23:42:45 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.gateway.auth.AuthCertificateAspect required a single bean, but 2 were found:
+	- authCertificateAuthorityHttpLocalStorageCacheImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageCacheImpl.class]
+	- authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-06-21 23:42:57 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:42:57 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 16140 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:42:57 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:42:58 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:42:58 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:42:58 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:42:58 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:42:58 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:42:58 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:42:58 [main] INFO - BeanFactory id=ff805de2-177a-3f01-a995-67c6f1927cb6
+2023-06-21 23:42:58 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authCertificateAspect' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\AuthCertificateAspect.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'club.p6e.coat.gateway.auth.AuthCertificateAuthority' available: expected single matching bean but found 2: authCertificateAuthorityHttpLocalStorageCacheImpl,authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
+2023-06-21 23:42:58 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-21 23:42:58 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.gateway.auth.AuthCertificateAspect required a single bean, but 2 were found:
+	- authCertificateAuthorityHttpLocalStorageCacheImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageCacheImpl.class]
+	- authCertificateAuthorityHttpLocalStorageJsonWebTokenImpl: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-06-21 23:43:38 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:43:38 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 2428 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:43:38 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:43:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:43:39 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:43:39 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:43:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:43:39 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:43:39 [main] INFO - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:43:39 [main] INFO - BeanFactory id=0d8b6b11-6077-3e3b-aa01-c4da27b2076c
+2023-06-21 23:43:39 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'accountPasswordLoginControllerImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\controller\AccountPasswordLoginControllerImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'accountPasswordLoginServiceImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\service\AccountPasswordLoginServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 3: No qualifying bean of type 'club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2023-06-21 23:43:39 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-21 23:43:39 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 3 of constructor in club.p6e.coat.gateway.auth.service.AccountPasswordLoginServiceImpl required a bean of type 'club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache' in your configuration.
+
+2023-06-21 23:44:19 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:44:19 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 17252 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:44:19 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:44:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:44:20 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:44:20 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:44:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:44:20 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:44:20 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:44:20 [main] INFO - BeanFactory id=2f208df4-2732-3059-8bad-6664b7151da7
+2023-06-21 23:44:20 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'qrCodeCallbackControllerDefaultImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\controller\QrCodeCallbackControllerDefaultImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'qrCodeCallbackServiceDefaultImpl' defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\service\QrCodeCallbackServiceDefaultImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'club.p6e.coat.gateway.auth.AuthCertificateInterceptor' available: expected single matching bean but found 4: authCertificateInterceptorHttpCookieCache,authCertificateInterceptorHttpCookieJsonWebToken,authCertificateInterceptorHttpLocalStorageCache,authCertificateInterceptorHttpLocalStorageJsonWebToken
+2023-06-21 23:44:20 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-21 23:44:20 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in club.p6e.coat.gateway.auth.service.QrCodeCallbackServiceDefaultImpl required a single bean, but 4 were found:
+	- authCertificateInterceptorHttpCookieCache: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateInterceptorHttpCookieCache.class]
+	- authCertificateInterceptorHttpCookieJsonWebToken: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateInterceptorHttpCookieJsonWebToken.class]
+	- authCertificateInterceptorHttpLocalStorageCache: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateInterceptorHttpLocalStorageCache.class]
+	- authCertificateInterceptorHttpLocalStorageJsonWebToken: defined in file [D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes\club\p6e\coat\gateway\auth\certificate\AuthCertificateInterceptorHttpLocalStorageJsonWebToken.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+2023-06-21 23:44:55 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:44:55 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 8732 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:44:55 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:44:55 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:44:55 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:44:55 [main] INFO - Finished Spring Data repository scanning in 14 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:44:55 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:44:55 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:44:55 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:44:55 [main] INFO - BeanFactory id=04c80163-f61b-3ad3-b804-0b0ff01616ec
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-06-21 23:44:56 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-06-21 23:44:57 [main] INFO - Netty started on port 8080
+2023-06-21 23:44:57 [main] INFO - Started P6eGatewayAuthApplication in 2.667 seconds (process running for 2.994)
+2023-06-21 23:47:11 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:47:11 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 14908 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:47:11 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:47:12 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:47:12 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:47:12 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:47:12 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:47:12 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:47:12 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:47:12 [main] INFO - BeanFactory id=6d1f2e57-6a5c-3c0c-a9f6-3889917dd805
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-06-21 23:47:13 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-06-21 23:47:13 [main] INFO - Netty started on port 8080
+2023-06-21 23:47:13 [main] INFO - Started P6eGatewayAuthApplication in 2.67 seconds (process running for 3.009)
+2023-06-21 23:48:58 [reactor-http-nio-2] ERROR - [bf48b7f2-1]  500 Server Error for HTTP GET "/index"
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.gateway.auth.cache.VoucherCache' available
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:340) ~[spring-beans-6.0.2.jar:6.0.2]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ club.p6e.coat.gateway.auth.CrossDomainWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ HTTP GET "/index" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:340) ~[spring-beans-6.0.2.jar:6.0.2]
+		at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331) ~[spring-beans-6.0.2.jar:6.0.2]
+		at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1148) ~[spring-context-6.0.2.jar:6.0.2]
+		at club.p6e.coat.gateway.auth.utils.SpringUtil.getBean(SpringUtil.java:56) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.AuthVoucher.create(AuthVoucher.java:110) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.service.IndexServiceImpl.execute(IndexServiceImpl.java:45) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.controller.IndexControllerImpl.execute(IndexControllerImpl.java:41) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.controller.IndexController.def3(IndexController.java:31) ~[classes/:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+		at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:145) ~[spring-webflux-6.0.2.jar:6.0.2]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:132) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:293) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:474) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:2508) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.request(MonoPeekTerminal.java:139) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipInner.onSubscribe(MonoZip.java:466) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onSubscribe(MonoPeekTerminal.java:152) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoJust.subscribe(MonoJust.java:55) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipCoordinator.request(MonoZip.java:216) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.request(MonoFlatMap.java:194) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.onSubscribe(MonoIgnoreThen.java:134) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onSubscribe(MonoFlatMap.java:117) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:125) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:240) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.onComplete(MonoIgnoreThen.java:203) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onComplete(MonoFlatMap.java:189) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators.complete(Operators.java:137) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:121) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4444) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:263) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:165) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:74) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onNext(MonoNext.java:82) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.innerNext(FluxConcatMapNoPrefetch.java:258) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMap$ConcatMapInner.onNext(FluxConcatMap.java:863) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:129) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:2508) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.request(MonoPeekTerminal.java:139) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:171) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.request(Operators.java:2268) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.request(FluxConcatMapNoPrefetch.java:338) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.request(MonoNext.java:108) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.set(Operators.java:2304) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onSubscribe(Operators.java:2178) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onSubscribe(MonoNext.java:70) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.onSubscribe(FluxConcatMapNoPrefetch.java:164) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4444) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:263) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDeferContextual.subscribe(MonoDeferContextual.java:55) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.netty.http.server.HttpServer$HttpServerHandle.onStateChange(HttpServer.java:997) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at reactor.netty.ReactorNetty$CompositeConnectionObserver.onStateChange(ReactorNetty.java:680) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at reactor.netty.transport.ServerTransport$ChildObserver.onStateChange(ServerTransport.java:477) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:573) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:113) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:220) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2023-06-21 23:49:02 [reactor-http-nio-3] ERROR - [c846d38d-2]  500 Server Error for HTTP GET "/index"
+org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.gateway.auth.cache.VoucherCache' available
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:340) ~[spring-beans-6.0.2.jar:6.0.2]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ org.springframework.cloud.gateway.filter.WeightCalculatorWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ club.p6e.coat.gateway.auth.CrossDomainWebFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ HTTP GET "/index" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:340) ~[spring-beans-6.0.2.jar:6.0.2]
+		at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:331) ~[spring-beans-6.0.2.jar:6.0.2]
+		at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1148) ~[spring-context-6.0.2.jar:6.0.2]
+		at club.p6e.coat.gateway.auth.utils.SpringUtil.getBean(SpringUtil.java:56) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.AuthVoucher.create(AuthVoucher.java:110) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.service.IndexServiceImpl.execute(IndexServiceImpl.java:45) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.controller.IndexControllerImpl.execute(IndexControllerImpl.java:41) ~[classes/:na]
+		at club.p6e.coat.gateway.auth.controller.IndexController.def3(IndexController.java:31) ~[classes/:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+		at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+		at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+		at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+		at org.springframework.web.reactive.result.method.InvocableHandlerMethod.lambda$invoke$0(InvocableHandlerMethod.java:145) ~[spring-webflux-6.0.2.jar:6.0.2]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:132) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipCoordinator.signal(MonoZip.java:293) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipInner.onNext(MonoZip.java:474) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:2508) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.request(MonoPeekTerminal.java:139) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipInner.onSubscribe(MonoZip.java:466) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onSubscribe(MonoPeekTerminal.java:152) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoJust.subscribe(MonoJust.java:55) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip$ZipCoordinator.request(MonoZip.java:216) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.request(MonoFlatMap.java:194) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.onSubscribe(MonoIgnoreThen.java:134) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onSubscribe(MonoFlatMap.java:117) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:125) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:240) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.onComplete(MonoIgnoreThen.java:203) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onComplete(MonoFlatMap.java:189) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators.complete(Operators.java:137) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoZip.subscribe(MonoZip.java:121) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4444) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:263) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:165) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:79) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxSwitchIfEmpty$SwitchIfEmptySubscriber.onNext(FluxSwitchIfEmpty.java:74) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onNext(MonoNext.java:82) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.innerNext(FluxConcatMapNoPrefetch.java:258) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMap$ConcatMapInner.onNext(FluxConcatMap.java:863) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.onNext(FluxMapFuseable.java:129) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.onNext(MonoPeekTerminal.java:180) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$ScalarSubscription.request(Operators.java:2508) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoPeekTerminal$MonoTerminalPeekSubscriber.request(MonoPeekTerminal.java:139) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxMapFuseable$MapFuseableSubscriber.request(FluxMapFuseable.java:171) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.request(Operators.java:2268) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.request(FluxConcatMapNoPrefetch.java:338) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.request(MonoNext.java:108) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.set(Operators.java:2304) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Operators$MultiSubscriptionSubscriber.onSubscribe(Operators.java:2178) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onSubscribe(MonoNext.java:70) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxConcatMapNoPrefetch$FluxConcatMapNoPrefetchSubscriber.onSubscribe(FluxConcatMapNoPrefetch.java:164) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:165) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:87) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:52) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4444) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:263) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:64) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.core.publisher.MonoDeferContextual.subscribe(MonoDeferContextual.java:55) ~[reactor-core-3.5.0.jar:3.5.0]
+		at reactor.netty.http.server.HttpServer$HttpServerHandle.onStateChange(HttpServer.java:997) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at reactor.netty.ReactorNetty$CompositeConnectionObserver.onStateChange(ReactorNetty.java:680) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at reactor.netty.transport.ServerTransport$ChildObserver.onStateChange(ServerTransport.java:477) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at reactor.netty.http.server.HttpServerOperations.onInboundNext(HttpServerOperations.java:573) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at reactor.netty.channel.ChannelOperationsHandler.channelRead(ChannelOperationsHandler.java:113) ~[reactor-netty-core-1.1.0.jar:1.1.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:444) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at reactor.netty.http.server.HttpTrafficHandler.channelRead(HttpTrafficHandler.java:220) ~[reactor-netty-http-1.1.0.jar:1.1.0]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.fireChannelRead(CombinedChannelDuplexHandler.java:436) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.fireChannelRead(ByteToMessageDecoder.java:346) ~[netty-codec-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:318) ~[netty-codec-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.CombinedChannelDuplexHandler.channelRead(CombinedChannelDuplexHandler.java:251) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:442) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:412) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:440) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:420) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:788) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.92.Final.jar:4.1.92.Final]
+		at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+2023-06-21 23:50:34 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-21 23:50:34 [main] INFO - Starting P6eGatewayAuthApplication using Java 17.0.7 with PID 23300 (D:\CodeResources\p6e-coat\p6e-coat\p6e-coat-gateway-auth\target\classes started by LiDaShuang in D:\CodeResources\p6e-coat\p6e-coat)
+2023-06-21 23:50:34 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-21 23:50:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:50:34 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-06-21 23:50:34 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2023-06-21 23:50:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-21 23:50:34 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-21 23:50:34 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-21 23:50:35 [main] INFO - BeanFactory id=8c4f9672-543c-3ac0-93e7-a8684b97a089
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [After]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Before]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Between]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Cookie]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Header]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Host]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Method]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Path]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Query]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [ReadBody]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [RemoteAddr]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [Weight]
+2023-06-21 23:50:35 [main] INFO - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2023-06-21 23:50:36 [main] INFO - Netty started on port 8080
+2023-06-21 23:50:36 [main] INFO - Started P6eGatewayAuthApplication in 2.728 seconds (process running for 3.042)

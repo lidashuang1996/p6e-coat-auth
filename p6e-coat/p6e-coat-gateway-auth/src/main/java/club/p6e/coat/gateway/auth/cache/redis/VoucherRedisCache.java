@@ -20,11 +20,11 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = VoucherCache.class,
-        ignored = VoucherRedisCache.class
-)
-@ConditionalOnExpression(VoucherCache.CONDITIONAL_EXPRESSION)
+//@ConditionalOnMissingBean(
+//        value = VoucherCache.class,
+//        ignored = VoucherRedisCache.class
+//)
+//@ConditionalOnExpression(VoucherCache.CONDITIONAL_EXPRESSION)
 public class VoucherRedisCache extends RedisCache implements VoucherCache {
 
     /**
