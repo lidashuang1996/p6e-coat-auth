@@ -94,15 +94,8 @@ public class ConfigContext implements Serializable {
     @Accessors(chain = true)
     public static class Item implements Serializable {
         private Integer id;
-        private Integer status;
-        private Integer enabled;
-        private String account;
-        private String phone;
-        private String mailbox;
-        private String name;
-        private String nickname;
-        private String avatar;
-        private String describe;
+        private String key;
+        private String value;
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
         private String operator;

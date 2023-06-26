@@ -44,7 +44,10 @@ public class ConfigListAggregate extends ConfigurationDomain {
                         cb.like(cb.lower(rt.get(ConfigModel.VALUE)), lq)
                 ));
             }
-            predicates.add(SearchableConverter.to(search, rt, cb));
+            final Predicate sp = SearchableConverter.to(search, rt, cb);
+            if (sp != null) {
+                predicates.add(sp);
+            }
             return cb.and(predicates.toArray(new Predicate[0]));
         }, PageRequest.of(page - 1, size, SortableConverter.to(sort, Sort.by(Sort.Order.asc(ConfigModel.ID)))));
         return new ConfigListAggregate(page, size, pcm.getTotalElements(), new ArrayList<>(pcm.getContent()));

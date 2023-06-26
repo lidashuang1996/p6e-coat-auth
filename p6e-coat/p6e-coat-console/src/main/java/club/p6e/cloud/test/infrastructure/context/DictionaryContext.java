@@ -1,8 +1,17 @@
 package club.p6e.cloud.test.infrastructure.context;
 
+import com.darvi.hksi.badminton.lib.Searchable;
 import com.darvi.hksi.badminton.lib.SearchableContext;
+import com.darvi.hksi.badminton.lib.Sortable;
 import com.darvi.hksi.badminton.lib.SortableContext;
 import com.darvi.hksi.badminton.lib.context.BaseContext;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -90,15 +99,10 @@ public class DictionaryContext implements Serializable {
     @Accessors(chain = true)
     public static class Item implements Serializable {
         private Integer id;
-        private Integer status;
-        private Integer enabled;
-        private String account;
-        private String phone;
-        private String mailbox;
-        private String name;
-        private String nickname;
-        private String avatar;
-        private String describe;
+        private String type;
+        private String key;
+        private String value;
+        private String language;
         private LocalDateTime createDate;
         private LocalDateTime updateDate;
         private String operator;

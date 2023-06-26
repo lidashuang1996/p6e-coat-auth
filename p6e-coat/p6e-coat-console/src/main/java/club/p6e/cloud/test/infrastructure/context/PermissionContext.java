@@ -171,10 +171,8 @@ public class PermissionContext implements Serializable {
         @Accessors(chain = true)
         public static class Item implements Serializable {
             private Integer id;
-            private String url;
-            private String baseUrl;
-            private String method;
-            private String config;
+            private String mark;
+            private String weight;
             private String name;
             private String describe;
             private LocalDateTime createDate;

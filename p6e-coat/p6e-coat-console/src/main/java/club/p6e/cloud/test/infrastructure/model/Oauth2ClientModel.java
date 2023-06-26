@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,38 +19,41 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "p6e_permission_url_group")
-@Where(clause = "is_delete = 0")
-public class PermissionUrlGroupModel implements Serializable {
+@Table(name = "p6e_dictionary")
+public class Oauth2ClientModel implements Serializable {
 
     public static final String ID = "id";
-    public static final String MARK = "mark";
-    public static final String WEIGHT = "weight";
-    public static final String NAME = "name";
-    public static final String DESCRIBE = "describe";
+    public static final String TYPE = "type";
+    public static final String KEY = "key";
+    public static final String VALUE = "value";
+    public static final String LANGUAGE = "language";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
     public static final String VERSION = "version";
-    public static final String IS_DELETE = "isDelete";
 
     @Id
+    @Sortable
+    @Searchable
     @Column(name = "[id]")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty
+    @Searchable
+    @Column(name = "[type]")
+    private String type;
     @NotNull
     @Searchable
-    @Column(name = "[mark]")
-    private String mark;
+    @Column(name = "[key]")
+    private String key;
+    @Size(max = 50)
+    @NotEmpty
     @Searchable
-    @Column(name = "[weight]")
-    private String weight;
+    @Column(name = "[value]")
+    private String value;
     @Searchable
-    @Column(name = "[name]")
-    private String name;
-    @Searchable
-    @Column(name = "[describe]")
-    private String describe;
+    @Column(name = "[language]")
+    private String language;
     @NotEmpty
     @Sortable
     @Searchable
@@ -69,8 +71,5 @@ public class PermissionUrlGroupModel implements Serializable {
     @NotEmpty
     @Column(name = "[version]")
     private Integer version;
-    @NotEmpty
-    @Column(name = "[is_delete]")
-    private Integer isDelete;
 
 }
