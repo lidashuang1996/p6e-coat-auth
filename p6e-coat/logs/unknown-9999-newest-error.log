@@ -1,20 +1,123 @@
-2023-06-26 09:35:49 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 09:36:35 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:04:31 [http-nio-9999-exec-1] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
-  建议：Perhaps you meant to reference the column "p1_0.delete".
-  位置：53
-2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
-2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
-  建议：Perhaps you meant to reference the column "p1_0.delete".
-  位置：53
-2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where (p1_0.is_delete = 0) and 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
-2023-06-26 10:16:14 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:16:20 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:29:23 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
-2023-06-26 10:29:26 [http-nio-9999-exec-10] ERROR - Request method 'POST' is not supported
-2023-06-26 10:29:37 [http-nio-9999-exec-4] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - ERROR: operator does not exist: character varying = integer
-  建议：No operator matches the given name and argument types. You might need to add explicit type casts.
-  位置：171
-2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - JDBC exception executing SQL [select c1_0."id",c1_0."create_date",c1_0."is_delete",c1_0."key",c1_0."operator",c1_0."update_date",c1_0."value",c1_0."version" from p6e_config c1_0 where (c1_0.is_delete = 0) and 1=1 order by c1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
+2023-06-27 12:24:21 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:24:21 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted
+2023-06-27 12:25:10 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:25:10 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted
+2023-06-27 12:27:51 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:27:51 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted

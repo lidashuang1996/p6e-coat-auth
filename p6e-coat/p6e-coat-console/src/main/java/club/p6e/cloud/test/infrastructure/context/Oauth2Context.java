@@ -40,15 +40,16 @@ public class Oauth2Context implements Serializable {
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private Integer id;
-            private Integer status;
-            private Integer enabled;
-            private String account;
-            private String phone;
-            private String mailbox;
-            private String name;
-            private String nickname;
-            private String avatar;
-            private String describe;
+            private String enabled;
+            private String type;
+            private String scope;
+            private String redirectUri;
+            private String reconfirm;
+            private String clientId;
+            private String clientName;
+            private String clientSecret;
+            private String clientDescribe;
+            private String clientAvatar;
             private LocalDateTime createDate;
             private LocalDateTime updateDate;
             private String operator;
@@ -66,15 +67,16 @@ public class Oauth2Context implements Serializable {
         @Accessors(chain = true)
         public static class Dto implements Serializable {
             private Integer id;
-            private Integer status;
-            private Integer enabled;
-            private String account;
-            private String phone;
-            private String mailbox;
-            private String name;
-            private String nickname;
-            private String avatar;
-            private String describe;
+            private String enabled;
+            private String type;
+            private String scope;
+            private String redirectUri;
+            private String reconfirm;
+            private String clientId;
+            private String clientName;
+            private String clientSecret;
+            private String clientDescribe;
+            private String clientAvatar;
             private LocalDateTime createDate;
             private LocalDateTime updateDate;
             private String operator;
@@ -91,10 +93,15 @@ public class Oauth2Context implements Serializable {
         @Accessors(chain = true)
         public static class Item implements Serializable {
             private Integer id;
+            private String enabled;
             private String type;
-            private String key;
-            private String value;
-            private String language;
+            private String scope;
+            private String redirectUri;
+            private String reconfirm;
+            private String clientId;
+            private String clientName;
+            private String clientDescribe;
+            private String clientAvatar;
             private LocalDateTime createDate;
             private LocalDateTime updateDate;
             private String operator;

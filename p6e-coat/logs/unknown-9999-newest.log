@@ -1,526 +1,327 @@
-2023-06-26 09:29:41 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 09:29:41 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 14324 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 09:29:41 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 09:29:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 09:29:42 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 09:29:42 [main] INFO - Finished Spring Data repository scanning in 92 ms. Found 6 JPA repository interfaces.
-2023-06-26 09:29:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 09:29:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:29:42 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 09:29:42 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 09:29:42 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 09:29:42 [main] INFO - Starting service [Tomcat]
-2023-06-26 09:29:42 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 09:29:42 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 09:29:42 [main] INFO - Root WebApplicationContext: initialization completed in 916 ms
-2023-06-26 09:29:42 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 09:29:42 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 09:29:43 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@70fede7d
-2023-06-26 09:29:43 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 09:29:43 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 09:29:43 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 09:29:43 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 09:29:43 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 09:29:43 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 09:29:43 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 09:29:44 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 09:29:44 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 09:29:44 [main] INFO - Started P6eCloudIndexApplication in 2.901 seconds (process running for 3.257)
-2023-06-26 09:29:44 [main] INFO - smart construction application initialization complete ...
-2023-06-26 09:35:21 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 09:35:21 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 09:35:21 [http-nio-9999-exec-1] INFO - Completed initialization in 1 ms
-2023-06-26 09:35:49 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 09:36:35 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 09:38:09 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 09:38:09 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 09:38:09 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 09:38:09 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 09:38:12 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 09:38:12 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 10268 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 09:38:12 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 09:38:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 09:38:13 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 09:38:13 [main] INFO - Finished Spring Data repository scanning in 86 ms. Found 6 JPA repository interfaces.
-2023-06-26 09:38:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 09:38:13 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 09:38:13 [main] INFO - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
-2023-06-26 09:38:13 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 09:38:13 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 09:38:13 [main] INFO - Starting service [Tomcat]
-2023-06-26 09:38:13 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 09:38:13 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 09:38:13 [main] INFO - Root WebApplicationContext: initialization completed in 828 ms
-2023-06-26 09:38:13 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 09:38:13 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 09:38:13 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@42d9e8d2
-2023-06-26 09:38:13 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 09:38:13 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 09:38:14 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 09:38:14 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 09:38:14 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 09:38:14 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 09:38:14 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 09:38:15 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 09:38:15 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 09:38:15 [main] INFO - Started P6eCloudIndexApplication in 2.894 seconds (process running for 3.243)
-2023-06-26 09:38:15 [main] INFO - smart construction application initialization complete ...
-2023-06-26 09:38:17 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 09:38:17 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 09:38:17 [http-nio-9999-exec-1] INFO - Completed initialization in 1 ms
-2023-06-26 10:04:20 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:04:20 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:04:20 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:04:20 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:04:24 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:04:24 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 3200 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:04:24 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:04:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:04:25 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:04:25 [main] INFO - Finished Spring Data repository scanning in 91 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:04:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:04:25 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:04:25 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:04:25 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:04:25 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:04:25 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:04:25 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:04:25 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:04:25 [main] INFO - Root WebApplicationContext: initialization completed in 950 ms
-2023-06-26 10:04:25 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:04:25 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:04:25 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5c59a0f7
-2023-06-26 10:04:25 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:04:25 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:04:25 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:04:26 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:04:26 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:04:26 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:04:26 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:04:27 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:04:27 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:04:27 [main] INFO - Started P6eCloudIndexApplication in 3.221 seconds (process running for 3.547)
-2023-06-26 10:04:27 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:04:31 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:04:31 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:04:31 [http-nio-9999-exec-1] INFO - Completed initialization in 0 ms
-2023-06-26 10:04:31 [http-nio-9999-exec-1] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:05:15 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:05:15 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:05:15 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:05:15 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:05:18 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:05:18 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 19084 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:05:18 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:05:19 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:05:19 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:05:19 [main] INFO - Finished Spring Data repository scanning in 89 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:05:19 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:05:19 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:05:19 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:05:19 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:05:19 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:05:19 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:05:19 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:05:19 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:05:19 [main] INFO - Root WebApplicationContext: initialization completed in 820 ms
-2023-06-26 10:05:19 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:05:19 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:05:20 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@736b21ee
-2023-06-26 10:05:20 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:05:20 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:05:20 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:05:20 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:05:20 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:05:21 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:05:21 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:05:21 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:05:21 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:05:21 [main] INFO - Started P6eCloudIndexApplication in 3.095 seconds (process running for 3.394)
-2023-06-26 10:05:21 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:05:26 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:05:26 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:05:26 [http-nio-9999-exec-1] INFO - Completed initialization in 2 ms
-2023-06-26 10:05:26 [http-nio-9999-exec-2] WARN - SQL Error: 0, SQLState: 42703
-2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
-  建议：Perhaps you meant to reference the column "p1_0.delete".
-  位置：53
-2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
-2023-06-26 10:09:10 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:09:10 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:09:10 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:09:10 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:09:13 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:09:13 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 11832 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:09:13 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:09:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:09:13 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:09:13 [main] INFO - Finished Spring Data repository scanning in 102 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:09:13 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:09:13 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:09:13 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:09:14 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:09:14 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:09:14 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:09:14 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:09:14 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:09:14 [main] INFO - Root WebApplicationContext: initialization completed in 896 ms
-2023-06-26 10:09:14 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:09:14 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:09:14 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@625487a6
-2023-06-26 10:09:14 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:09:14 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:09:14 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:09:14 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:09:14 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:09:15 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:09:15 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:09:15 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:09:15 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:09:15 [main] INFO - Started P6eCloudIndexApplication in 3.016 seconds (process running for 3.336)
-2023-06-26 10:09:15 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:09:22 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:09:22 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:09:22 [http-nio-9999-exec-1] INFO - Completed initialization in 1 ms
-2023-06-26 10:09:22 [http-nio-9999-exec-2] WARN - SQL Error: 0, SQLState: 42703
-2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
-  建议：Perhaps you meant to reference the column "p1_0.delete".
-  位置：53
-2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where (p1_0.is_delete = 0) and 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
-2023-06-26 10:11:58 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:11:58 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:11:58 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:11:58 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:12:01 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:12:02 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 4756 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:12:02 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:12:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:12:02 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:12:02 [main] INFO - Finished Spring Data repository scanning in 90 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:12:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:12:02 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:12:02 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:12:02 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:12:02 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:12:02 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:12:02 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:12:02 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:12:02 [main] INFO - Root WebApplicationContext: initialization completed in 878 ms
-2023-06-26 10:12:02 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:12:02 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:12:03 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6f15f52a
-2023-06-26 10:12:03 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:12:03 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:12:03 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:12:03 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:12:03 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:12:04 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:12:04 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:12:04 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:12:04 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:12:04 [main] INFO - Started P6eCloudIndexApplication in 2.921 seconds (process running for 3.244)
-2023-06-26 10:12:04 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:12:08 [http-nio-9999-exec-2] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:12:08 [http-nio-9999-exec-2] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:12:08 [http-nio-9999-exec-2] INFO - Completed initialization in 1 ms
-2023-06-26 10:16:14 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:16:20 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:18:19 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:18:19 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:18:19 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:18:19 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:18:38 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:18:38 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 17236 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:18:38 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:18:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:18:39 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:18:39 [main] INFO - Finished Spring Data repository scanning in 94 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:18:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:18:39 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:18:39 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:18:39 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:18:39 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:18:39 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:18:39 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:18:39 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:18:39 [main] INFO - Root WebApplicationContext: initialization completed in 763 ms
-2023-06-26 10:18:39 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:18:39 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:18:39 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6f15f52a
-2023-06-26 10:18:39 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:18:40 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:18:40 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:18:40 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:18:40 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:18:40 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:18:40 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:18:41 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:18:41 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:18:41 [main] INFO - Started P6eCloudIndexApplication in 2.714 seconds (process running for 3.056)
-2023-06-26 10:18:41 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:18:48 [http-nio-9999-exec-2] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:18:48 [http-nio-9999-exec-2] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:18:48 [http-nio-9999-exec-2] INFO - Completed initialization in 0 ms
-2023-06-26 10:20:22 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:20:22 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:20:22 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:20:22 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:20:24 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:20:24 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 12944 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:20:24 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:20:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:20:25 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:20:25 [main] INFO - Finished Spring Data repository scanning in 86 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:20:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:20:25 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:20:25 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:20:25 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:20:25 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:20:25 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:20:25 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:20:25 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:20:25 [main] INFO - Root WebApplicationContext: initialization completed in 770 ms
-2023-06-26 10:20:25 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:20:25 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:20:26 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2616b618
-2023-06-26 10:20:26 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:20:26 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:20:26 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:20:26 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:20:26 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:20:26 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:20:26 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:20:27 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:20:27 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:20:27 [main] INFO - Started P6eCloudIndexApplication in 2.78 seconds (process running for 3.112)
-2023-06-26 10:20:27 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:20:34 [http-nio-9999-exec-2] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:20:34 [http-nio-9999-exec-2] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:20:34 [http-nio-9999-exec-2] INFO - Completed initialization in 1 ms
-2023-06-26 10:29:23 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
-2023-06-26 10:29:26 [http-nio-9999-exec-10] ERROR - Request method 'POST' is not supported
-2023-06-26 10:29:37 [http-nio-9999-exec-4] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
-2023-06-26 10:29:58 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:29:58 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:29:58 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:29:58 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:30:00 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:30:00 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 4044 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:30:00 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:30:01 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:30:01 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:30:01 [main] INFO - Finished Spring Data repository scanning in 83 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:30:01 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:30:01 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:30:01 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:30:01 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:30:01 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:30:01 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:30:01 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:30:01 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:30:01 [main] INFO - Root WebApplicationContext: initialization completed in 803 ms
-2023-06-26 10:30:01 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:30:01 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:30:02 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@787d1f9c
-2023-06-26 10:30:02 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:30:02 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:30:02 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:30:02 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:30:02 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:30:02 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:30:02 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:30:03 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:30:03 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:30:03 [main] INFO - Started P6eCloudIndexApplication in 2.851 seconds (process running for 3.178)
-2023-06-26 10:30:03 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:30:06 [http-nio-9999-exec-4] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:30:06 [http-nio-9999-exec-4] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:30:06 [http-nio-9999-exec-4] INFO - Completed initialization in 1 ms
-2023-06-26 10:30:06 [http-nio-9999-exec-4] WARN - SQL Error: 0, SQLState: 42883
-2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - ERROR: operator does not exist: character varying = integer
-  建议：No operator matches the given name and argument types. You might need to add explicit type casts.
-  位置：171
-2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - JDBC exception executing SQL [select c1_0."id",c1_0."create_date",c1_0."is_delete",c1_0."key",c1_0."operator",c1_0."update_date",c1_0."value",c1_0."version" from p6e_config c1_0 where (c1_0.is_delete = 0) and 1=1 order by c1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
-2023-06-26 10:33:50 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:33:50 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:33:50 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:33:50 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:33:51 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:33:51 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 22476 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:33:51 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:33:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:33:52 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:33:52 [main] INFO - Finished Spring Data repository scanning in 87 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:33:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:33:52 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:33:52 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:33:52 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:33:52 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:33:52 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:33:52 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:33:52 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:33:52 [main] INFO - Root WebApplicationContext: initialization completed in 843 ms
-2023-06-26 10:33:52 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:33:52 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:33:53 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2becfd4c
-2023-06-26 10:33:53 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:33:53 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:33:53 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:33:53 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:33:53 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:33:53 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:33:53 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:33:54 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:33:54 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:33:54 [main] INFO - Started P6eCloudIndexApplication in 2.894 seconds (process running for 3.235)
-2023-06-26 10:33:54 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:34:03 [http-nio-9999-exec-2] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:34:03 [http-nio-9999-exec-2] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:34:03 [http-nio-9999-exec-2] INFO - Completed initialization in 1 ms
-2023-06-26 10:39:05 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 10:39:05 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:39:05 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 10:39:05 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 10:39:08 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 10:39:08 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 24268 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 10:39:08 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 10:39:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:39:08 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 10:39:08 [main] INFO - Finished Spring Data repository scanning in 90 ms. Found 6 JPA repository interfaces.
-2023-06-26 10:39:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 10:39:08 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 10:39:08 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 10:39:08 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 10:39:08 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:39:08 [main] INFO - Starting service [Tomcat]
-2023-06-26 10:39:08 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 10:39:09 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 10:39:09 [main] INFO - Root WebApplicationContext: initialization completed in 772 ms
-2023-06-26 10:39:09 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 10:39:09 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 10:39:09 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@341c6ac2
-2023-06-26 10:39:09 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 10:39:09 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 10:39:09 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 10:39:09 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 10:39:09 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 10:39:10 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 10:39:10 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 10:39:10 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 10:39:10 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 10:39:10 [main] INFO - Started P6eCloudIndexApplication in 2.825 seconds (process running for 3.171)
-2023-06-26 10:39:10 [main] INFO - smart construction application initialization complete ...
-2023-06-26 10:39:13 [http-nio-9999-exec-1] INFO - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-06-26 10:39:13 [http-nio-9999-exec-1] INFO - Initializing Servlet 'dispatcherServlet'
-2023-06-26 10:39:13 [http-nio-9999-exec-1] INFO - Completed initialization in 0 ms
-2023-06-26 11:36:40 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 11:36:40 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 11:36:40 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 11:36:40 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
-2023-06-26 11:36:44 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
-2023-06-26 11:36:44 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 19600 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
-2023-06-26 11:36:44 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2023-06-26 11:36:45 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 11:36:45 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-26 11:36:45 [main] INFO - Finished Spring Data repository scanning in 90 ms. Found 8 JPA repository interfaces.
-2023-06-26 11:36:45 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2023-06-26 11:36:45 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2023-06-26 11:36:45 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
-2023-06-26 11:36:45 [main] INFO - Tomcat initialized with port(s): 9999 (http)
-2023-06-26 11:36:45 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
-2023-06-26 11:36:45 [main] INFO - Starting service [Tomcat]
-2023-06-26 11:36:45 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
-2023-06-26 11:36:45 [main] INFO - Initializing Spring embedded WebApplicationContext
-2023-06-26 11:36:45 [main] INFO - Root WebApplicationContext: initialization completed in 777 ms
-2023-06-26 11:36:45 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
-2023-06-26 11:36:45 [main] INFO - HikariPool-1 - Starting...
-2023-06-26 11:36:46 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2bba35ef
-2023-06-26 11:36:46 [main] INFO - HikariPool-1 - Start completed.
-2023-06-26 11:36:46 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-06-26 11:36:46 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
-2023-06-26 11:36:46 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-26 11:36:46 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2023-06-26 11:36:46 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-26 11:36:46 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 11:36:47 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
-2023-06-26 11:36:47 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
-2023-06-26 11:36:47 [main] INFO - Started P6eCloudIndexApplication in 2.873 seconds (process running for 3.184)
-2023-06-26 11:36:47 [main] INFO - smart construction application initialization complete ...
-2023-06-26 18:55:16 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
-2023-06-26 18:55:16 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
-2023-06-26 18:55:16 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
-2023-06-26 18:55:16 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
+2023-06-27 12:24:19 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 12:24:19 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 10884 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-06-27 12:24:19 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 12:24:19 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:24:19 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 12:24:19 [main] INFO - Finished Spring Data repository scanning in 103 ms. Found 9 JPA repository interfaces.
+2023-06-27 12:24:19 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:24:19 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserAuthRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:24:20 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-27 12:24:20 [main] INFO - Tomcat initialized with port(s): 9999 (http)
+2023-06-27 12:24:20 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:24:20 [main] INFO - Starting service [Tomcat]
+2023-06-27 12:24:20 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-06-27 12:24:20 [main] INFO - Initializing Spring embedded WebApplicationContext
+2023-06-27 12:24:20 [main] INFO - Root WebApplicationContext: initialization completed in 836 ms
+2023-06-27 12:24:20 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
+2023-06-27 12:24:20 [main] INFO - HikariPool-1 - Starting...
+2023-06-27 12:24:20 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5bf4764d
+2023-06-27 12:24:20 [main] INFO - HikariPool-1 - Start completed.
+2023-06-27 12:24:20 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 12:24:20 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-06-27 12:24:20 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-06-27 12:24:20 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-27 12:24:21 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:24:21 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:24:21 [main] INFO - HikariPool-1 - Shutdown initiated...
+2023-06-27 12:24:21 [main] INFO - HikariPool-1 - Shutdown completed.
+2023-06-27 12:24:21 [main] INFO - Stopping service [Tomcat]
+2023-06-27 12:24:21 [main] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
+2023-06-27 12:24:21 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-27 12:24:21 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted
+2023-06-27 12:25:08 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 12:25:08 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 18716 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-06-27 12:25:08 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 12:25:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:25:08 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 12:25:08 [main] INFO - Finished Spring Data repository scanning in 97 ms. Found 9 JPA repository interfaces.
+2023-06-27 12:25:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:25:08 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserAuthRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:25:08 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-27 12:25:09 [main] INFO - Tomcat initialized with port(s): 9999 (http)
+2023-06-27 12:25:09 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:25:09 [main] INFO - Starting service [Tomcat]
+2023-06-27 12:25:09 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-06-27 12:25:09 [main] INFO - Initializing Spring embedded WebApplicationContext
+2023-06-27 12:25:09 [main] INFO - Root WebApplicationContext: initialization completed in 772 ms
+2023-06-27 12:25:09 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
+2023-06-27 12:25:09 [main] INFO - HikariPool-1 - Starting...
+2023-06-27 12:25:09 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@d36c1c3
+2023-06-27 12:25:09 [main] INFO - HikariPool-1 - Start completed.
+2023-06-27 12:25:09 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 12:25:09 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-06-27 12:25:09 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-06-27 12:25:09 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-27 12:25:10 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:25:10 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:25:10 [main] INFO - HikariPool-1 - Shutdown initiated...
+2023-06-27 12:25:10 [main] INFO - HikariPool-1 - Shutdown completed.
+2023-06-27 12:25:10 [main] INFO - Stopping service [Tomcat]
+2023-06-27 12:25:10 [main] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
+2023-06-27 12:25:10 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-27 12:25:10 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted
+2023-06-27 12:27:50 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 12:27:50 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 15348 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-06-27 12:27:50 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 12:27:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:27:50 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 12:27:50 [main] INFO - Finished Spring Data repository scanning in 98 ms. Found 9 JPA repository interfaces.
+2023-06-27 12:27:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:27:50 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserAuthRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:27:50 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-06-27 12:27:50 [main] INFO - Tomcat initialized with port(s): 9999 (http)
+2023-06-27 12:27:50 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:27:50 [main] INFO - Starting service [Tomcat]
+2023-06-27 12:27:50 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-06-27 12:27:50 [main] INFO - Initializing Spring embedded WebApplicationContext
+2023-06-27 12:27:50 [main] INFO - Root WebApplicationContext: initialization completed in 781 ms
+2023-06-27 12:27:50 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
+2023-06-27 12:27:50 [main] INFO - HikariPool-1 - Starting...
+2023-06-27 12:27:51 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4dd2ef54
+2023-06-27 12:27:51 [main] INFO - HikariPool-1 - Start completed.
+2023-06-27 12:27:51 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 12:27:51 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-06-27 12:27:51 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-06-27 12:27:51 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-27 12:27:51 [main] ERROR - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:27:51 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+2023-06-27 12:27:51 [main] INFO - HikariPool-1 - Shutdown initiated...
+2023-06-27 12:27:51 [main] INFO - HikariPool-1 - Shutdown completed.
+2023-06-27 12:27:51 [main] INFO - Stopping service [Tomcat]
+2023-06-27 12:27:51 [main] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
+2023-06-27 12:27:51 [main] INFO - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2023-06-27 12:27:51 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1130) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:905) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted
+Caused by: org.hibernate.MappingException: Column 'client_id' is duplicated in mapping for entity 'club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel' (use '@Column(insertable=false, updatable=false)' when mapping multiple properties to the same column)
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1009) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkPropertyColumnDuplication(PersistentClass.java:1027) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.checkColumnDuplication(PersistentClass.java:1055) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.PersistentClass.validate(PersistentClass.java:720) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.mapping.RootClass.validate(RootClass.java:283) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.MetadataImpl.validate(MetadataImpl.java:376) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:299) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:415) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1425) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.2.jar:6.0.2]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.2.jar:6.0.2]
+	... 20 common frames omitted
+2023-06-27 12:28:45 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 12:28:45 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 17112 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-06-27 12:28:45 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 12:28:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:28:46 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 12:28:46 [main] INFO - Finished Spring Data repository scanning in 101 ms. Found 9 JPA repository interfaces.
+2023-06-27 12:28:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:28:46 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserAuthRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:46 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-27 12:28:46 [main] INFO - Tomcat initialized with port(s): 9999 (http)
+2023-06-27 12:28:46 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:28:46 [main] INFO - Starting service [Tomcat]
+2023-06-27 12:28:46 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-06-27 12:28:46 [main] INFO - Initializing Spring embedded WebApplicationContext
+2023-06-27 12:28:46 [main] INFO - Root WebApplicationContext: initialization completed in 768 ms
+2023-06-27 12:28:46 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
+2023-06-27 12:28:46 [main] INFO - HikariPool-1 - Starting...
+2023-06-27 12:28:46 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1537e43
+2023-06-27 12:28:46 [main] INFO - HikariPool-1 - Start completed.
+2023-06-27 12:28:46 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 12:28:46 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-06-27 12:28:46 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-06-27 12:28:47 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-27 12:28:47 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 12:28:47 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 12:28:48 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:28:48 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
+2023-06-27 12:28:48 [main] INFO - Started P6eCloudIndexApplication in 2.974 seconds (process running for 3.278)
+2023-06-27 12:28:48 [main] INFO - smart construction application initialization complete ...
+2023-06-27 12:28:54 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
+2023-06-27 12:28:54 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 12:28:54 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
+2023-06-27 12:28:54 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.
+2023-06-27 12:28:56 [background-preinit] INFO - HV000001: Hibernate Validator 8.0.0.Final
+2023-06-27 12:28:56 [main] INFO - Starting P6eCloudIndexApplication using Java 17.0.7 with PID 4868 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-coat-console\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-06-27 12:28:56 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 12:28:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:28:57 [main] INFO - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-06-27 12:28:57 [main] INFO - Finished Spring Data repository scanning in 97 ms. Found 9 JPA repository interfaces.
+2023-06-27 12:28:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-06-27 12:28:57 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.ConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.DictionaryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadChunkRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.FileUploadRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRelationUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlGroupRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.PermissionUrlRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserAuthRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Spring Data Redis - Could not safely identify store assignment for repository candidate interface club.p6e.cloud.test.infrastructure.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-06-27 12:28:57 [main] INFO - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-06-27 12:28:57 [main] INFO - Tomcat initialized with port(s): 9999 (http)
+2023-06-27 12:28:57 [main] INFO - Initializing ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:28:57 [main] INFO - Starting service [Tomcat]
+2023-06-27 12:28:57 [main] INFO - Starting Servlet engine: [Apache Tomcat/10.1.1]
+2023-06-27 12:28:57 [main] INFO - Initializing Spring embedded WebApplicationContext
+2023-06-27 12:28:57 [main] INFO - Root WebApplicationContext: initialization completed in 756 ms
+2023-06-27 12:28:57 [main] INFO - Filter [ CrossDomainWebFilter ] init complete ... 
+2023-06-27 12:28:57 [main] INFO - HikariPool-1 - Starting...
+2023-06-27 12:28:57 [main] INFO - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3360283
+2023-06-27 12:28:57 [main] INFO - HikariPool-1 - Start completed.
+2023-06-27 12:28:57 [main] INFO - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-06-27 12:28:57 [main] INFO - HHH000412: Hibernate ORM core version 6.1.5.Final
+2023-06-27 12:28:58 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-06-27 12:28:58 [main] INFO - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-06-27 12:28:58 [main] INFO - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-06-27 12:28:58 [main] INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 12:28:59 [main] INFO - Starting ProtocolHandler ["http-nio-9999"]
+2023-06-27 12:28:59 [main] INFO - Tomcat started on port(s): 9999 (http) with context path ''
+2023-06-27 12:28:59 [main] INFO - Started P6eCloudIndexApplication in 2.824 seconds (process running for 3.117)
+2023-06-27 12:28:59 [main] INFO - smart construction application initialization complete ...
+2023-06-27 15:47:26 [SpringApplicationShutdownHook] INFO - Filter [ CrossDomainWebFilter ] destroy complete ... 
+2023-06-27 15:47:26 [SpringApplicationShutdownHook] INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-06-27 15:47:26 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown initiated...
+2023-06-27 15:47:26 [SpringApplicationShutdownHook] INFO - HikariPool-1 - Shutdown completed.

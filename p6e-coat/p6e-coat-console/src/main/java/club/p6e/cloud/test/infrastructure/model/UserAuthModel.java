@@ -3,6 +3,7 @@ package club.p6e.cloud.test.infrastructure.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,38 +15,32 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "p6e_oauth2_authorize")
-public class Oauth2AuthorizeModel implements Serializable {
+@Table(name = "p6e_user_auth")
+@Where(clause = "is_delete = 0")
+public class UserAuthModel implements Serializable {
+
     public static final String ID = "id";
+    public static final String STATUS = "account";
+    public static final String PHONE = "phone";
+    public static final String MAILBOX = "mailbox";
+    public static final String PASSWORD = "password";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
     public static final String VERSION = "version";
+    public static final String IS_DELETE = "isDelete";
 
     @Id
-    @Column(name = "[id]")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "[enabled]")
-    private String enabled;
-    @Column(name = "[type]")
-    private String type;
-    @Column(name = "[scope]")
-    private String scope;
-    @Column(name = "[redirect_uri]")
-    private String redirectUri;
-    @Column(name = "[reconfirm]")
-    private String reconfirm;
-    @Column(name = "[client_id]")
-    private String clientId;
-    @Column(name = "[client_secret]")
-    private String clientSecret;
-    @Column(name = "[client_name]")
-    private String clientName;
-    @Column(name = "[client_describe]")
-    private String clientDescribe;
-    @Column(name = "[client_avatar]")
-    private String clientAvatar;
+    @Column(name = "[account]")
+    private Integer account;
+    @Column(name = "[phone]")
+    private Integer phone;
+    @Column(name = "[mailbox]")
+    private String mailbox;
+    @Column(name = "[password]")
+    private String password;
     @Column(name = "[create_date]")
     private LocalDateTime createDate;
     @Column(name = "[update_date]")
@@ -56,4 +51,5 @@ public class Oauth2AuthorizeModel implements Serializable {
     private Integer version;
     @Column(name = "[is_delete]")
     private Integer isDelete;
+
 }

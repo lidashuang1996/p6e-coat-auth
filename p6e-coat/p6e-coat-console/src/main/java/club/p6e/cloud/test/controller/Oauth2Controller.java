@@ -1,10 +1,7 @@
 package club.p6e.cloud.test.controller;
 
-import club.p6e.cloud.test.application.service.DictionaryService;
 import club.p6e.cloud.test.application.service.Oauth2Service;
-import club.p6e.cloud.test.error.GlobalExceptionContext;
 import club.p6e.cloud.test.infrastructure.context.Oauth2Context;
-import club.p6e.cloud.test.infrastructure.model.DictionaryModel;
 import com.darvi.hksi.badminton.lib.context.ResultContext;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.web.bind.annotation.*;
@@ -35,85 +32,34 @@ public class Oauth2Controller {
 
     @PostMapping("/client/list")
     public ResultContext postClientList(@RequestBody Oauth2Context.Client.Request request) {
-        final Oauth2Context.Client.ListDto result = server.list(request);
+        final Oauth2Context.Client.ListDto result = server.client(request);
         return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.ListVo.class));
     }
 
-//    @PostMapping("/client")
-//    public ResultContext create(@RequestBody Oauth2Context.Request request) {
-//        if (request == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun create(Oauth2Context.Request request)",
-//                    "Request parameter exception."
-//            );
-//        }
-//        if (request.getType() == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun create(Oauth2Context.Request request)",
-//                    "Request parameter [type] exception."
-//            );
-//        }
-//        if (request.getKey() == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun create(Oauth2Context.Request request)",
-//                    "Request parameter [key] exception."
-//            );
-//        }
-//        if (request.getValue() == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun create(Oauth2Context.Request request)",
-//                    "Request parameter [value] exception."
-//            );
-//        }
-//        if (request.getLanguage() == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun create(Oauth2Context.Request request)",
-//                    "Request parameter [language] exception."
-//            );
-//        }
-//        final Oauth2Context.Dto result = server.create(request);
-//        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Vo.class));
-//    }
-//
-//    @PutMapping("/client/{id}")
-//    public ResultContext update(@PathVariable Integer id, @RequestBody Oauth2Context.Request request) {
-//        if (request == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun update(Integer id, Oauth2Context.Request request)",
-//                    "Request parameter exception."
-//            );
-//        }
-//        if (request.getType() == null
-//                && request.getKey() == null
-//                && request.getValue() == null
-//                && request.getLanguage() == null) {
-//            throw GlobalExceptionContext.executeParameterException(
-//                    this.getClass(),
-//                    "fun update(Integer id, Oauth2Context.Request request)",
-//                    "Request parameter exception."
-//            );
-//        }
-//        final Oauth2Context.Dto result = server.update(request.setId(id));
-//        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Vo.class));
-//    }
-//
-//    @GetMapping("/client/{id}")
-//    public ResultContext get(@PathVariable Integer id) {
-//        final Oauth2Context.Dto result = server.get(new Oauth2Context.Request().setId(id));
-//        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Vo.class));
-//    }
-//
-//    @DeleteMapping("/client/{id}")
-//    public ResultContext delete(@PathVariable Integer id) {
-//        final Oauth2Context.Dto result = server.delete(new Oauth2Context.Request().setId(id));
-//        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Vo.class));
-//    }
+    @GetMapping("/client/{id}")
+    public ResultContext get(@PathVariable Integer id) {
+        final Oauth2Context.Client.Dto result = server.getClient(new Oauth2Context.Client.Request().setId(id));
+        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
+    }
+
+    @PostMapping("/client")
+    public ResultContext create(@RequestBody Oauth2Context.Client.Request request) {
+        final Oauth2Context.Client.Dto result = server.createClient(request);
+        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
+    }
+
+    @PutMapping("/client/{id}")
+    public ResultContext update(@PathVariable Integer id, @RequestBody Oauth2Context.Client.Request request) {
+        final Oauth2Context.Client.Dto result = server.updateClient(request.setId(id));
+        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
+    }
+
+    @DeleteMapping("/client/{id}")
+    public ResultContext delete(@PathVariable Integer id) {
+        final Oauth2Context.Client.Dto result = server.deleteClient(new Oauth2Context.Client.Request().setId(id));
+        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
+    }
+
 //
 //
 //    @GetMapping("/authorize")

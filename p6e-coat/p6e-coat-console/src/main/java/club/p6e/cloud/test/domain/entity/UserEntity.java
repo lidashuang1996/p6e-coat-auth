@@ -1,7 +1,9 @@
 package club.p6e.cloud.test.domain.entity;
 
 import club.p6e.cloud.test.error.GlobalExceptionContext;
+import club.p6e.cloud.test.infrastructure.model.UserAuthModel;
 import club.p6e.cloud.test.infrastructure.model.UserModel;
+import club.p6e.cloud.test.infrastructure.repository.UserAuthRepository;
 import club.p6e.cloud.test.infrastructure.repository.UserRepository;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import com.darvi.hksi.badminton.lib.utils.SpringUtil;

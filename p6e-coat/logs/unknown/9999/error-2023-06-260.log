@@ -1,0 +1,20 @@
+2023-06-26 09:35:49 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 09:36:35 [http-nio-9999-exec-2] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 10:04:31 [http-nio-9999-exec-1] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
+  建议：Perhaps you meant to reference the column "p1_0.delete".
+  位置：53
+2023-06-26 10:05:26 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
+2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - ERROR: column p1_0.is_delete does not exist
+  建议：Perhaps you meant to reference the column "p1_0.delete".
+  位置：53
+2023-06-26 10:09:22 [http-nio-9999-exec-2] ERROR - JDBC exception executing SQL [select p1_0."id",p1_0."create_date",p1_0."describe",p1_0."is_delete",p1_0."mark",p1_0."name",p1_0."operator",p1_0."update_date",p1_0."version",p1_0."weight" from p6e_permission_group p1_0 where (p1_0.is_delete = 0) and 1=1 order by p1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
+2023-06-26 10:16:14 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 10:16:20 [http-nio-9999-exec-10] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 10:29:23 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
+2023-06-26 10:29:26 [http-nio-9999-exec-10] ERROR - Request method 'POST' is not supported
+2023-06-26 10:29:37 [http-nio-9999-exec-4] ERROR - Cannot invoke "org.hibernate.query.sqm.tree.predicate.SqmPredicate.getNodeType()" because the return value of "java.util.List.get(int)" is null
+2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - ERROR: operator does not exist: character varying = integer
+  建议：No operator matches the given name and argument types. You might need to add explicit type casts.
+  位置：171
+2023-06-26 10:30:06 [http-nio-9999-exec-4] ERROR - JDBC exception executing SQL [select c1_0."id",c1_0."create_date",c1_0."is_delete",c1_0."key",c1_0."operator",c1_0."update_date",c1_0."value",c1_0."version" from p6e_config c1_0 where (c1_0.is_delete = 0) and 1=1 order by c1_0."id" asc offset ? rows fetch first ? rows only]; SQL [n/a]
