@@ -80,4 +80,9 @@ public class PermissionUrlModel implements Serializable {
     @Column(name = "[is_delete]")
     private Integer isDelete;
 
+    @Transient
+    private String relationConfig;
+    @Transient
+    private String relationAttribute;
+
 }

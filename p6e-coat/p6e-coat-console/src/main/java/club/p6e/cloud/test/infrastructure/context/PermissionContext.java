@@ -5,10 +5,7 @@ import com.darvi.hksi.badminton.lib.SearchableContext;
 import com.darvi.hksi.badminton.lib.Sortable;
 import com.darvi.hksi.badminton.lib.SortableContext;
 import com.darvi.hksi.badminton.lib.context.BaseContext;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +15,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +112,6 @@ public class PermissionContext implements Serializable {
             private SortableContext<SortableContext.Option> sort;
             private SearchableContext<SearchableContext.Option> search;
 
-
             private Integer id;
             private String mark;
             private String weight;
@@ -149,10 +146,8 @@ public class PermissionContext implements Serializable {
         @Accessors(chain = true)
         public static class Dto implements Serializable {
             private Integer id;
-            private String url;
-            private String baseUrl;
-            private String method;
-            private String config;
+            private String mark;
+            private String weight;
             private String name;
             private String describe;
             private LocalDateTime createDate;
@@ -179,5 +174,66 @@ public class PermissionContext implements Serializable {
             private LocalDateTime updateDate;
             private String operator;
         }
+
+        public static class Details implements Serializable {
+            @Data
+            @Accessors(chain = true)
+            @EqualsAndHashCode(callSuper = true)
+            public static class Request extends BaseContext.PagingParam implements Serializable {
+                private Integer id;
+            }
+
+            @Data
+            @Accessors(chain = true)
+            @EqualsAndHashCode(callSuper = true)
+            public static class Vo extends BaseContext.ListResult implements Serializable {
+                private Integer id;
+                private String mark;
+                private String weight;
+                private String name;
+                private String describe;
+                private LocalDateTime createDate;
+                private LocalDateTime updateDate;
+                private String operator;
+                private Integer version;
+                private List<Url> urls;
+            }
+
+
+            @Data
+            @Accessors(chain = true)
+            @EqualsAndHashCode(callSuper = true)
+            public static class Dto extends BaseContext.ListResult implements Serializable {
+                private Integer id;
+                private String mark;
+                private String weight;
+                private String name;
+                private String describe;
+                private LocalDateTime createDate;
+                private LocalDateTime updateDate;
+                private String operator;
+                private Integer version;
+                private List<Url> urls;
+            }
+
+            @Data
+            @Accessors(chain = true)
+            public static class Url implements Serializable {
+                private Integer id;
+                private String url;
+                private String baseUrl;
+                private String method;
+                private String config;
+                private String name;
+                private String describe;
+                private LocalDateTime createDate;
+                private LocalDateTime updateDate;
+                private String operator;
+                private String relationConfig;
+                private String relationAttribute;
+            }
+        }
+
+
     }
 }

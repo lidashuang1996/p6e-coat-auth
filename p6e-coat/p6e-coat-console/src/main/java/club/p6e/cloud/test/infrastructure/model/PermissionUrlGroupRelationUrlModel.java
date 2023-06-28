@@ -16,8 +16,11 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @IdClass(value = PermissionUrlGroupRelationUrlModel.Key.class)
 @Entity
-@Table(name = "p6e_dictionary")
+@Table(name = "p6e_permission_url_group_relation_url")
 public class PermissionUrlGroupRelationUrlModel implements Serializable {
+
+    public static final String GID = "gid";
+    public static final String UID = "uid";
 
     @Data
     @Accessors(chain = true)

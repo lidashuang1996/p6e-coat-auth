@@ -1,6 +1,7 @@
 package club.p6e.cloud.test.application.service.impl;
 
 import club.p6e.cloud.test.application.service.PermissionServer;
+import club.p6e.cloud.test.domain.aggregate.PermissionUrlGroupDetailsAggregate;
 import club.p6e.cloud.test.domain.aggregate.PermissionUrlGroupListAggregate;
 import club.p6e.cloud.test.domain.aggregate.PermissionUrlListAggregate;
 import club.p6e.cloud.test.domain.entity.PermissionUrlEntity;
@@ -91,6 +92,24 @@ public class PermissionServerImpl implements PermissionServer {
     @Override
     public PermissionContext.UrlGroup.Dto urlGroupDelete(PermissionContext.UrlGroup.Request request) {
         return null;
+    }
+
+    @Override
+    public PermissionContext.Url.Dto urlDetails(PermissionContext.Url.Request request) {
+        return null;
+    }
+
+    @Override
+    public PermissionContext.UrlGroup.Details.Dto urlGroupDetails(PermissionContext.UrlGroup.Details.Request request) {
+        final PermissionUrlGroupDetailsAggregate aggregate =
+                PermissionUrlGroupDetailsAggregate.get(request.getId(), request.getPage(), request.getSize());
+        final PermissionContext.UrlGroup.Details.Dto result =
+                CopyUtil.run(aggregate.getModel(), PermissionContext.UrlGroup.Details.Dto.class);
+        result.setPage(aggregate.getPage());
+        result.setSize(aggregate.getSize());
+        result.setTotal(aggregate.getTotal());
+        result.setUrls(CopyUtil.runList(aggregate.getList(), PermissionContext.UrlGroup.Details.Url.class));
+        return result;
     }
 
 }

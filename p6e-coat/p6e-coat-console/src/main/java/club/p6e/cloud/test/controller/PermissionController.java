@@ -142,6 +142,12 @@ public class PermissionController {
         return ResultContext.build(CopyUtil.run(result, PermissionContext.Url.Vo.class));
     }
 
+    @GetMapping("/url/details/{id}")
+    public ResultContext urlDetails(@PathVariable Integer id) {
+        final PermissionContext.Url.Dto result = server.urlDetails(new PermissionContext.Url.Request().setId(id));
+        return ResultContext.build(CopyUtil.run(result, PermissionContext.Url.Vo.class));
+    }
+
 
     // -------------------------
 
@@ -246,6 +252,15 @@ public class PermissionController {
     public ResultContext urlGroupDelete(@PathVariable Integer id) {
         final PermissionContext.UrlGroup.Dto result = server.urlGroupDelete(new PermissionContext.UrlGroup.Request().setId(id));
         return ResultContext.build(CopyUtil.run(result, PermissionContext.UrlGroup.Vo.class));
+    }
+
+    @GetMapping("/url/group/details/{id}")
+    public ResultContext urlGroupDetails(@PathVariable Integer id, PermissionContext.UrlGroup.Details.Request request) {
+        if (request == null) {
+            request = new PermissionContext.UrlGroup.Details.Request();
+        }
+        final PermissionContext.UrlGroup.Details.Dto result = server.urlGroupDetails(request.setId(id));
+        return ResultContext.build(CopyUtil.run(result, PermissionContext.UrlGroup.Details.Vo.class));
     }
 
 }

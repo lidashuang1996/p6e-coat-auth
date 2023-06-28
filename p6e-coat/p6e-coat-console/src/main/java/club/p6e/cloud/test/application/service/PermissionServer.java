@@ -28,4 +28,7 @@ public interface PermissionServer {
 
     PermissionContext.UrlGroup.Dto urlGroupDelete(PermissionContext.UrlGroup.Request request);
 
+    PermissionContext.Url.Dto urlDetails(PermissionContext.Url.Request request);
+
+    PermissionContext.UrlGroup.Details.Dto urlGroupDetails(PermissionContext.UrlGroup.Details.Request request);
 }

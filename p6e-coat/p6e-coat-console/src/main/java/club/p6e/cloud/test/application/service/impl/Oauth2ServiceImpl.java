@@ -4,6 +4,7 @@ import club.p6e.cloud.test.application.service.Oauth2Service;
 import club.p6e.cloud.test.domain.aggregate.Oauth2ClientListAggregate;
 import club.p6e.cloud.test.domain.entity.Oauth2ClientEntity;
 import club.p6e.cloud.test.infrastructure.context.Oauth2Context;
+import club.p6e.cloud.test.infrastructure.model.Oauth2ClientModel;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
@@ -39,19 +40,22 @@ public class Oauth2ServiceImpl implements Oauth2Service {
 
     @Override
     public Oauth2Context.Client.Dto createClient(Oauth2Context.Client.Request request) {
-        final Oauth2ClientEntity entity = Oauth2ClientEntity.create(request);
+        final Oauth2ClientEntity entity = Oauth2ClientEntity
+                .create(CopyUtil.run(request, Oauth2ClientModel.class));
         return CopyUtil.run(entity.getModel(), Oauth2Context.Client.Dto.class);
     }
 
     @Override
     public Oauth2Context.Client.Dto updateClient(Oauth2Context.Client.Request request) {
-        final Oauth2ClientEntity entity = Oauth2ClientEntity.findById(request.getId()).update(request);
+        final Oauth2ClientEntity entity = Oauth2ClientEntity
+                .findById(request.getId())
+                .update(CopyUtil.run(request, Oauth2ClientModel.class));
         return CopyUtil.run(entity.getModel(), Oauth2Context.Client.Dto.class);
     }
 
     @Override
     public Oauth2Context.Client.Dto deleteClient(Oauth2Context.Client.Request request) {
-        final Oauth2ClientEntity entity = Oauth2ClientEntity.findById(request.getId()).delete(request);
+        final Oauth2ClientEntity entity = Oauth2ClientEntity.findById(request.getId()).delete();
         return CopyUtil.run(entity.getModel(), Oauth2Context.Client.Dto.class);
     }
 
