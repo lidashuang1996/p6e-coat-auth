@@ -1,9 +1,1 @@
-2023-06-28 09:52:12 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 11:49:13 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 12:59:06 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 12:59:35 [http-nio-9999-exec-8] WARN - SQL Error: 0, SQLState: 42703
-2023-06-28 13:04:56 [http-nio-9999-exec-2] WARN - SQL Error: 0, SQLState: 42703
-2023-06-28 13:06:03 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 18:05:16 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 18:06:58 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
-2023-06-28 18:09:47 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-07-03 14:57:45 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
