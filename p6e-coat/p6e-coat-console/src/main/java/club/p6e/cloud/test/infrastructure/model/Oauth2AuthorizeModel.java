@@ -16,44 +16,24 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "p6e_oauth2_authorize")
 public class Oauth2AuthorizeModel implements Serializable {
-    public static final String ID = "id";
-    public static final String CREATE_DATE = "createDate";
-    public static final String UPDATE_DATE = "updateDate";
-    public static final String OPERATOR = "operator";
-    public static final String VERSION = "version";
-
     @Id
-    @Column(name = "[id]")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "[enabled]")
-    private String enabled;
-    @Column(name = "[type]")
-    private String type;
-    @Column(name = "[scope]")
-    private String scope;
-    @Column(name = "[redirect_uri]")
-    private String redirectUri;
-    @Column(name = "[reconfirm]")
-    private String reconfirm;
-    @Column(name = "[client_id]")
-    private String clientId;
-    @Column(name = "[client_secret]")
-    private String clientSecret;
-    @Column(name = "[client_name]")
-    private String clientName;
-    @Column(name = "[client_describe]")
-    private String clientDescribe;
-    @Column(name = "[client_avatar]")
-    private String clientAvatar;
+    @Column(name = "[cid]")
+    private Integer cid;
+    @Id
+    @Column(name = "[uid]")
+    private Integer uid;
+    @Column(name = "[date]")
+    private LocalDateTime date;
+    @Column(name = "[action]")
+    private String action;
+    @Column(name = "[content]")
+    private String content;
+    @Column(name = "[version]")
+    private Integer version;
     @Column(name = "[create_date]")
     private LocalDateTime createDate;
     @Column(name = "[update_date]")
     private LocalDateTime updateDate;
     @Column(name = "[operator]")
     private String operator;
-    @Column(name = "[version]")
-    private Integer version;
-    @Column(name = "[is_delete]")
-    private Integer isDelete;
 }

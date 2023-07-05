@@ -16,10 +16,16 @@ import java.io.Serializable;
 public class Properties implements Serializable {
 
     private Auth auth = new Auth();
+    private FileUpload fileUpload = new FileUpload();
 
     @Data
     public static class Auth implements Serializable {
         private String url;
+    }
+
+    @Data
+    public static class FileUpload implements Serializable {
+        private String path;
     }
 
 }

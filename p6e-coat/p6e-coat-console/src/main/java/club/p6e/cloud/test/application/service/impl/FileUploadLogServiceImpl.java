@@ -36,4 +36,10 @@ public class FileUploadLogServiceImpl implements FileUploadLogService {
         return result;
     }
 
+    @Override
+    public FileUploadLogContext.Storage.Dto storage(FileUploadLogContext.Storage.Request request) {
+
+        return null;
+    }
+
 }

@@ -36,15 +36,15 @@ public class Oauth2Controller {
         return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.ListVo.class));
     }
 
-    @GetMapping("/client/{id}")
-    public ResultContext get(@PathVariable Integer id) {
-        final Oauth2Context.Client.Dto result = server.getClient(new Oauth2Context.Client.Request().setId(id));
-        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
-    }
-
     @PostMapping("/client")
     public ResultContext create(@RequestBody Oauth2Context.Client.Request request) {
         final Oauth2Context.Client.Dto result = server.createClient(request);
+        return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
+    }
+
+    @GetMapping("/client/{id}")
+    public ResultContext get(@PathVariable Integer id) {
+        final Oauth2Context.Client.Dto result = server.getClient(new Oauth2Context.Client.Request().setId(id));
         return ResultContext.build(CopyUtil.run(result, Oauth2Context.Client.Vo.class));
     }
 

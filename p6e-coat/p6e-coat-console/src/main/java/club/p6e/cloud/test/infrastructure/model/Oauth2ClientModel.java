@@ -19,18 +19,18 @@ public class Oauth2ClientModel implements Serializable {
     public static final String ID = "id";
     public static final String CLIENT_ID = "clientId";
     public static final String CLIENT_NAME = "clientName";
+    public static final String CLIENT_DESCRIBE = "clientDescribe";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
     public static final String VERSION = "version";
 
     @Id
-
     @Column(name = "[id]")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "[enabled]")
-    private String enabled;
+    private Integer enabled;
     @Column(name = "[type]")
     private String type;
     @Column(name = "[scope]")
@@ -38,7 +38,7 @@ public class Oauth2ClientModel implements Serializable {
     @Column(name = "[redirect_uri]")
     private String redirectUri;
     @Column(name = "[reconfirm]")
-    private String reconfirm;
+    private Integer reconfirm;
     @Column(name = "[client_id]")
     private String clientId;
     @Column(name = "[client_secret]")

@@ -12,4 +12,6 @@ public interface FileUploadLogService {
 
     FileUploadLogContext.Details.Dto details(FileUploadLogContext.Details.Request request);
 
+    FileUploadLogContext.Storage.Dto storage(FileUploadLogContext.Storage.Request request);
+
 }

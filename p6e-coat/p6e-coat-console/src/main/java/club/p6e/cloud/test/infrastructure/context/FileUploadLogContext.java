@@ -108,4 +108,28 @@ public class FileUploadLogContext implements Serializable {
         }
     }
 
+    public static class Storage implements Serializable {
+        @Data
+        @Accessors(chain = true)
+        public static class Request implements Serializable {
+            private Integer id;
+        }
+
+        @Data
+        @Accessors(chain = true)
+        public static class Vo implements Serializable {
+            private Integer files;
+            private Integer folders;
+            private Long memory;
+        }
+
+        @Data
+        @Accessors(chain = true)
+        public static class Dto implements Serializable {
+            private Integer files;
+            private Integer folders;
+            private Long memory;
+        }
+
+    }
 }

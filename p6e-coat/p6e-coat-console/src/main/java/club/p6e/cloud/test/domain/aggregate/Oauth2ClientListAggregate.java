@@ -40,8 +40,14 @@ public class Oauth2ClientListAggregate extends ConfigurationDomain {
             if (query != null) {
                 final String lq = "%" + query + "%";
                 predicates.add(cb.or(
+                        cb.like(cb.function(
+                                "text",
+                                String.class,
+                                rt.get(Oauth2ClientModel.CLIENT_ID)
+                        ), lq),
                         cb.like(cb.lower(rt.get(Oauth2ClientModel.CLIENT_ID)), lq),
-                        cb.like(cb.lower(rt.get(Oauth2ClientModel.CLIENT_NAME)), lq)
+                        cb.like(cb.lower(rt.get(Oauth2ClientModel.CLIENT_NAME)), lq),
+                        cb.like(cb.lower(rt.get(Oauth2ClientModel.CLIENT_DESCRIBE)), lq)
                 ));
             }
             final Predicate sp = SearchableConverter.to(search, rt, cb);

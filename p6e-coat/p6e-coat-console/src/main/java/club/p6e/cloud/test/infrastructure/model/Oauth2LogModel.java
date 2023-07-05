@@ -36,7 +36,6 @@ public class Oauth2LogModel implements Serializable {
     private String uid;
     @Column(name = "[key]")
     private String date;
-    @Size(max = 50)
     @Column(name = "[value]")
     private String action;
     @Column(name = "[content]")
