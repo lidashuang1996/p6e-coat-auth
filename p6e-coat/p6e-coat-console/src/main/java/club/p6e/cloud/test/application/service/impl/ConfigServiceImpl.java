@@ -17,8 +17,8 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public ConfigContext.ListDto list(ConfigContext.Request request) {
         final ConfigListAggregate aggregate = ConfigListAggregate.search(
-                request.getPage(), request.getSize(),
-                request.getQuery(), request.getSort(), request.getSearch()
+                request.getPage(), request.getSize(), request.getQuery(),
+                request.getSort(), request.getSearch()
         );
         final ConfigContext.ListDto result = new ConfigContext.ListDto();
         result.setPage(aggregate.getPage());

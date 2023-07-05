@@ -1,5 +1,6 @@
 package club.p6e.cloud.test.infrastructure.model;
 
+import club.p6e.cloud.test.infrastructure.model.listener.BaseModelListener;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "p6e_user_auth")
 @Where(clause = "is_delete = 0")
+@EntityListeners(value = BaseModelListener.class)
 public class UserAuthModel implements Serializable {
 
     public static final String ID = "id";

@@ -114,7 +114,7 @@ public class PermissionContext implements Serializable {
 
             private Integer id;
             private String mark;
-            private String weight;
+            private Integer weight;
             private String name;
             private String describe;
         }
@@ -123,10 +123,8 @@ public class PermissionContext implements Serializable {
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private Integer id;
-            private String url;
-            private String baseUrl;
-            private String method;
-            private String config;
+            private String mark;
+            private Integer weight;
             private String name;
             private String describe;
             private LocalDateTime createDate;
@@ -147,7 +145,7 @@ public class PermissionContext implements Serializable {
         public static class Dto implements Serializable {
             private Integer id;
             private String mark;
-            private String weight;
+            private Integer weight;
             private String name;
             private String describe;
             private LocalDateTime createDate;
@@ -167,7 +165,7 @@ public class PermissionContext implements Serializable {
         public static class Item implements Serializable {
             private Integer id;
             private String mark;
-            private String weight;
+            private Integer weight;
             private String name;
             private String describe;
             private LocalDateTime createDate;
@@ -189,7 +187,7 @@ public class PermissionContext implements Serializable {
             public static class Vo extends BaseContext.ListResult implements Serializable {
                 private Integer id;
                 private String mark;
-                private String weight;
+                private Integer weight;
                 private String name;
                 private String describe;
                 private LocalDateTime createDate;
@@ -206,7 +204,7 @@ public class PermissionContext implements Serializable {
             public static class Dto extends BaseContext.ListResult implements Serializable {
                 private Integer id;
                 private String mark;
-                private String weight;
+                private Integer weight;
                 private String name;
                 private String describe;
                 private LocalDateTime createDate;

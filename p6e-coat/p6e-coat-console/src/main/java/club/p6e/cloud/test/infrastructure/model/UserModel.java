@@ -1,5 +1,6 @@
 package club.p6e.cloud.test.infrastructure.model;
 
+import club.p6e.cloud.test.infrastructure.model.listener.BaseModelListener;
 import com.darvi.hksi.badminton.lib.Searchable;
 import com.darvi.hksi.badminton.lib.Sortable;
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "p6e_user")
 @Where(clause = "is_delete = 0")
+@EntityListeners(value = BaseModelListener.class)
 public class UserModel implements Serializable {
 
     public static final String ID = "id";

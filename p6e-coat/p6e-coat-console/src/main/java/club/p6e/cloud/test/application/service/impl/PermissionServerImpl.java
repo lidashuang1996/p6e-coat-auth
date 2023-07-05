@@ -5,7 +5,9 @@ import club.p6e.cloud.test.domain.aggregate.PermissionUrlGroupDetailsAggregate;
 import club.p6e.cloud.test.domain.aggregate.PermissionUrlGroupListAggregate;
 import club.p6e.cloud.test.domain.aggregate.PermissionUrlListAggregate;
 import club.p6e.cloud.test.domain.entity.PermissionUrlEntity;
+import club.p6e.cloud.test.domain.entity.PermissionUrlGroupEntity;
 import club.p6e.cloud.test.infrastructure.context.PermissionContext;
+import club.p6e.cloud.test.infrastructure.model.PermissionUrlGroupModel;
 import club.p6e.cloud.test.infrastructure.model.PermissionUrlModel;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import org.springframework.stereotype.Service;
@@ -76,22 +78,32 @@ public class PermissionServerImpl implements PermissionServer {
 
     @Override
     public PermissionContext.UrlGroup.Dto urlGroupCreate(PermissionContext.UrlGroup.Request request) {
-        return null;
+        return CopyUtil.run(PermissionUrlGroupEntity.create(
+                CopyUtil.run(request, PermissionUrlGroupModel.class)
+        ).getModel(), PermissionContext.UrlGroup.Dto.class);
     }
 
     @Override
     public PermissionContext.UrlGroup.Dto urlGroupUpdate(PermissionContext.UrlGroup.Request request) {
-        return null;
+        return CopyUtil.run(PermissionUrlGroupEntity.findById(request.getId()).update(
+                CopyUtil.run(request, PermissionUrlGroupModel.class)
+        ).getModel(), PermissionContext.UrlGroup.Dto.class);
     }
 
     @Override
     public PermissionContext.UrlGroup.Dto urlGroupGet(PermissionContext.UrlGroup.Request request) {
-        return null;
+        return CopyUtil.run(
+                PermissionUrlGroupEntity.findById(request.getId()).getModel(),
+                PermissionContext.UrlGroup.Dto.class
+        );
     }
 
     @Override
     public PermissionContext.UrlGroup.Dto urlGroupDelete(PermissionContext.UrlGroup.Request request) {
-        return null;
+        return CopyUtil.run(
+                PermissionUrlGroupEntity.findById(request.getId()).delete().getModel(),
+                PermissionContext.UrlGroup.Dto.class
+        );
     }
 
     @Override

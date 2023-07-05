@@ -40,6 +40,11 @@ public class ConfigListAggregate extends ConfigurationDomain {
             if (query != null) {
                 final String lq = "%" + query + "%";
                 predicates.add(cb.or(
+                        cb.like(cb.function(
+                                "text",
+                                String.class,
+                                rt.get(ConfigModel.ID)
+                        ), lq),
                         cb.like(cb.lower(rt.get(ConfigModel.KEY)), lq),
                         cb.like(cb.lower(rt.get(ConfigModel.VALUE)), lq)
                 ));

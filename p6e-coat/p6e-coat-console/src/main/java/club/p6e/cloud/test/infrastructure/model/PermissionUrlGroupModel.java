@@ -1,5 +1,6 @@
 package club.p6e.cloud.test.infrastructure.model;
 
+import club.p6e.cloud.test.infrastructure.model.listener.BaseModelListener;
 import com.darvi.hksi.badminton.lib.Searchable;
 import com.darvi.hksi.badminton.lib.Sortable;
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "p6e_permission_url_group")
 @Where(clause = "is_delete = 0")
+@EntityListeners(value = BaseModelListener.class)
 public class PermissionUrlGroupModel implements Serializable {
 
     public static final String ID = "id";
@@ -39,37 +41,30 @@ public class PermissionUrlGroupModel implements Serializable {
     @Column(name = "[id]")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
     @Searchable
     @Column(name = "[mark]")
     private String mark;
     @Searchable
     @Column(name = "[weight]")
-    private String weight;
+    private Integer weight;
     @Searchable
     @Column(name = "[name]")
     private String name;
     @Searchable
     @Column(name = "[describe]")
     private String describe;
-    @NotEmpty
     @Sortable
     @Searchable
     @Column(name = "[create_date]")
     private LocalDateTime createDate;
-    @NotEmpty
     @Sortable
     @Searchable
     @Column(name = "[update_date]")
     private LocalDateTime updateDate;
-    @Size(max = 50)
-    @NotEmpty
     @Column(name = "[operator]")
     private String operator;
-    @NotEmpty
     @Column(name = "[version]")
     private Integer version;
-    @NotEmpty
     @Column(name = "[is_delete]")
     private Integer isDelete;
 

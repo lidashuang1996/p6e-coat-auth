@@ -1,5 +1,6 @@
 package club.p6e.cloud.test.infrastructure.model;
 
+import club.p6e.cloud.test.infrastructure.model.listener.BaseModelListener;
 import com.darvi.hksi.badminton.lib.Searchable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @IdClass(value = PermissionUrlGroupRelationUrlModel.Key.class)
 @Entity
 @Table(name = "p6e_permission_url_group_relation_url")
+@EntityListeners(value = BaseModelListener.class)
 public class PermissionUrlGroupRelationUrlModel implements Serializable {
 
     public static final String GID = "gid";
@@ -38,11 +40,9 @@ public class PermissionUrlGroupRelationUrlModel implements Serializable {
     @Column(name = "[uid]")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
-    @NotNull
     @Searchable
     @Column(name = "[config]")
     private String config;
-    @NotNull
     @Searchable
     @Column(name = "[attribute]")
     private String attribute;

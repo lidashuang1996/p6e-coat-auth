@@ -2,9 +2,7 @@ package club.p6e.cloud.test.domain.entity;
 
 import club.p6e.cloud.test.error.GlobalExceptionContext;
 import club.p6e.cloud.test.infrastructure.model.ConfigModel;
-import club.p6e.cloud.test.infrastructure.model.UserModel;
 import club.p6e.cloud.test.infrastructure.repository.ConfigRepository;
-import club.p6e.cloud.test.infrastructure.repository.UserRepository;
 import com.darvi.hksi.badminton.lib.utils.CopyUtil;
 import com.darvi.hksi.badminton.lib.utils.SpringUtil;
 
@@ -51,7 +49,8 @@ public class ConfigEntity implements Serializable {
 
     public ConfigEntity delete() {
         final ConfigRepository repository = SpringUtil.getBean(ConfigRepository.class);
-        return new ConfigEntity(repository.saveAndFlush(model.setIsDelete(1)));
+        repository.deleteById(model.getId());
+        return this;
     }
 
     public ConfigModel getModel() {
