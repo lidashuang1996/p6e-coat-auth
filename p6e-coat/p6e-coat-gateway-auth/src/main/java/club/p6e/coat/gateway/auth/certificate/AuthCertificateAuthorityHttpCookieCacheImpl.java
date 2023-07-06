@@ -8,7 +8,7 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import org.springframework.stereotype.Component;
+import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -17,14 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 认证凭证下发（HttpLocalStorageCache）
+ * 认证凭证下发（HttpCookieCache）
  *
  * @author lidashuang
  * @version 1.0
  */
-@Component
-public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
+public class AuthCertificateAuthorityHttpCookieCacheImpl
         extends AuthCertificateHttp implements AuthCertificateAuthority {
+
+    protected final AuthCache cache;
 
     /**
      * ACCESS TOKEN 生成器
@@ -42,28 +43,51 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
      * @param accessTokenGenerator  ACCESS TOKEN 生成器
      * @param refreshTokenGenerator REFRESH TOKEN 生成器
      */
-    public AuthCertificateAuthorityHttpLocalStorageCacheImpl(
+    public AuthCertificateAuthorityHttpCookieCacheImpl(
+            AuthCache cache,
             AuthAccessTokenGenerator accessTokenGenerator,
             AuthRefreshTokenGenerator refreshTokenGenerator
     ) {
+        this.cache = cache;
         this.accessTokenGenerator = accessTokenGenerator;
         this.refreshTokenGenerator = refreshTokenGenerator;
     }
 
     @Override
     public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
-        // 序列化用户的信息
+        final String uid = user.id();
         final String info = JsonUtil.toJson(user.toMap());
-        // 生成令牌
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
-        return resultHttpLocalStorage(
-                user.id(),
-                info,
-                accessToken,
-                refreshToken,
-                exchange
-        ).map(ResultContext::build);
+        return AuthVoucher
+                .init(exchange)
+                .flatMap(v -> cache
+                        .set(uid, "", accessToken, refreshToken, info)
+                        .flatMap(t -> {
+                            final String oauth = v.get(AuthVoucher.OAUTH2);
+                            if (StringUtils.hasText(oauth)) {
+                                final Map<String, String> map = new HashMap<>();
+                                map.put(AuthVoucher.OAUTH2_USER_ID, uid);
+                                map.put(AuthVoucher.OAUTH2_USER_INFO, info);
+                                return v
+                                        .set(map)
+                                        .flatMap(vv -> setHttpCookieToken(
+                                                exchange.getResponse(),
+                                                t.getAccessToken(),
+                                                t.getRefreshToken(),
+                                                v.client()
+                                        ));
+                            } else {
+                                return v
+                                        .del()
+                                        .flatMap(vv -> setHttpCookieToken(
+                                                exchange.getResponse(),
+                                                t.getAccessToken(),
+                                                t.getRefreshToken()
+                                        ));
+                            }
+                        }))
+                .map(ResultContext::build);
     }
 
 }

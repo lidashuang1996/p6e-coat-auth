@@ -27,7 +27,7 @@ public interface AccountPasswordLoginSignatureCache extends ICache {
     String CONDITIONAL_EXPRESSION = "#{"
             + "${p6e.auth.login.enable:false} "
             + "&& ${p6e.auth.login.account-password.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false}"
+            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false} "
             + "}";
 
     /**

@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono;
 public class AuthWebFilter implements WebFilter {
 
     private final AuthPathMatcher matcher;
-    private final AuthCertificateInterceptor interceptor;
+    private final AuthCertificateValidator interceptor;
 
-    public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateInterceptor interceptor) {
+    public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateValidator interceptor) {
         this.matcher = matcher;
         this.interceptor = interceptor;
     }

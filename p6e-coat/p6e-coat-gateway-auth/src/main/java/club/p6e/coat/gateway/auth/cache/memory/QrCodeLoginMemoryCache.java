@@ -1,5 +1,8 @@
-package club.p6e.coat.gateway.auth.cache;
+package club.p6e.coat.gateway.auth.cache.memory;
 
+import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
+import club.p6e.coat.gateway.auth.cache.memory.support.MemoryCache;
+import club.p6e.coat.gateway.auth.cache.memory.support.ReactiveMemoryTemplate;
 import reactor.core.publisher.Mono;
 
 /**
@@ -8,72 +11,29 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public interface QrCodeLoginCache {
+public class QrCodeLoginMemoryCache
+        extends MemoryCache implements QrCodeLoginCache {
 
-    /**
-     * 过期的时间
-     */
-    long EXPIRATION_TIME = 320;
+    private final ReactiveMemoryTemplate template;
 
-    /**
-     * 空的内容标识
-     */
-    String EMPTY_CONTENT = "__null__";
-
-    /**
-     * 二维码登录的缓存前缀
-     */
-    String CACHE_PREFIX = "LOGIN:QR_CODE:";
-
-    /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.qr-code.enable:false}}";
-
-    /**
-     * 是否为空判断
-     *
-     * @param content 待判断内容
-     * @return 是否为空判断结果
-     */
-    static boolean isEmpty(String content) {
-        return EMPTY_CONTENT.equalsIgnoreCase(content);
+    public QrCodeLoginMemoryCache(ReactiveMemoryTemplate template) {
+        this.template = template;
     }
 
-    /**
-     * 是否不为空判断
-     *
-     * @param content 待判断内容
-     * @return 是否不为空判断结果
-     */
-    static boolean isNotEmpty(String content) {
-        return !isEmpty(content);
+    @Override
+    public Mono<Long> del(String key) {
+        return Mono.just(template.del(CACHE_PREFIX + key));
     }
 
-    /**
-     * 删除数据
-     *
-     * @param key 键
-     * @return 删除数据的条数
-     */
-    Mono<Long> del(String key);
+    @Override
+    public Mono<String> get(String key) {
+        final String r = template.get(CACHE_PREFIX + key, String.class);
+        return r == null ? Mono.empty() : Mono.just(r);
+    }
 
-    /**
-     * 读取数据
-     *
-     * @param key 键
-     * @return 值
-     */
-    Mono<String> get(String key);
-
-    /**
-     * 写入数据
-     *
-     * @param key   键
-     * @param value 值
-     * @return 是否写入数据成功
-     */
-    Mono<Boolean> set(String key, String value);
+    @Override
+    public Mono<Boolean> set(String key, String value) {
+        return Mono.just(template.set(CACHE_PREFIX + key, value, EXPIRATION_TIME));
+    }
 
 }

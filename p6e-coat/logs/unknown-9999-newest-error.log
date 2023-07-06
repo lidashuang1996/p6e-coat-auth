@@ -1,62 +1,37 @@
-2023-07-05 09:21:19 [http-nio-9999-exec-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [] } ::: [ class club.p6e.cloud.test.domain.entity.PermissionUrlEntity ] => (class club.p6e.cloud.test.error.CacheException) ===> 
-2023-07-05 09:47:55 [http-nio-9999-exec-7] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'createDate'
-2023-07-05 10:40:18 [http-nio-9999-exec-6] ERROR - Request method 'POST' is not supported
-2023-07-05 10:40:25 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
-2023-07-05 10:47:54 [http-nio-9999-exec-3] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [] } ::: [ class club.p6e.cloud.test.domain.entity.PermissionUrlEntity ] => (class club.p6e.cloud.test.error.CacheException) ===> 
-2023-07-05 10:48:05 [http-nio-9999-exec-1] ERROR - Request method 'POST' is not supported
-2023-07-05 10:48:25 [http-nio-9999-exec-2] ERROR - Request method 'POST' is not supported
-2023-07-05 10:48:26 [http-nio-9999-exec-4] ERROR - Request method 'POST' is not supported
-2023-07-05 10:48:26 [http-nio-9999-exec-5] ERROR - Request method 'POST' is not supported
-2023-07-05 10:48:27 [http-nio-9999-exec-6] ERROR - Request method 'POST' is not supported
-2023-07-05 10:48:27 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
-2023-07-05 10:49:02 [http-nio-9999-exec-10] ERROR - Request method 'POST' is not supported
-2023-07-05 10:51:13 [http-nio-9999-exec-3] ERROR - Request method 'POST' is not supported
-2023-07-05 10:51:14 [http-nio-9999-exec-1] ERROR - Request method 'POST' is not supported
-2023-07-05 10:51:16 [http-nio-9999-exec-2] ERROR - Request method 'POST' is not supported
-2023-07-05 10:51:28 [http-nio-9999-exec-5] ERROR - Request method 'POST' is not supported
-2023-07-05 10:51:33 [http-nio-9999-exec-6] ERROR - Request method 'POST' is not supported
-2023-07-05 10:54:07 [http-nio-9999-exec-7] ERROR - Request method 'POST' is not supported
-2023-07-05 10:54:17 [http-nio-9999-exec-9] ERROR - Request method 'POST' is not supported
-2023-07-05 10:55:07 [http-nio-9999-exec-2] ERROR - Request method 'POST' is not supported
-2023-07-05 10:56:43 [http-nio-9999-exec-5] ERROR - Request method 'POST' is not supported
-2023-07-05 11:01:26 [http-nio-9999-exec-7] ERROR - Request method 'POST' is not supported
-2023-07-05 11:01:27 [http-nio-9999-exec-9] ERROR - Request method 'POST' is not supported
-2023-07-05 11:02:30 [http-nio-9999-exec-2] ERROR - Request method 'POST' is not supported
-2023-07-05 11:11:56 [http-nio-9999-exec-8] ERROR - Request method 'POST' is not supported
-2023-07-05 11:12:28 [http-nio-9999-exec-7] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'createDate'
-2023-07-05 11:24:56 [http-nio-9999-exec-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [] } ::: [ class club.p6e.cloud.test.domain.entity.PermissionUrlEntity ] => (class club.p6e.cloud.test.error.CacheException) ===> 
-2023-07-05 11:24:58 [http-nio-9999-exec-4] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'createDate'
-2023-07-05 11:37:19 [http-nio-9999-exec-10] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'updateDate'
-2023-07-05 11:37:36 [http-nio-9999-exec-7] ERROR - Request method 'PUT' is not supported
-2023-07-05 11:38:30 [http-nio-9999-exec-3] ERROR - Request method 'PUT' is not supported
-2023-07-05 11:38:48 [http-nio-9999-exec-5] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'updateDate'
-2023-07-05 14:19:48 [http-nio-9999-exec-2] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'updateDate'
-2023-07-05 14:21:02 [http-nio-9999-exec-1] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'updateDate'
-2023-07-05 14:32:23 [http-nio-9999-exec-1] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'updateDate'
-2023-07-05 18:07:50 [http-nio-9999-exec-3] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'createDate'
-2023-07-05 19:59:57 [http-nio-9999-exec-1] ERROR - HV000030: No validator could be found for constraint 'jakarta.validation.constraints.NotEmpty' validating type 'java.time.LocalDateTime'. Check configuration for 'createDate'
-2023-07-05 20:01:32 [http-nio-9999-exec-1] ERROR - ERROR: null value in column "is_delete" violates not-null constraint
-  详细：Failing row contains (30000, 32311231, 312321, *, {}, 6666, , null, null, null, null, null).
-2023-07-05 20:01:32 [http-nio-9999-exec-1] ERROR - could not execute statement; SQL [n/a]; constraint [is_delete]
-2023-07-05 20:02:39 [http-nio-9999-exec-1] ERROR - ERROR: null value in column "is_delete" violates not-null constraint
-  详细：Failing row contains (30001, 32311231, 312321, *, {}, 6666, , null, null, null, null, null).
-2023-07-05 20:02:39 [http-nio-9999-exec-1] ERROR - could not execute statement; SQL [n/a]; constraint [is_delete]
-2023-07-05 20:22:14 [http-nio-9999-exec-7] ERROR - ERROR: null value in column "is_delete" violates not-null constraint
-  详细：Failing row contains (30003, /32/3231, /a, GET, {}, 44, 2, null, 2023-07-05 20:22:14+08, 1, null, null).
-2023-07-05 20:22:14 [http-nio-9999-exec-7] ERROR - could not execute statement; SQL [n/a]; constraint [is_delete]
-2023-07-05 20:22:17 [http-nio-9999-exec-8] ERROR - ERROR: null value in column "is_delete" violates not-null constraint
-  详细：Failing row contains (30003, /32/3231, /a/b, GET, {}, 44, 2, null, 2023-07-05 20:22:18+08, 1, null, null).
-2023-07-05 20:22:17 [http-nio-9999-exec-8] ERROR - could not execute statement; SQL [n/a]; constraint [is_delete]
-2023-07-05 20:49:40 [http-nio-9999-exec-9] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter [mark] exception.] } ::: [ class club.p6e.cloud.test.controller.PermissionController ] => (class club.p6e.cloud.test.error.ParameterException) ===> fun create(PermissionContext.UrlGroup.Request request)
-2023-07-05 20:51:18 [http-nio-9999-exec-8] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter [mark] exception.] } ::: [ class club.p6e.cloud.test.controller.PermissionController ] => (class club.p6e.cloud.test.error.ParameterException) ===> fun create(PermissionContext.UrlGroup.Request request)
-2023-07-05 20:51:51 [http-nio-9999-exec-6] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter [mark] exception.] } ::: [ class club.p6e.cloud.test.controller.PermissionController ] => (class club.p6e.cloud.test.error.ParameterException) ===> fun create(PermissionContext.UrlGroup.Request request)
-2023-07-05 20:59:49 [http-nio-9999-exec-3] ERROR - ERROR: column "weight" is of type integer but expression is of type character varying
-  建议：You will need to rewrite or cast the expression.
-  位置：183
-2023-07-05 20:59:49 [http-nio-9999-exec-3] ERROR - could not execute statement; SQL [n/a]
-2023-07-05 21:12:06 [http-nio-9999-exec-8] ERROR - ERROR: null value in column "create_date" violates not-null constraint
-  详细：Failing row contains (30001, 444, 222, 6, 444, null, 2023-07-05 21:12:06+08, 1, null, null).
-2023-07-05 21:12:06 [http-nio-9999-exec-8] ERROR - could not execute statement; SQL [n/a]; constraint [create_date]
-2023-07-05 21:12:07 [http-nio-9999-exec-7] ERROR - ERROR: null value in column "create_date" violates not-null constraint
-  详细：Failing row contains (30001, 444, 222, 6, 444, null, 2023-07-05 21:12:08+08, 1, null, null).
-2023-07-05 21:12:07 [http-nio-9999-exec-7] ERROR - could not execute statement; SQL [n/a]; constraint [create_date]
+2023-07-06 10:04:23 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'oauth2AuthorizeRepository' defined in club.p6e.cloud.test.infrastructure.repository.Oauth2AuthorizeRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: This class [class club.p6e.cloud.test.infrastructure.model.Oauth2AuthorizeModel] does not define an IdClass
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1751) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:521) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:915) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:584) ~[spring-context-6.0.2.jar:6.0.2]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:432) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1302) ~[spring-boot-3.0.0.jar:3.0.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1291) ~[spring-boot-3.0.0.jar:3.0.0]
+	at club.p6e.cloud.test.P6eCloudIndexApplication.main(P6eCloudIndexApplication.java:14) ~[classes/:na]
+Caused by: java.lang.IllegalArgumentException: This class [class club.p6e.cloud.test.infrastructure.model.Oauth2AuthorizeModel] does not define an IdClass
+	at org.hibernate.metamodel.model.domain.AbstractIdentifiableType.getIdClassAttributes(AbstractIdentifiableType.java:215) ~[hibernate-core-6.1.5.Final.jar:6.1.5.Final]
+	at org.springframework.data.jpa.repository.support.JpaMetamodelEntityInformation$IdMetadata.<init>(JpaMetamodelEntityInformation.java:245) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaMetamodelEntityInformation.<init>(JpaMetamodelEntityInformation.java:91) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaEntityInformationSupport.getEntityInformation(JpaEntityInformationSupport.java:69) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getEntityInformation(JpaRepositoryFactory.java:246) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:211) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:194) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:81) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:317) ~[spring-data-commons-3.0.0.jar:3.0.0]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279) ~[spring-data-commons-3.0.0.jar:3.0.0]
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:229) ~[spring-data-commons-3.0.0.jar:3.0.0]
+	at org.springframework.data.util.Lazy.get(Lazy.java:113) ~[spring-data-commons-3.0.0.jar:3.0.0]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285) ~[spring-data-commons-3.0.0.jar:3.0.0]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132) ~[spring-data-jpa-3.0.0.jar:3.0.0]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1797) ~[spring-beans-6.0.2.jar:6.0.2]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1747) ~[spring-beans-6.0.2.jar:6.0.2]
+	... 16 common frames omitted

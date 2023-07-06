@@ -183,4 +183,33 @@ public class AuthVoucher implements Serializable {
                 });
     }
 
+
+    /**
+     * 写入数据
+     *
+     * @param map 数据对象
+     * @return Mono<AuthVoucherContext> 认证凭证上下文对象
+     */
+    public Mono<AuthVoucher> del() {
+        return cache
+                .del(mark)
+                .map(b -> this);
+    }
+
+
+    public Map<String, Object> client() {
+        final String clientId = this.get(AuthVoucher.OAUTH2_CLIENT_ID);
+        final String clientName = this.get(AuthVoucher.OAUTH2_CLIENT_NAME);
+        final String clientAvatar = this.get(AuthVoucher.OAUTH2_CLIENT_AVATAR);
+        final String clientDescribe = this.get(AuthVoucher.OAUTH2_CLIENT_DESCRIBE);
+        final String clientReconfirm = this.get(AuthVoucher.OAUTH2_CLIENT_RECONFIRM);
+        final Map<String, Object> client = new HashMap<>(5);
+        client.put("clientId", clientId);
+        client.put("clientName", clientName);
+        client.put("clientAvatar", clientAvatar);
+        client.put("clientDescribe", clientDescribe);
+        client.put("clientReconfirm", clientReconfirm);
+        return client;
+    }
+
 }

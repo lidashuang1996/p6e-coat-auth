@@ -17,20 +17,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 认证凭证下发（HttpLocalStorageCache）
+ *
  * @author lidashuang
  * @version 1.0
  */
 @Component
-public class AuthCertificateAuthorityHttpLocalStorageCacheImpl implements AuthCertificateAuthority {
+public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
+        extends AuthCertificateHttp implements AuthCertificateAuthority {
+
+    protected final AuthCache cache;
 
     /**
-     * 认证缓存对象
+     * ACCESS TOKEN 生成器
      */
-    private final AuthCache cache;
-    private final AuthAccessTokenGenerator accessTokenGenerator;
-    private final AuthRefreshTokenGenerator refreshTokenGenerator;
+    protected final AuthAccessTokenGenerator accessTokenGenerator;
 
+    /**
+     * REFRESH TOKEN 生成器
+     */
+    protected final AuthRefreshTokenGenerator refreshTokenGenerator;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param accessTokenGenerator  ACCESS TOKEN 生成器
+     * @param refreshTokenGenerator REFRESH TOKEN 生成器
+     */
     public AuthCertificateAuthorityHttpLocalStorageCacheImpl(
             AuthCache cache,
             AuthAccessTokenGenerator accessTokenGenerator,
@@ -41,59 +54,41 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl implements AuthCe
         this.refreshTokenGenerator = refreshTokenGenerator;
     }
 
-    /**
-     * 认证头类型
-     */
-    protected static final String AUTH_HEADER_TOKEN_TYPE = "Bearer";
-    protected static final long EXPIRATION_TIME = 3600;
-
     @Override
     public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
+        final String uid = user.id();
         final String info = JsonUtil.toJson(user.toMap());
+        final String accessToken = accessTokenGenerator.execute();
+        final String refreshToken = refreshTokenGenerator.execute();
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> {
-                    final String accessToken = accessTokenGenerator.execute();
-                    final String refreshToken = refreshTokenGenerator.execute();
-                    final Mono<Map<String, Object>> mono = cache
-                            .set(user.id(), "", accessToken, refreshToken, info)
-                            .map(t -> {
-                                final Map<String, Object> result = new HashMap<>(5);
-                                result.put("accessToken", t.getAccessToken());
-                                result.put("refreshToken", t.getRefreshToken());
-                                result.put("expiration", EXPIRATION_TIME);
-                                result.put("type", AUTH_HEADER_TOKEN_TYPE);
-                                return result;
-                            });
-                    final String oauth = v.get(AuthVoucher.OAUTH2);
-                    System.out.println("oauthoauthoauthoauth >> " + oauth + "  " + StringUtils.hasText(oauth));
-                    if (StringUtils.hasText(oauth)) {
-                        return mono
-                                .flatMap(m -> {
-                                    final Map<String, String> map = new HashMap<>();
-                                    map.put(AuthVoucher.OAUTH2_USER_ID, user.id());
-                                    map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                                    return v.set(map)
-                                            .map(vv -> {
-                                                final String clientId = v.get(AuthVoucher.OAUTH2_CLIENT_ID);
-                                                final String clientName = v.get(AuthVoucher.OAUTH2_CLIENT_NAME);
-                                                final String clientAvatar = v.get(AuthVoucher.OAUTH2_CLIENT_AVATAR);
-                                                final String clientDescribe = v.get(AuthVoucher.OAUTH2_CLIENT_DESCRIBE);
-                                                final String clientReconfirm = v.get(AuthVoucher.OAUTH2_CLIENT_RECONFIRM);
-                                                final Map<String, Object> client = new HashMap<>(5);
-                                                client.put("clientId", clientId);
-                                                client.put("clientName", clientName);
-                                                client.put("clientAvatar", clientAvatar);
-                                                client.put("clientDescribe", clientDescribe);
-                                                client.put("clientReconfirm", clientReconfirm);
-                                                m.put("oauth2", client);
-                                                return m;
-                                            }).map(ResultContext::build);
-                                });
-                    } else {
-                        return mono.map(ResultContext::build);
-                    }
-                });
+                .flatMap(v -> cache
+                        .set(uid, "", accessToken, refreshToken, info)
+                        .flatMap(t -> {
+                            final String oauth = v.get(AuthVoucher.OAUTH2);
+                            if (StringUtils.hasText(oauth)) {
+                                final Map<String, String> map = new HashMap<>();
+                                final Map<String, Object> data = new HashMap<>();
+                                map.put(AuthVoucher.OAUTH2_USER_ID, uid);
+                                map.put(AuthVoucher.OAUTH2_USER_INFO, info);
+                                data.put("oauth2", v.client());
+                                return v
+                                        .set(map)
+                                        .flatMap(vv -> setHttpLocalStorageToken(
+                                                t.getAccessToken(),
+                                                t.getRefreshToken(),
+                                                data
+                                        ));
+                            } else {
+                                return v
+                                        .del()
+                                        .flatMap(vv -> setHttpLocalStorageToken(
+                                                t.getAccessToken(),
+                                                t.getRefreshToken()
+                                        ));
+                            }
+                        }))
+                .map(ResultContext::build);
     }
 
 }

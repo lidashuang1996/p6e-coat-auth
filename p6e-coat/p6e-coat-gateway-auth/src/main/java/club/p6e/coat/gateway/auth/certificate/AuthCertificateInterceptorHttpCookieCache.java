@@ -1,20 +1,19 @@
 package club.p6e.coat.gateway.auth.certificate;
 
-import club.p6e.coat.gateway.auth.AuthCertificateInterceptor;
+import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
-import org.springframework.stereotype.Component;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 外交部抽象类
- * 通过 HTTP -> COOKIE 的实现
+ * 认证凭证拦截验证（HttpCookieCache）
  *
  * @author lidashuang
  * @version 1.0
  */
 public class AuthCertificateInterceptorHttpCookieCache
-        extends AuthCertificateInterceptorBaseHttp implements AuthCertificateInterceptor {
+        extends AuthCertificateHttp implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -35,9 +34,35 @@ public class AuthCertificateInterceptorHttpCookieCache
         return getHttpCookieAccessToken(exchange.getRequest())
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.getUser(t.getUid()))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "",
+                        ""
+                )))
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
                 ).build());
     }
 
+    @Override
+    public Mono<String> accessToken(String token) {
+        return cache.getAccessToken(token)
+                .flatMap(t -> cache.getUser(t.getUid()))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "",
+                        ""
+                )));
+    }
+
+    @Override
+    public Mono<String> refreshToken(String token) {
+        return cache.getRefreshToken(token)
+                .flatMap(t -> cache.getUser(t.getUid()))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "",
+                        ""
+                )));
+    }
 }

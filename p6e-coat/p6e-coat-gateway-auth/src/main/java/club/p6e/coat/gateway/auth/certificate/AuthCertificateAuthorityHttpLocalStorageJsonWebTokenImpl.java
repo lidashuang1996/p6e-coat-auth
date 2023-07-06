@@ -4,46 +4,33 @@ import club.p6e.coat.gateway.auth.AuthCertificateAuthority;
 import club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher;
 import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.AuthVoucher;
-import club.p6e.coat.gateway.auth.cache.AuthCache;
-import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
-import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 认证凭证下发（HttpLocalStorageJsonWebToken）
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
-        extends AuthCertificateInterceptorBaseHttp implements AuthCertificateAuthority {
-
-    protected static final long EXPIRATION_TIME = 3600;
+        extends AuthCertificateHttp implements AuthCertificateAuthority {
 
     /**
-     * JWT 内容
-     */
-    private static final String CONTENT = "content";
-
-    /**
-     * 认证缓存的对象
+     * JWT 密码对象
      */
     protected final AuthJsonWebTokenCipher cipher;
 
     /**
      * 构造方法初始化
      *
-     * @param jwt JWT 对象
+     * @param cipher JWT 密码对象
      */
     public AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl(AuthJsonWebTokenCipher cipher) {
         this.cipher = cipher;
@@ -51,28 +38,36 @@ public class AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
 
     @Override
     public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
-        final Date date = new Date(LocalDateTime.now()
-                .plusSeconds(EXPIRATION_TIME).toInstant(ZoneOffset.of("+8")).toEpochMilli());
-        final String accessToken = JWT.create()
-                // 设置过期时间
-                .withExpiresAt(date)
-                // 设置接受方信息
-                .withAudience(user.id())
-                .withClaim(CONTENT, JsonUtil.toJson(user.toMap()))
-                // 使用HMAC算法
-                .sign(Algorithm.HMAC256(cipher.getAccessTokenSecret()));
-        final String refreshToken = JWT.create()
-                // 设置过期时间
-                .withExpiresAt(date)
-                // 设置接受方信息
-                .withAudience(user.id())
-                .withClaim(CONTENT, JsonUtil.toJson(user.toMap()))
-                // 使用HMAC算法
-                .sign(Algorithm.HMAC256(cipher.getRefreshTokenSecret()));
-        return setHttpCookieToken(exchange.getResponse(), accessToken, refreshToken)
-                .flatMap(b -> {
-                    return Mono.just("");
-                });
+        final String uid = user.id();
+        final String info = JsonUtil.toJson(user.toMap());
+        final String accessToken = jwtCreate(uid, info, cipher.getAccessTokenSecret());
+        final String refreshToken = jwtCreate(uid, info, cipher.getRefreshTokenSecret());
+        return AuthVoucher
+                .init(exchange)
+                .flatMap(v -> {
+                    final String oauth = v.get(AuthVoucher.OAUTH2);
+                    if (StringUtils.hasText(oauth)) {
+                        final Map<String, String> map = new HashMap<>();
+                        map.put(AuthVoucher.OAUTH2_USER_ID, uid);
+                        map.put(AuthVoucher.OAUTH2_USER_INFO, info);
+                        final Map<String, Object> data = new HashMap<>();
+                        data.put("oauth2", v.client());
+                        return v
+                                .set(map)
+                                .flatMap(vv -> setHttpLocalStorageToken(
+                                        accessToken,
+                                        refreshToken,
+                                        data
+                                ));
+                    } else {
+                        return v
+                                .del()
+                                .flatMap(vv -> setHttpLocalStorageToken(
+                                        accessToken,
+                                        refreshToken
+                                ));
+                    }
+                }).map(ResultContext::build);
     }
 
 }

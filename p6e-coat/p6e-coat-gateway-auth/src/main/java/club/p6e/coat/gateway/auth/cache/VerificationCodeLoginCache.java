@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.cache;
 
+import club.p6e.coat.gateway.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public interface VerificationCodeLoginCache {
+public interface VerificationCodeLoginCache extends ICache {
 
     /**
      * 分割符号

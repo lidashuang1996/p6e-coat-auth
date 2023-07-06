@@ -9,12 +9,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class MemoryAccountPasswordLoginSignatureCache
+public class AccountPasswordLoginSignatureMemoryCache
         extends MemoryCache implements AccountPasswordLoginSignatureCache {
 
     private final ReactiveMemoryTemplate template;
 
-    public MemoryAccountPasswordLoginSignatureCache(ReactiveMemoryTemplate template) {
+    public AccountPasswordLoginSignatureMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
 

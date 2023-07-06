@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.auth.certificate;
 
-import club.p6e.coat.gateway.auth.AuthCertificateInterceptor;
-import org.springframework.stereotype.Component;
+import club.p6e.coat.gateway.auth.AuthCertificateValidator;
+import club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -10,37 +10,40 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public class AuthCertificateInterceptorHttpCookieJsonWebToken
-        extends AuthCertificateInterceptorBaseHttp implements AuthCertificateInterceptor {
+        extends AuthCertificateHttp implements AuthCertificateValidator {
 
-    public AuthCertificateInterceptorHttpCookieJsonWebToken() {
+    /**
+     * JWT 密码对象
+     */
+    protected final AuthJsonWebTokenCipher cipher;
+
+    /**
+     * 构造方法初始化
+     *
+     * @param cipher JWT 密码对象
+     */
+    public AuthCertificateInterceptorHttpCookieJsonWebToken(AuthJsonWebTokenCipher cipher) {
+        this.cipher = cipher;
     }
-
-//    @Override
-//    public Mono<Object> use(ServerWebExchange exchange, AuthUserDetails user) {
-//        final String accessToken = accessTokenGenerator.execute();
-//        final String refreshToken = refreshTokenGenerator.execute();
-//        return cache
-//                .set(String.valueOf(user.getId()), "PC",
-//                        accessToken, refreshToken, JsonUtil.toJson(user.toMap()))
-//                .switchIfEmpty(Mono.error(GlobalExceptionContext
-//                        .executeCacheException(
-//                                this.getClass(),
-//                                "fun use(ServerWebExchange exchange, AuthUserDetails user)",
-//                                "Authentication cache write exception."
-//                        )))
-//                .map(t -> {
-//                    final Map<String, Object> r = new HashMap<>();
-//                    r.put("accessToken", accessToken);
-//                    r.put("refreshToken", refreshToken);
-//                    r.put("expiration", EXPIRATION_TIME);
-//                    r.put("type", AUTH_HEADER_TOKEN_TYPE);
-//                    return r;
-//                });
-//    }
 
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
-        return null;
+        return getHttpCookieAccessToken(exchange.getRequest())
+                .map(t -> jwtRequire(t, cipher.getAccessTokenSecret()))
+                .map(s -> exchange.mutate().request(
+                        exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
+                ).build());
+
+    }
+
+    @Override
+    public Mono<String> accessToken(String token) {
+        return Mono.just(jwtRequire(token, cipher.getAccessTokenSecret()));
+    }
+
+    @Override
+    public Mono<String> refreshToken(String token) {
+        return Mono.just(jwtRequire(token, cipher.getRefreshTokenSecret()));
     }
 
 }

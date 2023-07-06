@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.auth.controller;
 
 import club.p6e.coat.gateway.auth.AuthCertificate;
-import club.p6e.coat.gateway.auth.AuthCertificateInterceptor;
+import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
@@ -43,7 +43,7 @@ public class VerificationLoginControllerImpl
     /**
      * 认证证书拦截器对象
      */
-    private final AuthCertificateInterceptor interceptor;
+    private final AuthCertificateValidator interceptor;
 
     /**
      * 构造方法
@@ -51,7 +51,7 @@ public class VerificationLoginControllerImpl
      * @param properties  配置文件对象
      * @param interceptor 验证登录的切面对象
      */
-    public VerificationLoginControllerImpl(Properties properties, AuthCertificateInterceptor interceptor) {
+    public VerificationLoginControllerImpl(Properties properties, AuthCertificateValidator interceptor) {
         this.properties = properties;
         this.interceptor = interceptor;
     }

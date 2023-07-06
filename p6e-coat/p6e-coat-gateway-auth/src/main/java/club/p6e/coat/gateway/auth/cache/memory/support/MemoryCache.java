@@ -1,23 +1,16 @@
-package club.p6e.coat.gateway.auth.cache.memory;
+package club.p6e.coat.gateway.auth.cache.memory.support;
 
 import club.p6e.coat.gateway.auth.cache.support.ICache;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
-public abstract class MemoryCache implements ICache {
-
-    protected final Map<String, String> sMap = new ConcurrentHashMap<>();
+public class MemoryCache implements ICache {
 
     @Override
     public String toType() {
         return "MEMORY_TYPE";
     }
-
-
 
 }

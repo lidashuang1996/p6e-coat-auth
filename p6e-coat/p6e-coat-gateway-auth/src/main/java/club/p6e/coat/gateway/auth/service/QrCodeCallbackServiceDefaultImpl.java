@@ -1,6 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthCertificateInterceptor;
+import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
@@ -36,14 +36,14 @@ public class QrCodeCallbackServiceDefaultImpl implements QrCodeCallbackService {
      * 二维码登录缓存
      */
     private final QrCodeLoginCache cache;
-    private final AuthCertificateInterceptor interceptor;
+    private final AuthCertificateValidator interceptor;
 
     /**
      * 构造方法初始化
      *
      * @param cache 二维码登录缓存
      */
-    public QrCodeCallbackServiceDefaultImpl(QrCodeLoginCache cache, AuthCertificateInterceptor interceptor) {
+    public QrCodeCallbackServiceDefaultImpl(QrCodeLoginCache cache, AuthCertificateValidator interceptor) {
         this.cache = cache;
         this.interceptor = interceptor;
     }
