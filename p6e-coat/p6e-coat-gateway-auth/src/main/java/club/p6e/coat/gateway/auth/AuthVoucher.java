@@ -55,6 +55,8 @@ public class AuthVoucher implements Serializable {
 
     private static final String VOUCHER_URL_PARAM_NAME = "voucher";
 
+    private static final String DEVICE = "DEVICE";
+
     /**
      * 标记内容
      */
@@ -212,4 +214,7 @@ public class AuthVoucher implements Serializable {
         return client;
     }
 
+    public String device() {
+        return "123";
+    }
 }

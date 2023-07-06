@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Oauth2 Client 模型
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -70,8 +72,6 @@ public class Oauth2ClientModel implements Serializable {
         result.put("createDate", createDate);
         result.put("updateDate", updateDate);
         result.put("operator", operator);
-        result.put("version", version);
-        result.put("isDelete", isDelete);
         return result;
     }
 

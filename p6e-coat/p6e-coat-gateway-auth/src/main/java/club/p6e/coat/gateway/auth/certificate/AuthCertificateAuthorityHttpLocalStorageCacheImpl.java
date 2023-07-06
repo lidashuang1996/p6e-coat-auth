@@ -26,6 +26,9 @@ import java.util.Map;
 public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
         extends AuthCertificateHttp implements AuthCertificateAuthority {
 
+    /**
+     * 认证缓存
+     */
     protected final AuthCache cache;
 
     /**
@@ -63,12 +66,12 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> cache
-                        .set(uid, "", accessToken, refreshToken, info)
+                        .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
                             final String oauth = v.get(AuthVoucher.OAUTH2);
                             if (StringUtils.hasText(oauth)) {
-                                final Map<String, String> map = new HashMap<>();
-                                final Map<String, Object> data = new HashMap<>();
+                                final Map<String, String> map = new HashMap<>(2);
+                                final Map<String, Object> data = new HashMap<>(1);
                                 map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                                 map.put(AuthVoucher.OAUTH2_USER_INFO, info);
                                 data.put("oauth2", v.client());
@@ -87,8 +90,7 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
                                                 t.getRefreshToken()
                                         ));
                             }
-                        }))
-                .map(ResultContext::build);
+                        })).map(ResultContext::build);
     }
 
 }

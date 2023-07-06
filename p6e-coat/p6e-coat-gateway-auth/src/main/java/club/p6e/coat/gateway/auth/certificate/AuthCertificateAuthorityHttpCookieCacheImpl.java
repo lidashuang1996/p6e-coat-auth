@@ -8,7 +8,6 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -25,6 +24,9 @@ import java.util.Map;
 public class AuthCertificateAuthorityHttpCookieCacheImpl
         extends AuthCertificateHttp implements AuthCertificateAuthority {
 
+    /**
+     * 认证缓存
+     */
     protected final AuthCache cache;
 
     /**
@@ -40,6 +42,7 @@ public class AuthCertificateAuthorityHttpCookieCacheImpl
     /**
      * 构造方法初始化
      *
+     * @param cache                 认证缓存
      * @param accessTokenGenerator  ACCESS TOKEN 生成器
      * @param refreshTokenGenerator REFRESH TOKEN 生成器
      */
@@ -62,11 +65,11 @@ public class AuthCertificateAuthorityHttpCookieCacheImpl
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> cache
-                        .set(uid, "", accessToken, refreshToken, info)
+                        .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
                             final String oauth = v.get(AuthVoucher.OAUTH2);
                             if (StringUtils.hasText(oauth)) {
-                                final Map<String, String> map = new HashMap<>();
+                                final Map<String, String> map = new HashMap<>(2);
                                 map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                                 map.put(AuthVoucher.OAUTH2_USER_INFO, info);
                                 return v
@@ -86,8 +89,7 @@ public class AuthCertificateAuthorityHttpCookieCacheImpl
                                                 t.getRefreshToken()
                                         ));
                             }
-                        }))
-                .map(ResultContext::build);
+                        })).map(ResultContext::build);
     }
 
 }

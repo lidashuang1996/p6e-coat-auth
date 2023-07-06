@@ -1,9 +1,9 @@
 package club.p6e.coat.gateway.auth.launcher;
 
+import club.p6e.coat.gateway.auth.repository.UserAuthRepository;
 import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -17,12 +17,16 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class EmailMessageLauncherDefaultImpl implements EmailMessageLauncher {
+@ConditionalOnMissingBean(
+        value = EmailMessageLauncher.class,
+        ignored = EmailMessageLauncherImpl.class
+)
+public class EmailMessageLauncherImpl implements EmailMessageLauncher {
 
     /**
      * 注入日志对象
      */
-    private final static Logger LOGGER = LoggerFactory.getLogger(EmailMessageLauncherDefaultImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(EmailMessageLauncherImpl.class);
 
     @Override
     public Mono<String> execute(String account, String template, Map<String, String> content) {

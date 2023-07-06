@@ -32,13 +32,7 @@ public class AuthCertificateInterceptorHttpLocalStorageCache
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
         return getHttpLocalStorageAccessToken(exchange.getRequest())
-                .flatMap(cache::getAccessToken)
-                .flatMap(t -> cache.getUser(t.getUid()))
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
-                        this.getClass(),
-                        "",
-                        ""
-                )))
+                .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
                 ).build());

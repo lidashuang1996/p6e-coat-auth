@@ -15,9 +15,9 @@ public interface AuthAccountPasswordLoginTransmissionCodec {
      * 条件注册的条件表达式
      */
     public final static String CONDITIONAL_EXPRESSION = "#{"
-            + "${p6e.auth.login.enable:false} "
+            + "${@{AUTH_PROPERTIES_PREFIX}.login.enable:false} "
             + "&& ${p6e.auth.login.account-password.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false}"
+            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false} "
             + "}";
 
     /**
