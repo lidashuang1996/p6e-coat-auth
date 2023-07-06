@@ -3,6 +3,7 @@ package club.p6e.coat.gateway.auth.cache.memory;
 import club.p6e.coat.gateway.auth.cache.support.ICache;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author lidashuang
@@ -10,11 +11,13 @@ import java.util.Map;
  */
 public abstract class MemoryCache implements ICache {
 
-    protected final Map<String, String> sMap = new java.util.concurrent.ConcurrentHashMap<>();
+    protected final Map<String, String> sMap = new ConcurrentHashMap<>();
 
     @Override
     public String toType() {
-        return "MemoryCache";
+        return "MEMORY_TYPE";
     }
+
+
 
 }
