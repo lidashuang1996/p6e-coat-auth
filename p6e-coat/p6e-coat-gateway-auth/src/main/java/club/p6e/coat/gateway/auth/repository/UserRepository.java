@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
- * 用户模型
+ * 用户模型存储库
  *
  * @author lidashuang
  * @version 1.0
@@ -38,12 +38,12 @@ public class UserRepository {
     }
 
     /**
-     * 根据 ID 查询一条数据
+     * 根据 ID 查询数据
      *
      * @param id ID
      * @return Mono/UserModel 用户模型对象
      */
-    public Mono<UserModel> findOneById(Integer id) {
+    public Mono<UserModel> findById(Integer id) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ID).is(id).and(UserModel.IS_DELETE).is(0)),
                 UserModel.class
@@ -51,12 +51,12 @@ public class UserRepository {
     }
 
     /**
-     * 根据账号查询一条数据
+     * 根据账号查询数据
      *
      * @param account 账号
      * @return Mono/UserModel 用户模型对象
      */
-    public Mono<UserModel> findOneByAccount(String account) {
+    public Mono<UserModel> findByAccount(String account) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETE).is(0)),
                 UserModel.class
@@ -64,12 +64,12 @@ public class UserRepository {
     }
 
     /**
-     * 根据手机号码查询一条数据
+     * 根据手机号码查询数据
      *
      * @param phone 手机号码
      * @return Mono/UserModel 用户模型对象
      */
-    public Mono<UserModel> findOneByPhone(String phone) {
+    public Mono<UserModel> findByPhone(String phone) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.PHONE).is(phone).and(UserModel.IS_DELETE).is(0)),
                 UserModel.class
@@ -77,12 +77,12 @@ public class UserRepository {
     }
 
     /**
-     * 根据邮箱查询一条数据
+     * 根据邮箱查询数据
      *
      * @param mailbox 邮箱
      * @return Mono/UserModel 用户模型对象
      */
-    public Mono<UserModel> findOneByMailbox(String mailbox) {
+    public Mono<UserModel> findByMailbox(String mailbox) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox).and(UserModel.IS_DELETE).is(0)),
                 UserModel.class
@@ -95,7 +95,7 @@ public class UserRepository {
      * @param content ID
      * @return Mono/UserModel 用户模型对象
      */
-    public Mono<UserModel> findOneByPhoneOrMailbox(String content) {
+    public Mono<UserModel> findByPhoneOrMailbox(String content) {
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.IS_DELETE).is(0)
                         .and(Criteria.empty().or(

@@ -23,14 +23,12 @@ public final class Launcher {
      * @return 推送的结果返回
      */
     public static Mono<String> push(LauncherType type, String account, String template, Map<String, String> content) {
-        switch (type) {
-            case SMS -> {
-                return SpringUtil.getBean(SmsMessageLauncher.class).execute(account, template, content);
-            }
-            case EMAIL -> {
-                return SpringUtil.getBean(EmailMessageLauncher.class).execute(account, template, content);
-            }
-            default -> throw new RuntimeException("fun push(LauncherType type, String account, String template, Map<String, String> content).");
+        if (LauncherType.SMS == type) {
+            return SpringUtil.getBean(SmsMessageLauncher.class).execute(account, template, content);
         }
+        if (LauncherType.EMAIL == type) {
+            return SpringUtil.getBean(EmailMessageLauncher.class).execute(account, template, content);
+        }
+        return Mono.error(new RuntimeException());
     }
 }

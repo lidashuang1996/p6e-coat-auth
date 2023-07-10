@@ -15,7 +15,7 @@ public interface SmsMessageLauncher extends MessageLauncher {
      */
     @Override
     default String toType() {
-        return "SMS";
+        return "SMS_TYPE";
     }
 
 }

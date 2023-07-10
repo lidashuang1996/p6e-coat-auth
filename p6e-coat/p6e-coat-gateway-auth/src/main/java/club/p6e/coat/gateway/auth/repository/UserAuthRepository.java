@@ -4,13 +4,12 @@ import club.p6e.coat.gateway.auth.model.UserAuthModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
-import org.springframework.data.relational.core.query.CriteriaDefinition;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
- * 用户认证模型
+ * 用户认证模型存储库
  *
  * @author lidashuang
  * @version 1.0
@@ -42,7 +41,7 @@ public class UserAuthRepository {
      * @param id ID
      * @return Mono/UserAuthModel 用户认证模型对象
      */
-    public Mono<UserAuthModel> findOneById(Integer id) {
+    public Mono<UserAuthModel> findById(Integer id) {
         return template.selectOne(
                 Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.IS_DELETE).is(0)),
                 UserAuthModel.class

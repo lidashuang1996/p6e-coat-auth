@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
+ * Oauth2 Client 模型存储库
  * @author lidashuang
  * @version 1.0
  */
@@ -33,21 +34,17 @@ public class Oauth2ClientRepository {
         this.template = template;
     }
 
-
-
     /**
-     * 根据客户端 ID 查询一条数据
+     * 根据客户端 ID 查询数据
      *
      * @param clientId 客户端 ID
      * @return Mono/UserAuthModel 用户认证模型对象
      */
-    public Mono<Oauth2ClientModel> findOneByClientId(String clientId) {
+    public Mono<Oauth2ClientModel> findByClientId(String clientId) {
         return template.selectOne(
                 Query.query(Criteria.where(Oauth2ClientModel.CLIENT_ID).is(clientId).and(Oauth2ClientModel.IS_DELETE).is(0)),
                 Oauth2ClientModel.class
         );
     }
-
-
 
 }

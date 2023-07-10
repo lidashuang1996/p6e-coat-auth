@@ -47,11 +47,11 @@ public class AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl
                 .flatMap(v -> {
                     final String oauth = v.get(AuthVoucher.OAUTH2);
                     if (StringUtils.hasText(oauth)) {
-                        final Map<String, String> map = new HashMap<>();
+                        final Map<String, Object> data = new HashMap<>(1);
+                        data.put("oauth2", v.client());
+                        final Map<String, String> map = new HashMap<>(2);
                         map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                         map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                        final Map<String, Object> data = new HashMap<>();
-                        data.put("oauth2", v.client());
                         return v
                                 .set(map)
                                 .flatMap(vv -> setHttpLocalStorageToken(

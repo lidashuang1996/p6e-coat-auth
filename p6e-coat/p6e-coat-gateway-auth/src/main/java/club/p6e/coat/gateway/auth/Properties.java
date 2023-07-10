@@ -18,11 +18,15 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "club.p6e.cloud.gateway.auth")
 public class Properties {
 
+    public static final String AUTH_PROPERTIES_PREFIX = "club.p6e.cloud.gateway.auth";
+
     private Mode mode = Mode.PHONE_OR_MAILBOX;
 
     private Login login = new Login();
     private Oauth2 oauth2 = new Oauth2();
     private Register register = new Register();
+
+    private Cache cache = new Cache();
 
     private Redis redis = new Redis();
     private DataSource dataSource = new DataSource();
@@ -31,6 +35,18 @@ public class Properties {
     @EqualsAndHashCode(callSuper = true)
     public static class Redis extends RedisProperties {
         private Map<String, RedisProperties> nodes = new HashMap<>();
+    }
+
+
+
+    @Data
+    public static class Cache {
+        private Type type = Type.MEMORY;
+
+        public enum Type {
+            REDIS,
+            MEMORY
+        }
     }
 
     @Data

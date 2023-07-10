@@ -29,7 +29,7 @@ public class AuthCertificateInterceptorHttpLocalStorageJsonWebToken
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
         return getHttpLocalStorageAccessToken(exchange.getRequest())
-                .map(t -> jwtRequire(t, cipher.getAccessTokenSecret()))
+                .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
                 ).build());

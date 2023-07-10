@@ -1,9 +1,9 @@
 package club.p6e.coat.gateway.auth.launcher;
 
+import club.p6e.coat.gateway.auth.repository.UserAuthRepository;
 import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -21,7 +21,6 @@ import java.util.Map;
         value = EmailMessageLauncher.class,
         ignored = EmailMessageLauncherImpl.class
 )
-@ConditionalOnExpression(AccountPasswordLoginService.CONDITIONAL_EXPRESSION)
 public class EmailMessageLauncherImpl implements EmailMessageLauncher {
 
     /**

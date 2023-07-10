@@ -15,7 +15,7 @@ public interface EmailMessageLauncher extends MessageLauncher {
      */
     @Override
     default String toType() {
-        return "EMAIL";
+        return "EMAIL_TYPE";
     }
     
 }
