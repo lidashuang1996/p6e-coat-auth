@@ -1,7 +1,12 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.cache.redis.AuthRedisCache;
+import club.p6e.coat.gateway.auth.certificate.AuthCertificateAuthorityHttpCookieCacheImpl;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.io.Resource;
@@ -38,16 +43,12 @@ public class AutoConfigureImportSelector2 {
 
 
     public AutoConfigureImportSelector2(ApplicationContext applicationContext, Properties properties) {
-
         System.out.println("AutoConfigureImportSelector2");
-
-        System.out.println(
-                applicationContext.getAutowireCapableBeanFactory()
-        );
-
         final AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
-        AuthRedisCache yourBean = factory.configureBean(AuthRedisCache.class);
-        autowireCapableBeanFactory.autowireBean(yourBean);
-
+        final DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) factory;
+        final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(AuthJsonWebTokenCipher.class);
+        defaultListableBeanFactory.registerBeanDefinition(AuthJsonWebTokenCipher.class.getName(), beanDefinition);
+//        factory.configureBean(yourBean, yourBean.getClass().getName());
     }
 }

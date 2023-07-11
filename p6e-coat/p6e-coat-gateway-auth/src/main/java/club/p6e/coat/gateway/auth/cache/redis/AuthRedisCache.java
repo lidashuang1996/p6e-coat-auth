@@ -24,10 +24,6 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  */
 @Component
-@ConditionalOnMissingBean(
-        value = AuthCache.class,
-        ignored = AuthRedisCache.class
-)
 public class AuthRedisCache extends RedisCache implements AuthCache {
 
     /**
