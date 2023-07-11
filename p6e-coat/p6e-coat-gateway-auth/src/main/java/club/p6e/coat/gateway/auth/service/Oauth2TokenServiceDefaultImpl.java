@@ -159,7 +159,7 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
         final String clientId = param.getClientId();
         final String clientSecret = param.getClientSecret();
         return oauth2ClientRepository
-                .findOneByClientId(clientId)
+                .findByClientId(clientId)
                 .switchIfEmpty(Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
@@ -177,17 +177,17 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
                     }
                     final Properties.Mode mode = properties.getMode();
                     return (switch (mode) {
-                        case PHONE -> userRepository.findOneByPhone(username);
-                        case MAILBOX -> userRepository.findOneByMailbox(username);
-                        case ACCOUNT -> userRepository.findOneByAccount(username);
-                        case PHONE_OR_MAILBOX -> userRepository.findOneByPhoneOrMailbox(username);
+                        case PHONE -> userRepository.findByPhone(username);
+                        case MAILBOX -> userRepository.findByMailbox(username);
+                        case ACCOUNT -> userRepository.findByAccount(username);
+                        case PHONE_OR_MAILBOX -> userRepository.findByPhoneOrMailbox(username);
                     }).switchIfEmpty(Mono.error(
                                     GlobalExceptionContext.executeServiceNotEnabledException(
                                             this.getClass(), "fun executePasswordType(Oauth2Context.Token.Request param).",
                                             "Account password login service not enabled exception."
                                     )))
                             .flatMap(u -> userAuthRepository
-                                    .findOneById(u.getId())
+                                    .findById(u.getId())
                                     .switchIfEmpty(Mono.error(
                                             GlobalExceptionContext.executeServiceNotEnabledException(
                                                     this.getClass(), "fun executePasswordType(Oauth2Context.Token.Request param).",
@@ -230,7 +230,7 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
         final String clientId = param.getClientId();
         final String clientSecret = param.getClientId();
         return oauth2ClientRepository
-                .findOneByClientId(clientId)
+                .findByClientId(clientId)
                 .switchIfEmpty(Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),
@@ -270,7 +270,7 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
         final String redirectUri = param.getRedirectUri();
         final String clientSecret = param.getClientSecret();
         return oauth2ClientRepository
-                .findOneByClientId(clientId)
+                .findByClientId(clientId)
                 .switchIfEmpty(Mono.error(
                         GlobalExceptionContext.executeServiceNotEnabledException(
                                 this.getClass(),

@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.launcher;
 
-import club.p6e.coat.gateway.auth.repository.UserAuthRepository;
 import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

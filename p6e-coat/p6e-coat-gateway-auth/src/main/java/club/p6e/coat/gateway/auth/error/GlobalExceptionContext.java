@@ -85,4 +85,9 @@ public final class GlobalExceptionContext {
         return new QuickResponseCodeException(sc, error, content);
     }
 
+
+    public static LauncherTypeException exceptionLauncherTypeException(Class<?> sc, String error, String content) {
+        return new LauncherTypeException(sc, error, content);
+    }
+
 }

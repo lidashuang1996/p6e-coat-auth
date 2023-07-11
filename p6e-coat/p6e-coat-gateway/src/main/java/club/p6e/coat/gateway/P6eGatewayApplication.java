@@ -10,7 +10,7 @@ import org.springframework.context.annotation.FilterType;
 @EnableP6eGatewayAuth
 @SpringBootApplication
 @ComponentScan(excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "club.p6.coat.gateway.auth..*")
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "club.p6e.coat.gateway.auth..*")
 })
 public class P6eGatewayApplication {
 

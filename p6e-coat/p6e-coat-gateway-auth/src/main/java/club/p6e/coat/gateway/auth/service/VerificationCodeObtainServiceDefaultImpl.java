@@ -96,11 +96,11 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
         switch (properties.getMode()) {
             case PHONE -> {
                 type = LauncherType.SMS;
-                mono = repository.findOneByPhone(account);
+                mono = repository.findByPhone(account);
             }
             case MAILBOX -> {
                 type = LauncherType.EMAIL;
-                mono = repository.findOneByMailbox(account);
+                mono = repository.findByMailbox(account);
             }
             case PHONE_OR_MAILBOX -> {
                 if (VerificationUtil.phone(account)) {
@@ -108,7 +108,7 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
                 } else if (VerificationUtil.mailbox(account)) {
                     type = LauncherType.EMAIL;
                 }
-                mono = repository.findOneByPhoneOrMailbox(account);
+                mono = repository.findByPhoneOrMailbox(account);
             }
             default -> {
                 return Mono.error(GlobalExceptionContext.executeServiceNotSupportException(

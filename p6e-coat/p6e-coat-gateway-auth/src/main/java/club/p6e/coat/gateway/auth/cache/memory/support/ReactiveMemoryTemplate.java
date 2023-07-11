@@ -17,12 +17,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnMissingBean(
-        value = AccountPasswordLoginSignatureCache.class,
-        ignored = AccountPasswordLoginSignatureMemoryCache.class
-)
-@ConditionalOnExpression(value = P6eConditionalExpression.CONDITIONAL_EXPRESSION)
+//@Component
+//@ConditionalOnMissingBean(
+//        value = AccountPasswordLoginSignatureCache.class,
+//        ignored = AccountPasswordLoginSignatureMemoryCache.class
+//)
+//@ConditionalOnExpression(value = P6eConditionalExpression.CONDITIONAL_EXPRESSION)
 public class ReactiveMemoryTemplate {
 
     protected final Map<String, Model> CACHE = new ConcurrentHashMap<>();

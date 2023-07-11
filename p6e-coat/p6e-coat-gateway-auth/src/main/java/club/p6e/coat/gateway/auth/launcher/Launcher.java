@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.launcher;
 
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import reactor.core.publisher.Mono;
 
@@ -29,6 +30,11 @@ public final class Launcher {
         if (LauncherType.EMAIL == type) {
             return SpringUtil.getBean(EmailMessageLauncher.class).execute(account, template, content);
         }
-        return Mono.error(new RuntimeException());
+        return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
+                Launcher.class,
+                "fun push(LauncherType type, String account, String template, Map<String, String> content).",
+                "[ " + type + " ] launcher type mismatch"
+        ));
     }
+
 }

@@ -141,7 +141,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
         final String clientId = param.getClientId();
         final String redirectUri = param.getRedirectUri();
         return repository
-                .findOneByClientId(clientId)
+                .findByClientId(clientId)
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
                         this.getClass(),
                         "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",

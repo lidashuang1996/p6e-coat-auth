@@ -13,12 +13,6 @@ import java.util.Map;
 public interface MessageLauncher {
 
     /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION = "#{${p6e.auth.register.enable:false} " +
-            " || (${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false})}";
-
-    /**
      * 推送器类型
      *
      * @return 类型

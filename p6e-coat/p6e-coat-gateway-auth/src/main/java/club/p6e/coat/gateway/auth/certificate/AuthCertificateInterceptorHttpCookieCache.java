@@ -31,7 +31,7 @@ public class AuthCertificateInterceptorHttpCookieCache
 
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
-        return getHttpCookieAccessToken(exchange.getRequest())
+        return getHttpCookieToken(exchange.getRequest())
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()

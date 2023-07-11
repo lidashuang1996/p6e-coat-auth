@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -35,7 +36,12 @@ public class AutoConfigureImportSelector implements ImportSelector {
 
     @NonNull
     @Override
-    public String[] selectImports(@NonNull AnnotationMetadata importingClassMetadata) {
+    public String[] selectImports(@NonNull AnnotationMetadata metadata) {
+
+        System.out.println(
+                metadata.getClass()
+        );
+
         final List<String> register = new ArrayList<>();
         final String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
                 + ClassUtils.convertClassNameToResourcePath(this.getClass().getPackageName())
@@ -50,7 +56,6 @@ public class AutoConfigureImportSelector implements ImportSelector {
                 final Class<?> clazz = Class.forName(classname);
                 final Component componentAnnotation = clazz.getAnnotation(Component.class);
                 if (componentAnnotation != null) {
-                    System.out.println(clazz.getName());
                     register.add(clazz.getName());
                 }
             }

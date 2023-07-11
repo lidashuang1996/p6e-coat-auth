@@ -81,7 +81,7 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
                                     return cache
                                             .del(mark)
                                             .flatMap(l -> repository
-                                                    .findOneById(Integer.valueOf(s))
+                                                    .findById(Integer.valueOf(s))
                                                     .flatMap(m -> {
                                                         if (m == null) {
                                                             return Mono.error(GlobalExceptionContext.executeUserNotExistException(

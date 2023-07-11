@@ -10,9 +10,11 @@ import java.lang.annotation.*;
  * @version 1.0
  */
 @Documented
-@EnableScheduling
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import(AutoConfigureImportSelector.class)
+@Import({
+        Properties.class,
+        AutoConfigureImportSelector2.class
+})
 public @interface EnableP6eGatewayAuth {
 }

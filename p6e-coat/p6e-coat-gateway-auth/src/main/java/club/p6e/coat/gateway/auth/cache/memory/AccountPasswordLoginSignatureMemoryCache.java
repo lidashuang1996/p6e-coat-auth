@@ -15,12 +15,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnMissingBean(
-        value = AccountPasswordLoginSignatureCache.class,
-        ignored = AccountPasswordLoginSignatureMemoryCache.class
-)
-@ConditionalOnExpression(value = P6eConditionalExpression.CONDITIONAL_EXPRESSION)
+//@Component
+//@ConditionalOnMissingBean(
+//        value = AccountPasswordLoginSignatureCache.class,
+//        ignored = AccountPasswordLoginSignatureMemoryCache.class
+//)
+//@ConditionalOnExpression(value = P6eConditionalExpression.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginSignatureMemoryCache
         extends MemoryCache implements AccountPasswordLoginSignatureCache {
 

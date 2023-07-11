@@ -141,9 +141,9 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     private Mono<AuthUserDetails> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findOneByPhoneOrMailbox(param.getAccount())
+                .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
-                        .findOneById(u.getId())
+                        .findById(u.getId())
                         .map(a -> new AuthUserDetails(u, a)));
     }
 
@@ -155,9 +155,9 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     private Mono<AuthUserDetails> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findOneByPhoneOrMailbox(param.getAccount())
+                .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
-                        .findOneById(u.getId())
+                        .findById(u.getId())
                         .map(a -> new AuthUserDetails(u, a)));
     }
 
@@ -169,9 +169,9 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     protected Mono<AuthUserDetails> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findOneByPhoneOrMailbox(param.getAccount())
+                .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
-                        .findOneById(u.getId())
+                        .findById(u.getId())
                         .map(a -> new AuthUserDetails(u, a)));
     }
 
@@ -183,9 +183,9 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     protected Mono<AuthUserDetails> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findOneByPhoneOrMailbox(param.getAccount())
+                .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
-                        .findOneById(u.getId())
+                        .findById(u.getId())
                         .map(a -> new AuthUserDetails(u, a)));
     }
 

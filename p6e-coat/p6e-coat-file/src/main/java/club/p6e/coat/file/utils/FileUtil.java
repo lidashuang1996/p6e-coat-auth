@@ -184,7 +184,6 @@ public final class FileUtil {
         } else {
             return deleteFolder(new File(folderPath));
         }
-
     }
 
     /**

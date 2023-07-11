@@ -99,10 +99,10 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                                         ));
                             })
                             .flatMap(r -> switch (Properties.Mode.create(accountType)) {
-                                case PHONE -> repository.findOneByPhone(account);
-                                case MAILBOX -> repository.findOneByMailbox(account);
-                                case ACCOUNT -> repository.findOneByAccount(account);
-                                case PHONE_OR_MAILBOX -> repository.findOneByPhoneOrMailbox(account);
+                                case PHONE -> repository.findByPhone(account);
+                                case MAILBOX -> repository.findByMailbox(account);
+                                case ACCOUNT -> repository.findByAccount(account);
+                                case PHONE_OR_MAILBOX -> repository.findByPhoneOrMailbox(account);
                             })
                             .map(AuthUserDetails::new);
                 });
