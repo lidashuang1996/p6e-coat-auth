@@ -30,7 +30,7 @@ import java.util.Map;
 //        ignored = VerificationCodeObtainServiceDefaultImpl.class
 //)
 //@ConditionalOnExpression(VerificationCodeObtainService.CONDITIONAL_EXPRESSION)
-public class VerificationCodeObtainServiceDefaultImpl implements VerificationCodeObtainService {
+public class VerificationCodeObtainServiceImpl implements VerificationCodeObtainService {
 
     /**
      * CODE LOGIN 模板
@@ -66,7 +66,7 @@ public class VerificationCodeObtainServiceDefaultImpl implements VerificationCod
      * @param codeLoginCache     验证码缓存对象
      * @param codeLoginGenerator 验证码生成器对象
      */
-    public VerificationCodeObtainServiceDefaultImpl(
+    public VerificationCodeObtainServiceImpl(
             Properties properties, UserRepository repository,
             VerificationCodeLoginCache codeLoginCache, CodeLoginGenerator codeLoginGenerator) {
         this.cache = codeLoginCache;

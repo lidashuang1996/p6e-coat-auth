@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 //        ignored = QrCodeObtainControllerDefaultImpl.class
 //)
 //@ConditionalOnExpression(QrCodeObtainController.CONDITIONAL_EXPRESSION)
-public class QrCodeObtainControllerDefaultImpl
+public class QrCodeObtainControllerImpl
         implements QrCodeObtainController<LoginContext.QrCodeObtain.Request, ResultContext> {
 
     /**
@@ -42,7 +42,7 @@ public class QrCodeObtainControllerDefaultImpl
      * @param properties 配置文件对象
      * @param service    二维码获取的服务对象
      */
-    public QrCodeObtainControllerDefaultImpl(Properties properties, QrCodeObtainService service) {
+    public QrCodeObtainControllerImpl(Properties properties, QrCodeObtainService service) {
         this.service = service;
         this.properties = properties;
     }

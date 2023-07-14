@@ -22,6 +22,8 @@ public class Properties {
 
     private Mode mode = Mode.PHONE_OR_MAILBOX;
 
+    private boolean enable = true;
+
     private Login login = new Login();
     private Oauth2 oauth2 = new Oauth2();
     private Register register = new Register();

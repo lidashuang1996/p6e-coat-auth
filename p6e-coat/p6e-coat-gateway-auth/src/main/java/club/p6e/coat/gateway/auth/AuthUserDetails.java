@@ -3,7 +3,6 @@ package club.p6e.coat.gateway.auth;
 import club.p6e.coat.gateway.auth.model.UserAuthModel;
 import club.p6e.coat.gateway.auth.model.UserModel;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import io.r2dbc.postgresql.codec.Json;
 import lombok.Data;
 
 import java.util.HashMap;

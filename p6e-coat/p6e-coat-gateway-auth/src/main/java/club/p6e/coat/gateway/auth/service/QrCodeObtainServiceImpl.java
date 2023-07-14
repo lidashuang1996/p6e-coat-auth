@@ -6,8 +6,6 @@ import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.QrCodeLoginGenerator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -27,7 +25,7 @@ import java.util.Map;
 //        ignored = QrCodeObtainServiceDefaultImpl.class
 //)
 //@ConditionalOnExpression(QrCodeObtainService.CONDITIONAL_EXPRESSION)
-public class QrCodeObtainServiceDefaultImpl implements QrCodeObtainService {
+public class QrCodeObtainServiceImpl implements QrCodeObtainService {
 
     /**
      * 配置文件对象
@@ -52,7 +50,7 @@ public class QrCodeObtainServiceDefaultImpl implements QrCodeObtainService {
      * @param cache      二维码缓存对象
      * @param generator  二维码生成器对象
      */
-    public QrCodeObtainServiceDefaultImpl(
+    public QrCodeObtainServiceImpl(
             Properties properties,
             QrCodeLoginCache cache,
             QrCodeLoginGenerator generator) {

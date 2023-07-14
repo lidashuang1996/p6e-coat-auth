@@ -30,9 +30,6 @@ public class P6eGatewayApplication {
             }
         }
 
-        System.out.println(
-                SpringUtil.getBean(AuthJsonWebTokenCipher.class)
-        );
 
     }
 

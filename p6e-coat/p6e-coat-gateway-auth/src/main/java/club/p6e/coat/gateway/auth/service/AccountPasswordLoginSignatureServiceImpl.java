@@ -28,7 +28,7 @@ import java.util.Map;
 //        ignored = AccountPasswordLoginSignatureServiceDefaultImpl.class
 //)
 //@ConditionalOnExpression(AccountPasswordLoginSignatureService.CONDITIONAL_EXPRESSION)
-public class AccountPasswordLoginSignatureServiceDefaultImpl implements AccountPasswordLoginSignatureService {
+public class AccountPasswordLoginSignatureServiceImpl implements AccountPasswordLoginSignatureService {
 
     /**
      * 配置文件对象
@@ -50,7 +50,7 @@ public class AccountPasswordLoginSignatureServiceDefaultImpl implements AccountP
      * @param codec      传输编码解码器
      * @param properties 配置文件对象
      */
-    public AccountPasswordLoginSignatureServiceDefaultImpl(
+    public AccountPasswordLoginSignatureServiceImpl(
             Properties properties,
             AccountPasswordLoginSignatureCache cache,
             AccountPasswordLoginSignatureGenerator generator,
