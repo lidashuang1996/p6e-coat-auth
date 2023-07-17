@@ -1,10 +1,6 @@
-package club.p6e.coat.gateway.auth.validator.support;
+package club.p6e.coat.gateway.auth.validator;
 
 import club.p6e.coat.gateway.auth.context.LoginContext;
-import club.p6e.coat.gateway.auth.validator.ParameterValidatorInterface;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.stereotype.Component;
-
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -12,20 +8,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnExpression(VerificationCodeLoginParameterValidator.CONDITIONAL_EXPRESSION)
 public class VerificationCodeLoginParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
      */
     private static final int ORDER = 0;
-
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
 
     @Override
     public int order() {

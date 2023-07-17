@@ -1,12 +1,13 @@
 package club.p6e.coat.gateway.auth.controller;
 
+import club.p6e.coat.gateway.auth.AuthCertificateAuthority;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.QrCodeLoginService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -17,17 +18,7 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public class QrCodeLoginControllerDefaultImpl
-        implements QrCodeLoginController<LoginContext.QrCode.Request, AuthUserDetails> {
-
-    /**
-     * 二维码登录获取信息为空的返回
-     */
-    private static final String QR_CODE_EMPTY_RESULT = "NO_DATA";
-
-    /**
-     * 配置文件对象
-     */
-    private final Properties properties;
+        implements QrCodeLoginController<LoginContext.QrCode.Request, ResultContext> {
 
     /**
      * 二维码登录服务
@@ -35,19 +26,19 @@ public class QrCodeLoginControllerDefaultImpl
     private final QrCodeLoginService service;
 
     /**
+     * 认证授权的服务对象
+     */
+    private final AuthCertificateAuthority authority;
+
+    /**
      * 构造方法
      *
-     * @param properties 配置文件对象
-     * @param service    二维码登录服务
+     * @param service   二维码登录服务
+     * @param authority 认证授权的服务对象
      */
-    public QrCodeLoginControllerDefaultImpl(Properties properties, QrCodeLoginService service) {
+    public QrCodeLoginControllerDefaultImpl(QrCodeLoginService service, AuthCertificateAuthority authority) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getQrCode().isEnable();
+        this.authority = authority;
     }
 
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
@@ -55,16 +46,11 @@ public class QrCodeLoginControllerDefaultImpl
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param)",
-                                "QrCode login service not enabled exception."
-                        )))
-                .flatMap(p -> service.execute(exchange, p));
+    public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
+        return vp(exchange, param)
+                .then(Mono.just(param))
+                .flatMap(p -> service.execute(exchange, p))
+                .flatMap(u -> authority.present(exchange, u));
     }
 
 }

@@ -1,4 +1,4 @@
-package club.p6e.coat.gateway.auth.generator.impl;
+package club.p6e.coat.gateway.auth.generator;
 
 import club.p6e.coat.gateway.auth.generator.*;
 import club.p6e.coat.gateway.auth.utils.GeneratorUtil;
@@ -12,17 +12,13 @@ import org.springframework.util.DigestUtils;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnMissingBean(
-        value = {
-                AuthAccessTokenGenerator.class,
-                AuthRefreshTokenGenerator.class
-        },
-        ignored = AuthTokenGeneratorImpl.class
-)
-public class AuthTokenGeneratorImpl implements AuthAccessTokenGenerator, AuthRefreshTokenGenerator,
-        Oauth2TokenClientAuthAccessTokenGenerator, Oauth2TokenClientAuthRefreshTokenGenerator,
-        Oauth2TokenUserAuthAccessTokenGenerator, Oauth2TokenUserAuthRefreshTokenGenerator {
+public class AuthTokenGeneratorImpl implements
+        AuthAccessTokenGenerator,
+        AuthRefreshTokenGenerator,
+        Oauth2TokenClientAuthAccessTokenGenerator,
+        Oauth2TokenClientAuthRefreshTokenGenerator,
+        Oauth2TokenUserAuthAccessTokenGenerator,
+        Oauth2TokenUserAuthRefreshTokenGenerator {
 
     @Override
     public String execute() {

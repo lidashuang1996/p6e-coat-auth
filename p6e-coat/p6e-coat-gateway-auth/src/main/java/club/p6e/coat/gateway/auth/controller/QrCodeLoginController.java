@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -15,13 +14,7 @@ import reactor.core.publisher.Mono;
  */
 @RestController
 @RequestMapping("/login/qrcode")
-public interface QrCodeLoginController<P, R extends AuthUser> {
-
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.qr-code.enable:false}}";
+public interface QrCodeLoginController<P, R> {
 
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);

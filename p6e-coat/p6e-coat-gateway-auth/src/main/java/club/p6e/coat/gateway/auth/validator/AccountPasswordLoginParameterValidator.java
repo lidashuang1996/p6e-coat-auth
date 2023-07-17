@@ -1,11 +1,8 @@
-package club.p6e.coat.gateway.auth.validator.support;
+package club.p6e.coat.gateway.auth.validator;
 
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.utils.VerificationUtil;
-import club.p6e.coat.gateway.auth.validator.ParameterValidatorInterface;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -16,20 +13,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnExpression(AccountPasswordLoginParameterValidator.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
      */
     private static final int ORDER = 0;
-
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.account-password.enable:false}}";
 
     /**
      * 配置文件对象
@@ -57,13 +46,7 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
 
     @Override
     public Mono<Boolean> execute(ServerWebExchange request, Object data) {
-        System.out.println("-------------------------");
-        System.out.println(data);
-        System.out.println("-------------------------");
         if (data instanceof final LoginContext.AccountPassword.Request param) {
-            System.out.println("-------------------------");
-            System.out.println(data);
-            System.out.println("-------------------------");
             if (param.getAccount() == null || param.getPassword() == null) {
                 return Mono.just(false);
             } else {
@@ -80,7 +63,6 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
                         }
                     }
                     case PHONE_OR_MAILBOX -> {
-                        System.out.println(param.getAccount());
                         if (VerificationUtil.phone(param.getAccount())
                                 || VerificationUtil.mailbox(param.getAccount())) {
                             return Mono.just(true);

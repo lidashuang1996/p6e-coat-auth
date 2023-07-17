@@ -3,10 +3,8 @@ package club.p6e.coat.gateway.auth.controller;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.QrCodeObtainService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -21,11 +19,6 @@ public class QrCodeObtainControllerImpl
         implements QrCodeObtainController<LoginContext.QrCodeObtain.Request, ResultContext> {
 
     /**
-     * 配置文件对象
-     */
-    private final Properties properties;
-
-    /**
      * 二维码获取服务
      */
     private final QrCodeObtainService service;
@@ -38,12 +31,6 @@ public class QrCodeObtainControllerImpl
      */
     public QrCodeObtainControllerImpl(Properties properties, QrCodeObtainService service) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getQrCode().isEnable();
     }
 
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param) {
@@ -52,14 +39,8 @@ public class QrCodeObtainControllerImpl
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param)",
-                                "QrCode login code obtain service not enabled exception."
-                        )))
+        return vp(exchange, param)
+                .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
                 .map(ResultContext::build);
     }

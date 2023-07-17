@@ -1,10 +1,7 @@
-package club.p6e.coat.gateway.auth.validator.support;
+package club.p6e.coat.gateway.auth.validator;
 
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
-import club.p6e.coat.gateway.auth.validator.ParameterValidatorInterface;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -15,20 +12,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnExpression(Oauth2AuthParameterValidator.CONDITIONAL_EXPRESSION)
 public class Oauth2AuthParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
      */
     private static final int ORDER = 0;
-
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.oauth2.enable:false} && ${p6e.auth.oauth2.authorization-code.enable:false}}";
 
     /**
      * 客户端 ID 参数

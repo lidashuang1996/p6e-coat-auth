@@ -57,7 +57,7 @@ public class HttpCookieCacheCertificateAuthority
     }
 
     @Override
-    public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
+    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser user) {
         final String uid = user.id();
         final String info = JsonUtil.toJson(user.toMap());
         final String accessToken = accessTokenGenerator.execute();

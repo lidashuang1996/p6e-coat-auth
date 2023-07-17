@@ -16,7 +16,6 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 @ConditionalOnMissingBean(
         value = UserRepository.class,
         ignored = UserRepository.class

@@ -22,7 +22,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class HttpLocalStorageCacheCertificateAuthority
         extends HttpCertificate implements AuthCertificateAuthority {
 
@@ -58,7 +57,7 @@ public class HttpLocalStorageCacheCertificateAuthority
     }
 
     @Override
-    public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
+    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser user) {
         final String uid = user.id();
         final String info = JsonUtil.toJson(user.toMap());
         final String accessToken = accessTokenGenerator.execute();

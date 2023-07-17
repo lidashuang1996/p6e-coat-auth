@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 @ConditionalOnMissingBean(
         value = Oauth2ClientRepository.class,
         ignored = Oauth2ClientRepository.class

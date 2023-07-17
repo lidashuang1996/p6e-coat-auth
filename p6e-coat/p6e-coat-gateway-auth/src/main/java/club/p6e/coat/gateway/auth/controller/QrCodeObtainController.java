@@ -17,12 +17,6 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/login/qrcode/obtain")
 public interface QrCodeObtainController<P, R> {
 
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.qr-code.enable:false}}";
-
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 

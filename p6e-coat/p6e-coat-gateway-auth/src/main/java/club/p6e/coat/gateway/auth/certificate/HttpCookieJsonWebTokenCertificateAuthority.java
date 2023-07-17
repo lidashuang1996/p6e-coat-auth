@@ -37,7 +37,7 @@ public class HttpCookieJsonWebTokenCertificateAuthority
     }
 
     @Override
-    public Mono<Object> present(ServerWebExchange exchange, AuthUser user) {
+    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser user) {
         final String uid = user.id();
         final String info = JsonUtil.toJson(user.toMap());
         final String accessToken = jwtCreate(uid, info, cipher.getAccessTokenSecret());

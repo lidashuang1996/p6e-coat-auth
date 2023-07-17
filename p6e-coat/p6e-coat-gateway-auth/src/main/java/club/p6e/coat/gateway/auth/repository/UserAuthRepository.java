@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 @ConditionalOnMissingBean(
         value = UserAuthRepository.class,
         ignored = UserAuthRepository.class

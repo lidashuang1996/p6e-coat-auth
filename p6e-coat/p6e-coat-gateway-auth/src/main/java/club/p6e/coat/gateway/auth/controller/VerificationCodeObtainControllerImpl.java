@@ -20,11 +20,6 @@ public class VerificationCodeObtainControllerImpl implements
         VerificationCodeObtainController<LoginContext.VerificationCodeObtain.Request, ResultContext> {
 
     /**
-     * 配置文件对象
-     */
-    private final Properties properties;
-
-    /**
      * 验证码获取服务
      */
     private final VerificationCodeObtainService service;
@@ -32,17 +27,10 @@ public class VerificationCodeObtainControllerImpl implements
     /**
      * 构造方法
      *
-     * @param properties 配置文件对象
      * @param service    验证码获取的服务对象
      */
-    public VerificationCodeObtainControllerImpl(Properties properties, VerificationCodeObtainService service) {
+    public VerificationCodeObtainControllerImpl(VerificationCodeObtainService service) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getVerificationCode().isEnable();
     }
 
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param) {
@@ -51,14 +39,8 @@ public class VerificationCodeObtainControllerImpl implements
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                                "Verification code login code obtain service not enabled exception."
-                        )))
+        return vp(exchange, param)
+                .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
                 .map(ResultContext::build);
     }

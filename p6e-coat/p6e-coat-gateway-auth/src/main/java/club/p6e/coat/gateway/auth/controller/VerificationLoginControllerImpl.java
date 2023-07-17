@@ -29,11 +29,6 @@ public class VerificationLoginControllerImpl
     private static final String USER_HEADER_NAME = "P6e-User-Info";
 
     /**
-     * 配置文件对象
-     */
-    private final Properties properties;
-
-    /**
      * 认证证书拦截器对象
      */
     private final AuthCertificateValidator interceptor;
@@ -45,21 +40,13 @@ public class VerificationLoginControllerImpl
      * @param interceptor 验证登录的切面对象
      */
     public VerificationLoginControllerImpl(Properties properties, AuthCertificateValidator interceptor) {
-        this.properties = properties;
         this.interceptor = interceptor;
     }
 
-    /**
-     * 判断是否启用
-     *
-     * @return 是否启用
-     */
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable();
-    }
+
 
     @Override
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.Verification.Request param) {
+    public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.Verification.Request param) {
         return Mono
                 .just(isEnable())
                 .flatMap(b -> {
