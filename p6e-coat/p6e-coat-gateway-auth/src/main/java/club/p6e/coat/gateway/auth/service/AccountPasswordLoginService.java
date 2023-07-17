@@ -14,11 +14,6 @@ import reactor.core.publisher.Mono;
 public interface AccountPasswordLoginService {
 
     /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.account-password.enable:false}}";
-
-    /**
      * 执行账号密码登录操作
      *
      * @param param 请求对象

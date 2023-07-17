@@ -7,13 +7,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 认证凭证拦截验证（HttpCookieCache）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class AuthCertificateInterceptorHttpCookieCache
-        extends AuthCertificateHttp implements AuthCertificateValidator {
+public class HttpLocalStorageCacheAuthCertificateValidator
+        extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -25,13 +23,13 @@ public class AuthCertificateInterceptorHttpCookieCache
      *
      * @param cache 认证缓存的对象
      */
-    public AuthCertificateInterceptorHttpCookieCache(AuthCache cache) {
+    public HttpLocalStorageCacheAuthCertificateValidator(AuthCache cache) {
         this.cache = cache;
     }
 
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
-        return getHttpCookieToken(exchange.getRequest())
+        return getHttpLocalStorageToken(exchange.getRequest())
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
@@ -44,8 +42,8 @@ public class AuthCertificateInterceptorHttpCookieCache
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "",
-                        ""
+                        "fun accessToken(String token)",
+                        "[HTTP/STORAGE] Verifier validation access token exception."
                 )));
     }
 
@@ -55,8 +53,8 @@ public class AuthCertificateInterceptorHttpCookieCache
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "",
-                        ""
+                        "fun refreshToken(String token)",
+                        "[HTTP/STORAGE] Verifier validation refresh token exception."
                 )));
     }
 }

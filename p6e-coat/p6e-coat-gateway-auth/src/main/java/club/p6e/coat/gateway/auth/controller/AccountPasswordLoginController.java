@@ -1,7 +1,5 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
-import club.p6e.coat.gateway.auth.AuthUser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +17,7 @@ import reactor.core.publisher.Mono;
  */
 @RestController
 @RequestMapping("/login/account")
-public interface AccountPasswordLoginController<P, R extends AuthUser> {
-
-    /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.account-password.enable:false}}";
+public interface AccountPasswordLoginController<P, R> {
 
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);

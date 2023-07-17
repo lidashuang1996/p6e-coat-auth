@@ -3,17 +3,17 @@ package club.p6e.coat.gateway.auth.certificate;
 import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 认证凭证拦截验证（HttpCookieCache）
+ *
  * @author lidashuang
  * @version 1.0
  */
-@Component
-public class AuthCertificateInterceptorHttpLocalStorageCache
-        extends AuthCertificateHttp implements AuthCertificateValidator {
+public class HttpCookieCacheCertificateValidator
+        extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -25,16 +25,16 @@ public class AuthCertificateInterceptorHttpLocalStorageCache
      *
      * @param cache 认证缓存的对象
      */
-    public AuthCertificateInterceptorHttpLocalStorageCache(AuthCache cache) {
+    public HttpCookieCacheCertificateValidator(AuthCache cache) {
         this.cache = cache;
     }
 
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
-        return getHttpLocalStorageToken(exchange.getRequest())
+        return getHttpCookieToken(exchange.getRequest())
                 .flatMap(this::accessToken)
-                .map(s -> exchange.mutate().request(
-                        exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
+                .map(r -> exchange.mutate().request(
+                        exchange.getRequest().mutate().header(USER_HEADER_NAME, r).build()
                 ).build());
     }
 
@@ -44,8 +44,8 @@ public class AuthCertificateInterceptorHttpLocalStorageCache
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "",
-                        ""
+                        "fun accessToken(String token)",
+                        "[HTTP/COOKIE] Verifier validation access token exception."
                 )));
     }
 
@@ -55,8 +55,8 @@ public class AuthCertificateInterceptorHttpLocalStorageCache
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "",
-                        ""
+                        "fun refreshToken(String token)",
+                        "[HTTP/COOKIE] Verifier validation refresh token exception."
                 )));
     }
 }

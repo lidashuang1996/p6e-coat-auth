@@ -1,14 +1,11 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.QrCodeLoginService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -19,12 +16,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = QrCodeLoginController.class,
-//        ignored = QrCodeLoginControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(QrCodeLoginController.CONDITIONAL_EXPRESSION)
 public class QrCodeLoginControllerDefaultImpl
         implements QrCodeLoginController<LoginContext.QrCode.Request, AuthUserDetails> {
 
@@ -64,7 +55,6 @@ public class QrCodeLoginControllerDefaultImpl
     }
 
     @Override
-    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
         return Mono
                 .just(isEnable())

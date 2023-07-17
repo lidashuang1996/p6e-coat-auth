@@ -199,7 +199,7 @@ public class AuthVoucher implements Serializable {
     }
 
 
-    public Map<String, Object> client() {
+    public Map<String, Object> oauth2() {
         final String clientId = this.get(AuthVoucher.OAUTH2_CLIENT_ID);
         final String clientName = this.get(AuthVoucher.OAUTH2_CLIENT_NAME);
         final String clientAvatar = this.get(AuthVoucher.OAUTH2_CLIENT_AVATAR);

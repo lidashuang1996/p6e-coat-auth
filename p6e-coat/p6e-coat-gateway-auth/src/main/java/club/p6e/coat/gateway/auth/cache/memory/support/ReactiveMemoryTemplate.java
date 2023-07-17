@@ -1,13 +1,7 @@
 package club.p6e.coat.gateway.auth.cache.memory.support;
 
-import club.p6e.coat.gateway.auth.P6eConditionalExpression;
-import club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache;
-import club.p6e.coat.gateway.auth.cache.memory.AccountPasswordLoginSignatureMemoryCache;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.Map;
@@ -17,12 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author lidashuang
  * @version 1.0
  */
-//@Component
-//@ConditionalOnMissingBean(
-//        value = AccountPasswordLoginSignatureCache.class,
-//        ignored = AccountPasswordLoginSignatureMemoryCache.class
-//)
-//@ConditionalOnExpression(value = P6eConditionalExpression.CONDITIONAL_EXPRESSION)
 public class ReactiveMemoryTemplate {
 
     protected final Map<String, Model> CACHE = new ConcurrentHashMap<>();

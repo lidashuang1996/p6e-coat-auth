@@ -19,12 +19,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = QrCodeObtainService.class,
-//        ignored = QrCodeObtainServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(QrCodeObtainService.CONDITIONAL_EXPRESSION)
 public class QrCodeObtainServiceImpl implements QrCodeObtainService {
 
     /**

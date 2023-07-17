@@ -14,6 +14,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
         Properties.class,
+        Configuration.class,
         AutoConfigureImportSelector2.class
 })
 public @interface EnableP6eGatewayAuth {

@@ -16,12 +16,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = VerificationCodeObtainController.class,
-//        ignored = VerificationCodeObtainControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(VerificationCodeObtainController.CONDITIONAL_EXPRESSION)
 public class VerificationCodeObtainControllerImpl implements
         VerificationCodeObtainController<LoginContext.VerificationCodeObtain.Request, ResultContext> {
 

@@ -23,8 +23,8 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
-        extends AuthCertificateHttp implements AuthCertificateAuthority {
+public class HttpLocalStorageCacheCertificateAuthority
+        extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * 认证缓存
@@ -47,7 +47,7 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
      * @param accessTokenGenerator  ACCESS TOKEN 生成器
      * @param refreshTokenGenerator REFRESH TOKEN 生成器
      */
-    public AuthCertificateAuthorityHttpLocalStorageCacheImpl(
+    public HttpLocalStorageCacheCertificateAuthority(
             AuthCache cache,
             AuthAccessTokenGenerator accessTokenGenerator,
             AuthRefreshTokenGenerator refreshTokenGenerator
@@ -74,7 +74,7 @@ public class AuthCertificateAuthorityHttpLocalStorageCacheImpl
                                 final Map<String, Object> data = new HashMap<>(1);
                                 map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                                 map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                                data.put("oauth2", v.client());
+                                data.put("oauth2", v.oauth2());
                                 return v
                                         .set(map)
                                         .flatMap(vv -> setHttpLocalStorageToken(

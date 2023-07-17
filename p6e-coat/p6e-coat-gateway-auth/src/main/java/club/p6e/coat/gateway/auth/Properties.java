@@ -30,6 +30,8 @@ public class Properties {
 
     private Cache cache = new Cache();
 
+    private Auth auth = new Auth();
+
     private Redis redis = new Redis();
     private DataSource dataSource = new DataSource();
 
@@ -38,7 +40,6 @@ public class Properties {
     public static class Redis extends RedisProperties {
         private Map<String, RedisProperties> nodes = new HashMap<>();
     }
-
 
 
     @Data
@@ -87,7 +88,7 @@ public class Properties {
         @Data
         public static class AccountPassword {
             private boolean enable = true;
-            private boolean enableTransmissionEncryption = false;
+            private boolean enableTransmissionEncryption = true;
         }
 
         @Data
@@ -102,7 +103,7 @@ public class Properties {
 
         @Data
         public static class Other {
-            private boolean enable = true;
+            private boolean enable = false;
             private Map<String, Map<String, String>> config = new HashMap<>();
         }
     }
@@ -116,24 +117,51 @@ public class Properties {
 
         @Data
         public static class AuthorizationCode {
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         @Data
         public static class Password {
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         @Data
         public static class Client {
-            private boolean enable = true;
+            private boolean enable = false;
         }
     }
 
     @Data
     public static class Register {
-        private boolean enable = true;
+        private boolean enable = false;
     }
 
+    @Data
+    public static class Auth {
+        private Bean validator = new Bean("club.p6e.coat.gateway.auth.certificate." +
+                "AuthCertificateInterceptorHttpLocalStorageJsonWebToken", new String[]{
+                "club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher"
+        });
+        private Bean authority = new Bean("club.p6e.coat.gateway.auth.certificate." +
+                "AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl", new String[]{
+                "club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher"
+        });
+    }
+
+
+    @Data
+    public static class Bean {
+        private String name;
+        private String[] depend = new String[]{};
+
+        public Bean(String name) {
+            this.name = name;
+        }
+
+        public Bean(String name, String[] depend) {
+            this.name = name;
+            this.depend = depend;
+        }
+    }
 
 }

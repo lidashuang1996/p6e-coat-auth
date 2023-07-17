@@ -1,13 +1,10 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
-import club.p6e.coat.gateway.auth.Properties;
+import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.context.LoginContext;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.service.AccountPasswordLoginService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -17,19 +14,13 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = AccountPasswordLoginController.class,
-//        ignored = AccountPasswordLoginControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(AccountPasswordLoginController.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginControllerImpl implements
-        AccountPasswordLoginController<LoginContext.AccountPassword.Request, AuthUserDetails> {
+        AccountPasswordLoginController<LoginContext.AccountPassword.Request, ResultContext> {
 
     /**
-     * 配置文件对象
+     * 认证授权的服务对象
      */
-    private final Properties properties;
+    private final AuthCertificateAuthority authority;
 
     /**
      * 账号密码登录的服务对象
@@ -40,21 +31,11 @@ public class AccountPasswordLoginControllerImpl implements
      * 构造方法初始化
      *
      * @param service    账号密码登录的服务对象
-     * @param properties 配置文件对象
+     * @param authority  认证授权的服务对象
      */
-    public AccountPasswordLoginControllerImpl(Properties properties, AccountPasswordLoginService service) {
+    public AccountPasswordLoginControllerImpl(AuthCertificateAuthority authority, AccountPasswordLoginService service) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    /**
-     * 判断是否启用
-     *
-     * @return 是否启用
-     */
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getAccountPassword().isEnable();
+        this.authority = authority;
     }
 
     /**
@@ -69,17 +50,11 @@ public class AccountPasswordLoginControllerImpl implements
     }
 
     @Override
-    @AuthCertificate
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        )))
-                .flatMap(p -> service.execute(exchange, p));
+    public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
+        return vp(exchange, param)
+                .then(Mono.just(param))
+                .flatMap(p -> service.execute(exchange, p))
+                .flatMap(u -> authority.present(exchange, u));
     }
 
 }

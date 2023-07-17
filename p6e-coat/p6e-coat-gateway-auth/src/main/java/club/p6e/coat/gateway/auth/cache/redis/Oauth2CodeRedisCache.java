@@ -25,12 +25,6 @@ import java.util.Optional;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = Oauth2CodeCache.class,
-//        ignored = Oauth2CodeRedisCache.class
-//)
-//@ConditionalOnExpression(Oauth2CodeCache.CONDITIONAL_EXPRESSION)
 public class Oauth2CodeRedisCache extends RedisCache implements Oauth2CodeCache {
     /**
      * 缓存对象

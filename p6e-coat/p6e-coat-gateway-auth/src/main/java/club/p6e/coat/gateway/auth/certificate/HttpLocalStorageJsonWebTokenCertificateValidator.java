@@ -2,6 +2,7 @@ package club.p6e.coat.gateway.auth.certificate;
 
 import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher;
+import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -9,8 +10,8 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class AuthCertificateInterceptorHttpLocalStorageJsonWebToken
-        extends AuthCertificateHttp implements AuthCertificateValidator {
+public class HttpLocalStorageJsonWebTokenCertificateValidator
+        extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -22,7 +23,7 @@ public class AuthCertificateInterceptorHttpLocalStorageJsonWebToken
      *
      * @param cipher JWT 密码对象
      */
-    public AuthCertificateInterceptorHttpLocalStorageJsonWebToken(AuthJsonWebTokenCipher cipher) {
+    public HttpLocalStorageJsonWebTokenCertificateValidator(AuthJsonWebTokenCipher cipher) {
         this.cipher = cipher;
     }
 
@@ -37,12 +38,22 @@ public class AuthCertificateInterceptorHttpLocalStorageJsonWebToken
 
     @Override
     public Mono<String> accessToken(String token) {
-        return Mono.just(jwtRequire(token, cipher.getAccessTokenSecret()));
+        final String r = jwtDecode(token, cipher.getRefreshTokenSecret());
+        return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
+                this.getClass(),
+                "fun accessToken(String token)",
+                "[HTTP/STORAGE] Verifier validation access token exception."
+        )) : Mono.just(r);
     }
 
     @Override
     public Mono<String> refreshToken(String token) {
-        return Mono.just(jwtRequire(token, cipher.getRefreshTokenSecret()));
+        final String r = jwtDecode(token, cipher.getRefreshTokenSecret());
+        return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
+                this.getClass(),
+                "fun refreshToken(String token)",
+                "[HTTP/STORAGE] Verifier validation refresh token exception."
+        )) : Mono.just(r);
     }
 
 }

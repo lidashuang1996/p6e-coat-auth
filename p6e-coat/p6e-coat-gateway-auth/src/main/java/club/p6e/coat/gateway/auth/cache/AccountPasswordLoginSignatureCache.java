@@ -22,15 +22,6 @@ public interface AccountPasswordLoginSignatureCache extends ICache {
     String CACHE_PREFIX = "LOGIN:ACCOUNT_PASSWORD_SIGNATURE_RSA:";
 
     /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION = "#{"
-            + "${p6e.auth.login.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false} "
-            + "}";
-
-    /**
      * 删除数据
      *
      * @param key 键

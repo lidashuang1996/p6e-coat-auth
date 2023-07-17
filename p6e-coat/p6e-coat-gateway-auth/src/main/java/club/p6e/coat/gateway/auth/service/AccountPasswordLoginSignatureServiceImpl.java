@@ -3,12 +3,11 @@ package club.p6e.coat.gateway.auth.service;
 import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache;
-import club.p6e.coat.gateway.auth.codec.AuthAccountPasswordLoginTransmissionCodec;
+import club.p6e.coat.gateway.auth.codec.AccountPasswordLoginTransmissionCodec;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.AccountPasswordLoginSignatureGenerator;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -22,12 +21,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = AccountPasswordLoginSignatureService.class,
-//        ignored = AccountPasswordLoginSignatureServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(AccountPasswordLoginSignatureService.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginSignatureServiceImpl implements AccountPasswordLoginSignatureService {
 
     /**
@@ -38,7 +31,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
     /**
      * 传输编码解码器
      */
-    private final AuthAccountPasswordLoginTransmissionCodec codec;
+    private final AccountPasswordLoginTransmissionCodec codec;
 
     private final AccountPasswordLoginSignatureCache cache;
 
@@ -54,7 +47,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
             Properties properties,
             AccountPasswordLoginSignatureCache cache,
             AccountPasswordLoginSignatureGenerator generator,
-            AuthAccountPasswordLoginTransmissionCodec codec) {
+            AccountPasswordLoginTransmissionCodec codec) {
         this.codec = codec;
         this.cache = cache;
         this.generator = generator;
@@ -69,6 +62,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
     @Override
     public Mono<LoginContext.AccountPasswordSignature.Dto> execute(
             ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
         return Mono
                 .just(isEnable())
                 .flatMap(b -> {
@@ -77,7 +71,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                                 .init(exchange)
                                 .flatMap(v -> {
                                     final String mark = generator.execute();
-                                    final AuthAccountPasswordLoginTransmissionCodec.Model model = codec.generate();
+                                    final AccountPasswordLoginTransmissionCodec.Model model = codec.generate();
                                     final Map<String, String> map = new HashMap<>(2);
                                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
                                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));

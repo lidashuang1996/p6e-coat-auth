@@ -1,14 +1,13 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.AuthCertificateValidator;
 import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -21,14 +20,8 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = VerificationLoginController.class,
-//        ignored = VerificationLoginControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(VerificationLoginController.CONDITIONAL_EXPRESSION)
 public class VerificationLoginControllerImpl
-        implements VerificationLoginController<LoginContext.Verification.Request, AuthUserDetails> {
+        implements VerificationLoginController<LoginContext.Verification.Request, ResultContext> {
 
     /**
      * 用户信息的请求头名称
@@ -66,7 +59,6 @@ public class VerificationLoginControllerImpl
     }
 
     @Override
-    @AuthCertificate
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.Verification.Request param) {
         return Mono
                 .just(isEnable())

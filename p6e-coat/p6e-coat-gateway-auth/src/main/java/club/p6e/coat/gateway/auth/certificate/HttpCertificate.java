@@ -2,7 +2,6 @@ package club.p6e.coat.gateway.auth.certificate;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -23,7 +22,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class AuthCertificateHttp {
+public class HttpCertificate {
 
     /**
      * 用户信息的头部名称
@@ -46,14 +45,9 @@ public class AuthCertificateHttp {
     protected static String AUTH_HEADER_TOKEN_PREFIX = AUTH_HEADER_TOKEN_TYPE + " ";
 
     /**
-     * Query 方式 ACCESS TOKEN 参数 1
+     * Query 方式 ACCESS TOKEN
      */
-    protected static String ACCESS_TOKEN_PARAM1 = "accessToken";
-
-    /**
-     * Query 方式 ACCESS TOKEN 参数 2
-     */
-    protected static String ACCESS_TOKEN_PARAM2 = "access_token";
+    protected static List<String> ACCESS_TOKEN_PARAM = List.of("accessToken", "access_token");
 
     /**
      * AUTH COOKIE ACCESS TOKEN 名称
@@ -71,11 +65,6 @@ public class AuthCertificateHttp {
     protected static long EXPIRATION_TIME = 3600;
 
     /**
-     * JWT 内容
-     */
-    protected static String CONTENT = "content";
-
-    /**
      * 时间格式化对象
      */
     protected static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -83,7 +72,21 @@ public class AuthCertificateHttp {
     /**
      * 默认的实现
      */
-    private static final Achieve ACHIEVE = new Achieve();
+    private static Achieve ACHIEVE = new Achieve();
+
+    /**
+     * 重写默认的实现
+     */
+    public static void setAchieve(Achieve achieve) {
+        ACHIEVE = achieve;
+    }
+
+    /**
+     * 重写默认的实现
+     */
+    public static Achieve getAchieve() {
+        return ACHIEVE;
+    }
 
     /**
      * 从请求头中获取令牌
@@ -192,11 +195,67 @@ public class AuthCertificateHttp {
      * @param secret 密钥
      * @return 解密内容
      */
-    public static String jwtRequire(String token, String secret) {
-        return ACHIEVE.jwtRequire(token, secret);
+    public static String jwtDecode(String token, String secret) {
+        return ACHIEVE.jwtDecode(token, secret);
     }
 
     public interface Specification {
+
+        /**
+         * 设置认证头名称
+         *
+         * @param auth 认证头名称
+         */
+        public void setAuthHeader(String auth);
+
+        /**
+         * 设置用户信息的头部名称
+         *
+         * @param name 用户信息的头部名称
+         */
+        public void setUserHeaderName(String name);
+
+        /**
+         * 设置认证头类型
+         *
+         * @param type 认证头类型
+         */
+        public void setAuthHeaderTokenType(String type);
+
+        /**
+         * 设置认证头必须的前缀
+         *
+         * @param prefix 认证头必须的前缀
+         */
+        public void setAuthHeaderTokenPrefix(String prefix);
+
+        /**
+         * 设置 ACCESS TOKEN 请求参数名称
+         *
+         * @param params 请求参数名称
+         */
+        public void setTokenParams(List<String> params);
+
+        /**
+         * 设置 AUTH COOKIE ACCESS TOKEN 名称
+         *
+         * @param name AUTH COOKIE ACCESS TOKEN 名称
+         */
+        public void setAuthCookieAccessTokenName(String name);
+
+        /**
+         * 设置  AUTH COOKIE REFRESH TOKEN 名称
+         *
+         * @param name AUTH COOKIE REFRESH TOKEN 名称
+         */
+        public void setAuthCookieRefreshTokenName(String name);
+
+        /**
+         * 设置过期时间
+         *
+         * @param time 过期时间
+         */
+        public void setExpirationTime(long time);
 
         /**
          * 从请求头中获取令牌
@@ -268,11 +327,52 @@ public class AuthCertificateHttp {
          * @param secret 密钥
          * @return 解密内容
          */
-        public String jwtRequire(String token, String secret);
+        public String jwtDecode(String token, String secret);
     }
 
     public static class Achieve implements Specification {
 
+        @Override
+        public void setAuthHeader(String auth) {
+            HttpCertificate.AUTH_HEADER = auth;
+        }
+
+        @Override
+        public void setUserHeaderName(String name) {
+            HttpCertificate.USER_HEADER_NAME = name;
+        }
+
+        @Override
+        public void setAuthHeaderTokenType(String type) {
+            HttpCertificate.AUTH_HEADER_TOKEN_TYPE = type;
+        }
+
+        @Override
+        public void setAuthHeaderTokenPrefix(String prefix) {
+            HttpCertificate.AUTH_HEADER_TOKEN_PREFIX = prefix;
+        }
+
+        @Override
+        public void setTokenParams(List<String> params) {
+            HttpCertificate.ACCESS_TOKEN_PARAM = params;
+        }
+
+        @Override
+        public void setAuthCookieAccessTokenName(String name) {
+            HttpCertificate.AUTH_COOKIE_ACCESS_TOKEN_NAME = name;
+        }
+
+        @Override
+        public void setAuthCookieRefreshTokenName(String name) {
+            HttpCertificate.AUTH_COOKIE_REFRESH_TOKEN_NAME = name;
+        }
+
+        @Override
+        public void setExpirationTime(long time) {
+            HttpCertificate.EXPIRATION_TIME = time;
+        }
+
+        @Override
         public String getHeaderToken(ServerHttpRequest request) {
             final List<String> authorizations = request.getHeaders().get(AUTH_HEADER);
             if (authorizations != null && authorizations.size() > 0) {
@@ -285,10 +385,11 @@ public class AuthCertificateHttp {
             return null;
         }
 
+        @Override
         public String getQueryParamToken(ServerHttpRequest request) {
-            final MultiValueMap<String, String> querys = request.getQueryParams();
-            for (final String key : List.of(ACCESS_TOKEN_PARAM1, ACCESS_TOKEN_PARAM2)) {
-                final List<String> values = querys.get(key);
+            final MultiValueMap<String, String> params = request.getQueryParams();
+            for (final String key : ACCESS_TOKEN_PARAM) {
+                final List<String> values = params.get(key);
                 if (values != null && values.size() > 0) {
                     return values.get(0);
                 }
@@ -296,6 +397,7 @@ public class AuthCertificateHttp {
             return null;
         }
 
+        @Override
         public Mono<String> getHttpCookieToken(ServerHttpRequest request) {
             final MultiValueMap<String, HttpCookie> cookies = request.getCookies();
             for (final String key : cookies.keySet()) {
@@ -309,6 +411,7 @@ public class AuthCertificateHttp {
             return Mono.empty();
         }
 
+        @Override
         public Mono<String> getHttpLocalStorageToken(ServerHttpRequest request) {
             String token = getHeaderToken(request);
             if (token == null) {
@@ -317,6 +420,7 @@ public class AuthCertificateHttp {
             return token == null ? Mono.empty() : Mono.just(token);
         }
 
+        @Override
         public Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Object result) {
             final ResponseCookie accessTokenCookie = ResponseCookie
                     .from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken)
@@ -329,6 +433,7 @@ public class AuthCertificateHttp {
             return Mono.just(result);
         }
 
+        @Override
         public Mono<Map<String, Object>> setHttpLocalStorageToken(
                 String accessToken, String refreshToken, Map<String, Object> data) {
             final Map<String, Object> result = new HashMap<>(5);
@@ -344,6 +449,7 @@ public class AuthCertificateHttp {
             return Mono.just(result);
         }
 
+        @Override
         public String jwtCreate(String uid, String content, String secret) {
             final Date date = Date.from(LocalDateTime.now()
                     .plusSeconds(EXPIRATION_TIME)
@@ -352,99 +458,20 @@ public class AuthCertificateHttp {
             );
             return JWT
                     .create()
-                    .withExpiresAt(date)
                     .withAudience(uid)
-                    .withClaim(CONTENT, content)
+                    .withExpiresAt(date)
+                    .withSubject(content)
                     .sign(Algorithm.HMAC256(secret));
         }
 
-        public String jwtRequire(String token, String secret) {
-            final DecodedJWT jwt = JWT
-                    .require(Algorithm.HMAC256(secret))
-                    .build()
-                    .verify(token);
-            return jwt.getClaim(CONTENT).asString();
+        @Override
+        public String jwtDecode(String token, String secret) {
+            try {
+                return JWT.require(Algorithm.HMAC256(secret)).build().verify(token).getSubject();
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 
-    public static class Builder {
-
-        /**
-         * 用户信息的头部名称
-         */
-        public static void setUserHeaderName(String name) {
-            AuthCertificateHttp.USER_HEADER_NAME = name;
-        }
-
-        /**
-         * 认证头名称
-         */
-        public static void  setAuthHeader(String header) {
-            AuthCertificateHttp.AUTH_HEADER = header;
-        }
-
-        /**
-         * 认证头类型
-         */
-        public static void setAuthHeaderTokenType(String headerTokenType) {
-            AuthCertificateHttp.AUTH_HEADER_TOKEN_TYPE = headerTokenType;
-        }
-
-        /**
-         * 认证头必须的前缀
-         */
-        public static void setAuthHeaderTokenPrefix(String headerTokenPrefix) {
-            AuthCertificateHttp.AUTH_HEADER_TOKEN_PREFIX = headerTokenPrefix;
-        }
-
-        /**
-         * Query 方式 ACCESS TOKEN 参数 1
-         */
-        public static void setACCESS_TOKEN_PARAM1(String accessTokenParam) {
-            AuthCertificateHttp.ACCESS_TOKEN_PARAM1 = accessTokenParam;
-        }
-
-        /**
-         * Query 方式 ACCESS TOKEN 参数 2
-         */
-        public static void setACCESS_TOKEN_PARAM2(String accessTokenParam) {
-            AuthCertificateHttp.ACCESS_TOKEN_PARAM2 = accessTokenParam;
-        }
-
-        /**
-         * AUTH COOKIE ACCESS TOKEN 名称
-         */
-        public static void setAUTH_COOKIE_ACCESS_TOKEN_NAME(String accessTokenName) {
-            AuthCertificateHttp.AUTH_COOKIE_ACCESS_TOKEN_NAME = accessTokenName;
-        }
-
-        /**
-         * AUTH COOKIE REFRESH TOKEN 名称
-         */
-        public static void setAUTH_COOKIE_REFRESH_TOKEN_NAME(String refreshTokenName) {
-            AuthCertificateHttp.AUTH_COOKIE_REFRESH_TOKEN_NAME = refreshTokenName;
-        }
-
-        /**
-         * 认证过期时间
-         */
-        public static void setEXPIRATION_TIME() {
-
-        }
-
-        /**
-         * JWT 内容
-         */
-        public static void setContent() {
-
-        }
-
-        /**
-         * 时间格式化对象
-         */
-        public static void setDateTimeFormatter() {
-
-        }
-
-    }
 }

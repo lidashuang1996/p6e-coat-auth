@@ -21,7 +21,7 @@ public final class RsaUtil {
     /**
      * 私钥加密
      */
-    public static String encryptByPrivateKey(String privateKeyText, String text) throws Exception {
+    public static String encryptionByPrivateKey(String privateKeyText, String text) throws Exception {
         final PKCS8EncodedKeySpec pkcs8EncodedKeySpec =
                 new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyText));
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -34,7 +34,7 @@ public final class RsaUtil {
     /**
      * 私钥解密
      */
-    public static String decryptByPrivateKey(String privateKeyText, String text) throws Exception {
+    public static String decryptionByPrivateKey(String privateKeyText, String text) throws Exception {
         final PKCS8EncodedKeySpec pkcs8EncodedKeySpec5 =
                 new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyText));
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -47,7 +47,7 @@ public final class RsaUtil {
     /**
      * 公钥加密
      */
-    public static String encryptByPublicKey(String publicKeyText, String text) throws Exception {
+    public static String encryptionByPublicKey(String publicKeyText, String text) throws Exception {
         final X509EncodedKeySpec x509EncodedKeySpec =
                 new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyText));
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");

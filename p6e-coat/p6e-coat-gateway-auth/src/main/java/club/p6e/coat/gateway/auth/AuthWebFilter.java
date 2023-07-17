@@ -13,17 +13,17 @@ import reactor.core.publisher.Mono;
 public class AuthWebFilter implements WebFilter {
 
     private final AuthPathMatcher matcher;
-    private final AuthCertificateValidator interceptor;
+    private final AuthCertificateValidator validator;
 
-    public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateValidator interceptor) {
+    public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateValidator validator) {
         this.matcher = matcher;
-        this.interceptor = interceptor;
+        this.validator = validator;
     }
 
     @Override
     public @NotNull Mono<Void> filter(ServerWebExchange exchange, @NotNull WebFilterChain chain) {
         if (matcher.match(exchange.getRequest().getPath().value())) {
-            return interceptor
+            return validator
                     .execute(exchange)
                     .flatMap(chain::filter);
         } else {

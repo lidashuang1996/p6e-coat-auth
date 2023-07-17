@@ -14,16 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 认证凭证下发（HttpCookieJsonWebToken）
+ * 认证凭证下发（HttpLocalStorageJsonWebToken）
  *
  * @author lidashuang
  * @version 1.0
  */
-public class AuthCertificateAuthorityHttpCookieJsonWebTokenImpl
-        extends AuthCertificateHttp implements AuthCertificateAuthority {
+public class HttpLocalStorageJsonWebTokenCertificateAuthority
+        extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
-     * 认证缓存的对象
+     * JWT 密码对象
      */
     protected final AuthJsonWebTokenCipher cipher;
 
@@ -32,7 +32,7 @@ public class AuthCertificateAuthorityHttpCookieJsonWebTokenImpl
      *
      * @param cipher JWT 密码对象
      */
-    public AuthCertificateAuthorityHttpCookieJsonWebTokenImpl(AuthJsonWebTokenCipher cipher) {
+    public HttpLocalStorageJsonWebTokenCertificateAuthority(AuthJsonWebTokenCipher cipher) {
         this.cipher = cipher;
     }
 
@@ -47,22 +47,22 @@ public class AuthCertificateAuthorityHttpCookieJsonWebTokenImpl
                 .flatMap(v -> {
                     final String oauth = v.get(AuthVoucher.OAUTH2);
                     if (StringUtils.hasText(oauth)) {
+                        final Map<String, Object> data = new HashMap<>(1);
+                        data.put("oauth2", v.oauth2());
                         final Map<String, String> map = new HashMap<>(2);
                         map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                         map.put(AuthVoucher.OAUTH2_USER_INFO, info);
                         return v
                                 .set(map)
-                                .flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
+                                .flatMap(vv -> setHttpLocalStorageToken(
                                         accessToken,
                                         refreshToken,
-                                        v.client()
+                                        data
                                 ));
                     } else {
                         return v
                                 .del()
-                                .flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
+                                .flatMap(vv -> setHttpLocalStorageToken(
                                         accessToken,
                                         refreshToken
                                 ));

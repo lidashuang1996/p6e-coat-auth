@@ -1,13 +1,10 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
-import club.p6e.coat.gateway.auth.Properties;
+import club.p6e.coat.gateway.auth.AuthCertificateAuthority;
 import club.p6e.coat.gateway.auth.context.LoginContext;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
+import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.service.VerificationCodeLoginService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -17,39 +14,28 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = VerificationCodeLoginController.class,
-//        ignored = VerificationCodeLoginControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(VerificationCodeLoginController.CONDITIONAL_EXPRESSION)
 public class VerificationCodeLoginControllerImpl implements
-        VerificationCodeLoginController<LoginContext.VerificationCode.Request, AuthUserDetails> {
+        VerificationCodeLoginController<LoginContext.VerificationCode.Request, ResultContext> {
 
     /**
-     * 配置文件对象
+     * 认证授权的服务对象
      */
-    private final Properties properties;
+    private final AuthCertificateAuthority authority;
 
     /**
-     * 验证码登录服务对象
+     * 验证码登录的服务对象
      */
     private final VerificationCodeLoginService service;
 
     /**
      * 构造方法
      *
-     * @param properties 配置文件对象
      * @param service    验证码登录的服务对象
+     * @param authority  认证授权的服务对象
      */
-    public VerificationCodeLoginControllerImpl(Properties properties, VerificationCodeLoginService service) {
+    public VerificationCodeLoginControllerImpl(AuthCertificateAuthority authority, VerificationCodeLoginService service) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getVerificationCode().isEnable();
+        this.authority = authority;
     }
 
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
@@ -57,16 +43,11 @@ public class VerificationCodeLoginControllerImpl implements
     }
 
     @Override
-    @AuthCertificate
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param)",
-                                "Verification code login service not enabled exception."
-                        )))
-                .flatMap(p -> service.execute(exchange, p));
+    public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
+        return vp(exchange, param)
+                .then(Mono.just(param))
+                .flatMap(p -> service.execute(exchange, p))
+                .flatMap(u -> authority.present(exchange, u));
     }
+
 }

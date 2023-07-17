@@ -15,7 +15,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class IndexControllerImpl implements IndexController {
 
     /**
@@ -34,7 +33,6 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        // 设置凭证里面的信息
         final Map<String, String> m = new HashMap<>();
         m.put(AuthVoucher.INDEX, "true");
         m.put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));

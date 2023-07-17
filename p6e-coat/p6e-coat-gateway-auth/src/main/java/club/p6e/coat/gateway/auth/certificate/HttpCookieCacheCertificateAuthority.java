@@ -21,8 +21,8 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class AuthCertificateAuthorityHttpCookieCacheImpl
-        extends AuthCertificateHttp implements AuthCertificateAuthority {
+public class HttpCookieCacheCertificateAuthority
+        extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * 认证缓存
@@ -46,7 +46,7 @@ public class AuthCertificateAuthorityHttpCookieCacheImpl
      * @param accessTokenGenerator  ACCESS TOKEN 生成器
      * @param refreshTokenGenerator REFRESH TOKEN 生成器
      */
-    public AuthCertificateAuthorityHttpCookieCacheImpl(
+    public HttpCookieCacheCertificateAuthority(
             AuthCache cache,
             AuthAccessTokenGenerator accessTokenGenerator,
             AuthRefreshTokenGenerator refreshTokenGenerator
@@ -78,7 +78,7 @@ public class AuthCertificateAuthorityHttpCookieCacheImpl
                                                 exchange.getResponse(),
                                                 t.getAccessToken(),
                                                 t.getRefreshToken(),
-                                                v.client()
+                                                v.oauth2()
                                         ));
                             } else {
                                 return v

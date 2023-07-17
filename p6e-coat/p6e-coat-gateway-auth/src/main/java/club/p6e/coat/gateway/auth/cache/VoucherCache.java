@@ -14,20 +14,14 @@ import java.util.Map;
 public interface VoucherCache extends ICache {
 
     /**
-     * 缓存前缀
-     */
-    String CACHE_PREFIX = "VOUCHER:";
-
-    /**
      * 过期的时间
      */
     long EXPIRATION_TIME = 900L;
 
     /**
-     * 条件注册的条件表达式
+     * 缓存前缀
      */
-    String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} || ${p6e.auth.oauth2.enable:false} || ${p6e.auth.register.enable:false}}";
+    String CACHE_PREFIX = "VOUCHER:";
 
     /**
      * 删除数据

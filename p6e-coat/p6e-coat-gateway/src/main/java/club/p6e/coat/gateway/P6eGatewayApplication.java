@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway;
 
-import club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher;
 import club.p6e.coat.gateway.auth.EnableP6eGatewayAuth;
 import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;

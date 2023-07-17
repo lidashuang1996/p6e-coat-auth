@@ -1,13 +1,11 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.AuthCertificate;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.AccountPasswordLoginSignatureService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -17,12 +15,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = AccountPasswordLoginSignatureController.class,
-//        ignored = AccountPasswordLoginSignatureControllerImpl.class
-//)
-//@ConditionalOnExpression(AccountPasswordLoginSignatureController.CONDITIONAL_EXPRESSION)
 public class AccountPasswordLoginSignatureControllerImpl implements
         AccountPasswordLoginSignatureController<LoginContext.AccountPasswordSignature.Request, ResultContext> {
 
@@ -72,7 +64,6 @@ public class AccountPasswordLoginSignatureControllerImpl implements
     }
 
     @Override
-    @AuthCertificate
     public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param) {
         return Mono
                 .just(isEnable())

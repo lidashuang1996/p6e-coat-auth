@@ -17,12 +17,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = QrCodeObtainController.class,
-//        ignored = QrCodeObtainControllerDefaultImpl.class
-//)
-//@ConditionalOnExpression(QrCodeObtainController.CONDITIONAL_EXPRESSION)
 public class QrCodeObtainControllerImpl
         implements QrCodeObtainController<LoginContext.QrCodeObtain.Request, ResultContext> {
 

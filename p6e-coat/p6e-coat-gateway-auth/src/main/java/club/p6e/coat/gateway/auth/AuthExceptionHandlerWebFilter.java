@@ -15,7 +15,6 @@ import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.CodecConfigurer;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -32,7 +31,6 @@ import java.util.Objects;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandler implements Ordered {
 
     /**
