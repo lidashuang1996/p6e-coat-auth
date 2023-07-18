@@ -26,6 +26,11 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
     private static final String CODE_TYPE = "CODE";
 
     /**
+     * 主页的服务对象
+     */
+    private final IndexService service;
+
+    /**
      * 配置文件对象
      */
     private final Properties properties;
@@ -35,21 +40,21 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
      */
     private final Oauth2ClientRepository repository;
 
-    private final IndexService service;
-
     /**
      * 构造方法初始化
      *
+     * @param service    主页服务对象
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
     public Oauth2AuthServiceDefaultImpl(
-            Properties properties,
             IndexService service,
+            Properties properties,
             Oauth2ClientRepository repository) {
-        this.repository = repository;
-        this.properties = properties;
         this.service = service;
+        this.properties = properties;
+        this.repository = repository;
+
     }
 
     @Override

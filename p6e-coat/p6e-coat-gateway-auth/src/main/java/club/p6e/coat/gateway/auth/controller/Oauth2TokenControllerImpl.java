@@ -27,11 +27,6 @@ public class Oauth2TokenControllerDefaultImpl
         implements Oauth2TokenController<Oauth2Context.Token.Request, ResultContext> {
 
     /**
-     * 配置文件对象
-     */
-    private final Properties properties;
-
-    /**
      * OAUTH2 TOKEN 服务
      */
     private final Oauth2TokenService service;
@@ -39,21 +34,10 @@ public class Oauth2TokenControllerDefaultImpl
     /**
      * 构造方法
      *
-     * @param properties 配置文件对象
-     * @param service    OAUTH2 TOKEN 服务
+     * @param service OAUTH2 TOKEN 服务
      */
-    public Oauth2TokenControllerDefaultImpl(Properties properties, Oauth2TokenService service) {
+    public Oauth2TokenControllerDefaultImpl(Oauth2TokenService service) {
         this.service = service;
-        this.properties = properties;
-    }
-
-    /**
-     * 判断是否启用
-     *
-     * @return 是否启用
-     */
-    protected boolean isEnable() {
-        return properties.getOauth2().isEnable();
     }
 
     protected Mono<Void> vp(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
@@ -62,14 +46,7 @@ public class Oauth2TokenControllerDefaultImpl
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? vp(exchange, param).then(Mono.just(param)) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, Oauth2Context.Token.Request param)",
-                                "Oauth2 token service not enabled exception."
-                        )))
+        return vp(exchange, param).then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))
                 .map(ResultContext::build);
     }
