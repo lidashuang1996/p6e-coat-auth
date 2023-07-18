@@ -100,6 +100,15 @@ public class HttpCertificate {
     }
 
     /**
+     * 获取认证头类型
+     *
+     * @return 认证头类型
+     */
+    public static String getAuthHeaderTokenType() {
+        return AUTH_HEADER_TOKEN_TYPE;
+    }
+
+    /**
      * 从请求头中获取令牌
      *
      * @param request 请求对象

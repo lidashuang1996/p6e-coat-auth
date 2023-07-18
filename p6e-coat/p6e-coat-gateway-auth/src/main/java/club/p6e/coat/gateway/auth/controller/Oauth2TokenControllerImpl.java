@@ -1,12 +1,9 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.context.ResultContext;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.Oauth2TokenService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -23,7 +20,7 @@ import reactor.core.publisher.Mono;
 //        value = Oauth2TokenController.class,
 //        ignored = Oauth2TokenControllerDefaultImpl.class
 //)
-public class Oauth2TokenControllerDefaultImpl
+public class Oauth2TokenControllerImpl
         implements Oauth2TokenController<Oauth2Context.Token.Request, ResultContext> {
 
     /**
@@ -36,7 +33,7 @@ public class Oauth2TokenControllerDefaultImpl
      *
      * @param service OAUTH2 TOKEN 服务
      */
-    public Oauth2TokenControllerDefaultImpl(Oauth2TokenService service) {
+    public Oauth2TokenControllerImpl(Oauth2TokenService service) {
         this.service = service;
     }
 
@@ -46,7 +43,8 @@ public class Oauth2TokenControllerDefaultImpl
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
-        return vp(exchange, param).then(Mono.just(param))
+        return vp(exchange, param)
+                .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))
                 .map(ResultContext::build);
     }

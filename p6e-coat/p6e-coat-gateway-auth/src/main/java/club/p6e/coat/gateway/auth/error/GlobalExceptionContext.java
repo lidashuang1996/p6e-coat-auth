@@ -90,4 +90,8 @@ public final class GlobalExceptionContext {
         return new LauncherTypeException(sc, error, content);
     }
 
+    public static BeanException exceptionBeanException(Class<?> sc, String error, String content) {
+        return new BeanException(sc, error, content);
+    }
+
 }

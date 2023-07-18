@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 //        value = Oauth2ConfirmController.class,
 //        ignored = Oauth2ConfirmControllerDefaultImpl.class
 //)
-public class Oauth2ConfirmControllerDefaultImpl
+public class Oauth2ConfirmControllerImpl
         implements Oauth2ConfirmController<Oauth2Context.Confirm.Request, ResultContext> {
 
     /**
@@ -31,7 +31,7 @@ public class Oauth2ConfirmControllerDefaultImpl
      *
      * @param service OAUTH2 CODE 模式确认的服务对象
      */
-    public Oauth2ConfirmControllerDefaultImpl(Oauth2ConfirmService service) {
+    public Oauth2ConfirmControllerImpl(Oauth2ConfirmService service) {
         this.service = service;
     }
 
@@ -48,7 +48,8 @@ public class Oauth2ConfirmControllerDefaultImpl
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param) {
-        return vp(exchange, param).then(Mono.just(param))
+        return vp(exchange, param)
+                .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))
                 .map(ResultContext::build);
     }

@@ -7,7 +7,6 @@ import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -19,7 +18,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public class QrCodeCallbackServiceDefaultImpl implements QrCodeCallbackService {
+public class QrCodeCallbackServiceImpl implements QrCodeCallbackService {
 
     /**
      * 用户信息的请求头名称
@@ -37,7 +36,7 @@ public class QrCodeCallbackServiceDefaultImpl implements QrCodeCallbackService {
      *
      * @param cache 二维码登录缓存
      */
-    public QrCodeCallbackServiceDefaultImpl(QrCodeLoginCache cache, AuthCertificateValidator interceptor) {
+    public QrCodeCallbackServiceImpl(QrCodeLoginCache cache, AuthCertificateValidator interceptor) {
         this.cache = cache;
         this.interceptor = interceptor;
     }

@@ -139,11 +139,11 @@ public class Properties {
     @Data
     public static class Auth {
         private Bean validator = new Bean("club.p6e.coat.gateway.auth.certificate." +
-                "AuthCertificateInterceptorHttpLocalStorageJsonWebToken", new String[]{
+                "HttpLocalStorageJsonWebTokenCertificateValidator", new String[]{
                 "club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher"
         });
         private Bean authority = new Bean("club.p6e.coat.gateway.auth.certificate." +
-                "AuthCertificateAuthorityHttpLocalStorageJsonWebTokenImpl", new String[]{
+                "HttpLocalStorageJsonWebTokenCertificateAuthority", new String[]{
                 "club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher"
         });
     }

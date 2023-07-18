@@ -75,9 +75,9 @@ public final class RsaUtil {
     /**
      * RSA密钥对对象
      */
+    @SuppressWarnings("ALL")
     @Data
     @Accessors(chain = true)
-    @SuppressWarnings("all")
     public static class KeyModel {
         private final String publicKey;
         private final String privateKey;

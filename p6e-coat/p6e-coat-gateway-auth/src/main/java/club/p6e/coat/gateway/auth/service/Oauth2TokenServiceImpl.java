@@ -1,26 +1,22 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthPasswordEncryptor;
+import club.p6e.coat.gateway.auth.AuthUserDetails;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.Oauth2CodeCache;
 import club.p6e.coat.gateway.auth.cache.Oauth2TokenClientAuthCache;
 import club.p6e.coat.gateway.auth.cache.Oauth2TokenUserAuthCache;
+import club.p6e.coat.gateway.auth.certificate.HttpCertificate;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.*;
-import club.p6e.coat.gateway.auth.model.UserModel;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
 import club.p6e.coat.gateway.auth.repository.UserAuthRepository;
 import club.p6e.coat.gateway.auth.repository.UserRepository;
 import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
+import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * OAUTH2 TOKEN 的默认实现
@@ -28,13 +24,7 @@ import java.util.Optional;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = Oauth2TokenService.class,
-//        ignored = Oauth2TokenServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(Oauth2TokenService.CONDITIONAL_EXPRESSION)
-public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
+public class Oauth2TokenServiceImpl implements Oauth2TokenService {
 
     /**
      * 密码模式
@@ -57,21 +47,6 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
     private final Properties properties;
 
     /**
-     * OAUTH2 CODE 缓存
-     */
-    private final Oauth2CodeCache oauth2CodeCache;
-
-    /**
-     * OAUTH2 用户认证缓存
-     */
-    private final Oauth2TokenUserAuthCache oauth2TokenUserAuthCache;
-
-    /**
-     * OAUTH2 客户端认证缓存
-     */
-    private final Oauth2TokenClientAuthCache oauth2TokenClientAuthCache;
-
-    /**
      * 用户存储库
      */
     private final UserRepository userRepository;
@@ -83,68 +58,131 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
     private final Oauth2ClientRepository oauth2ClientRepository;
 
     /**
-     * OAUTH2 USER OPEN ID 生成器
+     * @param properties             配置文件对象
+     * @param userRepository         用户存储库
+     * @param oauth2ClientRepository OAUTH2 客户端存储库
      */
-    private final Oauth2UserOpenIdGenerator oauth2UserOpenIdGenerator;
-
-    /**
-     * 令牌生成器
-     */
-    private final Oauth2TokenUserAuthAccessTokenGenerator oauth2TokenUserAuthAccessTokenGenerator;
-
-    /**
-     * 令牌生成器
-     */
-    private final Oauth2TokenUserAuthRefreshTokenGenerator oauth2TokenUserAuthRefreshTokenGenerator;
-
-    /**
-     * 令牌生成器
-     */
-    private final Oauth2TokenClientAuthAccessTokenGenerator oauth2TokenClientAuthAccessTokenGenerator;
-
-    /**
-     * 令牌生成器
-     */
-    private final Oauth2TokenClientAuthRefreshTokenGenerator oauth2TokenClientAuthRefreshTokenGenerator;
-
-    private final AuthPasswordEncryptor passwordEncryptor;
-
-    /**
-     * @param properties                 配置文件对象
-     * @param oauth2CodeCache            OAUTH2 CODE 缓存
-     * @param oauth2TokenUserAuthCache   OAUTH2 用户认证缓存
-     * @param oauth2TokenClientAuthCache OAUTH2 客户端认证缓存
-     * @param userRepository             用户存储库
-     * @param oauth2ClientRepository     OAUTH2 客户端存储库
-     * @param oauth2UserOpenIdGenerator  OAUTH2 USER OPEN ID 生成器
-     */
-    public Oauth2TokenServiceDefaultImpl(
+    public Oauth2TokenServiceImpl(
             Properties properties,
-            Oauth2CodeCache oauth2CodeCache,
-            Oauth2TokenUserAuthCache oauth2TokenUserAuthCache,
-            Oauth2TokenClientAuthCache oauth2TokenClientAuthCache,
-            UserAuthRepository userAuthRepository,
             UserRepository userRepository,
-            AuthPasswordEncryptor passwordEncryptor,
-            Oauth2ClientRepository oauth2ClientRepository,
-            Oauth2UserOpenIdGenerator oauth2UserOpenIdGenerator,
-            Oauth2TokenUserAuthAccessTokenGenerator oauth2TokenUserAuthAccessTokenGenerator,
-            Oauth2TokenUserAuthRefreshTokenGenerator oauth2TokenUserAuthRefreshTokenGenerator,
-            Oauth2TokenClientAuthAccessTokenGenerator oauth2TokenClientAuthAccessTokenGenerator,
-            Oauth2TokenClientAuthRefreshTokenGenerator oauth2TokenClientAuthRefreshTokenGenerator) {
+            UserAuthRepository userAuthRepository,
+            Oauth2ClientRepository oauth2ClientRepository) {
         this.properties = properties;
-        this.passwordEncryptor = passwordEncryptor;
-        this.userAuthRepository = userAuthRepository;
-        this.oauth2CodeCache = oauth2CodeCache;
-        this.oauth2TokenUserAuthCache = oauth2TokenUserAuthCache;
-        this.oauth2TokenClientAuthCache = oauth2TokenClientAuthCache;
         this.userRepository = userRepository;
+        this.userAuthRepository = userAuthRepository;
         this.oauth2ClientRepository = oauth2ClientRepository;
-        this.oauth2UserOpenIdGenerator = oauth2UserOpenIdGenerator;
-        this.oauth2TokenUserAuthAccessTokenGenerator = oauth2TokenUserAuthAccessTokenGenerator;
-        this.oauth2TokenUserAuthRefreshTokenGenerator = oauth2TokenUserAuthRefreshTokenGenerator;
-        this.oauth2TokenClientAuthAccessTokenGenerator = oauth2TokenClientAuthAccessTokenGenerator;
-        this.oauth2TokenClientAuthRefreshTokenGenerator = oauth2TokenClientAuthRefreshTokenGenerator;
+    }
+
+    @Override
+    public Mono<Oauth2Context.Token.Dto> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
+        final String grantType = param.getGrantType();
+        switch (grantType) {
+            case PASSWORD_TYPE -> {
+                if (properties.getOauth2().getPassword().isEnable()) {
+                    return executePasswordType(param);
+                } else {
+                    return Mono.error(
+                            GlobalExceptionContext.executeServiceNotEnabledException(
+                                    this.getClass(),
+                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
+                                    "Oauth2 token [ PASSWORD ] service not enabled exception."
+                            ));
+                }
+            }
+            case CLIENT_CREDENTIALS_TYPE -> {
+                if (properties.getOauth2().getClient().isEnable()) {
+                    return executeClientType(param);
+                } else {
+                    return Mono.error(
+                            GlobalExceptionContext.executeServiceNotEnabledException(
+                                    this.getClass(),
+                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
+                                    "Oauth2 token [ CLIENT_CREDENTIALS ] service not enabled exception."
+                            ));
+                }
+            }
+            case AUTHORIZATION_CODE_TYPE -> {
+                if (properties.getOauth2().getAuthorizationCode().isEnable()) {
+                    return executeAuthorizationType(param);
+                } else {
+                    return Mono.error(
+                            GlobalExceptionContext.executeServiceNotEnabledException(
+                                    this.getClass(),
+                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
+                                    "Oauth2 token [ AUTHORIZATION_CODE ] service not enabled exception."
+                            ));
+                }
+            }
+            default -> {
+                return Mono.error(
+                        GlobalExceptionContext.executeServiceNotSupportException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
+                                "Oauth2 token [ " + grantType + " ] service not support exception."
+                        ));
+            }
+        }
+    }
+
+    /**
+     * Oauth2 客户端模式
+     *
+     * @param param 请求对象
+     * @return 结果对象
+     */
+    private Mono<Oauth2Context.Token.Dto> executeClientType(Oauth2Context.Token.Request param) {
+        final String clientId = param.getClientId();
+        final String clientSecret = param.getClientId();
+        return oauth2ClientRepository
+                .findByClientId(clientId)
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                        this.getClass(),
+                        "fun executeClientType(Oauth2Context.Token.Request param)",
+                        "Oauth2 client id not exist exception."
+                )))
+                .flatMap(m -> {
+                    if (!m.getClientSecret().equals(clientSecret)) {
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun executeClientType(Oauth2Context.Token.Request param)",
+                                "Oauth2 client secret exception."
+                        ));
+                    }
+                    if (!SpringUtil.exist(Oauth2TokenClientAuthCache.class)) {
+                        return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                                this.getClass(),
+                                "fun handleUserResult(String cid, String uid, String info, String scope)",
+                                "Oauth2 [ " + Oauth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+                        ));
+                    }
+                    if (!SpringUtil.exist(Oauth2TokenClientAuthAccessTokenGenerator.class)) {
+                        return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                                this.getClass(),
+                                "fun handleUserResult(String cid, String uid, String info, String scope)",
+                                "Oauth2 [ " + Oauth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+                        ));
+                    }
+                    if (!SpringUtil.exist(Oauth2TokenClientAuthRefreshTokenGenerator.class)) {
+                        return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                                this.getClass(),
+                                "fun handleUserResult(String cid, String uid, String info, String scope)",
+                                "Oauth2 [ " + Oauth2TokenClientAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
+                        ));
+                    }
+                    final String accessToken = SpringUtil.getBean(
+                            Oauth2TokenClientAuthAccessTokenGenerator.class).execute();
+                    final String refreshToken = SpringUtil.getBean(
+                            Oauth2TokenClientAuthRefreshTokenGenerator.class).execute();
+                    final Oauth2TokenClientAuthCache oauth2TokenClientAuthCache = SpringUtil.getBean(Oauth2TokenClientAuthCache.class);
+                    return oauth2TokenClientAuthCache
+                            .set(String.valueOf(m.getId()), JsonUtil.toJson(m), m.getScope(), accessToken, refreshToken)
+                            .map(t -> new Oauth2Context.Token.ClientDto()
+                                    .setId(String.valueOf(t.getCid()))
+                                    .setAccessToken(accessToken)
+                                    .setRefreshToken(refreshToken)
+                                    .setType(HttpCertificate.getAuthHeaderTokenType())
+                                    .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
+                });
     }
 
     /**
@@ -160,20 +198,18 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
         final String clientSecret = param.getClientSecret();
         return oauth2ClientRepository
                 .findByClientId(clientId)
-                .switchIfEmpty(Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        )))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                        this.getClass(),
+                        "fun executePasswordType(Oauth2Context.Token.Request param)",
+                        "Oauth2 client id not exist exception."
+                )))
                 .flatMap(m -> {
                     if (!m.getClientSecret().equals(clientSecret)) {
-                        return Mono.error(
-                                GlobalExceptionContext.executeServiceNotEnabledException(
-                                        this.getClass(),
-                                        "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                        "Account password login service not enabled exception."
-                                ));
+                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                this.getClass(),
+                                "fun executePasswordType(Oauth2Context.Token.Request param)",
+                                "Oauth2 client secret exception."
+                        ));
                     }
                     final Properties.Mode mode = properties.getMode();
                     return (switch (mode) {
@@ -181,81 +217,35 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
                         case MAILBOX -> userRepository.findByMailbox(username);
                         case ACCOUNT -> userRepository.findByAccount(username);
                         case PHONE_OR_MAILBOX -> userRepository.findByPhoneOrMailbox(username);
-                    }).switchIfEmpty(Mono.error(
-                                    GlobalExceptionContext.executeServiceNotEnabledException(
-                                            this.getClass(), "fun executePasswordType(Oauth2Context.Token.Request param).",
-                                            "Account password login service not enabled exception."
-                                    )))
+                    })
+                            .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
+                                    this.getClass(),
+                                    "fun executePasswordType(Oauth2Context.Token.Request param)",
+                                    "Oauth2 client account/password exception."
+                            )))
                             .flatMap(u -> userAuthRepository
                                     .findById(u.getId())
-                                    .switchIfEmpty(Mono.error(
-                                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                                    this.getClass(), "fun executePasswordType(Oauth2Context.Token.Request param).",
-                                                    "Account password login service not enabled exception."
-                                            )))
-                                    .filter(au -> au.getPassword().equals(passwordEncryptor.execute(password)))
-                                    .switchIfEmpty(Mono.error(
-                                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                                    this.getClass(), "fun executePasswordType(Oauth2Context.Token.Request param).",
-                                                    "Account password login service not enabled exception."
-                                            )))
-                                    .flatMap(au -> {
-                                        final String accessToken = oauth2TokenUserAuthAccessTokenGenerator.execute();
-                                        final String refreshToken = oauth2TokenUserAuthRefreshTokenGenerator.execute();
-                                        final String openId = oauth2UserOpenIdGenerator.execute(clientId, String.valueOf(u.getId()));
-                                        return oauth2TokenUserAuthCache.set(
-                                                String.valueOf(u.getId()),
-                                                JsonUtil.toJson(u),
-                                                m.getScope(),
-                                                accessToken,
-                                                refreshToken
-                                        ).map(t -> new Oauth2Context.Token.UserDto()
-                                                .setOpenId(openId)
-                                                .setType("Bearer")
-                                                .setAccessToken(t.getAccessToken())
-                                                .setRefreshToken(t.getRefreshToken())
-                                                .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
-                                    }));
+                                    .filter(au -> {
+                                        if (SpringUtil.exist(AuthPasswordEncryptor.class)) {
+                                            final AuthPasswordEncryptor passwordEncryptor = SpringUtil.getBean(AuthPasswordEncryptor.class);
+                                            return au.getPassword().equals(passwordEncryptor.execute(password));
+                                        } else {
+                                            return false;
+                                        }
+                                    })
+                                    .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
+                                            this.getClass(),
+                                            "fun executePasswordType(Oauth2Context.Token.Request param)",
+                                            "Oauth2 client account/password exception."
+                                    )))
+                                    .flatMap(au -> handleUserResult(
+                                            m.getClientId(),
+                                            String.valueOf(au.getId()),
+                                            JsonUtil.toJson(new AuthUserDetails(u, au)),
+                                            m.getScope()
+                                    )));
                 });
 
-    }
-
-    /**
-     * Oauth2 客户端模式
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    private Mono<Oauth2Context.Token.Dto> executeClientType(Oauth2Context.Token.Request param) {
-        final String clientId = param.getClientId();
-        final String clientSecret = param.getClientId();
-        return oauth2ClientRepository
-                .findByClientId(clientId)
-                .switchIfEmpty(Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        )))
-                .flatMap(m -> {
-                    if (!m.getClientSecret().equals(clientSecret)) {
-                        return Mono.error(
-                                GlobalExceptionContext.executeServiceNotEnabledException(
-                                        this.getClass(),
-                                        "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                        "Account password login service not enabled exception."
-                                ));
-                    }
-                    final String accessToken = oauth2TokenClientAuthAccessTokenGenerator.execute();
-                    final String refreshToken = oauth2TokenClientAuthRefreshTokenGenerator.execute();
-                    return oauth2TokenClientAuthCache
-                            .set(String.valueOf(m.getId()), JsonUtil.toJson(m), m.getScope(), accessToken, refreshToken)
-                            .map(t -> new Oauth2Context.Token.ClientDto()
-                                    .setId(String.valueOf(t.getCid()))
-                                    .setAccessToken(t.getAccessToken())
-                                    .setRefreshToken(t.getRefreshToken())
-                                    .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
-                });
     }
 
     /**
@@ -271,113 +261,108 @@ public class Oauth2TokenServiceDefaultImpl implements Oauth2TokenService {
         final String clientSecret = param.getClientSecret();
         return oauth2ClientRepository
                 .findByClientId(clientId)
-                .switchIfEmpty(Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                        this.getClass(),
+                        "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                        "Oauth2 client id not exist exception."
+                )))
+                .flatMap(m -> {
+                    if (!SpringUtil.exist(Oauth2CodeCache.class)) {
+                        return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        )))
-                .flatMap(m -> oauth2CodeCache
-                        .get(code)
-                        .switchIfEmpty(Mono.error(
-                                GlobalExceptionContext.executeServiceNotEnabledException(
-                                        this.getClass(),
-                                        "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                        "Account password login service not enabled exception."
-                                )))
-                        .flatMap(map -> {
-                            final String codeContentScope = map.get(Oauth2CodeCache.OAUTH2_SCOPE);
-                            final String codeContentUserId = map.get(Oauth2CodeCache.OAUTH2_USER_ID);
-                            final String codeContentUserInfo = map.get(Oauth2CodeCache.OAUTH2_USER_INFO);
-                            final String codeContentClientId = map.get(Oauth2CodeCache.OAUTH2_CLIENT_ID);
-                            final String codeContentRedirectUri = map.get(Oauth2CodeCache.OAUTH2_REDIRECT_URI);
-                            System.out.println("OAUTH2 TOKEN >> " + map);
-                            if (!m.getClientSecret().equals(clientSecret)) {
-                                return Mono.error(
-                                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                                this.getClass(),
-                                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                                "Account password login service not enabled exception."
-                                        ));
-                            }
-                            if (!codeContentClientId.equals(clientId)) {
-                                return Mono.error(
-                                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                                this.getClass(),
-                                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                                "Account password login service not enabled exception."
-                                        ));
-                            }
-                            if (!codeContentRedirectUri.equals(redirectUri)) {
-                                return Mono.error(
-                                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                                this.getClass(),
-                                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                                "Account password login service not enabled exception."
-                                        ));
-                            }
-                            final String accessToken = oauth2TokenUserAuthAccessTokenGenerator.execute();
-                            final String refreshToken = oauth2TokenUserAuthRefreshTokenGenerator.execute();
-                            return oauth2TokenUserAuthCache
-                                    .set(codeContentUserId, codeContentUserInfo,
-                                            codeContentScope, accessToken, refreshToken)
-                                    .map(t -> new Oauth2Context.Token.UserDto()
-                                            .setOpenId(oauth2UserOpenIdGenerator.execute(m.getClientId(), codeContentUserId))
-                                            .setAccessToken(t.getAccessToken())
-                                            .setRefreshToken(t.getRefreshToken())
-                                            .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
-                        })
+                                "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                                "Oauth2 [ " + Oauth2CodeCache.class + " ] handle bean not exist exception."
+                        ));
+                    }
+                    final Oauth2CodeCache oauth2CodeCache = SpringUtil.getBean(Oauth2CodeCache.class);
+                    return oauth2CodeCache
+                            .get(code)
+                            .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
+                                    this.getClass(),
+                                    "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                                    "Oauth2 parameter code exception."
+                            )))
+                            .flatMap(map -> {
+                                final String codeContentScope = map.get(Oauth2CodeCache.OAUTH2_SCOPE);
+                                final String codeContentUserId = map.get(Oauth2CodeCache.OAUTH2_USER_ID);
+                                final String codeContentUserInfo = map.get(Oauth2CodeCache.OAUTH2_USER_INFO);
+                                final String codeContentClientId = map.get(Oauth2CodeCache.OAUTH2_CLIENT_ID);
+                                final String codeContentRedirectUri = map.get(Oauth2CodeCache.OAUTH2_REDIRECT_URI);
+                                if (!m.getClientSecret().equals(clientSecret)) {
+                                    return Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                                            this.getClass(),
+                                            "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                                            "Oauth2 parameter clientSecret exception."
+                                    ));
+                                }
+                                if (!codeContentClientId.equals(clientId)) {
+                                    return Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                                            this.getClass(),
+                                            "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                                            "Oauth2 parameter clientId exception."
+                                    ));
+                                }
+                                if (!codeContentRedirectUri.equals(redirectUri)) {
+                                    return Mono.error(GlobalExceptionContext.executeOauth2ClientException(
+                                            this.getClass(),
+                                            "fun executeAuthorizationType(Oauth2Context.Token.Request param)",
+                                            "Oauth2 parameter redirectUri exception."
+                                    ));
+                                }
+                                return handleUserResult(clientId, codeContentUserId, codeContentUserInfo, codeContentScope);
+                            });
+                });
+    }
+
+    /**
+     * 处理用户的结果返回
+     *
+     * @param cid   客户端 ID
+     * @param uid   用户 ID
+     * @param info  用户信息
+     * @param scope 作用域
+     * @return 结果对象
+     */
+    private Mono<Oauth2Context.Token.Dto> handleUserResult(String cid, String uid, String info, String scope) {
+        if (!SpringUtil.exist(Oauth2TokenUserAuthAccessTokenGenerator.class)) {
+            return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                    this.getClass(),
+                    "fun handleUserResult(String cid, String uid, String info, String scope)",
+                    "Oauth2 [ " + Oauth2TokenUserAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+            ));
+        }
+        if (!SpringUtil.exist(Oauth2TokenUserAuthRefreshTokenGenerator.class)) {
+            return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                    this.getClass(),
+                    "fun handleUserResult(String cid, String uid, String info, String scope)",
+                    "Oauth2 [ " + Oauth2TokenUserAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
+            ));
+        }
+        if (!SpringUtil.exist(Oauth2TokenUserAuthCache.class)) {
+            return Mono.error(GlobalExceptionContext.exceptionBeanException(
+                    this.getClass(),
+                    "fun handleUserResult(String cid, String uid, String info, String scope)",
+                    "Oauth2 [ " + Oauth2TokenUserAuthCache.class + " ] handle bean not exist exception."
+            ));
+        }
+        final String accessToken = SpringUtil.getBean(
+                Oauth2TokenUserAuthAccessTokenGenerator.class).execute();
+        final String refreshToken = SpringUtil.getBean(
+                Oauth2TokenUserAuthRefreshTokenGenerator.class).execute();
+        final Oauth2TokenUserAuthCache oauth2TokenUserAuthCache =
+                SpringUtil.getBean(Oauth2TokenUserAuthCache.class);
+        final Oauth2UserOpenIdGenerator oauth2UserOpenIdGenerator =
+                SpringUtil.getBean(Oauth2UserOpenIdGenerator.class);
+        final String openid = oauth2UserOpenIdGenerator.execute(cid, uid);
+        return oauth2TokenUserAuthCache
+                .set(uid, info, scope, accessToken, refreshToken)
+                .map(t -> new Oauth2Context.Token.UserDto()
+                        .setOpenId(openid)
+                        .setAccessToken(t.getAccessToken())
+                        .setRefreshToken(t.getRefreshToken())
+                        .setType(HttpCertificate.getAuthHeaderTokenType())
+                        .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME)
                 );
     }
 
-    @Override
-    public Mono<Oauth2Context.Token.Dto> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
-        final String grantType = param.getGrantType();
-        switch (grantType) {
-            case PASSWORD_TYPE -> {
-                if (properties.getOauth2().getPassword().isEnable()) {
-                    return executePasswordType(param);
-                } else {
-                    return Mono.error(
-                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                    this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                    "Account password login service not enabled exception."
-                            ));
-                }
-            }
-            case CLIENT_CREDENTIALS_TYPE -> {
-                if (properties.getOauth2().getClient().isEnable()) {
-                    return executeClientType(param);
-                } else {
-                    return Mono.error(
-                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                    this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                    "Account password login service not enabled exception."
-                            ));
-                }
-            }
-            case AUTHORIZATION_CODE_TYPE -> {
-                if (properties.getOauth2().getAuthorizationCode().isEnable()) {
-                    return executeAuthorizationType(param);
-                } else {
-                    return Mono.error(
-                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                    this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                    "Account password login service not enabled exception."
-                            ));
-                }
-            }
-            default -> {
-                return Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        ));
-            }
-        }
-    }
 }

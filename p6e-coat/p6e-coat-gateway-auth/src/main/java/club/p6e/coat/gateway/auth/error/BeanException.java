@@ -7,7 +7,7 @@ package club.p6e.coat.gateway.auth.error;
  * @author lidashuang
  * @version 1.0
  */
-public class AccountException extends CustomException {
+public class BeanException extends CustomException {
 
     /**
      * 默认的代码
@@ -26,8 +26,8 @@ public class AccountException extends CustomException {
      * @param error   异常对象
      * @param content 描述内容
      */
-    public AccountException(Class<?> sc, String error, String content) {
-        super(sc, AccountException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
+    public BeanException(Class<?> sc, String error, String content) {
+        super(sc, BeanException.class, error, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -37,8 +37,8 @@ public class AccountException extends CustomException {
      * @param throwable 异常对象
      * @param content   描述内容
      */
-    public AccountException(Class<?> sc, Throwable throwable, String content) {
-        super(sc, AccountException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
+    public BeanException(Class<?> sc, Throwable throwable, String content) {
+        super(sc, BeanException.class, throwable, DEFAULT_CODE, DEFAULT_SKETCH, content);
     }
 
     /**
@@ -50,8 +50,8 @@ public class AccountException extends CustomException {
      * @param sketch  简述
      * @param content 描述内容
      */
-    public AccountException(Class<?> sc, String error, int code, String sketch, String content) {
-        super(sc, AccountException.class, error, code, sketch, content);
+    public BeanException(Class<?> sc, String error, int code, String sketch, String content) {
+        super(sc, BeanException.class, error, code, sketch, content);
     }
 
     /**
@@ -63,7 +63,7 @@ public class AccountException extends CustomException {
      * @param sketch    简述
      * @param content   描述内容
      */
-    public AccountException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
-        super(sc, AccountException.class, throwable, code, sketch, content);
+    public BeanException(Class<?> sc, Throwable throwable, int code, String sketch, String content) {
+        super(sc, BeanException.class, throwable, code, sketch, content);
     }
 }

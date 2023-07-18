@@ -18,13 +18,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = Oauth2ConfirmService.class,
-//        ignored = Oauth2ConfirmServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(Oauth2ConfirmService.CONDITIONAL_EXPRESSION)
-public class Oauth2ConfirmServiceDefaultImpl implements Oauth2ConfirmService {
+public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
 
     /**
      * Oauth2 Code 缓存对象
@@ -42,8 +36,7 @@ public class Oauth2ConfirmServiceDefaultImpl implements Oauth2ConfirmService {
      * @param cache     Oauth2 Code 缓存对象
      * @param generator Oauth2 Code 生成器对象
      */
-    public Oauth2ConfirmServiceDefaultImpl(
-            Oauth2CodeCache cache, Oauth2CodeGenerator generator) {
+    public Oauth2ConfirmServiceImpl(Oauth2CodeCache cache, Oauth2CodeGenerator generator) {
         this.cache = cache;
         this.generator = generator;
     }
@@ -120,7 +113,8 @@ public class Oauth2ConfirmServiceDefaultImpl implements Oauth2ConfirmService {
                                             this.getClass(),
                                             "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
                                             "Oauth2 cache data write exception."
-                                    )));
+                                    ))
+                            );
                 });
     }
 

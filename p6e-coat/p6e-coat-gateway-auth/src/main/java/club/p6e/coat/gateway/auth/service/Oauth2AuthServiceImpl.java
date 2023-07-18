@@ -5,11 +5,11 @@ import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
+import club.p6e.coat.gateway.auth.utils.VerificationUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
+public class Oauth2AuthServiceImpl implements Oauth2AuthService {
 
     /**
      * CODE 类型
@@ -47,7 +47,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
-    public Oauth2AuthServiceDefaultImpl(
+    public Oauth2AuthServiceImpl(
             IndexService service,
             Properties properties,
             Oauth2ClientRepository repository) {
@@ -66,66 +66,18 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                 // 如果启用 CODE 模型就执行 CODE 类型的代码
                 return executeCodeType(exchange, param);
             } else {
-                return Mono.error(GlobalExceptionContext.executeTypeNotSupportedException(
+                return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
                         this.getClass(),
                         "fun execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                        "Oauth2 auth type [" + responseType + "] not supported exception."
+                        "Oauth2 auth type [" + responseType + "] not enabled exception."
                 ));
             }
         }
         return Mono.error(GlobalExceptionContext.executeTypeNotSupportedException(
                 this.getClass(),
                 "fun execute(Oauth2Context.Auth.Request param).",
-                "Oauth2 auth service not enabled exception."
+                "Oauth2 auth service not supported exception."
         ));
-    }
-
-    /**
-     * 验证 scope
-     *
-     * @param source  源
-     * @param content 内容
-     * @return 验证结果
-     */
-    private boolean checkScope(String source, String content) {
-        if (source == null || content == null) {
-            return false;
-        } else {
-            final List<String> sList = List.of(source.split(","));
-            final List<String> cList = List.of(content.split(","));
-            for (final String ci : cList) {
-                boolean bool = false;
-                for (final String si : sList) {
-                    if (si.equalsIgnoreCase(ci)) {
-                        bool = true;
-                        break;
-                    }
-                }
-                if (!bool) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
-    /**
-     * 验证 redirect uri
-     *
-     * @param source  源
-     * @param content 内容
-     * @return 验证结果
-     */
-    private boolean checkRedirectUri(String source, String content) {
-        if (source != null && content != null) {
-            final List<String> sList = List.of(source.split(","));
-            for (final String si : sList) {
-                if (si.equalsIgnoreCase(content)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -147,7 +99,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                 )))
                 .flatMap(m -> {
                     // 验证作用域
-                    if (!checkScope(m.getScope(), scope)) {
+                    if (!VerificationUtil.oauth2Scope(m.getScope(), scope)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2ScopeException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
@@ -155,7 +107,7 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                         ));
                     }
                     // 验证重定向
-                    if (!checkRedirectUri(m.getRedirectUri(), redirectUri)) {
+                    if (!VerificationUtil.oauth2RedirectUri(m.getRedirectUri(), redirectUri)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2RedirectUriException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
@@ -182,4 +134,6 @@ public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
                 .flatMap(m -> service.execute(exchange, m));
 
     }
+
+
 }

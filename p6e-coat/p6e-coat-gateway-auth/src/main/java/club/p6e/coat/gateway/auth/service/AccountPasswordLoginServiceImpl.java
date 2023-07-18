@@ -62,7 +62,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     if (SpringUtil.exist(AccountPasswordLoginSignatureCache.class)) {
                         return SpringUtil.getBean(AccountPasswordLoginSignatureCache.class).get(m);
                     } else {
-                        return Mono.error(GlobalExceptionContext.executeCacheException(
+                        return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
                                 "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
                                 "Account password login transmission decryption cache handle bean not exist exception."

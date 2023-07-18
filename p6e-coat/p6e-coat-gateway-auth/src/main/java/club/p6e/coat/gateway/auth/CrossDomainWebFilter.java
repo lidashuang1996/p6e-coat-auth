@@ -24,8 +24,6 @@ import java.util.List;
 @Component
 public class CrossDomainWebFilter implements WebFilter, Ordered {
 
-
-
     /**
      * 跨域配置 ACCESS_CONTROL_MAX_AGE
      */

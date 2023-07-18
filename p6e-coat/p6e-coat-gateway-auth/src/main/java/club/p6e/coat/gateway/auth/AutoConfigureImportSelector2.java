@@ -31,7 +31,6 @@ public class AutoConfigureImportSelector2 {
 
     public AutoConfigureImportSelector2(
             Properties properties,
-            Configuration configuration,
             ApplicationContext applicationContext
     ) {
         this.properties = properties;
@@ -107,12 +106,12 @@ public class AutoConfigureImportSelector2 {
                 && properties.getOauth2().isEnable()) {
             registerOauth2RepositoryBean(defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2AuthServiceDefaultImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2AuthControllerDefaultImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmServiceDefaultImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmControllerDefaultImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2TokenServiceDefaultImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2TokenControllerDefaultImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2AuthControllerImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2ConfirmControllerImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2TokenControllerImpl.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
@@ -134,12 +133,12 @@ public class AutoConfigureImportSelector2 {
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()
                 && properties.getOauth2().getAuthorizationCode().isEnable()) {
+            registerOauth2CodeCache(defaultListableBeanFactory);
             registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2UserOpenIdGeneratorDefaultImpl.class, defaultListableBeanFactory);
         }
-
 
         // -------------------
         registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
@@ -160,6 +159,15 @@ public class AutoConfigureImportSelector2 {
     private void registerOauth2RepositoryBean(DefaultListableBeanFactory factory) {
         registerRepositoryBean(factory);
         registerBean(Oauth2ClientRepository.class, factory);
+    }
+
+    private void registerOauth2CodeCache(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(Oauth2CodeRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(Oauth2CodeMemoryCache.class, factory);
+        }
     }
 
     private void registerVerificationCodeLoginCacheBean(DefaultListableBeanFactory factory) {

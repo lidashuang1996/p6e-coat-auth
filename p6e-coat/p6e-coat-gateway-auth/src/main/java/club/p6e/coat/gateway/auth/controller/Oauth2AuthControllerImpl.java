@@ -1,8 +1,6 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.Oauth2AuthService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
 import org.springframework.web.server.ServerWebExchange;
@@ -18,7 +16,7 @@ import reactor.core.publisher.Mono;
 //        value = Oauth2AuthController.class,
 //        ignored = Oauth2AuthControllerDefaultImpl.class
 //)
-public class Oauth2AuthControllerDefaultImpl
+public class Oauth2AuthControllerImpl
         implements Oauth2AuthController<Oauth2Context.Auth.Request, Object> {
 
     /**
@@ -30,7 +28,7 @@ public class Oauth2AuthControllerDefaultImpl
      * 构造方法
      *
      */
-    public Oauth2AuthControllerDefaultImpl(Oauth2AuthService service) {
+    public Oauth2AuthControllerImpl(Oauth2AuthService service) {
         this.service = service;
     }
 
