@@ -38,6 +38,8 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     private final UserAuthRepository userAuthRepository;
 
+    private final AuthUser<?> au;
+
     /**
      * 构造方法初始化
      *
@@ -45,10 +47,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param properties 配置文件对象
      */
     public AccountPasswordLoginServiceImpl(
+            AuthUser<?> au,
             Properties properties,
             UserRepository userRepository,
             UserAuthRepository userAuthRepository,
             AuthPasswordEncryptor encryptor) {
+        this.au = au;
         this.encryptor = encryptor;
         this.properties = properties;
         this.userRepository = userRepository;
@@ -94,7 +98,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     }
 
     @Override
-    public Mono<AuthUser> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
+    public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
         final Properties.Mode mode = properties.getMode();
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
         return AuthVoucher
@@ -120,12 +124,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<AuthUser> executePhoneMode(LoginContext.AccountPassword.Request param) {
+    private Mono<AuthUser.Model> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
                         .findById(u.getId())
-                        .map(a -> new AuthUserDetails(u, a)));
+                        .map(a -> au.create(u, a)));
     }
 
     /**
@@ -134,12 +138,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<AuthUser> executeMailboxMode(LoginContext.AccountPassword.Request param) {
+    private Mono<AuthUser.Model> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
                         .findById(u.getId())
-                        .map(a -> new AuthUserDetails(u, a)));
+                        .map(a -> au.create(u, a)));
     }
 
     /**
@@ -148,12 +152,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<AuthUser> executeAccountMode(LoginContext.AccountPassword.Request param) {
+    protected Mono<AuthUser.Model> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
                         .findById(u.getId())
-                        .map(a -> new AuthUserDetails(u, a)));
+                        .map(a -> au.create(u, a)));
     }
 
     /**
@@ -162,12 +166,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<AuthUser> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
+    protected Mono<AuthUser.Model> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
                         .findById(u.getId())
-                        .map(a -> new AuthUserDetails(u, a)));
+                        .map(a -> au.create(u, a)));
     }
 
 }

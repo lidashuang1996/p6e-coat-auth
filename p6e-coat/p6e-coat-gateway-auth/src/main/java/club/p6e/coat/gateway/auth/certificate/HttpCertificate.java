@@ -134,7 +134,7 @@ public class HttpCertificate {
      * @param request 请求对象
      * @return 结果值
      */
-    public Mono<String> getHttpCookieToken(ServerHttpRequest request) {
+    public static Mono<String> getHttpCookieToken(ServerHttpRequest request) {
         return ACHIEVE.getHttpCookieToken(request);
     }
 
@@ -144,7 +144,7 @@ public class HttpCertificate {
      * @param request 请求对象
      * @return 结果值
      */
-    public Mono<String> getHttpLocalStorageToken(ServerHttpRequest request) {
+    public static Mono<String> getHttpLocalStorageToken(ServerHttpRequest request) {
         return ACHIEVE.getHttpLocalStorageToken(request);
     }
 

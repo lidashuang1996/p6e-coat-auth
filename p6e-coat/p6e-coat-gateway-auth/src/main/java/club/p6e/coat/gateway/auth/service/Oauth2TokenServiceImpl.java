@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthPasswordEncryptor;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.Oauth2CodeCache;
 import club.p6e.coat.gateway.auth.cache.Oauth2TokenClientAuthCache;
@@ -57,16 +57,20 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      */
     private final Oauth2ClientRepository oauth2ClientRepository;
 
+    private final AuthUser<?> au;
+
     /**
      * @param properties             配置文件对象
      * @param userRepository         用户存储库
      * @param oauth2ClientRepository OAUTH2 客户端存储库
      */
     public Oauth2TokenServiceImpl(
+            AuthUser<?> au,
             Properties properties,
             UserRepository userRepository,
             UserAuthRepository userAuthRepository,
             Oauth2ClientRepository oauth2ClientRepository) {
+        this.au = au;
         this.properties = properties;
         this.userRepository = userRepository;
         this.userAuthRepository = userAuthRepository;
@@ -225,10 +229,10 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                             )))
                             .flatMap(u -> userAuthRepository
                                     .findById(u.getId())
-                                    .filter(au -> {
+                                    .filter(uam -> {
                                         if (SpringUtil.exist(AuthPasswordEncryptor.class)) {
                                             final AuthPasswordEncryptor passwordEncryptor = SpringUtil.getBean(AuthPasswordEncryptor.class);
-                                            return au.getPassword().equals(passwordEncryptor.execute(password));
+                                            return uam.getPassword().equals(passwordEncryptor.execute(password));
                                         } else {
                                             return false;
                                         }
@@ -238,10 +242,10 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                                             "fun executePasswordType(Oauth2Context.Token.Request param)",
                                             "Oauth2 client account/password exception."
                                     )))
-                                    .flatMap(au -> handleUserResult(
+                                    .flatMap(uam -> handleUserResult(
                                             m.getClientId(),
-                                            String.valueOf(au.getId()),
-                                            JsonUtil.toJson(new AuthUserDetails(u, au)),
+                                            String.valueOf(uam.getId()),
+                                            au.create(u, uam).serialize(),
                                             m.getScope()
                                     )));
                 });

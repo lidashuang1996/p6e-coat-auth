@@ -1,6 +1,7 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthUser;
+import club.p6e.coat.gateway.auth.AuthUserImpl;
 import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
@@ -28,6 +29,8 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
      */
     private final UserRepository repository;
 
+    private final AuthUser<?> au;
+
     /**
      * 构造方法初始化
      *
@@ -36,14 +39,16 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
      * @param repository 用户存储库
      */
     public VerificationCodeLoginServiceImpl(
+            AuthUser<?> au,
             VerificationCodeLoginCache cache,
             UserRepository repository) {
+        this.au = au;
         this.cache = cache;
         this.repository = repository;
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
+    public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
         final String code = param.getCode();
         return AuthVoucher
                 .init(exchange)
@@ -78,7 +83,7 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                                 case ACCOUNT -> repository.findByAccount(account);
                                 case PHONE_OR_MAILBOX -> repository.findByPhoneOrMailbox(account);
                             })
-                            .map(AuthUserDetails::new);
+                            .map(m -> au.create(m, null));
                 });
 
     }

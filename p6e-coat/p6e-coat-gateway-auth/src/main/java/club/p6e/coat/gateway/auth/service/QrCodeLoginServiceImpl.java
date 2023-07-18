@@ -1,13 +1,13 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthUser;
+import club.p6e.coat.gateway.auth.AuthUserImpl;
 import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.repository.UserRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -30,23 +30,25 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
      */
     private final UserRepository repository;
 
+    private final  AuthUser au;
+
     /**
      * 构造方法初始化
      *
      * @param cache      二维码缓存对象
-     * @param properties 配置文件对象
      * @param repository 用户存储库
      */
     public QrCodeLoginServiceImpl(
-            Properties properties,
+            AuthUser au,
             QrCodeLoginCache cache,
             UserRepository repository) {
+        this.au = au;
         this.cache = cache;
         this.repository = repository;
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
+    public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.QrCode.Request param) {
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
@@ -78,7 +80,7 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
                                                                     "QrCode login user id select data does not exist exception."
                                                             ));
                                                         } else {
-                                                            return Mono.just(new AuthUserDetails(m));
+                                                            return Mono.just(au.create(m, null));
                                                         }
                                                     }));
                                 }

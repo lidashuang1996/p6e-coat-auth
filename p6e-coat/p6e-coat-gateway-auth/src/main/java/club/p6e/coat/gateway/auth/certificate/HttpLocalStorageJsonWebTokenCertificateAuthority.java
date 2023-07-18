@@ -37,9 +37,9 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
     }
 
     @Override
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser user) {
-        final String uid = user.id();
-        final String info = JsonUtil.toJson(user.toMap());
+    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model) {
+        final String uid = model.id();
+        final String info = model.serialize();
         final String accessToken = jwtCreate(uid, info, cipher.getAccessTokenSecret());
         final String refreshToken = jwtCreate(uid, info, cipher.getRefreshTokenSecret());
         return AuthVoucher

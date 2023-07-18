@@ -51,6 +51,7 @@ public class AutoConfigureImportSelector2 {
         if (properties.isEnable()
                 && properties.getLogin().isEnable()) {
             registerVoucherBean(defaultListableBeanFactory);
+            registerBean(AuthUserImpl.class, defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
             registerBean(IndexControllerImpl.class, defaultListableBeanFactory);
             registerBean(VerificationLoginControllerImpl.class, defaultListableBeanFactory);
@@ -106,6 +107,7 @@ public class AutoConfigureImportSelector2 {
                 && properties.getOauth2().isEnable()) {
             registerOauth2RepositoryBean(defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
+            registerBean(AuthOauth2ClientImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2AuthControllerImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
@@ -152,7 +154,7 @@ public class AutoConfigureImportSelector2 {
 
     private void registerRepositoryBean(DefaultListableBeanFactory factory) {
         registerBean(UserRepository.class, factory);
-        registerBean(AuthUserDetails.class, factory);
+        registerBean(AuthUserImpl.class, factory);
         registerBean(UserAuthRepository.class, factory);
     }
 

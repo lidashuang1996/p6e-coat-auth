@@ -6,7 +6,6 @@ import club.p6e.coat.gateway.auth.certificate.HttpCertificate;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
-import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
@@ -28,12 +27,14 @@ public class VerificationLoginControllerImpl
      */
     private final AuthCertificateValidator validator;
 
+    private final AuthUser<?> au;
     /**
      * 构造方法
      *
      * @param validator 验证器
      */
-    public VerificationLoginControllerImpl(AuthCertificateValidator validator) {
+    public VerificationLoginControllerImpl(AuthUser<?> au, AuthCertificateValidator validator) {
+        this.au = au;
         this.validator = validator;
     }
 
@@ -46,7 +47,7 @@ public class VerificationLoginControllerImpl
                     final HttpHeaders httpHeaders = request.getHeaders();
                     final List<String> list = httpHeaders.get(HttpCertificate.getUserHeaderName());
                     if (list != null && list.size() > 0) {
-                        return Mono.just(ResultContext.build(JsonUtil.fromJson(list.get(0), AuthUser.SUPPORT)));
+                        return Mono.just(ResultContext.build(au.create(list.get(0))));
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                 this.getClass(),

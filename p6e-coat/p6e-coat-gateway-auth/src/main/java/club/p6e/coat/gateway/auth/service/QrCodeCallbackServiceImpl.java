@@ -1,7 +1,7 @@
 package club.p6e.coat.gateway.auth.service;
 
 import club.p6e.coat.gateway.auth.AuthCertificateValidator;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
+import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
@@ -29,29 +29,32 @@ public class QrCodeCallbackServiceImpl implements QrCodeCallbackService {
      * 二维码登录缓存
      */
     private final QrCodeLoginCache cache;
-    private final AuthCertificateValidator interceptor;
+    private final AuthCertificateValidator validator;
+
+    private final AuthUser<?> au;
 
     /**
      * 构造方法初始化
      *
      * @param cache 二维码登录缓存
      */
-    public QrCodeCallbackServiceImpl(QrCodeLoginCache cache, AuthCertificateValidator interceptor) {
+    public QrCodeCallbackServiceImpl(QrCodeLoginCache cache, AuthCertificateValidator validator, AuthUser<?> authUser) {
         this.cache = cache;
-        this.interceptor = interceptor;
+        this.au = authUser;
+        this.validator = validator;
     }
 
     @Override
     public Mono<LoginContext.QrCodeCallback.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param) {
         final String content = param.getContent();
-        return interceptor
+        return validator
                 .execute(exchange)
                 .flatMap(e -> {
                     final ServerHttpRequest request = e.getRequest();
                     final HttpHeaders httpHeaders = request.getHeaders();
                     final List<String> list = httpHeaders.get(USER_HEADER_NAME);
                     if (list != null && list.size() > 0) {
-                        return Mono.just(AuthUserDetails.create(list.get(0)));
+                        return Mono.just(au.create(list.get(0)));
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                 this.getClass(),
@@ -69,7 +72,7 @@ public class QrCodeCallbackServiceImpl implements QrCodeCallbackService {
                         )))
                         .flatMap(s -> {
                             if (QrCodeLoginCache.isEmpty(s)) {
-                                return cache.set(content, String.valueOf(u.getId()));
+                                return cache.set(content, u.id());
                             } else {
                                 return Mono.error(GlobalExceptionContext.executeCacheException(
                                         this.getClass(),

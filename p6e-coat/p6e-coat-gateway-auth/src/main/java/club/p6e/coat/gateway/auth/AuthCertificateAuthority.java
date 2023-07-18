@@ -9,5 +9,5 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public interface AuthCertificateAuthority {
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser user);
+    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model);
 }
