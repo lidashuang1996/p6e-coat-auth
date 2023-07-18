@@ -5,7 +5,6 @@ import club.p6e.coat.gateway.auth.AuthJsonWebTokenCipher;
 import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.AuthVoucher;
 import club.p6e.coat.gateway.auth.context.ResultContext;
-import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;

@@ -6,6 +6,9 @@ import lombok.experimental.Accessors;
 import java.io.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lidashuang
@@ -15,24 +18,22 @@ public class ReactiveMemoryTemplate {
 
     protected final Map<String, Model> CACHE = new ConcurrentHashMap<>();
 
-    @Data
-    @Accessors(chain = true)
-    public static class Model implements Serializable {
-        private byte[] bytes;
-        private long expire;
-        private long date;
-
-        public Model(byte[] bytes) {
-            this.bytes = bytes;
-            this.expire = -1;
-            this.date = System.currentTimeMillis();
-        }
-
-        public Model(byte[] bytes, long expire) {
-            this.bytes = bytes;
-            this.expire = expire;
-            this.date = System.currentTimeMillis();
-        }
+    public ReactiveMemoryTemplate() {
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(() -> {
+            final long now = System.currentTimeMillis();
+            for (final String key : CACHE.keySet()) {
+                if (key == null) {
+                    CACHE.remove(null);
+                } else {
+                    final Model value = CACHE.get(key);
+                    if (value == null
+                            || (value.getExpire() > 0 && now > value.getDate() + value.getExpire() * 1000)) {
+                        CACHE.remove(key);
+                    }
+                }
+            }
+        }, 5, 900, TimeUnit.SECONDS);
     }
 
     public boolean set(String key, Object value) {
@@ -116,4 +117,25 @@ public class ReactiveMemoryTemplate {
             e.printStackTrace();
         }
     }
+
+    @Data
+    @Accessors(chain = true)
+    public static class Model implements Serializable {
+        private byte[] bytes;
+        private long expire;
+        private long date;
+
+        public Model(byte[] bytes) {
+            this.bytes = bytes;
+            this.expire = -1;
+            this.date = System.currentTimeMillis();
+        }
+
+        public Model(byte[] bytes, long expire) {
+            this.bytes = bytes;
+            this.expire = expire;
+            this.date = System.currentTimeMillis();
+        }
+    }
+
 }

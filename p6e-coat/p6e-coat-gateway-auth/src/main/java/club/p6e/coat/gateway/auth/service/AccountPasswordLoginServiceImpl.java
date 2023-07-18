@@ -21,6 +21,8 @@ import reactor.core.scheduler.Schedulers;
  */
 public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginService {
 
+    private final AuthUser<?> au;
+
     /**
      * 配置文件对象
      */
@@ -37,8 +39,6 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private final UserRepository userRepository;
 
     private final UserAuthRepository userAuthRepository;
-
-    private final AuthUser<?> au;
 
     /**
      * 构造方法初始化
@@ -110,7 +110,12 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     case ACCOUNT -> executeAccountMode(p);
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(p);
                 })
-                .filter(u -> u.password().equals(encryptor.execute(param.getPassword())))
+                .filter(u -> {
+                    System.out.println(u);
+                    System.out.println(param.getPassword());
+                    System.out.println(encryptor.execute(param.getPassword()));
+                    return u.password().equals(encryptor.execute(param.getPassword()));
+                })
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param)",

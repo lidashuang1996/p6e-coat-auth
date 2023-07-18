@@ -22,12 +22,13 @@ import java.util.List;
 public class VerificationLoginControllerImpl
         implements VerificationLoginController<LoginContext.Verification.Request, ResultContext> {
 
+    private final AuthUser<?> au;
+
     /**
      * 认证证书拦截器对象
      */
     private final AuthCertificateValidator validator;
 
-    private final AuthUser<?> au;
     /**
      * 构造方法
      *

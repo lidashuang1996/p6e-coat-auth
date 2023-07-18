@@ -19,17 +19,19 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Arrays;
+
 /**
  * 自动配置导入选择器
  *
  * @author lidashuang
  * @version 1.0
  */
-public class AutoConfigureImportSelector2 {
+public class AutoConfigureImportSelector {
 
     private final Properties properties;
 
-    public AutoConfigureImportSelector2(
+    public AutoConfigureImportSelector(
             Properties properties,
             ApplicationContext applicationContext
     ) {
@@ -245,10 +247,41 @@ public class AutoConfigureImportSelector2 {
      * 注册 bean 服务
      */
     private synchronized void registerBean(Class<?> bc, DefaultListableBeanFactory factory) {
-        if (!factory.containsBean(bc.getName())) {
-            final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-            beanDefinition.setBeanClass(bc);
-            factory.registerBeanDefinition(bc.getName(), beanDefinition);
+        if (!isExistBean(bc, factory)) {
+            boolean bool = false;
+            System.out.println("===============================");
+            final Class<?>[] interfaces = bc.getInterfaces();
+            System.out.println(bc);
+            System.out.println(Arrays.toString(interfaces));
+            System.out.println("===============================");
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            for (final Class<?> item : interfaces) {
+                if (isExistBean(item, factory)) {
+                    bool = true;
+                    break;
+                }
+            }
+            if (!bool) {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>  " + bc);
+                final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+                beanDefinition.setBeanClass(bc);
+                beanDefinition.setPrimary(false);
+                factory.registerBeanDefinition(bc.getName(), beanDefinition);
+            }
+        }
+    }
+
+
+    private boolean isExistBean(Class<?> bc, DefaultListableBeanFactory factory) {
+        try {
+            if (!factory.containsBean(bc.getName())) {
+                factory.getBean(bc);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 

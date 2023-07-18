@@ -83,28 +83,28 @@ public class Properties {
         private AccountPassword accountPassword = new AccountPassword();
         private VerificationCode verificationCode = new VerificationCode();
         private QrCode qrCode = new QrCode();
-        private Other other = new Other();
+        private Map<String, Other> others = new HashMap<>();
 
         @Data
         public static class AccountPassword {
             private boolean enable = true;
-            private boolean enableTransmissionEncryption = true;
+            private boolean enableTransmissionEncryption = false;
         }
 
         @Data
         public static class VerificationCode {
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         @Data
         public static class QrCode {
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         @Data
         public static class Other {
             private boolean enable = false;
-            private Map<String, Map<String, String>> config = new HashMap<>();
+            private Map<String, String> config = new HashMap<>();
         }
     }
 

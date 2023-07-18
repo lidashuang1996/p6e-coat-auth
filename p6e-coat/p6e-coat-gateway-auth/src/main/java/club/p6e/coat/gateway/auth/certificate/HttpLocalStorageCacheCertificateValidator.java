@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class HttpLocalStorageCacheAuthCertificateValidator
+public class HttpLocalStorageCacheCertificateValidator
         extends HttpCertificate implements AuthCertificateValidator {
 
     /**
@@ -23,7 +23,7 @@ public class HttpLocalStorageCacheAuthCertificateValidator
      *
      * @param cache 认证缓存的对象
      */
-    public HttpLocalStorageCacheAuthCertificateValidator(AuthCache cache) {
+    public HttpLocalStorageCacheCertificateValidator(AuthCache cache) {
         this.cache = cache;
     }
 

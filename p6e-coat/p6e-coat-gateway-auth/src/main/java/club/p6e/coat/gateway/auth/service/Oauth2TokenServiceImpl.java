@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
+import club.p6e.coat.gateway.auth.AuthOauth2Client;
 import club.p6e.coat.gateway.auth.AuthPasswordEncryptor;
 import club.p6e.coat.gateway.auth.AuthUser;
 import club.p6e.coat.gateway.auth.Properties;
@@ -58,6 +59,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     private final Oauth2ClientRepository oauth2ClientRepository;
 
     private final AuthUser<?> au;
+    private final AuthOauth2Client<?> aoc;
 
     /**
      * @param properties             配置文件对象
@@ -66,11 +68,13 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      */
     public Oauth2TokenServiceImpl(
             AuthUser<?> au,
+            AuthOauth2Client<?> aoc,
             Properties properties,
             UserRepository userRepository,
             UserAuthRepository userAuthRepository,
             Oauth2ClientRepository oauth2ClientRepository) {
         this.au = au;
+        this.aoc = aoc;
         this.properties = properties;
         this.userRepository = userRepository;
         this.userAuthRepository = userAuthRepository;

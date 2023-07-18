@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
         Properties.class,
-        AutoConfigureImportSelector2.class
+        AutoConfigureImportSelector.class
 })
 public @interface EnableP6eGatewayAuth {
 }

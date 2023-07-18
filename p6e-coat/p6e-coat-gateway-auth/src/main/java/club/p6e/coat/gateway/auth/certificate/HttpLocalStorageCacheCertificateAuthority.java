@@ -7,8 +7,6 @@ import club.p6e.coat.gateway.auth.cache.AuthCache;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.gateway.auth.generator.AuthRefreshTokenGenerator;
-import club.p6e.coat.gateway.auth.utils.JsonUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
