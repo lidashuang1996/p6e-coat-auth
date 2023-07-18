@@ -1,6 +1,5 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.service.QrCodeObtainService;
@@ -26,10 +25,9 @@ public class QrCodeObtainControllerImpl
     /**
      * 构造方法
      *
-     * @param properties 配置文件对象
-     * @param service    二维码获取的服务对象
+     * @param service 二维码获取的服务对象
      */
-    public QrCodeObtainControllerImpl(Properties properties, QrCodeObtainService service) {
+    public QrCodeObtainControllerImpl(QrCodeObtainService service) {
         this.service = service;
     }
 

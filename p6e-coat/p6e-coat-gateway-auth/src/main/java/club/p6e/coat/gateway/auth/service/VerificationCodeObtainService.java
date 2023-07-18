@@ -13,12 +13,6 @@ import reactor.core.publisher.Mono;
 public interface VerificationCodeObtainService {
 
     /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.verification-code.enable:false}}";
-
-    /**
      * 执行验证码获取
      *
      * @param param 请求对象

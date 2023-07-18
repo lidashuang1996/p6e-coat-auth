@@ -13,12 +13,6 @@ import reactor.core.publisher.Mono;
 public interface QrCodeCallbackService {
 
     /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.login.enable:false} && ${p6e.auth.login.qr-code.enable:false}}";
-
-    /**
      * 执行二维码回调
      *
      * @param param 请求对象

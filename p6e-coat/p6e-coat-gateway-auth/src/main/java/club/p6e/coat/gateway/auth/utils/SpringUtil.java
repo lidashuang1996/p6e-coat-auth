@@ -35,7 +35,7 @@ public final class SpringUtil {
      * @return boolean 是否存在 Bean
      */
     @SuppressWarnings("ALL")
-    public static boolean existBean(Class<?> tClass) {
+    public static boolean exist(Class<?> tClass) {
         try {
             APPLICATION.getBean(tClass);
             return true;

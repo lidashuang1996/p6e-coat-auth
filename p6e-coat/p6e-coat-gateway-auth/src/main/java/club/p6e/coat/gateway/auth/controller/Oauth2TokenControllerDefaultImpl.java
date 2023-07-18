@@ -19,12 +19,10 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 //@ConditionalOnMissingBean(
 //        value = Oauth2TokenController.class,
 //        ignored = Oauth2TokenControllerDefaultImpl.class
 //)
-//@ConditionalOnExpression(Oauth2TokenController.CONDITIONAL_EXPRESSION)
 public class Oauth2TokenControllerDefaultImpl
         implements Oauth2TokenController<Oauth2Context.Token.Request, ResultContext> {
 

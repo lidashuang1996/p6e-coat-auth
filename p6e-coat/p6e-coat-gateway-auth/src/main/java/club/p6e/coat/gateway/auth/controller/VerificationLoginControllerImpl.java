@@ -1,14 +1,14 @@
 package club.p6e.coat.gateway.auth.controller;
 
 import club.p6e.coat.gateway.auth.AuthCertificateValidator;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
-import club.p6e.coat.gateway.auth.Properties;
+import club.p6e.coat.gateway.auth.AuthUser;
+import club.p6e.coat.gateway.auth.certificate.HttpCertificate;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
+import club.p6e.coat.gateway.auth.utils.JsonUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -24,56 +24,37 @@ public class VerificationLoginControllerImpl
         implements VerificationLoginController<LoginContext.Verification.Request, ResultContext> {
 
     /**
-     * 用户信息的请求头名称
-     */
-    private static final String USER_HEADER_NAME = "P6e-User-Info";
-
-    /**
      * 认证证书拦截器对象
      */
-    private final AuthCertificateValidator interceptor;
+    private final AuthCertificateValidator validator;
 
     /**
      * 构造方法
      *
-     * @param properties  配置文件对象
-     * @param interceptor 验证登录的切面对象
+     * @param validator 验证器
      */
-    public VerificationLoginControllerImpl(Properties properties, AuthCertificateValidator interceptor) {
-        this.interceptor = interceptor;
+    public VerificationLoginControllerImpl(AuthCertificateValidator validator) {
+        this.validator = validator;
     }
-
-
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.Verification.Request param) {
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> {
-                    if (b) {
-                        return interceptor
-                                .execute(exchange)
-                                .flatMap(e -> {
-                                    final ServerHttpRequest request = e.getRequest();
-                                    final HttpHeaders httpHeaders = request.getHeaders();
-                                    final List<String> list = httpHeaders.get(USER_HEADER_NAME);
-                                    if (list != null && list.size() > 0) {
-                                        return Mono.just(AuthUserDetails.create(list.get(0)));
-                                    } else {
-                                        return Mono.error(GlobalExceptionContext.exceptionAuthException(
-                                                this.getClass(),
-                                                "fun execute(ServerWebExchange exchange, LoginContext.Verification.Request param).",
-                                                "Verification login authentication exception."
-                                        ));
-                                    }
-                                });
+        return validator
+                .execute(exchange)
+                .flatMap(e -> {
+                    final ServerHttpRequest request = e.getRequest();
+                    final HttpHeaders httpHeaders = request.getHeaders();
+                    final List<String> list = httpHeaders.get(HttpCertificate.getUserHeaderName());
+                    if (list != null && list.size() > 0) {
+                        return Mono.just(ResultContext.build(JsonUtil.fromJson(list.get(0), AuthUser.SUPPORT)));
                     } else {
-                        return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
+                        return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                 this.getClass(),
                                 "fun execute(ServerWebExchange exchange, LoginContext.Verification.Request param).",
-                                "Verification login service not enabled exception."
+                                "Verification login authentication exception."
                         ));
                     }
                 });
+
     }
 }

@@ -19,12 +19,6 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = QrCodeCallbackService.class,
-//        ignored = QrCodeCallbackServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(QrCodeCallbackService.CONDITIONAL_EXPRESSION)
 public class QrCodeCallbackServiceDefaultImpl implements QrCodeCallbackService {
 
     /**

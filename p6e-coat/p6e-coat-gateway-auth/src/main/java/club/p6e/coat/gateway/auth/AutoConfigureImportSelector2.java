@@ -97,7 +97,7 @@ public class AutoConfigureImportSelector2 {
             registerRepositoryBean(defaultListableBeanFactory);
             registerQrCodeLoginCacheBean(defaultListableBeanFactory);
             registerBean(QrCodeLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeLoginControllerDefaultImpl.class, defaultListableBeanFactory);
+            registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeObtainServiceImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeLoginGeneratorDefaultImpl.class, defaultListableBeanFactory);

@@ -140,7 +140,7 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
     }
 
     @Override
-    public Mono<Long> cleaUserAll(String uid) {
+    public Mono<Long> cleanUserAll(String uid) {
         return getUser(uid)
                 .flatMap(s -> template
                         .execute(
@@ -179,10 +179,9 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
                 );
     }
 
-    @Override
     public Mono<Long> cleanTokenAll(String content) {
         return getAccessToken(content)
-                .flatMap(t -> cleaUserAll(t.getUid()));
+                .flatMap(t -> cleanUserAll(t.getUid()));
     }
 
 }

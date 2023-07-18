@@ -18,18 +18,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = QrCodeLoginService.class,
-//        ignored = QrCodeLoginServiceImpl.class
-//)
-//@ConditionalOnExpression(QrCodeLoginService.CONDITIONAL_EXPRESSION)
 public class QrCodeLoginServiceImpl implements QrCodeLoginService {
-
-    /**
-     * 配置文件对象
-     */
-    private final Properties properties;
 
     /**
      * 二维码缓存对象
@@ -53,7 +42,6 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
             QrCodeLoginCache cache,
             UserRepository repository) {
         this.cache = cache;
-        this.properties = properties;
         this.repository = repository;
     }
 

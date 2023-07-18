@@ -5,18 +5,15 @@ import club.p6e.coat.gateway.auth.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
-@Component
 public class IndexServiceImpl implements IndexService {
 
     /**
@@ -43,10 +40,14 @@ public class IndexServiceImpl implements IndexService {
     public Mono<Void> execute(ServerWebExchange exchange, Map<String, String> vm) {
         return AuthVoucher
                 .create(vm)
-                .flatMap(voucher -> {
-                    System.out.println("execute voucher " + voucher);
-                    return write(exchange, TemplateParser.execute(templateContent, "voucher", voucher.getMark()));
-                });
+                .flatMap(voucher -> write(
+                        exchange,
+                        TemplateParser.execute(
+                                templateContent,
+                                "voucher",
+                                voucher.getMark()
+                        )
+                ));
     }
 
     /**
@@ -57,7 +58,6 @@ public class IndexServiceImpl implements IndexService {
      * @return Mono/Void 对象
      */
     protected Mono<Void> write(ServerWebExchange exchange, String content) {
-        System.out.println("write :::: " + content);
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(mediaType);

@@ -87,6 +87,11 @@ public class AuthUserDetails implements AuthUser {
     }
 
     @Override
+    public String password() {
+        return String.valueOf("123456");
+    }
+
+    @Override
     public Map<String, Object> toMap() {
         final Map<String, Object> map = new HashMap<>();
         map.put("id", id);

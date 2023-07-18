@@ -19,12 +19,10 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
 //@ConditionalOnMissingBean(
 //        value = Oauth2ConfirmController.class,
 //        ignored = Oauth2ConfirmControllerDefaultImpl.class
 //)
-//@ConditionalOnExpression(Oauth2ConfirmController.CONDITIONAL_EXPRESSION)
 public class Oauth2ConfirmControllerDefaultImpl
         implements Oauth2ConfirmController<Oauth2Context.Confirm.Request, ResultContext> {
 

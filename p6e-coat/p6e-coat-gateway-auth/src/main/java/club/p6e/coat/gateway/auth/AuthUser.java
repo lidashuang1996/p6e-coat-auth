@@ -8,7 +8,11 @@ import java.util.Map;
  */
 public interface AuthUser {
 
+    public static Class<? extends AuthUser> SUPPORT = AuthUserDetails.class;
+
     public String id();
+
+    public String password();
 
     public Map<String, Object> toMap();
 

@@ -1,12 +1,9 @@
 package club.p6e.coat.gateway.auth.controller;
 
-import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.context.ResultContext;
-import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.service.VerificationCodeObtainService;
 import club.p6e.coat.gateway.auth.validator.ParameterValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 

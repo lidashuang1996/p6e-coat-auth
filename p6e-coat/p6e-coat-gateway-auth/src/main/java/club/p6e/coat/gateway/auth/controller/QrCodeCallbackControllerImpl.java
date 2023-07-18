@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class QrCodeCallbackControllerDefaultImpl
+public class QrCodeCallbackControllerImpl
         implements QrCodeCallbackController<LoginContext.QrCodeCallback.Request, ResultContext> {
 
     /**
@@ -24,9 +24,9 @@ public class QrCodeCallbackControllerDefaultImpl
     /**
      * 构造方法
      *
-     * @param service    二维码登录的服务对象
+     * @param service 二维码登录的服务对象
      */
-    public QrCodeCallbackControllerDefaultImpl(QrCodeCallbackService service) {
+    public QrCodeCallbackControllerImpl(QrCodeCallbackService service) {
         this.service = service;
     }
 

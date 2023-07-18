@@ -35,7 +35,7 @@ public class VoucherMemoryCache extends MemoryCache implements VoucherCache {
     public Mono<Boolean> set(String key, Map<String, String> data) {
         final Map<String, String> map = get0(key);
         map.putAll(data);
-        return Mono.just(template.set(CACHE_PREFIX + key, map));
+        return Mono.just(template.set(CACHE_PREFIX + key, map, EXPIRATION_TIME));
     }
 
     @SuppressWarnings("ALL")

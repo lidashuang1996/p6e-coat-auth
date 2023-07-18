@@ -16,12 +16,6 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/oauth2/auth")
 public interface Oauth2AuthController<P, R> {
 
-    /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.oauth2.enable:false} && ${p6e.auth.oauth2.authorization-code.enable:false}}";
-
     @GetMapping("")
     public Mono<Void> execute(ServerWebExchange exchange, P param);
 

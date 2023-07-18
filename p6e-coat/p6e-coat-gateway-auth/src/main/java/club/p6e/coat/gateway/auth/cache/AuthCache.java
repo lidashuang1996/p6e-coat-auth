@@ -119,14 +119,6 @@ public interface AuthCache extends ICache {
      * @param uid 用户 ID
      * @return Mono/Long 清除的数据条数
      */
-    Mono<Long> cleaUserAll(String uid);
-
-    /**
-     * 清除用户的 ACCESS TOKEN 令牌对应的全部信息
-     *
-     * @param content 令牌内容
-     * @return Mono/Long 清除的数据条数
-     */
-    Mono<Long> cleanTokenAll(String content);
+    Mono<Long> cleanUserAll(String uid);
 
 }

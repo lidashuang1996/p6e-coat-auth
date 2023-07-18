@@ -9,15 +9,11 @@ import org.springframework.stereotype.Component;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = Oauth2CodeGenerator.class,
-//        ignored = Oauth2CodeGeneratorDefaultImpl.class
-//)
-//@ConditionalOnExpression(Oauth2CodeGenerator.CONDITIONAL_EXPRESSION)
 public class Oauth2CodeGeneratorDefaultImpl implements Oauth2CodeGenerator {
+
     @Override
     public String execute() {
         return GeneratorUtil.uuid();
     }
+
 }

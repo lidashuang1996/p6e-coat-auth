@@ -13,15 +13,6 @@ import reactor.core.publisher.Mono;
 public interface AccountPasswordLoginSignatureService {
 
     /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION = "#{"
-            + "${p6e.auth.login.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable:false} "
-            + "&& ${p6e.auth.login.account-password.enable-transmission-encryption:false}"
-            + "}";
-
-    /**
      * 执行账号密码登录密码签名操作
      *
      * @param param 请求对象

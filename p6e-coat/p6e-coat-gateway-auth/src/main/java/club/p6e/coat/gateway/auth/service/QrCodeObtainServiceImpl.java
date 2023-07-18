@@ -6,7 +6,6 @@ import club.p6e.coat.gateway.auth.cache.QrCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.generator.QrCodeLoginGenerator;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -20,11 +19,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class QrCodeObtainServiceImpl implements QrCodeObtainService {
-
-    /**
-     * 配置文件对象
-     */
-    private final Properties properties;
 
     /**
      * 二维码缓存对象
@@ -50,12 +44,6 @@ public class QrCodeObtainServiceImpl implements QrCodeObtainService {
             QrCodeLoginGenerator generator) {
         this.cache = cache;
         this.generator = generator;
-        this.properties = properties;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getQrCode().isEnable();
     }
 
     @Override

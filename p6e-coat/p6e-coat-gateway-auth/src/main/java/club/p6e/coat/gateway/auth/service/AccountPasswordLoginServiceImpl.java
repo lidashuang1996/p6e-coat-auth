@@ -1,9 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
-import club.p6e.coat.gateway.auth.AuthPasswordEncryptor;
-import club.p6e.coat.gateway.auth.AuthUserDetails;
-import club.p6e.coat.gateway.auth.AuthVoucher;
-import club.p6e.coat.gateway.auth.Properties;
+import club.p6e.coat.gateway.auth.*;
 import club.p6e.coat.gateway.auth.cache.AccountPasswordLoginSignatureCache;
 import club.p6e.coat.gateway.auth.codec.AccountPasswordLoginTransmissionCodec;
 import club.p6e.coat.gateway.auth.context.LoginContext;
@@ -30,16 +27,16 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private final Properties properties;
 
     /**
+     * 密码加密器
+     */
+    private final AuthPasswordEncryptor encryptor;
+
+    /**
      * 用户存储库
      */
     private final UserRepository userRepository;
 
     private final UserAuthRepository userAuthRepository;
-
-    /**
-     * 密码加密器
-     */
-    private final AuthPasswordEncryptor encryptor;
 
     /**
      * 构造方法初始化
@@ -58,15 +55,20 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
         this.userAuthRepository = userAuthRepository;
     }
 
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getAccountPassword().isEnable();
-    }
-
     protected Mono<String> executeTransmissionDecryption(AuthVoucher voucher, String content) {
         final String mark = voucher.get(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK);
         return Mono.just(mark)
-                .flatMap(m -> SpringUtil.getBean(AccountPasswordLoginSignatureCache.class).get(m))
+                .flatMap(m -> {
+                    if (SpringUtil.exist(AccountPasswordLoginSignatureCache.class)) {
+                        return SpringUtil.getBean(AccountPasswordLoginSignatureCache.class).get(m);
+                    } else {
+                        return Mono.error(GlobalExceptionContext.executeCacheException(
+                                this.getClass(),
+                                "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
+                                "Account password login transmission decryption cache handle bean not exist exception."
+                        ));
+                    }
+                })
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeCacheException(
                         this.getClass(),
                         "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
@@ -92,17 +94,11 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     }
 
     @Override
-    public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
+    public Mono<AuthUser> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
         final Properties.Mode mode = properties.getMode();
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
-        return Mono
-                .just(isEnable())
-                .flatMap(b -> b ? AuthVoucher.init(exchange) : Mono.error(
-                        GlobalExceptionContext.executeServiceNotEnabledException(
-                                this.getClass(),
-                                "fun execute(LoginContext.AccountPassword.Request param)",
-                                "Account password login service not enabled exception."
-                        )))
+        return AuthVoucher
+                .init(exchange)
                 .flatMap(v -> ete ? executeTransmissionDecryption(v, param.getPassword()).map(param::setPassword) : Mono.just(param))
                 .flatMap(p -> switch (mode) {
                     case PHONE -> executePhoneMode(p);
@@ -110,11 +106,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     case ACCOUNT -> executeAccountMode(p);
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(p);
                 })
-                .filter(u -> {
-                    System.out.println(u.getPassword());
-                    System.out.println(encryptor.execute(param.getPassword()));
-                    return u.getPassword().equals(encryptor.execute(param.getPassword()));
-                })
+                .filter(u -> u.password().equals(encryptor.execute(param.getPassword())))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param)",
@@ -128,7 +120,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<AuthUserDetails> executePhoneMode(LoginContext.AccountPassword.Request param) {
+    private Mono<AuthUser> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
@@ -142,7 +134,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<AuthUserDetails> executeMailboxMode(LoginContext.AccountPassword.Request param) {
+    private Mono<AuthUser> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
@@ -156,7 +148,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<AuthUserDetails> executeAccountMode(LoginContext.AccountPassword.Request param) {
+    protected Mono<AuthUser> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository
@@ -170,7 +162,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<AuthUserDetails> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
+    protected Mono<AuthUser> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository

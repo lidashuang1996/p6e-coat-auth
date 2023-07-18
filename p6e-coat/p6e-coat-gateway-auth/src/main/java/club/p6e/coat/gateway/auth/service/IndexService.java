@@ -1,9 +1,6 @@
 package club.p6e.coat.gateway.auth.service;
 
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -31,6 +28,13 @@ public interface IndexService {
      */
     public void setTemplateContent(String content);
 
+    /**
+     * 执行首页内容
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param vm       凭证初始化缓存的对象
+     * @return Mono<Void> 无返回
+     */
     public Mono<Void> execute(ServerWebExchange exchange, Map<String, String> vm);
 
 }

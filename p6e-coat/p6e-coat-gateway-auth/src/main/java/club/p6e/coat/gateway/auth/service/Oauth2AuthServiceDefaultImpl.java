@@ -5,7 +5,6 @@ import club.p6e.coat.gateway.auth.Properties;
 import club.p6e.coat.gateway.auth.context.Oauth2Context;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.repository.Oauth2ClientRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -19,12 +18,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = Oauth2AuthService.class,
-//        ignored = Oauth2AuthServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(Oauth2AuthService.CONDITIONAL_EXPRESSION)
 public class Oauth2AuthServiceDefaultImpl implements Oauth2AuthService {
 
     /**

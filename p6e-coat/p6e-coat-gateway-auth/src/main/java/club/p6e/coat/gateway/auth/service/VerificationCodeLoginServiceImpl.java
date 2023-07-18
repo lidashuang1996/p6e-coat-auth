@@ -7,7 +7,6 @@ import club.p6e.coat.gateway.auth.cache.VerificationCodeLoginCache;
 import club.p6e.coat.gateway.auth.context.LoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.repository.UserRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -17,23 +16,12 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = VerificationCodeLoginService.class,
-//        ignored = VerificationCodeLoginServiceImpl.class
-//)
-//@ConditionalOnExpression(VerificationCodeLoginService.CONDITIONAL_EXPRESSION)
 public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginService {
 
     /**
      * 验证码缓存对象
      */
     private final VerificationCodeLoginCache cache;
-
-    /**
-     * 配置文件对象
-     */
-    private final Properties properties;
 
     /**
      * 用户存储库
@@ -49,27 +37,13 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
      */
     public VerificationCodeLoginServiceImpl(
             VerificationCodeLoginCache cache,
-            Properties properties,
             UserRepository repository) {
         this.cache = cache;
-        this.properties = properties;
         this.repository = repository;
-    }
-
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getVerificationCode().isEnable();
     }
 
     @Override
     public Mono<AuthUserDetails> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
-        if (!isEnable()) {
-            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                    this.getClass(),
-                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                    "Verification code login code obtain service not enabled exception."
-            ));
-        }
         final String code = param.getCode();
         return AuthVoucher
                 .init(exchange)

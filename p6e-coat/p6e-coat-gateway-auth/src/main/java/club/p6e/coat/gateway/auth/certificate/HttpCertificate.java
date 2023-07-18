@@ -82,10 +82,21 @@ public class HttpCertificate {
     }
 
     /**
-     * 重写默认的实现
+     * 获取实现对象
+     *
+     * @return 实现对象
      */
     public static Achieve getAchieve() {
         return ACHIEVE;
+    }
+
+    /**
+     * 获取用户信息的头名称
+     *
+     * @return 用户信息的头名称
+     */
+    public static String getUserHeaderName() {
+        return USER_HEADER_NAME;
     }
 
     /**

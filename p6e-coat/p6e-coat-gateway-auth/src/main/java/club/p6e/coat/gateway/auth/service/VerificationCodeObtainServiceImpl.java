@@ -11,7 +11,6 @@ import club.p6e.coat.gateway.auth.launcher.LauncherType;
 import club.p6e.coat.gateway.auth.model.UserModel;
 import club.p6e.coat.gateway.auth.repository.UserRepository;
 import club.p6e.coat.gateway.auth.utils.VerificationUtil;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -24,12 +23,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-//@ConditionalOnMissingBean(
-//        value = VerificationCodeObtainService.class,
-//        ignored = VerificationCodeObtainServiceDefaultImpl.class
-//)
-//@ConditionalOnExpression(VerificationCodeObtainService.CONDITIONAL_EXPRESSION)
 public class VerificationCodeObtainServiceImpl implements VerificationCodeObtainService {
 
     /**
@@ -75,21 +68,9 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
         this.generator = codeLoginGenerator;
     }
 
-    protected boolean isEnable() {
-        return properties.getLogin().isEnable()
-                && properties.getLogin().getVerificationCode().isEnable();
-    }
-
     @Override
     public Mono<LoginContext.VerificationCodeObtain.Dto> execute(
             ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param) {
-        if (!isEnable()) {
-            return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
-                    this.getClass(),
-                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                    "Verification code login code obtain service not enabled exception."
-            ));
-        }
         Mono<UserModel> mono;
         LauncherType type = null;
         final String account = param.getAccount();
