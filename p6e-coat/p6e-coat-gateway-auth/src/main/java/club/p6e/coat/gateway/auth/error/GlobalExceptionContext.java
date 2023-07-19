@@ -94,4 +94,20 @@ public final class GlobalExceptionContext {
         return new BeanException(sc, error, content);
     }
 
+    public static ConfigException exceptionConfigException(Class<?> sc, String error, String content) {
+        return new ConfigException(sc, error, content);
+    }
+
+    public static OtherLoginException exceptionOtherLoginException(Class<?> sc, String error, String content) {
+        return new OtherLoginException(sc, error, content);
+    }
+
+    public static StateOtherLoginException exceptionStateOtherLoginException(Class<?> sc, String error, String content) {
+        return new StateOtherLoginException(sc, error, content);
+    }
+
+    public static RegisterOtherLoginException exceptionRegisterOtherLoginException(Class<?> sc, String error, String content) {
+        return new RegisterOtherLoginException(sc, error, content);
+    }
+
 }

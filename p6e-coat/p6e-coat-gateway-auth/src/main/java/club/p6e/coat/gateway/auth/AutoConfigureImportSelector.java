@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth;
 
+import club.p6e.coat.gateway.auth.cache.RegisterOtherLoginCache;
 import club.p6e.coat.gateway.auth.cache.memory.*;
 import club.p6e.coat.gateway.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.coat.gateway.auth.cache.redis.*;
@@ -105,6 +106,8 @@ public class AutoConfigureImportSelector {
             registerBean(QrCodeLoginGeneratorDefaultImpl.class, defaultListableBeanFactory);
         }
 
+
+
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()) {
             registerOauth2RepositoryBean(defaultListableBeanFactory);
@@ -145,7 +148,14 @@ public class AutoConfigureImportSelector {
         }
 
         // -------------------
+        registerBean(RegisterOtherLoginMemoryCache.class, defaultListableBeanFactory);
+        registerBean(StateOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+        registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
+        registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
+        registerStateOtherLoginCacheBean(defaultListableBeanFactory);
         registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
+        registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+
     }
 
     private void registerVoucherBean(DefaultListableBeanFactory factory) {
@@ -189,6 +199,15 @@ public class AutoConfigureImportSelector {
         }
         if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
             registerBean(Oauth2TokenClientAuthMemoryCache.class, factory);
+        }
+    }
+
+    private void registerStateOtherLoginCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(StateOtherLoginRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(StateOtherLoginMemoryCache.class, factory);
         }
     }
 

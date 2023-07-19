@@ -20,6 +20,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -55,11 +56,14 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
     private static final String TIMESTAMP = "timestamp";
     private static final String REQUEST_ID = "requestId";
 
+    private final Properties properties;
+
     /**
      * 构造方法初始化
      */
-    public AuthExceptionHandlerWebFilter(CodecConfigurer codecConfigurer, ApplicationContext applicationContext) {
+    public AuthExceptionHandlerWebFilter(Properties properties, CodecConfigurer codecConfigurer, ApplicationContext applicationContext) {
         super(new DefaultErrorAttributes(), new WebProperties.Resources(), null, applicationContext);
+        this.properties = properties;
         this.setMessageReaders(codecConfigurer.getReaders());
         this.setMessageWriters(codecConfigurer.getWriters());
     }
@@ -100,6 +104,12 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
                 }
                 errorMap.remove(ERROR);
                 errorMap.remove(STATUS);
+
+                if (errorMap.get(CODE) != null
+                        && properties.isRedirectIndexPage()
+                        && Double.valueOf(String.valueOf(errorMap.get(CODE))).intValue() == HttpStatus.NOT_FOUND.value()) {
+                    return ServerResponse.temporaryRedirect(URI.create(properties.getRedirectIndexPagePath())).build();
+                }
                 return ServerResponse
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .contentType(MediaType.APPLICATION_JSON)

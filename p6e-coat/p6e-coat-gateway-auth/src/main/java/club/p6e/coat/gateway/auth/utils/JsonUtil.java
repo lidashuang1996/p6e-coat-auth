@@ -1,5 +1,6 @@
 package club.p6e.coat.gateway.auth.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
@@ -17,6 +18,10 @@ public class JsonUtil {
      * OBJECT_MAPPER 对象
      */
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    static {
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     /**
      * 序列化对象
@@ -46,6 +51,7 @@ public class JsonUtil {
         try {
             return OBJECT_MAPPER.readValue(json, tClass);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

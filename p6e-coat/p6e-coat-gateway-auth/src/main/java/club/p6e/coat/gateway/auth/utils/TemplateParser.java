@@ -56,6 +56,27 @@ public final class TemplateParser {
     /**
      * 执行解析模板的内容
      *
+     * @param content 模板的内容
+     * @param data    模板的数据 KEY/VALUE
+     * @return 模板解析后的内容
+     */
+    public static String execute(String content, Map<String, String> data1, String... data2) {
+        if (data2.length % 2 != 0) {
+            throw new RuntimeException();
+        }
+        if (data1 == null) {
+            data1 = new HashMap<>();
+        }
+        final Map<String, String> map = data1;
+        for (int i = 0; i < data2.length; i++) {
+            map.put(data2[i], data2[++i]);
+        }
+        return execute(content, map, false);
+    }
+
+    /**
+     * 执行解析模板的内容
+     *
      * @param content                      模板的内容
      * @param data                         模板的数据 KEY/VALUE
      * @param isVariablesReplaceEmptyValue 是否用变量名称替换空的数据内容

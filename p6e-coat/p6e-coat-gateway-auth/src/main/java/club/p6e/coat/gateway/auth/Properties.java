@@ -22,7 +22,10 @@ public class Properties {
 
     private Mode mode = Mode.PHONE_OR_MAILBOX;
 
+
     private boolean enable = true;
+    private boolean redirectIndexPage = false;
+    private String redirectIndexPagePath = "/";
 
     private Login login = new Login();
     private Oauth2 oauth2 = new Oauth2();
@@ -84,6 +87,42 @@ public class Properties {
         private VerificationCode verificationCode = new VerificationCode();
         private QrCode qrCode = new QrCode();
         private Map<String, Other> others = new HashMap<>();
+
+        public Login() {
+            final Map<String, String> map = new HashMap<>();
+            map.put(
+                    "home",
+                    "https://graph.qq.com/oauth2.0/authorize"
+                            + "?response_type=@{home_response_type}"
+                            + "&client_id=@{home_client_id}"
+                            + "&redirect_uri=@{home_redirect_uri}"
+                            + "&scope=@{home_scope}"
+            );
+            map.put("home_scope", "get_user_info");
+            map.put("home_response_type", "code");
+            map.put("home_client_id", "101701115");
+            map.put("home_redirect_uri", "http://www.zhimamimi.com/login/qq/callback");
+
+            map.put(
+                    "token",
+                    "https://graph.qq.com/oauth2.0/token"
+                            + "?grant_type=@{token_grant_type}"
+                            + "&client_id=@{token_client_id}"
+                            + "&client_secret=@{token_client_secret}"
+                            + "&redirect_uri=@{token_redirect_uri}"
+            );
+            map.put("token_grant_type", "authorization_code");
+            map.put("token_client_id", "101701115");
+            map.put("token_client_secret", "165716bf22444998e0394d0e244e13d7");
+            map.put("token_redirect_uri", "http://www.zhimamimi.com/login/qq/callback");
+            map.put("me", "https://graph.qq.com/oauth2.0/me");
+            map.put("info", "https://graph.qq.com/user/get_user_info?oauth_consumer_key=@{info_oauth_consumer_key}");
+            map.put("info_oauth_consumer_key", "101701115");
+            final Other qq = new Other();
+            qq.setEnable(true);
+            qq.setConfig(map);
+            others.put("QQ", qq);
+        }
 
         @Data
         public static class AccountPassword {

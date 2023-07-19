@@ -31,6 +31,9 @@ public class AuthVoucher implements Serializable {
     public static final String ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public static final String ACCOUNT = "ACCOUNT";
 
+    public static final String OTHER_LOGIN_TYPE = "OTHER_LOGIN_TYPE";
+    public static final String OTHER_LOGIN_DATE = "OTHER_LOGIN_DATE";
+
     public static final String USER_ID = "USER_ID";
     public static final String USER_NAME = "USER_NAME";
     public static final String VERIFICATION_CODE_LOGIN_DATE = "VERIFICATION_CODE_LOGIN_DATE";
@@ -101,6 +104,18 @@ public class AuthVoucher implements Serializable {
                     "Voucher request parameter does not exist exception."
             ));
         }
+    }
+
+    public static Mono<AuthVoucher> init(String voucher) {
+        final VoucherCache cache = SpringUtil.getBean(VoucherCache.class);
+        return cache
+                .get(voucher)
+                .map(m -> new AuthVoucher(voucher, m, cache))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeVoucherException(
+                        AuthVoucher.class,
+                        "fun init(ServerWebExchange exchange)",
+                        "Voucher request parameter does not data or expired exception."
+                )));
     }
 
     /**

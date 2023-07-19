@@ -80,6 +80,10 @@
             <artifactId>java-jwt</artifactId>
             <version>${java.auth.jwt}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
         <!-- Java JWT [END] -->
     </dependencies>
 

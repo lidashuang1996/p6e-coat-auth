@@ -26,6 +26,7 @@ public class UserAuthModel implements Serializable {
     public static final String PHONE = "phone";
     public static final String MAILBOX = "mailbox";
     public static final String PASSWORD = "password";
+    public static final String QQ = "qq";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
@@ -38,6 +39,7 @@ public class UserAuthModel implements Serializable {
     private String phone;
     private String mailbox;
     private String password;
+    private String qq;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private String operator;

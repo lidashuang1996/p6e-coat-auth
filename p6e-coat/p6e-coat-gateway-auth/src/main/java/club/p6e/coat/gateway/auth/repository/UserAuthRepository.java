@@ -47,4 +47,18 @@ public class UserAuthRepository {
         );
     }
 
+    /**
+     * 根据 ID 查询一条数据
+     *
+     * @param id ID
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
+    public Mono<UserAuthModel> findByQq(String qq) {
+        return template.selectOne(
+                Query.query(Criteria.where(UserAuthModel.QQ).is(qq).and(UserAuthModel.IS_DELETE).is(0)),
+                UserAuthModel.class
+        );
+    }
+
+
 }
