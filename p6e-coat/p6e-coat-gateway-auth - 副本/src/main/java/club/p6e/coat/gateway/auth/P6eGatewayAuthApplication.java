@@ -1,7 +1,6 @@
 package club.p6e.coat.gateway.auth;
 
 import club.p6e.coat.gateway.auth.controller.AuthController;
-import club.p6e.coat.gateway.auth.service.*;
 import club.p6e.coat.gateway.auth.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

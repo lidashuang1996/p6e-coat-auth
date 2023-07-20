@@ -9,7 +9,6 @@ import club.p6e.coat.gateway.auth.context.ResultContext;
 import club.p6e.coat.gateway.auth.context.VerificationCodeLoginContext;
 import club.p6e.coat.gateway.auth.error.GlobalExceptionContext;
 import club.p6e.coat.gateway.auth.error.ParameterException;
-import club.p6e.coat.gateway.auth.service.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
