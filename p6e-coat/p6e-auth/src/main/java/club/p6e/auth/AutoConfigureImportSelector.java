@@ -105,7 +105,6 @@ public class AutoConfigureImportSelector {
         }
 
 
-
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()) {
             registerOauth2RepositoryBean(defaultListableBeanFactory);
@@ -247,12 +246,34 @@ public class AutoConfigureImportSelector {
     }
 
     private void registerAuthWebFilterBean(DefaultListableBeanFactory factory) {
-        final Properties.Bean validator = properties.getAuth().getValidator();
-        final Properties.Bean authority = properties.getAuth().getAuthority();
-        registerPropertiesBean(validator, factory);
-        registerPropertiesBean(authority, factory);
+        Properties.Bean validatorBean = null;
+        Properties.Bean authorityBean = null;
+        final Object validator = properties.getAuth().getValidator();
+        final Object authority = properties.getAuth().getAuthority();
+        if (validator instanceof String) {
+            validatorBean = null;
+        } else if (validator instanceof Properties.Bean) {
+            validatorBean = (Properties.Bean) validator;
+        } else {
+            throw new RuntimeException();
+        }
+        if (authority instanceof String) {
+            authorityBean = null;
+        } else if (authority instanceof Properties.Bean) {
+            authorityBean = (Properties.Bean) authority;
+        } else {
+            throw new RuntimeException();
+        }
+        registerPropertiesBean(validatorBean, factory);
+        registerPropertiesBean(authorityBean, factory);
         registerBean(AuthPathMatcher.class, factory);
-        registerBean(AuthWebFilter.class, factory);
+        registerBean(AuthWebFilter.class, factory, false);
+        System.out.println("====-=--=-=----=-=-=-=-==-");
+
+        final AuthPathMatcher matcher = factory.getBean(AuthPathMatcher.class);
+        for (final String path : properties.getInterceptor()) {
+            matcher.register(path);
+        }
     }
 
     private void registerLauncherBean(DefaultListableBeanFactory factory) {
@@ -264,6 +285,17 @@ public class AutoConfigureImportSelector {
      * 注册 bean 服务
      */
     private synchronized void registerBean(Class<?> bc, DefaultListableBeanFactory factory) {
+        registerBean(bc, factory, true);
+    }
+
+    private synchronized void registerBean(Class<?> bc, DefaultListableBeanFactory factory, boolean is) {
+        if (!is) {
+            final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+            beanDefinition.setBeanClass(bc);
+            System.out.println(bc.getName());
+            factory.registerBeanDefinition(bc.getName(), beanDefinition);
+            return;
+        }
         if (!isExistBean(bc, factory)) {
             boolean bool = false;
             final Class<?>[] interfaces = bc.getInterfaces();
@@ -276,7 +308,7 @@ public class AutoConfigureImportSelector {
             if (!bool) {
                 final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
                 beanDefinition.setBeanClass(bc);
-                beanDefinition.setPrimary(false);
+                System.out.println(bc.getName());
                 factory.registerBeanDefinition(bc.getName(), beanDefinition);
             }
         }
@@ -300,7 +332,7 @@ public class AutoConfigureImportSelector {
      */
     private synchronized void registerPropertiesBean(Properties.Bean bean, DefaultListableBeanFactory factory) {
         try {
-            for (final String item : bean.getDepend()) {
+            for (final String item : bean.getDependency()) {
                 registerBean(Class.forName(item), factory);
             }
             registerBean(Class.forName(bean.getName()), factory);

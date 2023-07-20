@@ -30,6 +30,11 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun execute(ServerWebExchange exchange)",
+                        "[HTTP/STORAGE] Verifier validation access token not exist exception."
+                )))
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
@@ -38,7 +43,9 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
 
     @Override
     public Mono<String> accessToken(String token) {
-        final String r = jwtDecode(token, cipher.getRefreshTokenSecret());
+        System.out.println("5555       " + token);
+        final String r = jwtDecode(token, cipher.getAccessTokenSecret());
+        System.out.println("6666       " + r);
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun accessToken(String token)",

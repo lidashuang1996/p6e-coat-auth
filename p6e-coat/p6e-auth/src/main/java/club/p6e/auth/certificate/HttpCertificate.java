@@ -437,6 +437,7 @@ public class HttpCertificate {
             if (token == null) {
                 token = getQueryParamToken(request);
             }
+            System.out.println(token);
             return token == null ? Mono.empty() : Mono.just(token);
         }
 
