@@ -19,7 +19,6 @@ public class AuthWebFilter implements WebFilter {
         this.matcher = matcher;
         this.validator = validator;
     }
-
     @Override
     public @NotNull Mono<Void> filter(ServerWebExchange exchange, @NotNull WebFilterChain chain) {
         if (matcher.match(exchange.getRequest().getPath().value())) {
