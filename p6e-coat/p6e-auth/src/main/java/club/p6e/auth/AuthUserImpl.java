@@ -9,11 +9,22 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
+ * 认证用户
+ *
  * @author lidashuang
  * @version 1.0
  */
-
 public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
+
+    @Override
+    public Model create(String content) {
+        final AuthUserImpl.Model model = JsonUtil.fromJson(content, AuthUserImpl.Model.class);
+        if (model == null) {
+            throw new RuntimeException("JSON TO OBJECT ERROR");
+        } else {
+            return model;
+        }
+    }
 
     @Override
     public Model create(UserModel um, UserAuthModel uam) {
@@ -34,16 +45,9 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
         return model;
     }
 
-    @Override
-    public Model create(String content) {
-        final AuthUserImpl.Model model = JsonUtil.fromJson(content, AuthUserImpl.Model.class);
-        if (model == null) {
-            throw new RuntimeException("JSON TO OBJECT ERROR");
-        } else {
-            return model;
-        }
-    }
-
+    /**
+     * 实现的用户认证模型
+     */
     @Data
     @Accessors(chain = true)
     public static class Model implements AuthUser.Model, Serializable {
@@ -71,7 +75,19 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
 
         @Override
         public String serialize() {
-            return JsonUtil.toJson(this);
+            return JsonUtil.toJson(new Model()
+                    .setId(this.getId())
+                    .setStatus(this.getStatus())
+                    .setEnabled(this.getEnabled())
+                    .setAccount(this.getAccount())
+                    .setPhone(this.getPhone())
+                    .setMailbox(this.getMailbox())
+                    .setName(this.getName())
+                    .setNickname(this.getNickname())
+                    .setAvatar(this.getAvatar())
+                    .setDescribe(this.getDescribe())
+            );
         }
+
     }
 }

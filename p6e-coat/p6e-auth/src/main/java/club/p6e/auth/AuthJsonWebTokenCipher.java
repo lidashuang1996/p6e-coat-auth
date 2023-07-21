@@ -13,11 +13,24 @@ import java.nio.charset.StandardCharsets;
  */
 public class AuthJsonWebTokenCipher {
 
+    /**
+     * 注入日志对象
+     */
     private final static Logger LOGGER = LoggerFactory.getLogger(AuthJsonWebTokenCipher.class);
 
+    /**
+     * 密钥
+     */
     private String accessTokenSecret;
+
+    /**
+     * 密钥
+     */
     private String refreshTokenSecret;
 
+    /**
+     * 初始化
+     */
     public void init() {
         if (this.accessTokenSecret == null) {
             this.accessTokenSecret = DigestUtils.md5DigestAsHex(
@@ -53,11 +66,21 @@ public class AuthJsonWebTokenCipher {
         return refreshTokenSecret;
     }
 
+    /**
+     * 设置 ACCESS TOKEN 密钥
+     *
+     * @param secret ACCESS TOKEN 密钥
+     */
     public void setAccessTokenSecret(String secret) {
         this.accessTokenSecret = secret;
         LOGGER.info(this.accessTokenSecret);
     }
 
+    /**
+     * 设置 REFRESH TOKEN 密钥
+     *
+     * @param secret REFRESH TOKEN 密钥
+     */
     public void setRefreshTokenSecret(String secret) {
         this.refreshTokenSecret = secret;
         LOGGER.info(this.refreshTokenSecret);

@@ -398,4 +398,17 @@ public class Properties implements Serializable {
         private boolean enableOtherLoginBinding = true;
     }
 
+    /**
+     * 页面配置
+     */
+    private Page page = new Page();
+
+    @Data
+    @Accessors(chain = true)
+    public static class Page implements Serializable {
+        private String me = "classpath:page/me.html";
+        private String login = "classpath:page/login.html";
+        private String register = "classpath:page/register.html";
+    }
+
 }

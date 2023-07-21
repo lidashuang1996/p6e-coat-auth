@@ -20,6 +20,8 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +58,7 @@ public class AutoConfigureImportSelector {
          */
 
         if (properties.isEnable()) {
+            initMePage();
             registerAuthWebFilterBean(defaultListableBeanFactory);
             registerRefererWebFilterBean(defaultListableBeanFactory);
             registerCrossDomainWebFilterBean(defaultListableBeanFactory);
@@ -70,6 +73,7 @@ public class AutoConfigureImportSelector {
 
         if (properties.isEnable()
                 && properties.getLogin().isEnable()) {
+            initLoginPage();
             registerVoucherBean(defaultListableBeanFactory);
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
@@ -140,6 +144,7 @@ public class AutoConfigureImportSelector {
 
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()) {
+            initLoginPage();
             registerOauth2RepositoryBean(defaultListableBeanFactory);
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
@@ -180,6 +185,7 @@ public class AutoConfigureImportSelector {
 
         if (properties.isEnable()
                 && properties.getRegister().isEnable()) {
+            initRegisterPage();
             registerUserRepositoryBean(defaultListableBeanFactory);
             registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
             registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
@@ -191,6 +197,112 @@ public class AutoConfigureImportSelector {
             registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
             registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
         }
+    }
+
+    /**
+     * 读取文件内容
+     *
+     * @return 文件的内容
+     */
+    private String file(String path) {
+        if (path != null) {
+            if (path.startsWith("classpath:")) {
+                InputStream inputStream = null;
+                InputStreamReader inputStreamReader = null;
+                BufferedReader bufferedReader = null;
+                final StringBuilder sb = new StringBuilder();
+                try {
+                    inputStream = this.getClass().getClassLoader().getResourceAsStream(
+                            path.substring("classpath:".length())
+                    );
+                    if (inputStream != null) {
+                        inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                        bufferedReader = new BufferedReader(inputStreamReader);
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            sb.append(line).append("\n");
+                        }
+                    }
+                    return sb.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (bufferedReader != null) {
+                        try {
+                            bufferedReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (inputStreamReader != null) {
+                        try {
+                            inputStreamReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (inputStream != null) {
+                        try {
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } else {
+                FileReader fileReader = null;
+                final StringBuilder sb = new StringBuilder();
+                if (path.startsWith("file:")) {
+                    path = path.substring("file:".length());
+                }
+                try {
+                    fileReader = new FileReader(path);
+                    int ch;
+                    while ((ch = fileReader.read()) != -1) {
+                        sb.append((char) ch);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileReader != null) {
+                        try {
+                            fileReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return sb.toString();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 初始化我的页面内容
+     */
+    private void initMePage() {
+        System.out.println(
+                file(properties.getPage().getMe())
+        );
+    }
+
+    /**
+     * 初始化登录页面内容
+     */
+    private void initLoginPage() {
+        System.out.println(
+                file(properties.getPage().getLogin())
+        );
+    }
+
+    /**
+     * 初始化注册页面内容
+     */
+    private void initRegisterPage() {
+        System.out.println(
+                file(properties.getPage().getRegister())
+        );
     }
 
     /**

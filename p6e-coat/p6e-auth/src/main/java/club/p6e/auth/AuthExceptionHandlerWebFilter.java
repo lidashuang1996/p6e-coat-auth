@@ -90,7 +90,6 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(Mono.just(Objects.requireNonNull(JsonUtil.toJson(result))), String.class);
             } else {
-                System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 throwable.printStackTrace();
                 final Map<String, Object> errorMap =
                         this.getErrorAttributes(request, ErrorAttributeOptions.defaults());
@@ -106,13 +105,9 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
                 }
                 errorMap.remove(ERROR);
                 errorMap.remove(STATUS);
-
-
-                System.out.println(errorMap);
                 if (errorMap.get(CODE) != null
                         && properties.isRedirectIndexPage()
                         && Double.valueOf(String.valueOf(errorMap.get(CODE))).intValue() == HttpStatus.NOT_FOUND.value()) {
-                    System.out.println("ccccccccccccccccccccccccccccccc");
                     return ServerResponse.temporaryRedirect(URI.create(properties.getRedirectIndexPagePath())).build();
                 }
                 return ServerResponse

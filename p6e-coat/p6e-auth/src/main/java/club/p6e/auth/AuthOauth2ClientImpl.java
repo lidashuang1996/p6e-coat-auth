@@ -2,14 +2,16 @@ package club.p6e.auth;
 
 import club.p6e.auth.utils.JsonUtil;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
+ * 认证客户端
+ *
  * @author lidashuang
  * @version 1.0
  */
-
 public class AuthOauth2ClientImpl implements AuthOauth2Client<AuthOauth2Client.Model> {
 
     @Override
@@ -23,6 +25,7 @@ public class AuthOauth2ClientImpl implements AuthOauth2Client<AuthOauth2Client.M
     }
 
     @Data
+    @Accessors(chain = true)
     public static class Model implements AuthOauth2Client.Model, Serializable {
         private Integer id;
         private Integer status;
@@ -48,7 +51,19 @@ public class AuthOauth2ClientImpl implements AuthOauth2Client<AuthOauth2Client.M
 
         @Override
         public String serialize() {
-            return JsonUtil.toJson(this);
+            return JsonUtil.toJson(new Model()
+                    .setId(this.getId())
+                    .setStatus(this.getStatus())
+                    .setEnabled(this.getEnabled())
+                    .setAccount(this.getAccount())
+                    .setPhone(this.getPhone())
+                    .setMailbox(this.getMailbox())
+                    .setName(this.getName())
+                    .setNickname(this.getNickname())
+                    .setAvatar(this.getAvatar())
+                    .setDescribe(this.getDescribe())
+            );
         }
+
     }
 }

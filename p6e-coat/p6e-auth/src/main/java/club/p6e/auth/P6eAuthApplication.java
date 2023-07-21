@@ -19,6 +19,9 @@ public class P6eAuthApplication {
         SpringUtil.init(
                 SpringApplication.run(P6eAuthApplication.class, args)
         );
+        System.out.println(
+                SpringUtil.getBean(AuthPasswordEncryptor.class).execute("123456")
+        );
         SpringUtil.getBean(IndexService.class).setTemplateContent(
                 "<!DOCTYPE html>\n" +
                         "<html>\n" +
