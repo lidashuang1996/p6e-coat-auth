@@ -9,7 +9,7 @@ import club.p6e.auth.utils.GeneratorUtil;
  * @author lidashuang
  * @version 1.0
  */
-public class QrCodeLoginGeneratorDefaultImpl implements QrCodeLoginGenerator {
+public class QrCodeLoginGeneratorImpl implements QrCodeLoginGenerator {
 
     @Override
     public String execute() {

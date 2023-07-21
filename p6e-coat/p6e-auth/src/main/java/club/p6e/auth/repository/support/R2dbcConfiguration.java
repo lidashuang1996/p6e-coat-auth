@@ -1,4 +1,4 @@
-package club.p6e.auth.repository;
+package club.p6e.auth.repository.support;
 
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.context.annotation.Bean;

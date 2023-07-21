@@ -158,19 +158,13 @@ public class Properties implements Serializable {
          * 验证实现的类以及依赖的类
          * 验证的作用是用来验证程序下发的合法的令牌/证书（现在实现的方式有多种主要是需要和授权对应）
          */
-        private Object validator = new Bean("club.p6e.auth.certificate." +
-                "HttpLocalStorageJsonWebTokenCertificateValidator", new String[]{
-                "club.p6e.auth.AuthJsonWebTokenCipher"
-        });
+        private Bean validator = new Bean(HTTP_LOCAL_JWT);
 
         /**
          * 授权实现的类以及依赖的类
          * 授权的作用是用来下发合法的令牌/证书（现在实现的方式有多种主要是需要和验证对应）
          */
-        private Object authority = new Bean("club.p6e.auth.certificate." +
-                "HttpLocalStorageJsonWebTokenCertificateAuthority", new String[]{
-                "club.p6e.auth.AuthJsonWebTokenCipher"
-        });
+        private Bean authority = new Bean(HTTP_LOCAL_JWT);
     }
 
     @Data
@@ -303,29 +297,29 @@ public class Properties implements Serializable {
             map.put("key", "my_key");
             map.put("secret", "my_secret");
             map.put("redirect_uri", "my_redirect_uri");
-            map.put("home", "https://graph.qq.com/oauth2.0/authorize"
-                    + "?response_type=@{home_response_type}"
-                    + "&client_id=@{home_client_id}"
-                    + "&redirect_uri=@{home_redirect_uri}"
-                    + "&scope=@{home_scope}"
+            map.put("#home_response_type", "code");
+            map.put("#home_scope", "get_user_info");
+            map.put("#home_client_id", "@{key}");
+            map.put("#home_redirect_uri", "@{redirect_uri}");
+            map.put("@home", "https://graph.qq.com/oauth2.0/authorize"
+                    + "?response_type=@{#home_response_type}"
+                    + "&client_id=@{#home_client_id}"
+                    + "&redirect_uri=@{#home_redirect_uri}"
+                    + "&scope=@{#home_scope}"
             );
-            map.put("home_client_id", "@{key}");
-            map.put("home_response_type", "code");
-            map.put("home_scope", "get_user_info");
-            map.put("home_redirect_uri", "@{redirect_uri}");
-            map.put("token", "https://graph.qq.com/oauth2.0/token"
-                    + "?grant_type=@{token_grant_type}"
-                    + "&client_id=@{token_client_id}"
-                    + "&client_secret=@{token_client_secret}"
-                    + "&redirect_uri=@{token_redirect_uri}"
+            map.put("#token_client_id", "@{key}");
+            map.put("#token_client_secret", "@{secret}");
+            map.put("#token_redirect_uri", "@{redirect_uri}");
+            map.put("#token_grant_type", "authorization_code");
+            map.put("@token", "https://graph.qq.com/oauth2.0/token"
+                    + "?grant_type=@{#token_grant_type}"
+                    + "&client_id=@{#token_client_id}"
+                    + "&client_secret=@{#token_client_secret}"
+                    + "&redirect_uri=@{#token_redirect_uri}"
             );
-            map.put("token_client_id", "@{key}");
-            map.put("token_client_secret", "@{secret}");
-            map.put("token_redirect_uri", "@{redirect_uri}");
-            map.put("token_grant_type", "authorization_code");
-            map.put("me", "https://graph.qq.com/oauth2.0/me");
-            map.put("info", "https://graph.qq.com/user/get_user_info?oauth_consumer_key=@{info_oauth_consumer_key}");
-            map.put("info_oauth_consumer_key", "@{key}");
+            map.put("#info_oauth_consumer_key", "@{key}");
+            map.put("@me", "https://graph.qq.com/oauth2.0/me");
+            map.put("@info", "https://graph.qq.com/user/get_user_info?oauth_consumer_key=@{#info_oauth_consumer_key}");
             others.put("QQ", new Other().setEnable(false).setConfig(map));
         }
     }
@@ -341,7 +335,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启 OAUTH2 功能
          */
-        private boolean enable = true;
+        private boolean enable = false;
 
         /**
          * 客户端授权登录的配置
@@ -354,7 +348,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启客户端授权登录
              */
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         /**
@@ -368,7 +362,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启密码授权登录
              */
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         /**
@@ -398,6 +392,10 @@ public class Properties implements Serializable {
          * 是否开启注册的功能
          */
         private boolean enable = false;
+        /**
+         * 是否开启第三方登录没有对应绑定信息时候进行注册绑定
+         */
+        private boolean enableOtherLoginBinding = true;
     }
 
 }

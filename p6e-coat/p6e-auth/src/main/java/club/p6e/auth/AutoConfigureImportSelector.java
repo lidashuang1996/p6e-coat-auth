@@ -4,6 +4,7 @@ import club.p6e.auth.cache.memory.*;
 import club.p6e.auth.cache.redis.*;
 import club.p6e.auth.controller.*;
 import club.p6e.auth.generator.*;
+import club.p6e.auth.repository.support.R2dbcConfiguration;
 import club.p6e.auth.service.*;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.auth.codec.AccountPasswordLoginTransmissionCodecImpl;
@@ -12,13 +13,15 @@ import club.p6e.auth.launcher.SmsMessageLauncherImpl;
 import club.p6e.auth.repository.Oauth2ClientRepository;
 import club.p6e.auth.repository.UserAuthRepository;
 import club.p6e.auth.repository.UserRepository;
+import club.p6e.auth.utils.TemplateParser;
 import club.p6e.auth.validator.AccountPasswordLoginParameterValidator;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 自动配置导入选择器
@@ -28,19 +31,35 @@ import java.util.Arrays;
  */
 public class AutoConfigureImportSelector {
 
+    /**
+     * 配置文件对象
+     */
     private final Properties properties;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param properties  配置文件对象
+     * @param application 应用上下文对象
+     */
     public AutoConfigureImportSelector(
             Properties properties,
-            ApplicationContext applicationContext
+            ApplicationContext application
     ) {
+        // 初始化
         this.properties = properties;
-        System.out.println("AutoConfigureImportSelector2");
-        final AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
+        final AutowireCapableBeanFactory factory = application.getAutowireCapableBeanFactory();
         final DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) factory;
+
+        /*
+         * 注入需要的bean对象
+         */
 
         if (properties.isEnable()) {
             registerAuthWebFilterBean(defaultListableBeanFactory);
+            registerRefererWebFilterBean(defaultListableBeanFactory);
+            registerCrossDomainWebFilterBean(defaultListableBeanFactory);
+            registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
@@ -61,7 +80,7 @@ public class AutoConfigureImportSelector {
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
-            registerRepositoryBean(defaultListableBeanFactory);
+            registerUserRepositoryBean(defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginServiceImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginControllerImpl.class, defaultListableBeanFactory);
@@ -73,9 +92,9 @@ public class AutoConfigureImportSelector {
                 && properties.getLogin().getAccountPassword().isEnable()
                 && properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
             registerAccountPasswordLoginSignatureCacheBean(defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginSignatureGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginTransmissionCodecImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginSignatureServiceImpl.class, defaultListableBeanFactory);
+            registerBean(AccountPasswordLoginTransmissionCodecImpl.class, defaultListableBeanFactory);
+            registerBean(AccountPasswordLoginSignatureGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginSignatureControllerImpl.class, defaultListableBeanFactory);
         }
 
@@ -83,39 +102,54 @@ public class AutoConfigureImportSelector {
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getVerificationCode().isEnable()) {
             registerLauncherBean(defaultListableBeanFactory);
-            registerRepositoryBean(defaultListableBeanFactory);
+            registerUserRepositoryBean(defaultListableBeanFactory);
             registerVerificationCodeLoginCacheBean(defaultListableBeanFactory);
-            registerBean(CodeLoginGeneratorDefaultImpl.class, defaultListableBeanFactory);
             registerBean(VerificationCodeLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(VerificationCodeObtainServiceImpl.class, defaultListableBeanFactory);
+            registerBean(VerificationCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(VerificationCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(VerificationCodeObtainControllerImpl.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable()) {
-            registerRepositoryBean(defaultListableBeanFactory);
+            registerUserRepositoryBean(defaultListableBeanFactory);
             registerQrCodeLoginCacheBean(defaultListableBeanFactory);
             registerBean(QrCodeLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeObtainServiceImpl.class, defaultListableBeanFactory);
+            registerBean(QrCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeLoginGeneratorDefaultImpl.class, defaultListableBeanFactory);
         }
 
+        if (properties.isEnable()
+                && properties.getLogin().isEnable()
+                && properties.getLogin().getOthers().size() > 0) {
+            initOtherLoginConfig();
+            registerStateOtherLoginCacheBean(defaultListableBeanFactory);
+            registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
+            registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
+            registerBean(StateOtherLoginGenerator.class, defaultListableBeanFactory);
+            if (properties.getRegister().isEnable()
+                    && properties.getRegister().isEnableOtherLoginBinding()) {
+                registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
+                registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+            }
+        }
 
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()) {
             registerOauth2RepositoryBean(defaultListableBeanFactory);
+            registerBean(AuthUserImpl.class, defaultListableBeanFactory);
             registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
             registerBean(AuthOauth2ClientImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2AuthControllerImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmControllerImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2AuthControllerImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2TokenControllerImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2ConfirmControllerImpl.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
@@ -137,105 +171,200 @@ public class AutoConfigureImportSelector {
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()
                 && properties.getOauth2().getAuthorizationCode().isEnable()) {
-            registerOauth2CodeCache(defaultListableBeanFactory);
+            registerOauth2CodeCacheBean(defaultListableBeanFactory);
             registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2UserOpenIdGeneratorDefaultImpl.class, defaultListableBeanFactory);
         }
 
-        // -------------------
-        registerBean(RegisterOtherLoginMemoryCache.class, defaultListableBeanFactory);
-        registerBean(StateOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
-        registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
-        registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
+        if (properties.isEnable()
+                && properties.getRegister().isEnable()) {
+            registerUserRepositoryBean(defaultListableBeanFactory);
+            registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
+        }
 
-        registerStateOtherLoginCacheBean(defaultListableBeanFactory);
-        registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
-        registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+        if (properties.isEnable()
+                && properties.getRegister().isEnable()
+                && properties.getRegister().isEnableOtherLoginBinding()) {
+            registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
+            registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+        }
     }
 
+    /**
+     * 初始化其它登录的配置文件
+     */
+    private void initOtherLoginConfig() {
+        final Map<String, Properties.Login.Other> others = properties.getLogin().getOthers();
+        for (final String key : others.keySet()) {
+            final Properties.Login.Other other = others.get(key);
+            final Map<String, String> data = new HashMap<>();
+            final Map<String, String> varData = new HashMap<>();
+            final Map<String, String> templateData = new HashMap<>();
+            final Map<String, String> config = other.getConfig();
+            for (final String ck : config.keySet()) {
+                if (!ck.startsWith("#") || !ck.startsWith("@")) {
+                    data.put(ck, config.get(ck));
+                }
+                if (ck.startsWith("#")) {
+                    varData.put(ck, config.get(ck));
+                }
+                if (ck.startsWith("@")) {
+                    templateData.put(ck, config.get(ck));
+                }
+            }
+            varData.replaceAll((k, v) -> TemplateParser.execute(v, data));
+            templateData.replaceAll((k, v) -> TemplateParser.execute(v, varData));
+            config.putAll(varData);
+            config.putAll(templateData);
+        }
+    }
+
+    /**
+     * 注册认证过滤器
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerAuthWebFilterBean(DefaultListableBeanFactory factory) {
+        final Properties.Bean validator = properties.getAuth().getValidator();
+        final Properties.Bean authority = properties.getAuth().getAuthority();
+        String[] dependency1 = new String[]{
+                "club.p6e.auth.AuthJsonWebTokenCipher"
+        };
+        String[] dependency2 = new String[0];
+        if (Properties.Cache.Type.REDIS == properties.getCache().getType()) {
+            dependency2 = new String[]{
+                    "club.p6e.auth.cache.memory.AuthMemoryCache"
+            };
+        }
+        if (Properties.Cache.Type.MEMORY == properties.getCache().getType()) {
+            dependency2 = new String[]{
+                    "club.p6e.auth.cache.redis.AuthRedisCache"
+            };
+        }
+        switch (validator.getName().toUpperCase()) {
+            case Properties.Auth.HTTP_COOKIE_CACHE -> {
+                validator.setName("club.p6e.auth.certificate.HttpCookieCacheCertificateValidator");
+                validator.setDependency(dependency2);
+            }
+            case Properties.Auth.HTTP_LOCAL_CACHE -> {
+                validator.setName("club.p6e.auth.certificate.HttpLocalStorageCacheCertificateValidator");
+                validator.setDependency(dependency2);
+            }
+            case Properties.Auth.HTTP_COOKIE_JWT -> {
+                validator.setName("club.p6e.auth.certificate.HttpCookieJsonWebTokenCertificateValidator");
+                validator.setDependency(dependency1);
+            }
+            case Properties.Auth.HTTP_LOCAL_JWT -> {
+                validator.setName("club.p6e.auth.certificate.HttpLocalStorageJsonWebTokenCertificateValidator");
+                validator.setDependency(dependency1);
+            }
+        }
+        switch (authority.getName().toUpperCase()) {
+            case Properties.Auth.HTTP_COOKIE_CACHE -> {
+                authority.setName("club.p6e.auth.certificate.HttpCookieCacheCertificateAuthority");
+                authority.setDependency(dependency2);
+            }
+            case Properties.Auth.HTTP_LOCAL_CACHE -> {
+                authority.setName("club.p6e.auth.certificate.HttpLocalStorageCacheCertificateAuthority");
+                authority.setDependency(dependency2);
+            }
+            case Properties.Auth.HTTP_COOKIE_JWT -> {
+                authority.setName("club.p6e.auth.certificate.HttpCookieJsonWebTokenCertificateAuthority");
+                authority.setDependency(dependency1);
+            }
+            case Properties.Auth.HTTP_LOCAL_JWT -> {
+                authority.setName("club.p6e.auth.certificate.HttpLocalStorageJsonWebTokenCertificateAuthority");
+                authority.setDependency(dependency1);
+            }
+        }
+        registerPropertiesBean(validator, factory);
+        registerPropertiesBean(authority, factory);
+        registerBean(AuthPathMatcher.class, factory);
+        registerBean(AuthWebFilter.class, factory, true, false);
+        final AuthPathMatcher matcher = factory.getBean(AuthPathMatcher.class);
+        for (final String path : properties.getInterceptor()) {
+            matcher.register(path);
+        }
+    }
+
+    /**
+     * 注册 referer 过滤器
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerRefererWebFilterBean(DefaultListableBeanFactory factory) {
+        registerBean(AuthRefererWebFilter.class, factory, false, false);
+    }
+
+    /**
+     * 注册跨域过滤器
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerCrossDomainWebFilterBean(DefaultListableBeanFactory factory) {
+        registerBean(AuthCrossDomainWebFilter.class, factory, false, false);
+    }
+
+    /**
+     * 注册凭证过滤器
+     *
+     * @param factory 上下文对象工厂
+     */
     private void registerVoucherBean(DefaultListableBeanFactory factory) {
         registerVoucherCacheBean(factory);
         registerBean(AuthVoucher.class, factory);
         registerBean(VoucherGeneratorDefaultImpl.class, factory);
     }
 
+    /**
+     * 注册基础的存储库
+     *
+     * @param factory 上下文对象工厂
+     */
     private void registerRepositoryBean(DefaultListableBeanFactory factory) {
+        registerBean(R2dbcConfiguration.class, factory);
+    }
+
+    /**
+     * 注册用户的存储库
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerUserRepositoryBean(DefaultListableBeanFactory factory) {
+        registerRepositoryBean(factory);
         registerBean(UserRepository.class, factory);
-        registerBean(AuthUserImpl.class, factory);
         registerBean(UserAuthRepository.class, factory);
     }
 
+    /**
+     * 注册 OAuth2 的存储库
+     *
+     * @param factory 上下文对象工厂
+     */
     private void registerOauth2RepositoryBean(DefaultListableBeanFactory factory) {
         registerRepositoryBean(factory);
+        registerUserRepositoryBean(factory);
         registerBean(Oauth2ClientRepository.class, factory);
     }
 
-    private void registerOauth2CodeCache(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(Oauth2CodeRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(Oauth2CodeMemoryCache.class, factory);
-        }
+    /**
+     * 注册发射器
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerLauncherBean(DefaultListableBeanFactory factory) {
+        registerBean(SmsMessageLauncherImpl.class, factory);
+        registerBean(EmailMessageLauncherImpl.class, factory);
     }
 
-    private void registerVerificationCodeLoginCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(VerificationCodeLoginRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(VerificationCodeLoginMemoryCache.class, factory);
-        }
-    }
-
-    private void registerOauth2TokenClientAuthCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(Oauth2TokenClientAuthRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(Oauth2TokenClientAuthMemoryCache.class, factory);
-        }
-    }
-
-    private void registerStateOtherLoginCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(StateOtherLoginRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(StateOtherLoginMemoryCache.class, factory);
-        }
-    }
-
-    private void registerOauth2TokenUserAuthCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(Oauth2TokenUserAuthRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(Oauth2TokenUserAuthMemoryCache.class, factory);
-        }
-    }
-
-    private void registerAccountPasswordLoginSignatureCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(AccountPasswordLoginSignatureRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(AccountPasswordLoginSignatureMemoryCache.class, factory);
-        }
-    }
-
-
-    private void registerQrCodeLoginCacheBean(DefaultListableBeanFactory factory) {
-        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(QrCodeLoginRedisCache.class, factory);
-        }
-        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(QrCodeLoginMemoryCache.class, factory);
-        }
-    }
-
+    /**
+     * 注册凭证缓存过滤器
+     *
+     * @param factory 上下文对象工厂
+     */
     private void registerVoucherCacheBean(DefaultListableBeanFactory factory) {
         if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
             registerBean(VoucherRedisCache.class, factory);
@@ -245,76 +374,165 @@ public class AutoConfigureImportSelector {
         }
     }
 
-    private void registerAuthWebFilterBean(DefaultListableBeanFactory factory) {
-        Properties.Bean validatorBean = null;
-        Properties.Bean authorityBean = null;
-        final Object validator = properties.getAuth().getValidator();
-        final Object authority = properties.getAuth().getAuthority();
-        if (validator instanceof String) {
-            validatorBean = null;
-        } else if (validator instanceof Properties.Bean) {
-            validatorBean = (Properties.Bean) validator;
-        } else {
-            throw new RuntimeException();
+    /**
+     * 注册登录签名缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerAccountPasswordLoginSignatureCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(AccountPasswordLoginSignatureRedisCache.class, factory);
         }
-        if (authority instanceof String) {
-            authorityBean = null;
-        } else if (authority instanceof Properties.Bean) {
-            authorityBean = (Properties.Bean) authority;
-        } else {
-            throw new RuntimeException();
-        }
-        registerPropertiesBean(validatorBean, factory);
-        registerPropertiesBean(authorityBean, factory);
-        registerBean(AuthPathMatcher.class, factory);
-        registerBean(AuthWebFilter.class, factory, false);
-        System.out.println("====-=--=-=----=-=-=-=-==-");
-
-        final AuthPathMatcher matcher = factory.getBean(AuthPathMatcher.class);
-        for (final String path : properties.getInterceptor()) {
-            matcher.register(path);
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(AccountPasswordLoginSignatureMemoryCache.class, factory);
         }
     }
 
-    private void registerLauncherBean(DefaultListableBeanFactory factory) {
-        registerBean(SmsMessageLauncherImpl.class, factory);
-        registerBean(EmailMessageLauncherImpl.class, factory);
+    /**
+     * 注册验证码登录缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerVerificationCodeLoginCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(VerificationCodeLoginRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(VerificationCodeLoginMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册二维码登录缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerQrCodeLoginCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(QrCodeLoginRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(QrCodeLoginMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册 OAuth2 令牌客户端认证缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerOauth2TokenClientAuthCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(Oauth2TokenClientAuthRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(Oauth2TokenClientAuthMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册 OAuth2 令牌用户认证缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerOauth2TokenUserAuthCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(Oauth2TokenUserAuthRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(Oauth2TokenUserAuthMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册 OAuth2 code 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerOauth2CodeCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(Oauth2CodeRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(Oauth2CodeMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 其它登录 state 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerStateOtherLoginCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(StateOtherLoginRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(StateOtherLoginMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 其它登录 state 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerRegisterOtherLoginCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(RegisterOtherLoginRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(RegisterOtherLoginMemoryCache.class, factory);
+        }
     }
 
     /**
      * 注册 bean 服务
+     *
+     * @param bc      bean 的类型
+     * @param factory 上下文对象工厂
      */
     private synchronized void registerBean(Class<?> bc, DefaultListableBeanFactory factory) {
-        registerBean(bc, factory, true);
+        registerBean(bc, factory, true, true);
     }
 
-    private synchronized void registerBean(Class<?> bc, DefaultListableBeanFactory factory, boolean is) {
-        if (!is) {
-            final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-            beanDefinition.setBeanClass(bc);
-            System.out.println(bc.getName());
-            factory.registerBeanDefinition(bc.getName(), beanDefinition);
+    /**
+     * 注册 bean 服务
+     *
+     * @param bc               bean 的类型
+     * @param factory          上下文对象工厂
+     * @param isScanSelf       注册之前是否扫描自身类型，如果存在就不进行注册
+     * @param isScanInterfaces 注册之前是否扫描自身接口类型，如果存在就不进行注册
+     */
+    private synchronized void registerBean(
+            Class<?> bc,
+            DefaultListableBeanFactory factory,
+            boolean isScanSelf,
+            boolean isScanInterfaces
+    ) {
+        if (isScanSelf && isExistBean(bc, factory)) {
             return;
         }
-        if (!isExistBean(bc, factory)) {
-            boolean bool = false;
+        if (isScanInterfaces) {
             final Class<?>[] interfaces = bc.getInterfaces();
             for (final Class<?> item : interfaces) {
                 if (isExistBean(item, factory)) {
-                    bool = true;
-                    break;
+                    return;
                 }
             }
-            if (!bool) {
-                final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
-                beanDefinition.setBeanClass(bc);
-                System.out.println(bc.getName());
-                factory.registerBeanDefinition(bc.getName(), beanDefinition);
-            }
         }
+        final GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(bc);
+        factory.registerBeanDefinition(bc.getName(), beanDefinition);
     }
 
-
+    /**
+     * 是否存在 bean 类型对象
+     *
+     * @param bc      bean 的类型
+     * @param factory 上下文对象工厂
+     * @return 是否存在 bean 对象
+     */
     private boolean isExistBean(Class<?> bc, DefaultListableBeanFactory factory) {
         try {
             if (!factory.containsBean(bc.getName())) {
@@ -326,9 +544,11 @@ public class AutoConfigureImportSelector {
         }
     }
 
-
     /**
      * 注册 bean 服务
+     *
+     * @param bean    配置文件的 bean 对象
+     * @param factory 上下文对象工厂
      */
     private synchronized void registerPropertiesBean(Properties.Bean bean, DefaultListableBeanFactory factory) {
         try {

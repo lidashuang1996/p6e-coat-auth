@@ -8,14 +8,29 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
+ * 认证过滤器
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class AuthWebFilter implements WebFilter, Ordered {
 
+    /**
+     * 匹配器对象
+     */
     private final AuthPathMatcher matcher;
+
+    /**
+     * 验证器对象
+     */
     private final AuthCertificateValidator validator;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param matcher   匹配器对象
+     * @param validator 验证器对象
+     */
     public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateValidator validator) {
         this.matcher = matcher;
         this.validator = validator;
@@ -23,9 +38,6 @@ public class AuthWebFilter implements WebFilter, Ordered {
 
     @Override
     public @NonNull Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
-        System.out.println("Before handling the request");
-        System.out.println("Before handling the request");
-        System.out.println("AuthWebFilter AuthWebFilter AuthWebFilter AuthWebFilter AuthWebFilter");
         if (matcher.match(exchange.getRequest().getPath().value())) {
             return validator
                     .execute(exchange)
@@ -37,6 +49,7 @@ public class AuthWebFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -10000;
+        return 0;
     }
+
 }

@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -21,8 +20,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-public class CrossDomainWebFilter implements WebFilter, Ordered {
+public class AuthCrossDomainWebFilter implements WebFilter, Ordered {
 
     /**
      * 跨域配置 ACCESS_CONTROL_MAX_AGE
@@ -83,13 +81,13 @@ public class CrossDomainWebFilter implements WebFilter, Ordered {
      *
      * @param properties 配置文件对象
      */
-    public CrossDomainWebFilter(Properties properties) {
+    public AuthCrossDomainWebFilter(Properties properties) {
         this.properties = properties;
     }
 
     @Override
     public int getOrder() {
-        return -1;
+        return -1000;
     }
 
     @NonNull

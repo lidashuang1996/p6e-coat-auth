@@ -9,7 +9,7 @@ import club.p6e.auth.utils.GeneratorUtil;
  * @author lidashuang
  * @version 1.0
  */
-public class CodeLoginGeneratorDefaultImpl implements CodeLoginGenerator {
+public class VerificationCodeLoginGeneratorImpl implements CodeLoginGenerator {
 
     @Override
     public String execute(String type) {
