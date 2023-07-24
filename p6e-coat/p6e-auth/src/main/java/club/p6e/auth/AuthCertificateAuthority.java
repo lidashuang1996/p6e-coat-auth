@@ -21,4 +21,7 @@ public interface AuthCertificateAuthority {
      */
     public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model);
 
+
+    public Mono<Void> revoke(ServerWebExchange exchange);
+
 }

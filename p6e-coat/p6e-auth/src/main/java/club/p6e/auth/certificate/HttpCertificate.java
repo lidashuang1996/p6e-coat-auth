@@ -10,6 +10,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -170,7 +171,20 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Object result) {
-        return ACHIEVE.setHttpCookieToken(response, accessToken, refreshToken, result);
+        return setHttpCookieToken(response, accessToken, refreshToken, EXPIRATION_TIME, result);
+    }
+
+    /**
+     * 写入 cookie 令牌
+     *
+     * @param response     返回对象
+     * @param accessToken  认证令牌
+     * @param refreshToken 刷新令牌
+     * @param result       结果对象
+     * @return 结果值
+     */
+    public static Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result) {
+        return ACHIEVE.setHttpCookieToken(response, accessToken, refreshToken, age, result);
     }
 
     /**
@@ -318,7 +332,7 @@ public class HttpCertificate {
          * @param result       结果对象
          * @return 结果值
          */
-        public Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Object result);
+        public Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result);
 
         /**
          * 写入本地缓存令牌
@@ -442,12 +456,19 @@ public class HttpCertificate {
         }
 
         @Override
-        public Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Object result) {
+        public Mono<Object> setHttpCookieToken(
+                ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result) {
             final ResponseCookie accessTokenCookie = ResponseCookie
                     .from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken)
+                    .maxAge(Duration.ofSeconds(age))
+                    .httpOnly(true)
+                    .path("/")
                     .build();
             final ResponseCookie refreshTokenCookie = ResponseCookie
                     .from(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshToken)
+                    .maxAge(Duration.ofSeconds(age))
+                    .httpOnly(true)
+                    .path("/")
                     .build();
             response.addCookie(accessTokenCookie);
             response.addCookie(refreshTokenCookie);

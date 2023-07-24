@@ -19,6 +19,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -62,6 +63,8 @@ public class AutoConfigureImportSelector {
             registerAuthWebFilterBean(defaultListableBeanFactory);
             registerRefererWebFilterBean(defaultListableBeanFactory);
             registerCrossDomainWebFilterBean(defaultListableBeanFactory);
+            registerBean(MeControllerImpl.class, defaultListableBeanFactory);
+            registerBean(LogoutControllerImpl.class, defaultListableBeanFactory);
             registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
         }
 
@@ -197,6 +200,10 @@ public class AutoConfigureImportSelector {
             registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
             registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
         }
+
+        if (properties.isEnable() && properties.getSignature().isEnable()) {
+            registerBean(AuthSignatureWebFilter.class, defaultListableBeanFactory, true, false);
+        }
     }
 
     /**
@@ -282,18 +289,14 @@ public class AutoConfigureImportSelector {
      * 初始化我的页面内容
      */
     private void initMePage() {
-        System.out.println(
-                file(properties.getPage().getMe())
-        );
+        AuthPage.me(MediaType.TEXT_HTML, file(properties.getPage().getMe()));
     }
 
     /**
      * 初始化登录页面内容
      */
     private void initLoginPage() {
-        System.out.println(
-                file(properties.getPage().getLogin())
-        );
+        AuthPage.login(MediaType.TEXT_HTML, file(properties.getPage().getLogin()));
     }
 
     /**
@@ -417,6 +420,7 @@ public class AutoConfigureImportSelector {
      * @param factory 上下文对象工厂
      */
     private void registerCrossDomainWebFilterBean(DefaultListableBeanFactory factory) {
+        System.out.println("registerCrossDomainWebFilterBean registerCrossDomainWebFilterBean registerCrossDomainWebFilterBean ");
         registerBean(AuthCrossDomainWebFilter.class, factory, false, false);
     }
 

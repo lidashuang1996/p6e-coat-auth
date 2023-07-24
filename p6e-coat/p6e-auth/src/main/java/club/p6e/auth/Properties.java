@@ -27,11 +27,7 @@ public class Properties implements Serializable {
     /**
      * 对需要认证访问的路径进行拦截
      */
-    private String[] interceptor = new String[]{
-            "/me",
-            "/me/*",
-            "/me/**"
-    };
+    private String[] interceptor = new String[]{};
 
     /**
      * 404 页面是否重定向到网站首页
@@ -257,7 +253,7 @@ public class Properties implements Serializable {
              * 是否开启验证码登录功能
              * 开启验证码登录功能，账号模式需要为手机模式或邮箱模式或手机或者邮箱模式
              */
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         /**
@@ -271,7 +267,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启二维码扫码登录功能
              */
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         /**
@@ -409,6 +405,21 @@ public class Properties implements Serializable {
         private String me = "classpath:page/me.html";
         private String login = "classpath:page/login.html";
         private String register = "classpath:page/register.html";
+    }
+
+    /**
+     * 签名配置
+     */
+    private Signature signature = new Signature();
+
+    @Data
+    @Accessors(chain = true)
+    public static class Signature implements Serializable {
+        /**
+         * 是否开启签名的功能
+         */
+        private boolean enable = false;
+        private String secret = "ch2b8wh8t57n6r8p6wj6m5nu7ku8nde8";
     }
 
 }

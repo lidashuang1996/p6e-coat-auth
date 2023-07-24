@@ -112,7 +112,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
             return AuthVoucher
                     .init(exchange)
                     .flatMap(v -> fm
-                            .flatMap(u -> cache.set(account, ft.name(), code))
+                            .flatMap(u -> cache.set(ft.name(), account, code))
                             .flatMap(b -> {
                                 if (b) {
                                     final Map<String, String> tc = new HashMap<>(1);

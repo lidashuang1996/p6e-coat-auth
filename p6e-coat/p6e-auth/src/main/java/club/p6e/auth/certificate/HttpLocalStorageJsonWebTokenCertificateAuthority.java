@@ -69,4 +69,11 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
                 }).map(ResultContext::build);
     }
 
+    @Override
+    public Mono<Void> revoke(ServerWebExchange exchange) {
+        return getHttpLocalStorageToken(exchange.getRequest())
+                .map(t -> jwtDecode(t, cipher.getAccessTokenSecret()))
+                .flatMap(l -> Mono.empty());
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,6 +90,21 @@ public class HttpCookieCacheCertificateAuthority
                                         ));
                             }
                         })).map(ResultContext::build);
+    }
+
+    @Override
+    public Mono<Void> revoke(ServerWebExchange exchange) {
+        return getHttpCookieToken(exchange.getRequest())
+                .flatMap(cache::getAccessToken)
+                .flatMap(t -> cache.cleanToken(t.getAccessToken()))
+                .flatMap(l -> setHttpCookieToken(
+                        exchange.getResponse(),
+                        "",
+                        "",
+                        0L,
+                        LocalDateTime.now()
+                ))
+                .flatMap(l -> Mono.empty());
     }
 
 }

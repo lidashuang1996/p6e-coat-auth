@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +68,20 @@ public class HttpCookieJsonWebTokenCertificateAuthority
                                 ));
                     }
                 }).map(ResultContext::build);
+    }
+
+    @Override
+    public Mono<Void> revoke(ServerWebExchange exchange) {
+        return getHttpCookieToken(exchange.getRequest())
+                .map(t -> jwtDecode(t, cipher.getAccessTokenSecret()))
+                .flatMap(u -> setHttpCookieToken(
+                        exchange.getResponse(),
+                        "",
+                        "",
+                        0L,
+                        LocalDateTime.now()
+                ))
+                .flatMap(l -> Mono.empty());
     }
 
 }

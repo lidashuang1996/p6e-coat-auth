@@ -12,7 +12,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class JsonUtil {
+public final class JsonUtil {
 
     /**
      * OBJECT_MAPPER 对象

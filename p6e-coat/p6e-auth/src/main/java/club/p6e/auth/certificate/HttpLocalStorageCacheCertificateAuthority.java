@@ -90,4 +90,12 @@ public class HttpLocalStorageCacheCertificateAuthority
                         })).map(ResultContext::build);
     }
 
+    @Override
+    public Mono<Void> revoke(ServerWebExchange exchange) {
+        return getHttpLocalStorageToken(exchange.getRequest())
+                .flatMap(cache::getAccessToken)
+                .flatMap(t -> cache.cleanToken(t.getAccessToken()))
+                .flatMap(l -> Mono.empty());
+    }
+
 }

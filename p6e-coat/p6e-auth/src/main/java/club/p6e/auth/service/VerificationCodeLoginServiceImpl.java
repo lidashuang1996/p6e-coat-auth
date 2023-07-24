@@ -55,7 +55,7 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                     final String account = v.get(AuthVoucher.ACCOUNT);
                     final String accountType = v.get(AuthVoucher.ACCOUNT_TYPE);
                     return cache
-                            .get(account, accountType)
+                            .get(accountType, account)
                             .switchIfEmpty(Mono.error(
                                     GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
@@ -63,10 +63,11 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                                             "Verification code login cache data does not exist or expire exception."
                                     )))
                             .flatMap(list -> {
+                                System.out.println(list);
                                 if (list != null && list.size() > 0) {
                                     final int index = list.indexOf(code);
                                     if (index >= 0) {
-                                        return cache.del(account, accountType, code);
+                                        return cache.del(accountType, account, code);
                                     }
                                 }
                                 return Mono.error(

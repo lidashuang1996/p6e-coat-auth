@@ -8,7 +8,7 @@ if (!window.p6e) {
 // 全局的配置
 window.g.config = {
   // 网络请求的基础路径
-  url: '',
+  // url: 'http://auth.p6e.club',
   // 项目当前是否为 debug 状态
   debug: false,
   // 项目当前的环境
@@ -22,14 +22,14 @@ window.g.config = {
 // PHONE_OR_MAILBOX 电话邮箱模式
 window.p6e.mode = 'PHONE_OR_MAILBOX';
 // p6e 凭证
-window.p6e.voucher = '@{voucher}';
+window.p6e.voucher = '9cf19d44b3034356bed9104d0f09e440';
 // p6e 主页
 window.p6e.home = {
-  page: '/me'
+  page: 'http://auth.p6e.club/me'
 };
 // p6e 登录页
 window.p6e.login = {
-  page: '/login',
+  page: 'http://auth.p6e.club/login',
   ap: {
     rsa: false
   },
@@ -80,6 +80,9 @@ window.p6e.validator = {
     }
     if (data === '') {
       return '$t("sign.validator.password.error1")';
+    }
+    if (!/^[*]{6,24}$/.test(data)) {
+      return '$t("sign.validator.password.error2")';
     }
     return true;
   },

@@ -1,6 +1,5 @@
 package club.p6e.auth.service;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -13,20 +12,6 @@ import java.util.Map;
  * @version 1.0
  */
 public interface IndexService {
-
-    /**
-     * 设置返回类型头
-     *
-     * @param mediaType 媒体类型
-     */
-    public void setContentType(MediaType mediaType);
-
-    /**
-     * 设置模板内容
-     *
-     * @param content 模板内容
-     */
-    public void setTemplateContent(String content);
 
     /**
      * 执行首页内容

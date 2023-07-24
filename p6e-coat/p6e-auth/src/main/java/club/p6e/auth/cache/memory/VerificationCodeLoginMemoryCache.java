@@ -49,18 +49,23 @@ public class VerificationCodeLoginMemoryCache
 
     @Override
     public Mono<List<String>> get(String type, String key) {
+        System.out.println(type + "  " + key + "  ");
         final Map<String, String> map = get0(type, key);
+        System.out.println(map);
         if (map == null || map.size() == 0) {
             return Mono.empty();
         } else {
+            System.out.println(map);
             return Mono.just(new ArrayList<>(map.keySet()));
         }
     }
 
     @Override
     public Mono<Boolean> set(String type, String key, String value) {
+        System.out.println(type + "  " + key + "  " + value);
         final Map<String, String> map = get0(key, type);
         map.put(value, String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
+        System.out.println(map);
         return Mono.just(template.set(CACHE_PREFIX + type + DELIMITER + key, map, EXPIRATION_TIME));
     }
 
@@ -73,8 +78,7 @@ public class VerificationCodeLoginMemoryCache
             final Map<String, String> result = (Map<String, String>) map;
             final long now = System.currentTimeMillis();
             for (final String k : result.keySet()) {
-                if (map.get(k) != null
-                        && now < Long.parseLong(result.get(k))) {
+                if (map.get(k) == null || now > Long.parseLong(result.get(k))) {
                     map.remove(k);
                 }
             }

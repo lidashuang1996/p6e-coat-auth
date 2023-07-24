@@ -3,3 +3,11 @@ spring:
     import: D://env/p6e-coat-file-application.yml
 logging:
   config: 'classpath:p6e-logback.xml'
+
+
+
+club:
+  p6e:
+    auth:
+      crossDomain:
+        enabled: true
