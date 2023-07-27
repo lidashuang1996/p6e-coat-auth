@@ -22,7 +22,8 @@ public class VoucherMemoryCache extends MemoryCache implements VoucherCache {
 
     @Override
     public Mono<Long> del(String key) {
-        return Mono.just(template.del(CACHE_PREFIX + key));
+        // template.del(CACHE_PREFIX + key)
+        return Mono.just(1L);
     }
 
     @Override

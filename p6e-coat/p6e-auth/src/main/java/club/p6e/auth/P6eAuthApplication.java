@@ -1,6 +1,5 @@
 package club.p6e.auth;
 
-import club.p6e.auth.service.IndexService;
 import club.p6e.auth.utils.SpringUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

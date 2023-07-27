@@ -2,6 +2,7 @@ package club.p6e.auth.service;
 
 import club.p6e.auth.AuthPage;
 import club.p6e.auth.AuthVoucher;
+import club.p6e.auth.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
@@ -20,7 +21,7 @@ public class IndexServiceImpl implements IndexService {
     public Mono<Void> execute(ServerWebExchange exchange, Map<String, String> vm) {
         return AuthVoucher
                 .create(vm)
-                .flatMap(voucher -> write(exchange));
+                .flatMap(v -> write(exchange, v.getMark()));
     }
 
     /**
@@ -29,14 +30,14 @@ public class IndexServiceImpl implements IndexService {
      * @param exchange ServerWebExchange 对象
      * @return Mono/Void 对象
      */
-    protected Mono<Void> write(ServerWebExchange exchange) {
+    protected Mono<Void> write(ServerWebExchange exchange, String voucher) {
         final AuthPage.Model login = AuthPage.login();
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(login.getType());
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
-                login.getContent().getBytes(StandardCharsets.UTF_8)))
-        );
+                (TemplateParser.execute(login.getContent(), "voucher", voucher)).getBytes(StandardCharsets.UTF_8)
+        )));
     }
 
 }

@@ -1,0 +1,321 @@
+2023-07-24 09:43:20 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 13920 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 09:43:20 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 09:43:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 09:43:20 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 09:43:20 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 09:43:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 09:43:20 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 09:43:20 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 09:43:21 [main] INFO - Netty started on port 8080
+2023-07-24 09:43:21 [main] INFO - Started P6eAuthApplication in 1.491 seconds (process running for 1.817)
+2023-07-24 09:45:34 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 17672 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 09:45:34 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 09:45:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 09:45:34 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 09:45:34 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 09:45:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 09:45:34 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 09:45:34 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 09:45:35 [main] INFO - Netty started on port 8080
+2023-07-24 09:45:35 [main] INFO - Started P6eAuthApplication in 1.332 seconds (process running for 1.611)
+2023-07-24 10:29:31 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 17804 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:29:31 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:29:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:29:31 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:29:31 [main] INFO - Finished Spring Data repository scanning in 22 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:29:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:29:31 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:29:31 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:29:32 [main] INFO - Netty started on port 8080
+2023-07-24 10:29:32 [main] INFO - Started P6eAuthApplication in 1.345 seconds (process running for 1.633)
+2023-07-24 10:31:10 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 15324 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:31:10 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:31:10 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:31:10 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:31:10 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:31:10 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:31:10 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:31:10 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:31:11 [main] INFO - Netty started on port 8080
+2023-07-24 10:31:11 [main] INFO - Started P6eAuthApplication in 1.321 seconds (process running for 1.602)
+2023-07-24 10:33:02 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 9168 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:33:02 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:33:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:33:02 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:33:02 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:33:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:33:02 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:33:02 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:33:03 [main] INFO - Netty started on port 8080
+2023-07-24 10:33:03 [main] INFO - Started P6eAuthApplication in 1.392 seconds (process running for 1.727)
+2023-07-24 10:36:50 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 7524 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:36:50 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:36:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:36:50 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:36:50 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:36:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:36:50 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:36:50 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:36:51 [main] INFO - Netty started on port 8080
+2023-07-24 10:36:51 [main] INFO - Started P6eAuthApplication in 1.304 seconds (process running for 1.583)
+2023-07-24 10:38:22 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=323796}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:39:37 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=351648}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:41:29 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=303610}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:44:42 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 8508 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:44:42 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:44:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:44:42 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:44:42 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:44:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:44:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:44:42 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:44:43 [main] INFO - Netty started on port 8080
+2023-07-24 10:44:43 [main] INFO - Started P6eAuthApplication in 1.403 seconds (process running for 1.701)
+2023-07-24 10:44:58 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=515845}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:46:39 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 20448 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:46:39 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:46:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:46:39 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:46:39 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:46:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:46:39 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:46:39 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:46:40 [main] INFO - Netty started on port 8080
+2023-07-24 10:46:40 [main] INFO - Started P6eAuthApplication in 1.34 seconds (process running for 1.616)
+2023-07-24 10:47:19 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=869079}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:48:30 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 8404 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:48:30 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:48:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:48:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:48:30 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:48:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:48:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:48:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:48:31 [main] INFO - Netty started on port 8080
+2023-07-24 10:48:31 [main] INFO - Started P6eAuthApplication in 1.376 seconds (process running for 1.647)
+2023-07-24 10:48:44 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=613108}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:51:02 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 14800 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 10:51:02 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 10:51:03 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:51:03 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 10:51:03 [main] INFO - Finished Spring Data repository scanning in 24 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 10:51:03 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 10:51:03 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 10:51:03 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 10:51:03 [main] INFO - Netty started on port 8080
+2023-07-24 10:51:03 [main] INFO - Started P6eAuthApplication in 1.415 seconds (process running for 1.707)
+2023-07-24 10:51:15 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=295786}   |
+--------------------------------------------------------------------
+
+
+2023-07-24 10:51:29 [reactor-tcp-nio-1] INFO - [ JWT ( ACCESS_TOKEN ) ] INIT >>> 44a3111e99fc5e4e3cc452e879cd41cc
+2023-07-24 10:51:29 [reactor-tcp-nio-1] INFO - [ JWT ( REFRESH_TOKEN ) ] INIT >>> e1f3bc81f37f4de2eec8bc1f0730f904
+2023-07-24 13:58:25 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 8896 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 13:58:25 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 13:58:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 13:58:25 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 13:58:25 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 13:58:25 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 13:58:25 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 13:58:25 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 13:58:26 [main] INFO - Netty started on port 8080
+2023-07-24 13:58:26 [main] INFO - Started P6eAuthApplication in 1.361 seconds (process running for 1.65)
+2023-07-24 14:34:22 [reactor-http-nio-2] INFO - [ JWT ( ACCESS_TOKEN ) ] INIT >>> 7d610afd13055df55015b950bcdbd929
+2023-07-24 14:34:22 [reactor-http-nio-2] INFO - [ JWT ( REFRESH_TOKEN ) ] INIT >>> b5ec67a4ff934144dfa61a28ee652052
+2023-07-24 14:47:12 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 17528 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 14:47:12 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 14:47:12 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:47:12 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 14:47:12 [main] INFO - Finished Spring Data repository scanning in 22 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 14:47:12 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:47:12 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 14:47:12 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 14:47:13 [main] INFO - Netty started on port 8080
+2023-07-24 14:47:13 [main] INFO - Started P6eAuthApplication in 1.515 seconds (process running for 1.793)
+2023-07-24 14:48:46 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 21656 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 14:48:46 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 14:48:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:48:46 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 14:48:46 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 14:48:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:48:46 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 14:48:46 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 14:48:47 [main] INFO - Netty started on port 8080
+2023-07-24 14:48:47 [main] INFO - Started P6eAuthApplication in 1.407 seconds (process running for 1.729)
+2023-07-24 14:51:00 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 15248 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 14:51:00 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 14:51:00 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:51:00 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 14:51:00 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 14:51:00 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:51:00 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 14:51:00 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 14:51:01 [main] INFO - Netty started on port 8080
+2023-07-24 14:51:01 [main] INFO - Started P6eAuthApplication in 1.334 seconds (process running for 1.608)
+2023-07-24 14:55:44 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 5472 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 14:55:44 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 14:55:44 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:55:44 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 14:55:45 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 14:55:45 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 14:55:45 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 14:55:45 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 14:55:45 [main] INFO - Netty started on port 8080
+2023-07-24 14:55:45 [main] INFO - Started P6eAuthApplication in 1.358 seconds (process running for 1.648)
+2023-07-24 15:01:56 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 7668 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:01:56 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:01:56 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:01:56 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:01:56 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:01:56 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:01:56 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:01:56 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:01:57 [main] INFO - Netty started on port 8080
+2023-07-24 15:01:57 [main] INFO - Started P6eAuthApplication in 1.368 seconds (process running for 1.65)
+2023-07-24 15:02:30 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 17424 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:02:30 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:02:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:02:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:02:30 [main] INFO - Finished Spring Data repository scanning in 22 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:02:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:02:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:02:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:02:31 [main] INFO - Netty started on port 8080
+2023-07-24 15:02:31 [main] INFO - Started P6eAuthApplication in 1.332 seconds (process running for 1.608)
+2023-07-24 15:04:38 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 12208 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:04:38 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:04:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:04:38 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:04:38 [main] INFO - Finished Spring Data repository scanning in 23 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:04:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:04:38 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:04:38 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:04:39 [main] INFO - Netty started on port 8080
+2023-07-24 15:04:39 [main] INFO - Started P6eAuthApplication in 1.388 seconds (process running for 1.708)
+2023-07-24 15:10:47 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 21680 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:10:47 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:10:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:10:47 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:10:47 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:10:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:10:47 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:10:47 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:10:48 [main] INFO - Netty started on port 8080
+2023-07-24 15:10:48 [main] INFO - Started P6eAuthApplication in 1.342 seconds (process running for 1.611)
+2023-07-24 15:11:19 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 12132 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:11:19 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:11:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:11:20 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:11:20 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:11:20 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:11:20 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:11:20 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:11:21 [main] INFO - Netty started on port 8080
+2023-07-24 15:11:21 [main] INFO - Started P6eAuthApplication in 1.342 seconds (process running for 1.614)
+2023-07-24 15:16:34 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 17016 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:16:34 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:16:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:16:34 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:16:34 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:16:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:16:34 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:16:34 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:16:35 [main] INFO - Netty started on port 8080
+2023-07-24 15:16:35 [main] INFO - Started P6eAuthApplication in 1.451 seconds (process running for 1.781)
+2023-07-24 15:19:30 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 8096 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:19:30 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:19:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:19:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:19:30 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:19:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:19:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:19:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:19:31 [main] INFO - Netty started on port 8080
+2023-07-24 15:19:31 [main] INFO - Started P6eAuthApplication in 1.343 seconds (process running for 1.614)
+2023-07-24 15:20:05 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 7420 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:20:05 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:20:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:20:05 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:20:05 [main] INFO - Finished Spring Data repository scanning in 22 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:20:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:20:05 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:20:05 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:20:06 [main] INFO - Netty started on port 8080
+2023-07-24 15:20:06 [main] INFO - Started P6eAuthApplication in 1.423 seconds (process running for 1.71)
+2023-07-24 15:20:29 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 12244 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-24 15:20:29 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-24 15:20:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:20:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-24 15:20:30 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-24 15:20:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-24 15:20:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-24 15:20:30 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-24 15:20:30 [main] INFO - Netty started on port 8080
+2023-07-24 15:20:30 [main] INFO - Started P6eAuthApplication in 1.31 seconds (process running for 1.586)
