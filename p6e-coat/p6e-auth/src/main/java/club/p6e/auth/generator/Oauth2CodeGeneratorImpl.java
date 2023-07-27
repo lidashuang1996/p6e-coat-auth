@@ -6,7 +6,7 @@ import club.p6e.auth.utils.GeneratorUtil;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2CodeGeneratorDefaultImpl implements Oauth2CodeGenerator {
+public class Oauth2CodeGeneratorImpl implements Oauth2CodeGenerator {
 
     @Override
     public String execute() {

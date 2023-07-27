@@ -182,6 +182,7 @@ public class AutoConfigureImportSelector {
             registerOauth2CodeCacheBean(defaultListableBeanFactory);
             registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(Oauth2CodeGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2UserOpenIdGeneratorDefaultImpl.class, defaultListableBeanFactory);
         }

@@ -331,7 +331,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启 OAUTH2 功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
 
         /**
          * 客户端授权登录的配置
@@ -344,7 +344,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启客户端授权登录
              */
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         /**
@@ -358,7 +358,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启密码授权登录
              */
-            private boolean enable = false;
+            private boolean enable = true;
         }
 
         /**
