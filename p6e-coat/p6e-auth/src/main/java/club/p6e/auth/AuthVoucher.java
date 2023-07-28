@@ -24,6 +24,9 @@ public class AuthVoucher implements Serializable {
     public static final String IP = "IP";
     public static final String INDEX = "INDEX";
     public static final String INDEX_DATE = "INDEX_DATE";
+
+    public static final String REGISTER = "REGISTER";
+    public static final String REGISTER_DATE = "REGISTER_DATE";
     public static final String ACCOUNT_PASSWORD_LOGIN = "ACCOUNT_PASSWORD_LOGIN";
     public static final String ACCOUNT_PASSWORD_CODEC_DATE = "ACCOUNT_PASSWORD_CODEC_DATE";
     public static final String ACCOUNT_PASSWORD_CODEC_MARK = "ACCOUNT_PASSWORD_CODEC_MARK";
@@ -158,6 +161,10 @@ public class AuthVoucher implements Serializable {
      * @return 标记内容
      */
     public String getMark() {
+        return mark;
+    }
+
+    public String getAccount() {
         return mark;
     }
 

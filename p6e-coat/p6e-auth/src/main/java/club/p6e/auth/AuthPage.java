@@ -32,6 +32,8 @@ public final class AuthPage {
     private static final Model ME = new Model("I am on the me page.");
     private static final Model LOGIN = new Model("I am on the login page.");
 
+    private static final Model REGISTER = new Model("I am on the register page.");
+
     public static Model me() {
         return ME;
     }
@@ -64,6 +66,24 @@ public final class AuthPage {
     public static void login(MediaType type, String content) {
         LOGIN.setType(type);
         LOGIN.setContent(content);
+    }
+
+
+    public static Model register() {
+        return REGISTER;
+    }
+
+    public static void register(MediaType type) {
+        REGISTER.setType(type);
+    }
+
+    public static void register(String content) {
+        REGISTER.setContent(content);
+    }
+
+    public static void register(MediaType type, String content) {
+        REGISTER.setType(type);
+        REGISTER.setContent(content);
     }
 
 }

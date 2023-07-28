@@ -113,4 +113,8 @@ public final class GlobalExceptionContext {
     public static DataBaseException exceptionDataBaseException(Class<?> sc, String error, String content) {
         return new DataBaseException(sc, error, content);
     }
+
+    public static PasswordException exceptionPasswordException(Class<?> sc, String error, String content) {
+        return new PasswordException(sc, error, content);
+    }
 }

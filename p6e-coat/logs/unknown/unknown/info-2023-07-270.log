@@ -1,0 +1,36 @@
+2023-07-27 09:41:43 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 21748 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-27 09:41:43 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-27 09:41:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 09:41:43 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-27 09:41:43 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2023-07-27 09:41:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 09:41:43 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-27 09:41:43 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-07-27 09:41:44 [main] INFO - Netty started on port 8080
+2023-07-27 09:41:44 [main] INFO - Started P6eAuthApplication in 1.53 seconds (process running for 1.856)
+2023-07-27 09:44:23 [reactor-http-nio-2] INFO - [ JWT ( ACCESS_TOKEN ) ] INIT >>> 7ba068d4684faa2e2339907bed4253ba
+2023-07-27 09:44:23 [reactor-http-nio-2] INFO - [ JWT ( REFRESH_TOKEN ) ] INIT >>> 79c8e8a08228949057bc6f00b7713e57
+2023-07-27 09:51:58 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 16780 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-27 09:51:58 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-27 09:51:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 09:51:59 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-27 09:51:59 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
+2023-07-27 09:51:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 09:51:59 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-27 09:51:59 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-27 09:51:59 [main] INFO - Netty started on port 8080
+2023-07-27 09:51:59 [main] INFO - Started P6eAuthApplication in 1.342 seconds (process running for 1.605)
+2023-07-27 09:52:37 [reactor-tcp-nio-1] INFO - [ JWT ( ACCESS_TOKEN ) ] INIT >>> d16fe4caeda421d3d50e21550a16b7d8
+2023-07-27 09:52:37 [reactor-tcp-nio-1] INFO - [ JWT ( REFRESH_TOKEN ) ] INIT >>> 7853b3a88d0fedd983745120ce73cd68
+2023-07-27 14:24:56 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 11756 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-07-27 14:24:56 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-07-27 14:24:56 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 14:24:56 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-07-27 14:24:56 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2023-07-27 14:24:56 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-07-27 14:24:56 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-07-27 14:24:56 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2023-07-27 14:24:57 [main] INFO - Netty started on port 8080
+2023-07-27 14:24:57 [main] INFO - Started P6eAuthApplication in 1.431 seconds (process running for 1.745)
+2023-07-27 14:25:02 [reactor-http-nio-2] INFO - [ JWT ( ACCESS_TOKEN ) ] INIT >>> 9f2730bd20795b38e368092eb066d164
+2023-07-27 14:25:02 [reactor-http-nio-2] INFO - [ JWT ( REFRESH_TOKEN ) ] INIT >>> 23a91f86bf623ae9e5317a1c9f7e1923

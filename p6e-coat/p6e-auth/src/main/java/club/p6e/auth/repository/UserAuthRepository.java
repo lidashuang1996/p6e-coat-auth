@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
+import org.springframework.data.relational.core.query.Update;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -48,6 +49,43 @@ public class UserAuthRepository {
         );
     }
 
+    public Mono<UserAuthModel> findByAccount(String account) {
+        return template.selectOne(
+                Query.query(Criteria
+                        .where(UserAuthModel.ACCOUNT).is(account)
+                        .and(UserAuthModel.IS_DELETE).is(0)
+                ), UserAuthModel.class
+        );
+    }
+
+    public Mono<UserAuthModel> findByPhone(String account) {
+        return template.selectOne(
+                Query.query(Criteria
+                        .where(UserAuthModel.PHONE).is(account)
+                        .and(UserAuthModel.IS_DELETE).is(0)
+                ), UserAuthModel.class
+        );
+    }
+
+    public Mono<UserAuthModel> findByMailbox(String account) {
+        return template.selectOne(
+                Query.query(Criteria
+                        .where(UserAuthModel.MAILBOX).is(account)
+                        .and(UserAuthModel.IS_DELETE).is(0)
+                ), UserAuthModel.class
+        );
+    }
+
+    public Mono<UserAuthModel> findByPhoneOrMailbox(String account) {
+        return template.selectOne(
+                Query.query(Criteria
+                        .where(UserAuthModel.PHONE).is(account)
+                        .or(UserAuthModel.MAILBOX).is(account)
+                        .and(UserAuthModel.IS_DELETE).is(0)
+                ), UserAuthModel.class
+        );
+    }
+
     /**
      * 根据 ID 查询一条数据
      *
@@ -72,5 +110,13 @@ public class UserAuthRepository {
                 .setVersion(0)
                 .setIsDelete(0);
         return template.insert(model);
+    }
+
+    public Mono<Long> updatePassword(Integer id, String password) {
+        return template.update(
+                Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.IS_DELETE).is(0)),
+                Update.update(UserAuthModel.PASSWORD, password),
+                UserAuthModel.class
+        );
     }
 }
