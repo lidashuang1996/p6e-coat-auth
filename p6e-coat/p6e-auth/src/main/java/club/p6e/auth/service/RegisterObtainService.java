@@ -8,6 +8,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public interface RegisterService {
-    Mono<RegisterContext.Dto> execute(ServerWebExchange exchange, RegisterContext.Request p);
+public interface RegisterObtainService {
+    Mono<RegisterContext.Obtain.Dto> execute(ServerWebExchange exchange, RegisterContext.Obtain.Request p);
 }

@@ -205,6 +205,22 @@ public class AutoConfigureImportSelector {
         if (properties.isEnable() && properties.getSignature().isEnable()) {
             registerBean(AuthSignatureWebFilter.class, defaultListableBeanFactory, true, false);
         }
+
+
+        registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
+        registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
+        registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
+        registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
+        registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
+        registerBean(RegisterCodeMemoryCache.class, defaultListableBeanFactory);
+
+        registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
+        registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
+        registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
+        registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
+        registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
+        registerBean(ForgotPasswordCodeMemoryCache.class, defaultListableBeanFactory);
+
     }
 
     /**

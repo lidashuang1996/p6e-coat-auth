@@ -17,12 +17,14 @@ public class R2dbcConfiguration {
 
     @Bean
     public R2dbcEntityTemplate r1(ConnectionFactory connectionFactory) {
+        System.out.println("R1R1R1R1R1R1RR1R1");
         return new R2dbcEntityTemplate(connectionFactory);
     }
 
     @Bean
     public TransactionalOperator r2(ConnectionFactory connectionFactory) {
-        return TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory), TransactionDefinition.withDefaults());
+        System.out.println("R2R22R2R2R2R2R2R2R2R2R");
+        return TransactionalOperator.create(new R2dbcTransactionManager(connectionFactory));
     }
 
 }

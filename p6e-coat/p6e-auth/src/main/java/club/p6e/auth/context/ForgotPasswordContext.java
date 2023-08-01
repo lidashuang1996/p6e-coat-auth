@@ -36,4 +36,24 @@ public class ForgotPasswordContext implements Serializable {
         private String account;
     }
 
+    public static class Obtain implements Serializable {
+        @Data
+        @Accessors(chain = true)
+        public static class Request implements Serializable {
+            private String account;
+        }
+
+        @Data
+        @Accessors(chain = true)
+        public static class Vo implements Serializable {
+            private String account;
+        }
+
+        @Data
+        @Accessors(chain = true)
+        public static class Dto implements Serializable {
+            private String account;
+            private String message;
+        }
+    }
 }

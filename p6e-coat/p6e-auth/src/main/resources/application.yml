@@ -1,10 +1,8 @@
 spring:
   config:
-    import: /root/p6e-coat-file-application.yml
+    import: D://env/p6e-coat-file-application.yml
 logging:
   config: 'classpath:p6e-logback.xml'
-
-
 
 club:
   p6e:

@@ -69,7 +69,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启跨域的支持
          */
-        private boolean enabled = false;
+        private boolean enabled = true;
     }
 
     /**
@@ -280,7 +280,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启此第三方登录功能
              */
-            private boolean enable = false;
+            private boolean enable = true;
 
             /**
              * 此第三方登录需要的配置对象
@@ -387,7 +387,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
         /**
          * 是否开启第三方登录没有对应绑定信息时候进行注册绑定
          */

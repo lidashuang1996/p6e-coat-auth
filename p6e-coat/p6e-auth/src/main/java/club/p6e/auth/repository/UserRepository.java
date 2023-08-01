@@ -63,7 +63,7 @@ public class UserRepository {
         );
     }
 
-    public Mono<UserModel> createAccount(UserModel model) {
+    public Mono<UserModel> create(UserModel model) {
         model
                 .setId(null)
                 .setStatus(0)

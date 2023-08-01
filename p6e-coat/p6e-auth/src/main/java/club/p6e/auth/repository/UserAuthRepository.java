@@ -103,12 +103,11 @@ public class UserAuthRepository {
     public Mono<UserAuthModel> create(UserAuthModel model) {
         model
                 .setId(null)
-                .setQq(null)
-                .setCreateDate(LocalDateTime.now())
-                .setUpdateDate(LocalDateTime.now())
-                .setOperator("register_sys")
                 .setVersion(0)
-                .setIsDelete(0);
+                .setIsDelete(0)
+                .setOperator("register_sys")
+                .setCreateDate(LocalDateTime.now())
+                .setUpdateDate(LocalDateTime.now());
         return template.insert(model);
     }
 
