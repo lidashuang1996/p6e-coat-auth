@@ -1,2 +1,0 @@
-2023-07-04 12:36:51 [http-nio-9999-exec-8] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [] } ::: [ class club.p6e.cloud.test.domain.entity.PermissionUrlEntity ] => (class club.p6e.cloud.test.error.CacheException) ===> 
-2023-07-04 12:57:32 [http-nio-9999-exec-4] ERROR - { PARAMETER_EXCEPTION <1000> [Request sort validation exception.] } ::: [ class club.p6e.cloud.test.controller.DictionaryController ] => (class club.p6e.cloud.test.error.ParameterException) ===> fun postType(@RequestBody DictionaryContext.Type.Request request)

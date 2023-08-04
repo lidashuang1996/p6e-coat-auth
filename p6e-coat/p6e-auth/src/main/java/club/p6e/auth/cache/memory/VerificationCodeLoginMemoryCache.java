@@ -17,61 +17,45 @@ import java.util.Map;
 public class VerificationCodeLoginMemoryCache
         extends MemoryCache implements VerificationCodeLoginCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public VerificationCodeLoginMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
 
     @Override
-    public Mono<Long> del(String type, String key) {
-        return Mono.just(template.del(CACHE_PREFIX + type + DELIMITER + key));
+    public Mono<Long> del(String key) {
+        return Mono.just(template.del(CACHE_PREFIX + key));
     }
 
     @Override
-    public Mono<Long> del(String type, String key, String value) {
-        final Map<String, String> map = get0(type, key);
-        if (map == null || map.size() == 0) {
-            return Mono.just(0L);
-        } else {
-            if (map.get(value) == null) {
-                return Mono.just(0L);
-            } else {
-                map.remove(value);
-                if (map.size() == 0) {
-                    return del(key, type);
-                } else {
-                    return Mono.just(template.set(CACHE_PREFIX + type + DELIMITER + key, map, EXPIRATION_TIME) ? 1L : 0L);
-                }
-            }
-        }
-    }
-
-    @Override
-    public Mono<List<String>> get(String type, String key) {
-        System.out.println(type + "  " + key + "  ");
-        final Map<String, String> map = get0(type, key);
-        System.out.println(map);
-        if (map == null || map.size() == 0) {
+    public Mono<List<String>> get(String key) {
+        final Map<String, String> map = get0(key);
+        if (map.isEmpty()) {
             return Mono.empty();
         } else {
-            System.out.println(map);
             return Mono.just(new ArrayList<>(map.keySet()));
         }
     }
 
     @Override
-    public Mono<Boolean> set(String type, String key, String value) {
-        System.out.println(type + "  " + key + "  " + value);
-        final Map<String, String> map = get0(key, type);
+    public Mono<Boolean> set(String key, String value) {
+        final Map<String, String> map = get0(key);
         map.put(value, String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
-        System.out.println(map);
-        return Mono.just(template.set(CACHE_PREFIX + type + DELIMITER + key, map, EXPIRATION_TIME));
+        return Mono.just(template.set(CACHE_PREFIX + key, map, EXPIRATION_TIME));
     }
 
     @SuppressWarnings("ALL")
-    private Map<String, String> get0(String type, String key) {
-        Map map = template.get(CACHE_PREFIX + type + DELIMITER + key, Map.class);
+    private Map<String, String> get0(String key) {
+        final Map map = template.get(CACHE_PREFIX + key, Map.class);
         if (map == null) {
             return new HashMap<>();
         } else {

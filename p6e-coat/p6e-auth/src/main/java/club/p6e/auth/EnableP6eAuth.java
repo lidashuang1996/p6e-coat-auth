@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
         Properties.class,
+        Configuration.class,
         AutoConfigureImportSelector.class
 })
 public @interface EnableP6eAuth {

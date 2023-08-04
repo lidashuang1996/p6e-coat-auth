@@ -14,8 +14,7 @@ public final class VerificationUtil {
     }
 
     public static boolean mailbox(String data) {
-//        return Pattern.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\\\.[a-zA-Z0-9]+", data);
-        return true;
+        return Pattern.matches("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", data);
     }
 
     /**

@@ -13,38 +13,44 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class AuthMemoryCache extends MemoryCache implements AuthCache {
+public class AuthMemoryCache
+        extends MemoryCache implements AuthCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public AuthMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user) {
-        // 在这里可以考虑实现控制设备登录的限制
-        // 或者实现用户最多同时几个会话在使用
-        // 这里配置的是无限多个（很多的时候会崩）
-        // 构造缓存的数据对象
         final Token token = new Token()
                 .setUid(uid)
                 .setDevice(device)
                 .setAccessToken(accessToken)
                 .setRefreshToken(refreshToken);
-        // 序列化为字符串方便存储
-        final String jc = JsonUtil.toJson(token);
-        // 读取之前缓存的令牌数据（主要是删除过期的令牌的数据）
+        final String json = JsonUtil.toJson(token);
+        if (json == null) {
+            return Mono.empty();
+        }
         final Map<String, String> map = get0(uid);
         map.put(ACCESS_TOKEN_PREFIX + accessToken,
                 String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
         map.put(REFRESH_TOKEN_PREFIX + refreshToken,
                 String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
-        // 写入此次操作的缓存数据
         template.set(USER_PREFIX + uid, user);
         template.set(USER_TOKEN_LIST_PREFIX + uid, map, EXPIRATION_TIME);
-        template.set(ACCESS_TOKEN_PREFIX + accessToken, jc, EXPIRATION_TIME);
-        template.set(REFRESH_TOKEN_PREFIX + refreshToken, jc, EXPIRATION_TIME);
+        template.set(ACCESS_TOKEN_PREFIX + accessToken, json, EXPIRATION_TIME);
+        template.set(REFRESH_TOKEN_PREFIX + refreshToken, json, EXPIRATION_TIME);
         return Mono.just(token);
     }
 
@@ -75,19 +81,16 @@ public class AuthMemoryCache extends MemoryCache implements AuthCache {
         return getToken(REFRESH_TOKEN_PREFIX, content);
     }
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Long> cleanToken(String content) {
         final String r = template.get(ACCESS_TOKEN_PREFIX + content, String.class);
         if (r != null) {
-            try {
-                final Token token = JsonUtil.fromJson(r, Token.class);
-                if (token != null) {
-                    template.del(ACCESS_TOKEN_PREFIX + token.getAccessToken());
-                    template.del(REFRESH_TOKEN_PREFIX + token.getRefreshToken());
-                    return Mono.just(1L);
-                }
-            } catch (Exception e) {
-                // ignore exceptions
+            final Token token = JsonUtil.fromJson(r, Token.class);
+            if (token != null) {
+                template.del(ACCESS_TOKEN_PREFIX + token.getAccessToken());
+                template.del(REFRESH_TOKEN_PREFIX + token.getRefreshToken());
+                return Mono.just(1L);
             }
         }
         return Mono.just(0L);

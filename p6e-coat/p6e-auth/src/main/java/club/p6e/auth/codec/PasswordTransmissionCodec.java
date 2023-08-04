@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 账号密码登录传输数据编码解码器
+ * 密码传输编码解码器
  *
  * @author lidashuang
  * @version 1.0
  */
-public interface AccountPasswordLoginTransmissionCodec {
+public interface PasswordTransmissionCodec {
 
     /**
      * 传输编解码模型

@@ -6,15 +6,22 @@ import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import reactor.core.publisher.Mono;
 
 /**
- * 二维码登录的缓存
- *
  * @author lidashuang
  * @version 1.0
  */
-public class QrCodeLoginMemoryCache extends MemoryCache implements QrCodeLoginCache {
+public class QrCodeLoginMemoryCache
+        extends MemoryCache implements QrCodeLoginCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public QrCodeLoginMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }

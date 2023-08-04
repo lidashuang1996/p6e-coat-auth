@@ -8,9 +8,6 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 /**
- * 二维码登录的缓存
- * 采用 REDIS 实现
- *
  * @author lidashuang
  * @version 1.0
  */
@@ -36,15 +33,15 @@ public class QrCodeLoginRedisCache extends RedisCache implements QrCodeLoginCach
     }
 
     @Override
+    public Mono<String> get(String key) {
+        return template.opsForValue().get(CACHE_PREFIX + key);
+    }
+
+    @Override
     public Mono<Boolean> set(String key, String value) {
         return template
                 .opsForValue()
                 .set(CACHE_PREFIX + key, value, Duration.ofSeconds(EXPIRATION_TIME));
-    }
-
-    @Override
-    public Mono<String> get(String key) {
-        return template.opsForValue().get(CACHE_PREFIX + key);
     }
 
 }

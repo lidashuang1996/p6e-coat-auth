@@ -7,7 +7,7 @@ import club.p6e.auth.generator.*;
 import club.p6e.auth.repository.support.R2dbcConfiguration;
 import club.p6e.auth.service.*;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
-import club.p6e.auth.codec.AccountPasswordLoginTransmissionCodecImpl;
+import club.p6e.auth.codec.PasswordTransmissionCodecImpl;
 import club.p6e.auth.launcher.EmailMessageLauncherImpl;
 import club.p6e.auth.launcher.SmsMessageLauncherImpl;
 import club.p6e.auth.repository.Oauth2ClientRepository;
@@ -100,7 +100,7 @@ public class AutoConfigureImportSelector {
                 && properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
             registerAccountPasswordLoginSignatureCacheBean(defaultListableBeanFactory);
             registerBean(AccountPasswordLoginSignatureServiceImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginTransmissionCodecImpl.class, defaultListableBeanFactory);
+            registerBean(PasswordTransmissionCodecImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginSignatureGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AccountPasswordLoginSignatureControllerImpl.class, defaultListableBeanFactory);
         }
@@ -514,10 +514,10 @@ public class AutoConfigureImportSelector {
      */
     private void registerAccountPasswordLoginSignatureCacheBean(DefaultListableBeanFactory factory) {
         if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
-            registerBean(AccountPasswordLoginSignatureRedisCache.class, factory);
+            registerBean(PasswordSignatureRedisCache.class, factory);
         }
         if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(AccountPasswordLoginSignatureMemoryCache.class, factory);
+            registerBean(PasswordSignatureMemoryCache.class, factory);
         }
     }
 

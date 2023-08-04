@@ -1,6 +1,7 @@
 package club.p6e.auth.cache.memory;
 
 import club.p6e.auth.cache.RegisterCodeCache;
+import club.p6e.auth.cache.memory.support.MemoryCache;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import reactor.core.publisher.Mono;
 
@@ -13,10 +14,19 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class RegisterCodeMemoryCache implements RegisterCodeCache {
+public class RegisterCodeMemoryCache
+        extends MemoryCache implements RegisterCodeCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public RegisterCodeMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
@@ -30,7 +40,7 @@ public class RegisterCodeMemoryCache implements RegisterCodeCache {
     public Mono<List<String>> get(String key) {
         final Map<String, String> data = get0(key);
         template.set(CACHE_PREFIX + key, data, EXPIRATION_TIME);
-        return data.size() == 0 ? Mono.empty() : Mono.just(new ArrayList<>(data.keySet()));
+        return data.isEmpty() ? Mono.empty() : Mono.just(new ArrayList<>(data.keySet()));
     }
 
     @Override

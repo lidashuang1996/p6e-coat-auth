@@ -1,5 +1,6 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public interface RegisterCodeCache {
+public interface RegisterCodeCache extends ICache {
 
     /**
      * 过期的时间
@@ -16,7 +17,7 @@ public interface RegisterCodeCache {
     long EXPIRATION_TIME = 180;
 
     /**
-     * 用户缓存前缀
+     * 缓存前缀
      */
     String CACHE_PREFIX = "REGISTER:CODE:";
 

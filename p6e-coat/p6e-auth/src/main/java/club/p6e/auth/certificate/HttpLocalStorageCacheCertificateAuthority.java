@@ -55,7 +55,7 @@ public class HttpLocalStorageCacheCertificateAuthority
     }
 
     @Override
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model) {
+    public Mono<ResultContext> award(ServerWebExchange exchange, AuthUser.Model model) {
         final String uid = model.id();
         final String info = model.serialize();
         final String accessToken = accessTokenGenerator.execute();
@@ -91,7 +91,7 @@ public class HttpLocalStorageCacheCertificateAuthority
     }
 
     @Override
-    public Mono<Void> revoke(ServerWebExchange exchange) {
+    public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))

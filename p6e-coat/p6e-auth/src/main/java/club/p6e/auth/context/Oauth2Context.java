@@ -17,25 +17,6 @@ import java.util.Map;
 public class Oauth2Context implements Serializable {
 
     /**
-     * OAUTH2 的请求对象
-     */
-    @Data
-    @Accessors(chain = true)
-    public static class Request implements Serializable {
-
-        /**
-         * 凭证
-         */
-        private String voucher;
-
-        /**
-         * 凭证读取的内容
-         */
-        private Map<String, String> voucherMap = new HashMap<>();
-
-    }
-
-    /**
      * 认证对象
      */
     public static class Auth implements Serializable {
@@ -69,44 +50,6 @@ public class Oauth2Context implements Serializable {
         @Accessors(chain = true)
         public static class Dto implements Serializable {
             private String voucher;
-        }
-
-    }
-
-    /**
-     * 认证对象
-     */
-    public static class AuthScript implements Serializable {
-
-        /**
-         * 请求对象
-         */
-        @Data
-        @Accessors(chain = true)
-        public static class Request implements Serializable {
-            private String responseType;
-            private String clientId;
-            private String redirectUri;
-            private String scope;
-            private String state;
-        }
-
-        /**
-         * 结果对象
-         */
-        @Data
-        @Accessors(chain = true)
-        public static class Vo implements Serializable {
-            private String voucher;
-        }
-
-        /**
-         * 结果对象
-         */
-        @Data
-        @Accessors(chain = true)
-        public static class Dto implements Serializable {
-            private String content;
         }
 
     }

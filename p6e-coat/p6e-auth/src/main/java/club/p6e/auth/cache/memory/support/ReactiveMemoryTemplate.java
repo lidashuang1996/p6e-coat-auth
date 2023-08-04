@@ -2,6 +2,9 @@ package club.p6e.auth.cache.memory.support;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MarkerFactory;
 
 import java.io.*;
 import java.util.Map;
@@ -11,7 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 内存缓存模板
+ * Reactive Memory Template
  *
  * @author lidashuang
  * @version 1.0
@@ -19,15 +22,34 @@ import java.util.concurrent.TimeUnit;
 public class ReactiveMemoryTemplate {
 
     /**
-     * 存储缓存的对象
+     * 注入日志对象
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReactiveMemoryTemplate.class);
+
+    /**
+     * 存储缓存数据的对象
      */
     protected final Map<String, Model> CACHE = new ConcurrentHashMap<>();
 
     /**
      * 构造方法初始化
-     * 启动定时任务的线程，每隔一段时间清除掉过期的数据
+     * 启动定时任务的线程
+     * 每隔一段时间清除掉过期的数据
      */
     public ReactiveMemoryTemplate() {
+        this(5, 900, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 构造方法初始化
+     * 启动定时任务的线程
+     * 每隔一段时间清除掉过期的数据
+     *
+     * @param initialDelay 初始化延迟时间
+     * @param period       轮询间隔时间
+     * @param unit         时间单位
+     */
+    public ReactiveMemoryTemplate(long initialDelay, long period, TimeUnit unit) {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             final long now = System.currentTimeMillis();
@@ -37,12 +59,12 @@ public class ReactiveMemoryTemplate {
                 } else {
                     final Model value = CACHE.get(key);
                     if (value == null
-                            || (value.getExpire() > 0 && now > value.getDate() + value.getExpire() * 1000)) {
+                            || (value.getExpire() > 0 && now > value.getDate() + (value.getExpire() * 1000))) {
                         CACHE.remove(key);
                     }
                 }
             }
-        }, 5, 900, TimeUnit.SECONDS);
+        }, initialDelay, period, unit);
     }
 
     /**
@@ -50,7 +72,7 @@ public class ReactiveMemoryTemplate {
      *
      * @param key   键
      * @param value 值
-     * @return 写入数据的结果
+     * @return 写入数据是否成功的结果
      */
     public boolean set(String key, Object value) {
         CACHE.put(key, new Model(serialize(value), -1));
@@ -63,7 +85,7 @@ public class ReactiveMemoryTemplate {
      * @param key    键
      * @param value  值
      * @param expire 过期时间
-     * @return 写入数据的结果
+     * @return 写入数据是否成功的结果
      */
     public boolean set(String key, Object value, long expire) {
         CACHE.put(key, new Model(serialize(value), expire));
@@ -74,9 +96,9 @@ public class ReactiveMemoryTemplate {
      * 读取数据
      *
      * @param key   键
-     * @param clazz 结果的类型
+     * @param clazz 结果的类
      * @param <T>   强制转换为结果的类型
-     * @return 结果对象
+     * @return 结果类型的对象
      */
     @SuppressWarnings("ALL")
     public <T> T get(String key, Class<T> clazz) {
@@ -85,8 +107,8 @@ public class ReactiveMemoryTemplate {
             return null;
         } else {
             if (model.getExpire() > 0
-                    && System.currentTimeMillis() - model.getDate() > model.getExpire() * 1000) {
-                del(key);
+                    && System.currentTimeMillis() - model.getDate() > (model.getExpire() * 1000)) {
+                CACHE.remove(key);
                 return null;
             } else {
                 return (T) deserialize(model.getBytes());
@@ -95,6 +117,8 @@ public class ReactiveMemoryTemplate {
     }
 
     /**
+     * 删除数据
+     *
      * @param key 键
      * @return 删除的数据的条数
      */
@@ -112,8 +136,8 @@ public class ReactiveMemoryTemplate {
     /**
      * 序列化
      *
-     * @param o 序列化的对象
-     * @return 序列化后字节数据
+     * @param o 待序列化的对象
+     * @return 序列化完成后的字节数据
      */
     private static byte[] serialize(Object o) {
         ObjectOutputStream objectOutputStream = null;
@@ -126,7 +150,7 @@ public class ReactiveMemoryTemplate {
             byteArrayOutputStream.flush();
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(MarkerFactory.getMarker("ERROR"), "fun serialize(Object o).", e);
         } finally {
             close(objectOutputStream);
             close(byteArrayOutputStream);
@@ -137,8 +161,8 @@ public class ReactiveMemoryTemplate {
     /**
      * 反序列化
      *
-     * @param bytes 反序列化字节数据
-     * @return 反序列化的对象
+     * @param bytes 待反序列化的字节数据
+     * @return 反序列化完成后的对象
      */
     private static Object deserialize(byte[] bytes) {
         ObjectInputStream objectInputStream = null;
@@ -148,7 +172,7 @@ public class ReactiveMemoryTemplate {
             objectInputStream = new ObjectInputStream(byteArrayInputStream);
             return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.error(MarkerFactory.getMarker("ERROR"), "fun deserialize(byte[] bytes).", e);
         } finally {
             close(objectInputStream);
             close(byteArrayInputStream);
@@ -167,7 +191,7 @@ public class ReactiveMemoryTemplate {
                 closeable.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(MarkerFactory.getMarker("ERROR"), "fun close(Closeable closeable).", e);
         }
     }
 

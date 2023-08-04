@@ -68,8 +68,6 @@ public class UserRepository {
                 .setId(null)
                 .setStatus(0)
                 .setEnabled(1)
-                .setPhone(null)
-                .setMailbox(null)
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
@@ -155,6 +153,7 @@ public class UserRepository {
      * @return Mono/UserModel 用户模型对象
      */
     public Mono<UserModel> findByPhoneOrMailbox(String content) {
+        System.out.println("findByPhoneOrMailbox ::: " + content);
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.IS_DELETE).is(0)
                         .and(Criteria.empty().or(

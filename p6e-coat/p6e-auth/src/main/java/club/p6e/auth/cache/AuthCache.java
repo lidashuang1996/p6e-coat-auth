@@ -55,11 +55,6 @@ public interface AuthCache extends ICache {
     String USER_PREFIX = "AUTH:USER:";
 
     /**
-     * 用户令牌缓存前缀
-     */
-    String USER_TOKEN_LIST_PREFIX = "AUTH:USER:TOKEN_LIST";
-
-    /**
      * ACCESS TOKEN 缓存前缀
      */
     String ACCESS_TOKEN_PREFIX = "AUTH:ACCESS_TOKEN:";
@@ -68,6 +63,11 @@ public interface AuthCache extends ICache {
      * REFRESH TOKEN 缓存前缀
      */
     String REFRESH_TOKEN_PREFIX = "AUTH:REFRESH_TOKEN:";
+
+    /**
+     * 用户令牌缓存前缀
+     */
+    String USER_TOKEN_LIST_PREFIX = "AUTH:USER:TOKEN:";
 
     /**
      * 写入认证数据

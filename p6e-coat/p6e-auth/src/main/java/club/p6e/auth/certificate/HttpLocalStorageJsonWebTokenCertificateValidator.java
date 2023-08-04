@@ -43,9 +43,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
 
     @Override
     public Mono<String> accessToken(String token) {
-        System.out.println("5555       " + token);
         final String r = jwtDecode(token, cipher.getAccessTokenSecret());
-        System.out.println("6666       " + r);
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun accessToken(String token)",

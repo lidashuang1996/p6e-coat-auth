@@ -1,9 +1,9 @@
 package club.p6e.auth.service;
 
-import club.p6e.auth.codec.AccountPasswordLoginTransmissionCodec;
+import club.p6e.auth.codec.PasswordTransmissionCodec;
 import club.p6e.auth.utils.JsonUtil;
 import club.p6e.auth.AuthVoucher;
-import club.p6e.auth.cache.AccountPasswordLoginSignatureCache;
+import club.p6e.auth.cache.PasswordSignatureCache;
 import club.p6e.auth.context.LoginContext;
 import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.generator.AccountPasswordLoginSignatureGenerator;
@@ -24,12 +24,12 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
     /**
      * 缓存对象
      */
-    private final AccountPasswordLoginSignatureCache cache;
+    private final PasswordSignatureCache cache;
 
     /**
      * 传输编码解码器
      */
-    private final AccountPasswordLoginTransmissionCodec codec;
+    private final PasswordTransmissionCodec codec;
 
     /**
      * 标记生成器
@@ -44,8 +44,8 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
      * @param generator 标记生成器对象
      */
     public AccountPasswordLoginSignatureServiceImpl(
-            AccountPasswordLoginSignatureCache cache,
-            AccountPasswordLoginTransmissionCodec codec,
+            PasswordSignatureCache cache,
+            PasswordTransmissionCodec codec,
             AccountPasswordLoginSignatureGenerator generator) {
         this.cache = cache;
         this.codec = codec;
@@ -59,7 +59,7 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                 .init(exchange)
                 .flatMap(v -> {
                     final String mark = generator.execute();
-                    final AccountPasswordLoginTransmissionCodec.Model model = codec.generate();
+                    final PasswordTransmissionCodec.Model model = codec.generate();
                     final Map<String, String> map = new HashMap<>(2);
                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));

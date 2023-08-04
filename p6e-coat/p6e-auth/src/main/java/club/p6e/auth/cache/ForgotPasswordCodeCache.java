@@ -1,5 +1,6 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
-public interface ForgotPasswordCodeCache {
+public interface ForgotPasswordCodeCache extends ICache {
 
     /**
      * 过期的时间

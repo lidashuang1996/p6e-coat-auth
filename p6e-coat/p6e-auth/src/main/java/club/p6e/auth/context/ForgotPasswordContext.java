@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 登录的上下文对象
+ * 忘记密码的上下文对象
  *
  * @author lidashuang
  * @version 1.0
@@ -20,7 +20,6 @@ public class ForgotPasswordContext implements Serializable {
     @Accessors(chain = true)
     public static class Request implements Serializable {
         private String code;
-        private String account;
         private String password;
     }
 
@@ -36,6 +35,9 @@ public class ForgotPasswordContext implements Serializable {
         private String account;
     }
 
+    /**
+     * 验证码获取上下文
+     */
     public static class Obtain implements Serializable {
         @Data
         @Accessors(chain = true)

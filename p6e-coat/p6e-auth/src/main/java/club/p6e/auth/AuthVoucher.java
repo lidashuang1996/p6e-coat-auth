@@ -164,8 +164,13 @@ public class AuthVoucher implements Serializable {
         return mark;
     }
 
+    public Mono<AuthVoucher> setAccount(String account) {
+        final Map<String, String> map = new HashMap<>();
+        map.put(ACCOUNT, account);
+        return this.set(map);
+    }
     public String getAccount() {
-        return mark;
+        return this.get(ACCOUNT);
     }
 
     /**

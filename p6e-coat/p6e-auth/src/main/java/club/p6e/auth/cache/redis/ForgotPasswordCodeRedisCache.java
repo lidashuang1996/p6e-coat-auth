@@ -1,7 +1,7 @@
 package club.p6e.auth.cache.redis;
 
+import club.p6e.auth.cache.ForgotPasswordCodeCache;
 import club.p6e.auth.cache.redis.support.RedisCache;
-import club.p6e.auth.cache.VerificationCodeLoginCache;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import reactor.core.publisher.Mono;
 
@@ -16,20 +16,20 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class VerificationCodeLoginRedisCache
-        extends RedisCache implements VerificationCodeLoginCache {
+public class ForgotPasswordCodeRedisCache
+        extends RedisCache implements ForgotPasswordCodeCache {
 
     /**
-     * 缓存对象
+     * 内存缓存模板对象
      */
     private final ReactiveStringRedisTemplate template;
 
     /**
      * 构造方法初始化
      *
-     * @param template 缓存对象
+     * @param template 内存缓存模板对象
      */
-    public VerificationCodeLoginRedisCache(ReactiveStringRedisTemplate template) {
+    public ForgotPasswordCodeRedisCache(ReactiveStringRedisTemplate template) {
         this.template = template;
     }
 
@@ -86,4 +86,5 @@ public class VerificationCodeLoginRedisCache
                     }
                 });
     }
+
 }

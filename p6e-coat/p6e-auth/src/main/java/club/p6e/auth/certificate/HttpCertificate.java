@@ -63,7 +63,7 @@ public class HttpCertificate {
     /**
      * 认证过期时间
      */
-    protected static long EXPIRATION_TIME = 3600;
+    protected static long EXPIRATION_TIME = 3600 * 3L;
 
     /**
      * 时间格式化对象
@@ -409,7 +409,7 @@ public class HttpCertificate {
         @Override
         public String getHeaderToken(ServerHttpRequest request) {
             final List<String> authorizations = request.getHeaders().get(AUTH_HEADER);
-            if (authorizations != null && authorizations.size() > 0) {
+            if (authorizations != null && !authorizations.isEmpty()) {
                 final String authorization = authorizations.get(0);
                 if (StringUtils.hasText(authorization)
                         && authorization.startsWith(AUTH_HEADER_TOKEN_PREFIX)) {
@@ -424,7 +424,7 @@ public class HttpCertificate {
             final MultiValueMap<String, String> params = request.getQueryParams();
             for (final String key : ACCESS_TOKEN_PARAM) {
                 final List<String> values = params.get(key);
-                if (values != null && values.size() > 0) {
+                if (values != null && !values.isEmpty()) {
                     return values.get(0);
                 }
             }
@@ -437,7 +437,7 @@ public class HttpCertificate {
             for (final String key : cookies.keySet()) {
                 if (key.equalsIgnoreCase(AUTH_COOKIE_ACCESS_TOKEN_NAME)) {
                     final List<HttpCookie> values = cookies.get(key);
-                    if (values != null && values.size() > 0) {
+                    if (values != null && !values.isEmpty()) {
                         return Mono.just(values.get(0).getValue().trim());
                     }
                 }
@@ -451,7 +451,6 @@ public class HttpCertificate {
             if (token == null) {
                 token = getQueryParamToken(request);
             }
-            System.out.println(token);
             return token == null ? Mono.empty() : Mono.just(token);
         }
 
@@ -479,11 +478,11 @@ public class HttpCertificate {
         public Mono<Map<String, Object>> setHttpLocalStorageToken(
                 String accessToken, String refreshToken, Map<String, Object> data) {
             final Map<String, Object> result = new HashMap<>(5);
+            result.put("expire", EXPIRATION_TIME);
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
-            result.put("expiration", EXPIRATION_TIME);
-            result.put("type", AUTH_HEADER_TOKEN_TYPE);
-            if (data != null && data.size() > 0) {
+            result.put("tokenType", AUTH_HEADER_TOKEN_TYPE);
+            if (data != null && !data.isEmpty()) {
                 for (final String key : data.keySet()) {
                     result.put(key, data.get(key));
                 }

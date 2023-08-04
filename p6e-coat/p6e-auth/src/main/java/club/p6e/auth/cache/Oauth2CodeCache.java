@@ -1,5 +1,6 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2CodeCache {
+public interface Oauth2CodeCache extends ICache {
 
     /**
      * 过期的时间
@@ -48,11 +49,6 @@ public interface Oauth2CodeCache {
     String OAUTH2_USER_INFO = "OAUTH2_USER_INFO";
 
     /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
-
-    /**
      * 删除数据
      *
      * @param key 键
@@ -71,10 +67,10 @@ public interface Oauth2CodeCache {
     /**
      * 写入数据
      *
-     * @param key 键
-     * @param map 值
+     * @param key  键
+     * @param data 值
      * @return 是否写入数据成功
      */
-    Mono<Boolean> set(String key, Map<String, String> map);
+    Mono<Boolean> set(String key, Map<String, String> data);
 
 }

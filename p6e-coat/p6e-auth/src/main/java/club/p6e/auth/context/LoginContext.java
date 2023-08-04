@@ -1,12 +1,9 @@
 package club.p6e.auth.context;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登录的上下文对象
@@ -15,25 +12,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class LoginContext implements Serializable {
-
-    /**
-     * 登录的请求对象
-     */
-    @Data
-    @Accessors(chain = true)
-    public static class Request implements Serializable {
-
-        /**
-         * 凭证
-         */
-        private String voucher;
-
-        /**
-         * 凭证读取的内容
-         */
-        private Map<String, String> voucherMap = new HashMap<>();
-
-    }
 
     /**
      * 验证登录的对象
@@ -60,8 +38,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
             private String account;
             private String password;
         }
@@ -184,8 +161,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
         }
 
         /**
@@ -215,8 +191,7 @@ public class LoginContext implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends LoginContext.Request implements Serializable {
+        public static class Request implements Serializable {
         }
 
         /**

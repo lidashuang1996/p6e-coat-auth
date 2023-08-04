@@ -12,10 +12,19 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class VoucherMemoryCache extends MemoryCache implements VoucherCache {
+public class VoucherMemoryCache
+        extends MemoryCache implements VoucherCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public VoucherMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
@@ -29,7 +38,7 @@ public class VoucherMemoryCache extends MemoryCache implements VoucherCache {
     @Override
     public Mono<Map<String, String>> get(String key) {
         final Map<String, String> map = get0(key);
-        return map.size() == 0 ? Mono.empty() : Mono.just(map);
+        return map.isEmpty() ? Mono.empty() : Mono.just(map);
     }
 
     @Override

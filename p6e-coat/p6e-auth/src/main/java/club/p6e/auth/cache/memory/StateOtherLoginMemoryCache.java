@@ -1,6 +1,7 @@
 package club.p6e.auth.cache.memory;
 
 import club.p6e.auth.cache.StateOtherLoginCache;
+import club.p6e.auth.cache.memory.support.MemoryCache;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import reactor.core.publisher.Mono;
 
@@ -8,10 +9,19 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class StateOtherLoginMemoryCache implements StateOtherLoginCache {
+public class StateOtherLoginMemoryCache
+        extends MemoryCache implements StateOtherLoginCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public StateOtherLoginMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }

@@ -57,7 +57,7 @@ public class HttpCookieCacheCertificateAuthority
     }
 
     @Override
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model) {
+    public Mono<ResultContext> award(ServerWebExchange exchange, AuthUser.Model model) {
         final String uid = model.id();
         final String info = model.serialize();
         final String accessToken = accessTokenGenerator.execute();
@@ -72,8 +72,7 @@ public class HttpCookieCacheCertificateAuthority
                                 final Map<String, String> map = new HashMap<>(2);
                                 map.put(AuthVoucher.OAUTH2_USER_ID, uid);
                                 map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                                return v
-                                        .set(map)
+                                return v.set(map)
                                         .flatMap(vv -> setHttpCookieToken(
                                                 exchange.getResponse(),
                                                 t.getAccessToken(),
@@ -81,8 +80,7 @@ public class HttpCookieCacheCertificateAuthority
                                                 v.oauth2()
                                         ));
                             } else {
-                                return v
-                                        .del()
+                                return v.del()
                                         .flatMap(vv -> setHttpCookieToken(
                                                 exchange.getResponse(),
                                                 t.getAccessToken(),
@@ -93,7 +91,7 @@ public class HttpCookieCacheCertificateAuthority
     }
 
     @Override
-    public Mono<Void> revoke(ServerWebExchange exchange) {
+    public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpCookieToken(exchange.getRequest())
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))

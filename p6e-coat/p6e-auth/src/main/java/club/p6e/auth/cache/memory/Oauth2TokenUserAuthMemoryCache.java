@@ -10,14 +10,24 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2TokenUserAuthMemoryCache extends MemoryCache implements Oauth2TokenUserAuthCache {
+public class Oauth2TokenUserAuthMemoryCache
+        extends MemoryCache implements Oauth2TokenUserAuthCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
     public Oauth2TokenUserAuthMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Token> set(String uid, String scope, String accessToken, String refreshToken, String user) {
         final Token token = new Token()
@@ -25,12 +35,13 @@ public class Oauth2TokenUserAuthMemoryCache extends MemoryCache implements Oauth
                 .setScope(scope)
                 .setAccessToken(accessToken)
                 .setRefreshToken(refreshToken);
-        // 序列化为字符串方便存储
-        final String jc = JsonUtil.toJson(token);
-        // 写入此次操作的缓存数据
+        final String json = JsonUtil.toJson(token);
+        if (json == null) {
+            return Mono.empty();
+        }
         template.set(USER_PREFIX + uid, user);
-        template.set(ACCESS_TOKEN_PREFIX + accessToken, jc, EXPIRATION_TIME);
-        template.set(REFRESH_TOKEN_PREFIX + refreshToken, jc, EXPIRATION_TIME);
+        template.set(ACCESS_TOKEN_PREFIX + accessToken, json, EXPIRATION_TIME);
+        template.set(REFRESH_TOKEN_PREFIX + refreshToken, json, EXPIRATION_TIME);
         return Mono.just(token);
     }
 
@@ -66,15 +77,11 @@ public class Oauth2TokenUserAuthMemoryCache extends MemoryCache implements Oauth
     public Mono<Long> cleanToken(String content) {
         final String r = template.get(ACCESS_TOKEN_PREFIX + content, String.class);
         if (r != null) {
-            try {
-                final Token token = JsonUtil.fromJson(r, Token.class);
-                if (token != null) {
-                    template.del(ACCESS_TOKEN_PREFIX + token.getAccessToken());
-                    template.del(REFRESH_TOKEN_PREFIX + token.getRefreshToken());
-                    return Mono.just(1L);
-                }
-            } catch (Exception e) {
-                // ignore exceptions
+            final Token token = JsonUtil.fromJson(r, Token.class);
+            if (token != null) {
+                template.del(ACCESS_TOKEN_PREFIX + token.getAccessToken());
+                template.del(REFRESH_TOKEN_PREFIX + token.getRefreshToken());
+                return Mono.just(1L);
             }
         }
         return Mono.just(0L);

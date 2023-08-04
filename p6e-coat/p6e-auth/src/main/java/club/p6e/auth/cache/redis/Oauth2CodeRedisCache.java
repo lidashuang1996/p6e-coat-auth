@@ -11,19 +11,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * OAUTH2 CODE 授权模式缓存
- * 采用 REDIS 实现
- *
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2CodeRedisCache extends RedisCache implements Oauth2CodeCache {
+public class Oauth2CodeRedisCache
+        extends RedisCache implements Oauth2CodeCache {
+
     /**
      * 缓存对象
      */
     private final ReactiveStringRedisTemplate template;
 
-
+    /**
+     * 构造方法初始化
+     *
+     * @param template 缓存对象
+     */
     public Oauth2CodeRedisCache(ReactiveStringRedisTemplate template) {
         this.template = template;
     }
@@ -33,15 +36,7 @@ public class Oauth2CodeRedisCache extends RedisCache implements Oauth2CodeCache 
         return template.delete(CACHE_PREFIX + key);
     }
 
-    @Override
-    public Mono<Boolean> set(String key, Map<String, String> map) {
-        return template
-                .opsForHash()
-                .putAll(CACHE_PREFIX + key, map)
-                .flatMap(b -> template.expire(CACHE_PREFIX + key, Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS)))
-                .map(b -> true);
-    }
-
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Map<String, String>> get(String key) {
         return template
@@ -55,5 +50,22 @@ public class Oauth2CodeRedisCache extends RedisCache implements Oauth2CodeCache 
                 });
     }
 
+    @SuppressWarnings("ALL")
+    @Override
+    public Mono<Boolean> set(String key, Map<String, String> map) {
+        return template
+                .opsForHash()
+                .putAll(CACHE_PREFIX + key, map)
+                .flatMap(b -> {
+                    if (b) {
+                        return template.expire(
+                                CACHE_PREFIX + key,
+                                Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS)
+                        );
+                    } else {
+                        return Mono.just(false);
+                    }
+                });
+    }
 
 }

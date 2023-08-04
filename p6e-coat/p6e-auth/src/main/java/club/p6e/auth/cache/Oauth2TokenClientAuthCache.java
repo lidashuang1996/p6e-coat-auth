@@ -1,5 +1,6 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
@@ -7,12 +8,10 @@ import reactor.core.publisher.Mono;
 import java.io.Serializable;
 
 /**
- * OAUTH2 客户端令牌信息缓存
- *
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2TokenClientAuthCache {
+public interface Oauth2TokenClientAuthCache extends ICache {
 
     /**
      * 令牌模型
@@ -62,16 +61,6 @@ public interface Oauth2TokenClientAuthCache {
      * REFRESH TOKEN 缓存前缀
      */
     String REFRESH_TOKEN_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:REFRESH_TOKEN:";
-
-    /**
-     * 客户端 ACCESS TOKEN 缓存前缀
-     */
-    String CLIENT_TOKEN_LIST_PREFIX = "OAUTH2:CLIENT_AUTH_TOKEN:TOKEN_LIST:";
-
-    /**
-     * 条件注册的条件表达式
-     */
-    String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
 
     /**
      * @param cid          客户端ID

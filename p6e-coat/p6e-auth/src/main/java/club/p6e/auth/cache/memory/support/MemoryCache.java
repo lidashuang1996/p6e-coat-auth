@@ -3,7 +3,7 @@ package club.p6e.auth.cache.memory.support;
 import club.p6e.auth.cache.support.ICache;
 
 /**
- * 内存缓存的类型声明类
+ * Memory Cache
  *
  * @author lidashuang
  * @version 1.0

@@ -10,9 +10,6 @@ import club.p6e.auth.Properties;
 import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.model.UserAuthModel;
 import club.p6e.auth.model.UserModel;
-import org.reactivestreams.Publisher;
-import org.springframework.transaction.ReactiveTransaction;
-import org.springframework.transaction.reactive.TransactionCallback;
 import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -59,16 +56,19 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public Mono<RegisterContext.Dto> execute(ServerWebExchange exchange, RegisterContext.Request param) {
-        param.setAccount("15549562864");
         final Properties.Mode mode = properties.getMode();
         return AuthVoucher
                 .init(exchange)
+                .map(v -> {
+                    param.setAccount(v.getAccount());
+                    return v;
+                })
                 .flatMap(v -> switch (mode) {
-                    case PHONE -> executePhoneOrMailboxMode(param).flatMap(l -> v.del())
+                    case PHONE -> executePhoneMode(param).flatMap(l -> v.del())
                             .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
-                    case MAILBOX -> executePhoneOrMailboxMode(param).flatMap(l -> v.del())
+                    case MAILBOX -> executeMailboxMode(param).flatMap(l -> v.del())
                             .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
-                    case ACCOUNT -> executePhoneOrMailboxMode(param).flatMap(l -> v.del())
+                    case ACCOUNT -> executeAccountMode(param).flatMap(l -> v.del())
                             .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(param)
                             .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
@@ -82,29 +82,35 @@ public class RegisterServiceImpl implements RegisterService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Void> executePhoneMode(RegisterContext.Request param) {
-        return transactional.execute(new TransactionCallback<Void>() {
-            @Override
-            public Publisher<Void> doInTransaction(ReactiveTransaction status) {
-                return userRepository
-                        .create(new UserModel().setPhone(param.getAccount()))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+    private Mono<String> executePhoneMode(RegisterContext.Request param) {
+        return userRepository
+                .findByPhone(param.getAccount())
+                .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
+                .flatMap(m -> {
+                    System.out.println("mmmm  " + m);
+                    if (m != null && m.getId() != null && m.getId() > 0) {
+                        return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account exception."
-                        )))
-                        .flatMap(m -> userAuthRepository.create(new UserAuthModel()
-                                .setPhone(param.getAccount())
-                                .setPassword(param.getPassword())
-                        ))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-                                this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account auth exception."
-                        )))
-                        .then();
-            }
-        }).then();
+                                "",
+                                ""
+                        ));
+                    } else {
+                        return transactional.transactional(
+                                userRepository
+                                        .create(new UserModel().setPhone(param.getAccount()))
+                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+                                                this.getClass(),
+                                                "fun executePhoneMode(RegisterContext.Request param).",
+                                                "[ TransactionCallback ] create user phone account exception."
+                                        )))
+                                        .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
+                                                .setId(mm.getId())
+                                                .setPhone(param.getAccount())
+                                                .setPassword(encryptor.execute(param.getPassword()))
+                                        ))
+                        ).map(mm -> param.getAccount());
+                    }
+                });
     }
 
     /**
@@ -113,29 +119,35 @@ public class RegisterServiceImpl implements RegisterService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Long> executeMailboxMode(RegisterContext.Request param) {
-        return transactional.execute(new TransactionCallback<Integer>() {
-            @Override
-            public Publisher<Integer> doInTransaction(ReactiveTransaction status) {
-                return userRepository
-                        .create(new UserModel().setMailbox(param.getAccount()))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+    private Mono<String> executeMailboxMode(RegisterContext.Request param) {
+        return userRepository
+                .findByMailbox(param.getAccount())
+                .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
+                .flatMap(m -> {
+                    System.out.println("mmmm  " + m);
+                    if (m != null && m.getId() != null && m.getId() > 0) {
+                        return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account exception."
-                        )))
-                        .flatMap(m -> userAuthRepository.create(new UserAuthModel()
-                                .setMailbox(param.getAccount())
-                                .setPassword(param.getPassword())
-                        ))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-                                this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account auth exception."
-                        )))
-                        .map(m -> 1);
-            }
-        }).collectList().map(l -> (long) l.stream().reduce(0, Integer::sum));
+                                "",
+                                ""
+                        ));
+                    } else {
+                        return transactional.transactional(
+                                userRepository
+                                        .create(new UserModel().setMailbox(param.getAccount()))
+                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+                                                this.getClass(),
+                                                "fun executePhoneMode(RegisterContext.Request param).",
+                                                "[ TransactionCallback ] create user phone account exception."
+                                        )))
+                                        .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
+                                                .setId(mm.getId())
+                                                .setMailbox(param.getAccount())
+                                                .setPassword(encryptor.execute(param.getPassword()))
+                                        ))
+                        ).map(mm -> param.getAccount());
+                    }
+                });
     }
 
     /**
@@ -144,29 +156,35 @@ public class RegisterServiceImpl implements RegisterService {
      * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<Long> executeAccountMode(RegisterContext.Request param) {
-        return transactional.execute(new TransactionCallback<Integer>() {
-            @Override
-            public Publisher<Integer> doInTransaction(ReactiveTransaction status) {
-                return userRepository
-                        .create(new UserModel().setAccount(param.getAccount()))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+    protected Mono<String> executeAccountMode(RegisterContext.Request param) {
+        return userRepository
+                .findByAccount(param.getAccount())
+                .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
+                .flatMap(m -> {
+                    System.out.println("mmmm  " + m);
+                    if (m != null && m.getId() != null && m.getId() > 0) {
+                        return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account exception."
-                        )))
-                        .flatMap(m -> userAuthRepository.create(new UserAuthModel()
-                                .setAccount(param.getAccount())
-                                .setPassword(param.getPassword())
-                        ))
-                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-                                this.getClass(),
-                                "fun executePhoneMode(RegisterContext.Request param).",
-                                "[ TransactionCallback ] create user phone account auth exception."
-                        )))
-                        .map(m -> 1);
-            }
-        }).collectList().map(l -> (long) l.stream().reduce(0, Integer::sum));
+                                "",
+                                ""
+                        ));
+                    } else {
+                        return transactional.transactional(
+                                userRepository
+                                        .create(new UserModel().setAccount(param.getAccount()))
+                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+                                                this.getClass(),
+                                                "fun executePhoneMode(RegisterContext.Request param).",
+                                                "[ TransactionCallback ] create user phone account exception."
+                                        )))
+                                        .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
+                                                .setId(mm.getId())
+                                                .setAccount(param.getAccount())
+                                                .setPassword(encryptor.execute(param.getPassword()))
+                                        ))
+                        ).map(mm -> param.getAccount());
+                    }
+                });
     }
 
     /**
@@ -180,6 +198,7 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByPhoneOrMailbox(param.getAccount())
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
+                    System.out.println("mmmm  " + m);
                     if (m != null && m.getId() != null && m.getId() > 0) {
                         return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
@@ -187,50 +206,24 @@ public class RegisterServiceImpl implements RegisterService {
                                 ""
                         ));
                     } else {
-                        return userRepository
-                                .create(new UserModel()
-                                        .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-                                        .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
-                                )
-                                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-                                        this.getClass(),
-                                        "fun executePhoneMode(RegisterContext.Request param).",
-                                        "[ TransactionCallback ] create user phone account exception."
-                                )))
-//                                .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
-//                                        .setPassword(param.getPassword())
-//                                        .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-//                                        .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
-//                                ))
-//                                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-//                                        this.getClass(),
-//                                        "fun executePhoneMode(RegisterContext.Request param).",
-//                                        "[ TransactionCallback ] create user phone account auth exception."
-//                                )))
-                                .map(mm -> param.getAccount());
-//                        return transactional
-//                                .transactional(userRepository
-//                                        .create(new UserModel()
-//                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-//                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
-//                                        )
-//                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-//                                                this.getClass(),
-//                                                "fun executePhoneMode(RegisterContext.Request param).",
-//                                                "[ TransactionCallback ] create user phone account exception."
-//                                        )))
-//                                        .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
-//                                                .setPassword(param.getPassword())
-//                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-//                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
-//                                        ))
-//                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
-//                                                this.getClass(),
-//                                                "fun executePhoneMode(RegisterContext.Request param).",
-//                                                "[ TransactionCallback ] create user phone account auth exception."
-//                                        )))
-//                                        .map(mm -> param.getAccount())
-//                                );
+                        return transactional.transactional(
+                                userRepository
+                                        .create(new UserModel()
+                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
+                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
+                                        )
+                                        .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
+                                                this.getClass(),
+                                                "fun executePhoneMode(RegisterContext.Request param).",
+                                                "[ TransactionCallback ] create user phone account exception."
+                                        )))
+                                        .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
+                                                .setId(mm.getId())
+                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
+                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
+                                                .setPassword(encryptor.execute(param.getPassword()))
+                                        ))
+                        ).map(mm -> param.getAccount());
                     }
                 });
     }

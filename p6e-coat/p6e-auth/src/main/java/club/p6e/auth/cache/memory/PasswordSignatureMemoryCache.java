@@ -1,6 +1,6 @@
 package club.p6e.auth.cache.memory;
 
-import club.p6e.auth.cache.AccountPasswordLoginSignatureCache;
+import club.p6e.auth.cache.PasswordSignatureCache;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.auth.cache.memory.support.MemoryCache;
 import reactor.core.publisher.Mono;
@@ -9,12 +9,20 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class AccountPasswordLoginSignatureMemoryCache
-        extends MemoryCache implements AccountPasswordLoginSignatureCache {
+public class PasswordSignatureMemoryCache
+        extends MemoryCache implements PasswordSignatureCache {
 
+    /**
+     * 内存缓存模板对象
+     */
     private final ReactiveMemoryTemplate template;
 
-    public AccountPasswordLoginSignatureMemoryCache(ReactiveMemoryTemplate template) {
+    /**
+     * 构造方法初始化
+     *
+     * @param template 内存缓存模板对象
+     */
+    public PasswordSignatureMemoryCache(ReactiveMemoryTemplate template) {
         this.template = template;
     }
 

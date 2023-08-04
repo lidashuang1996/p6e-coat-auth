@@ -16,7 +16,8 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class VoucherRedisCache extends RedisCache implements VoucherCache {
+public class VoucherRedisCache
+        extends RedisCache implements VoucherCache {
 
     /**
      * 缓存对象
@@ -37,6 +38,7 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
         return template.delete(CACHE_PREFIX + key);
     }
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Map<String, String>> get(String key) {
         return template
@@ -50,6 +52,7 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
                 });
     }
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<Boolean> set(String key, Map<String, String> data) {
         return template
@@ -57,8 +60,10 @@ public class VoucherRedisCache extends RedisCache implements VoucherCache {
                 .putAll(CACHE_PREFIX + key, data)
                 .flatMap(b -> {
                     if (b) {
-                        return template.expire(CACHE_PREFIX + key,
-                                Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS));
+                        return template.expire(
+                                CACHE_PREFIX + key,
+                                Duration.of(EXPIRATION_TIME, ChronoUnit.SECONDS)
+                        );
                     } else {
                         return Mono.just(false);
                     }

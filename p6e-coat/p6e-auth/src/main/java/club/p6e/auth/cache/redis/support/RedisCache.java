@@ -3,7 +3,7 @@ package club.p6e.auth.cache.redis.support;
 import club.p6e.auth.cache.support.ICache;
 
 /**
- * redis 缓存的类型声明类
+ * Redis Cache
  *
  * @author lidashuang
  * @version 1.0

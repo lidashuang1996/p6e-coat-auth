@@ -1,14 +1,13 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 /**
- * 二维码登录的缓存
- *
  * @author lidashuang
  * @version 1.0
  */
-public interface QrCodeLoginCache {
+public interface QrCodeLoginCache extends ICache {
 
     /**
      * 过期的时间
@@ -21,7 +20,7 @@ public interface QrCodeLoginCache {
     String EMPTY_CONTENT = "__null__";
 
     /**
-     * 二维码登录的缓存前缀
+     * 缓存前缀
      */
     String CACHE_PREFIX = "LOGIN:QR_CODE:";
 
@@ -29,7 +28,7 @@ public interface QrCodeLoginCache {
      * 是否为空判断
      *
      * @param content 待判断内容
-     * @return 是否为空判断结果
+     * @return 判断结果
      */
     static boolean isEmpty(String content) {
         return EMPTY_CONTENT.equalsIgnoreCase(content);
@@ -39,7 +38,7 @@ public interface QrCodeLoginCache {
      * 是否不为空判断
      *
      * @param content 待判断内容
-     * @return 是否不为空判断结果
+     * @return 判断结果
      */
     static boolean isNotEmpty(String content) {
         return !isEmpty(content);

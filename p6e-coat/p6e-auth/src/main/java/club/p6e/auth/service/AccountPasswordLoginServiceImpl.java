@@ -1,6 +1,6 @@
 package club.p6e.auth.service;
 
-import club.p6e.auth.codec.AccountPasswordLoginTransmissionCodec;
+import club.p6e.auth.codec.PasswordTransmissionCodec;
 import club.p6e.auth.repository.UserAuthRepository;
 import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.JsonUtil;
@@ -9,7 +9,7 @@ import club.p6e.auth.AuthPasswordEncryptor;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
-import club.p6e.auth.cache.AccountPasswordLoginSignatureCache;
+import club.p6e.auth.cache.PasswordSignatureCache;
 import club.p6e.auth.context.LoginContext;
 import club.p6e.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
@@ -66,8 +66,8 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
         final String mark = voucher.get(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK);
         return Mono.just(mark)
                 .flatMap(m -> {
-                    if (SpringUtil.exist(AccountPasswordLoginSignatureCache.class)) {
-                        return SpringUtil.getBean(AccountPasswordLoginSignatureCache.class).get(m);
+                    if (SpringUtil.exist(PasswordSignatureCache.class)) {
+                        return SpringUtil.getBean(PasswordSignatureCache.class).get(m);
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
@@ -83,10 +83,10 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                 )))
                 .flatMap(s -> {
                     try {
-                        final AccountPasswordLoginTransmissionCodec codec
-                                = SpringUtil.getBean(AccountPasswordLoginTransmissionCodec.class);
-                        final AccountPasswordLoginTransmissionCodec.Model model
-                                = JsonUtil.fromJson(s, AccountPasswordLoginTransmissionCodec.Model.class);
+                        final PasswordTransmissionCodec codec
+                                = SpringUtil.getBean(PasswordTransmissionCodec.class);
+                        final PasswordTransmissionCodec.Model model
+                                = JsonUtil.fromJson(s, PasswordTransmissionCodec.Model.class);
                         return Mono.just(codec.decryption(model, content));
                     } catch (Exception e) {
                         return Mono.error(GlobalExceptionContext.executeCacheException(
@@ -97,7 +97,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     }
                 })
                 .publishOn(Schedulers.boundedElastic())
-                .doFinally(signalType -> SpringUtil.getBean(AccountPasswordLoginSignatureCache.class).del(mark).block());
+                .doFinally(signalType -> SpringUtil.getBean(PasswordSignatureCache.class).del(mark).block());
     }
 
     @Override

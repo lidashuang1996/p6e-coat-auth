@@ -1,5 +1,6 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
@@ -7,12 +8,10 @@ import reactor.core.publisher.Mono;
 import java.io.Serializable;
 
 /**
- * OAUTH2 用户令牌信息缓存
- *
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2TokenUserAuthCache {
+public interface Oauth2TokenUserAuthCache extends ICache {
 
     /**
      * 令牌模型

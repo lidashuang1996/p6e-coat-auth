@@ -36,7 +36,7 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
     }
 
     @Override
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model) {
+    public Mono<ResultContext> award(ServerWebExchange exchange, AuthUser.Model model) {
         final String uid = model.id();
         final String info = model.serialize();
         final String accessToken = jwtCreate(uid, info, cipher.getAccessTokenSecret());
@@ -70,7 +70,7 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
     }
 
     @Override
-    public Mono<Void> revoke(ServerWebExchange exchange) {
+    public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
                 .map(t -> jwtDecode(t, cipher.getAccessTokenSecret()))
                 .flatMap(l -> Mono.empty());

@@ -3,12 +3,12 @@ package club.p6e.auth.codec;
 import club.p6e.auth.utils.RsaUtil;
 
 /**
- * 账号密码登录传输数据编码解码器的默认实现
+ * 密码编码解码器的默认实现
  *
  * @author lidashuang
  * @version 1.0
  */
-public class AccountPasswordLoginTransmissionCodecImpl implements AccountPasswordLoginTransmissionCodec {
+public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec {
 
     @Override
     public Model generate() {

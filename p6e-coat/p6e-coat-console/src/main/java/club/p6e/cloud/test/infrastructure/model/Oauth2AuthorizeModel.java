@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @Entity
+@IdClass(Oauth2AuthorizeKeyModel.class)
 @Table(name = "p6e_oauth2_authorize")
 public class Oauth2AuthorizeModel implements Serializable {
     @Id

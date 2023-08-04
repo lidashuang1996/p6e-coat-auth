@@ -1,6 +1,7 @@
 package club.p6e.auth.cache.redis;
 
 import club.p6e.auth.cache.StateOtherLoginCache;
+import club.p6e.auth.cache.redis.support.RedisCache;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import reactor.core.publisher.Mono;
 
@@ -10,7 +11,8 @@ import java.time.Duration;
  * @author lidashuang
  * @version 1.0
  */
-public class StateOtherLoginRedisCache implements StateOtherLoginCache {
+public class StateOtherLoginRedisCache
+        extends RedisCache implements StateOtherLoginCache {
 
     /**
      * 缓存对象

@@ -13,15 +13,20 @@ import reactor.core.publisher.Mono;
 public interface AuthCertificateAuthority {
 
     /**
-     * 执行证书下发
+     * 执行证书颁发
      *
      * @param exchange ServerWebExchange 对象
      * @param model    用户认证模型
      * @return 读取的令牌里面的认证信息
      */
-    public Mono<ResultContext> present(ServerWebExchange exchange, AuthUser.Model model);
+    public Mono<ResultContext> award(ServerWebExchange exchange, AuthUser.Model model);
 
-
-    public Mono<Void> revoke(ServerWebExchange exchange);
+    /**
+     * 执行证书废除
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 空的返回
+     */
+    public Mono<Void> abolish(ServerWebExchange exchange);
 
 }

@@ -1,14 +1,13 @@
 package club.p6e.auth.cache;
 
+import club.p6e.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
-public interface StateOtherLoginCache {
+public interface StateOtherLoginCache extends ICache {
 
     /**
      * 分割符号
@@ -21,14 +20,15 @@ public interface StateOtherLoginCache {
     long EXPIRATION_TIME = 300L;
 
     /**
-     * OAUTH2 CODE 模式的缓存前缀
+     * 缓存前缀
      */
-    String CACHE_PREFIX = "OTHER:STATE:";
+    String CACHE_PREFIX = "LOGIN:OTHER_STATE:";
 
     /**
      * 删除数据
      *
-     * @param key 键
+     * @param type 类型
+     * @param key  键
      * @return 删除数据的条数
      */
     Mono<Long> del(String type, String key);
@@ -36,7 +36,8 @@ public interface StateOtherLoginCache {
     /**
      * 读取数据
      *
-     * @param key 键
+     * @param type 类型
+     * @param key  键
      * @return 值
      */
     Mono<String> get(String type, String key);
@@ -44,7 +45,8 @@ public interface StateOtherLoginCache {
     /**
      * 写入数据
      *
-     * @param key 键
+     * @param type  类型
+     * @param key   键
      * @param value 值
      * @return 是否写入数据成功
      */

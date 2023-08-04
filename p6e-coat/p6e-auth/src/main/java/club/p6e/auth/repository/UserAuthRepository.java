@@ -102,7 +102,6 @@ public class UserAuthRepository {
 
     public Mono<UserAuthModel> create(UserAuthModel model) {
         model
-                .setId(null)
                 .setVersion(0)
                 .setIsDelete(0)
                 .setOperator("register_sys")

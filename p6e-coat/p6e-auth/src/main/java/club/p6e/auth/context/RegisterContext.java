@@ -1,28 +1,22 @@
 package club.p6e.auth.context;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * 登录的上下文对象
+ * 注册的上下文对象
  *
  * @author lidashuang
  * @version 1.0
  */
 public class RegisterContext implements Serializable {
 
-    /**
-     * 登录的请求对象
-     */
     @Data
     @Accessors(chain = true)
     public static class Request implements Serializable {
-        private String account;
+        private String code;
         private String password;
     }
 
@@ -38,6 +32,9 @@ public class RegisterContext implements Serializable {
         private String account;
     }
 
+    /**
+     * 验证码获取上下文
+     */
     public static class Obtain implements Serializable {
         @Data
         @Accessors(chain = true)
