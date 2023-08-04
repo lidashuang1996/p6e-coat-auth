@@ -73,6 +73,7 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
         return Integer.MIN_VALUE;
     }
 
+    @SuppressWarnings("ALL")
     @Override
     protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
         return r -> Mono.just((HandlerFunction<ServerResponse>) request -> {
@@ -93,7 +94,6 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
                 throwable.printStackTrace();
                 final Map<String, Object> errorMap =
                         this.getErrorAttributes(request, ErrorAttributeOptions.defaults());
-
                 errorMap.put(PATH, errorMap.get(PATH));
                 errorMap.put(REQUEST_ID, errorMap.get(REQUEST_ID));
                 errorMap.put(CODE, errorMap.get(STATUS));

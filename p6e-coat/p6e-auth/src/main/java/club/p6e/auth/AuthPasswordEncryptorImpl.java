@@ -29,8 +29,8 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
                 (content + SEED).getBytes(StandardCharsets.UTF_8)
         );
         final int index = ((int) hex.charAt(16)) % 24;
-        return DigestUtils.md5DigestAsHex(
-                (hex.substring(index) + hex).getBytes(StandardCharsets.UTF_8)
+        return hex.substring(index) + DigestUtils.md5DigestAsHex(
+                hex.substring(0, index).getBytes(StandardCharsets.UTF_8)
         );
     }
 

@@ -39,6 +39,9 @@ public class Properties implements Serializable {
      */
     private String redirectIndexPagePath = "/";
 
+    private String jwtAccessTokenSecret = null;
+    private String jwtRefreshTokenSecret = null;
+
     /**
      * Referer
      */
