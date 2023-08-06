@@ -20,10 +20,11 @@ public interface AccountPasswordLoginSignatureController<P, R> {
      * [ GET ]
      * 账号密码登录的密码签名操作
      *
-     * @param param 请求对象
+     * @param exchange ServerWebExchange 对象
+     * @param param    请求对象
      * @return 结果对象
      */
-    @PostMapping("")
+    @GetMapping("")
     public Mono<R> execute(ServerWebExchange exchange, P param);
 
 }

@@ -40,7 +40,7 @@ public class AuthSignatureWebFilter implements WebFilter, Ordered {
                     return verification(exchange) ? chain.filter(exchange) : Mono.empty();
                 }
             } catch (Exception e) {
-                // Ignore exceptions
+                // ignore exceptions
             }
         }
         return Mono.empty();
@@ -53,7 +53,7 @@ public class AuthSignatureWebFilter implements WebFilter, Ordered {
         final String signature = params.getFirst("signature");
         final String rPath = request.getPath().value();
         if (date != null && signature != null) {
-            return signature.equals(AesUtil.decrypt(
+            return signature.equals(AesUtil.decryption(
                     properties.getSignature().getSecret(),
                     rPath + "_" + date
             ));

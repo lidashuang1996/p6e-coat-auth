@@ -4,14 +4,13 @@ import club.p6e.auth.AuthCertificateAuthority;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.cache.AuthCache;
 import club.p6e.auth.context.ResultContext;
+import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.auth.AuthVoucher;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,17 +66,15 @@ public class HttpCookieCacheCertificateAuthority
                 .flatMap(v -> cache
                         .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
-                            final String oauth = v.get(AuthVoucher.OAUTH2);
-                            if (StringUtils.hasText(oauth)) {
-                                final Map<String, String> map = new HashMap<>(2);
-                                map.put(AuthVoucher.OAUTH2_USER_ID, uid);
-                                map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                                return v.set(map)
+                            if (v.isOAuth2()) {
+                                final Map<String, Object> data = new HashMap<>(1);
+                                data.put("oauth2", v.getOAuth2());
+                                return v.setOAuth2User(uid, info)
                                         .flatMap(vv -> setHttpCookieToken(
                                                 exchange.getResponse(),
                                                 t.getAccessToken(),
                                                 t.getRefreshToken(),
-                                                v.oauth2()
+                                                data
                                         ));
                             } else {
                                 return v.del()
@@ -93,16 +90,19 @@ public class HttpCookieCacheCertificateAuthority
     @Override
     public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpCookieToken(exchange.getRequest())
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun abolish(ServerWebExchange exchange)",
+                        "[HTTP/COOKIE/CACHE] HTTP request access token does not exist."
+                )))
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))
-                .flatMap(l -> setHttpCookieToken(
-                        exchange.getResponse(),
-                        "",
-                        "",
-                        0L,
-                        LocalDateTime.now()
-                ))
-                .flatMap(l -> Mono.empty());
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun abolish(ServerWebExchange exchange)",
+                        "[HTTP/COOKIE/CACHE] Verifier validation clean access token exception."
+                )))
+                .flatMap(l -> cleanHttpCookieToken(exchange.getResponse()));
     }
 
 }

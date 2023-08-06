@@ -5,7 +5,7 @@ import club.p6e.auth.AuthJsonWebTokenCipher;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.context.ResultContext;
-import org.springframework.util.StringUtils;
+import club.p6e.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -44,23 +44,17 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
-                    final String oauth = v.get(AuthVoucher.OAUTH2);
-                    if (StringUtils.hasText(oauth)) {
+                    if (v.isOAuth2()) {
                         final Map<String, Object> data = new HashMap<>(1);
-                        data.put("oauth2", v.oauth2());
-                        final Map<String, String> map = new HashMap<>(2);
-                        map.put(AuthVoucher.OAUTH2_USER_ID, uid);
-                        map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                        return v
-                                .set(map)
+                        data.put("oauth2", v.getOAuth2());
+                        return v.setOAuth2User(uid, info)
                                 .flatMap(vv -> setHttpLocalStorageToken(
                                         accessToken,
                                         refreshToken,
                                         data
                                 ));
                     } else {
-                        return v
-                                .del()
+                        return v.del()
                                 .flatMap(vv -> setHttpLocalStorageToken(
                                         accessToken,
                                         refreshToken
@@ -72,7 +66,11 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
     @Override
     public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
-                .map(t -> jwtDecode(t, cipher.getAccessTokenSecret()))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun abolish(ServerWebExchange exchange)",
+                        "[HTTP/STORAGE/JWT] HTTP request access token does not exist."
+                )))
                 .flatMap(l -> Mono.empty());
     }
 

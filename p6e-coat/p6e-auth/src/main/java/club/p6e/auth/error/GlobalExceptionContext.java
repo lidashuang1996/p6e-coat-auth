@@ -12,15 +12,19 @@ public final class GlobalExceptionContext {
     public static Oauth2ParameterException executeOauth2ParameterException(Class<?> sc, String error, String content) {
         return new Oauth2ParameterException(sc, error, content);
     }
+
     public static Oauth2ScopeException executeOauth2ScopeException(Class<?> sc, String error, String content) {
         return new Oauth2ScopeException(sc, error, content);
     }
+
     public static Oauth2ClientException executeOauth2ClientException(Class<?> sc, String error, String content) {
         return new Oauth2ClientException(sc, error, content);
     }
+
     public static Oauth2RedirectUriException executeOauth2RedirectUriException(Class<?> sc, String error, String content) {
         return new Oauth2RedirectUriException(sc, error, content);
     }
+
     public static ParameterException executeParameterException(Class<?> sc, String error, String content) {
         return new ParameterException(sc, error, content);
     }
@@ -116,5 +120,21 @@ public final class GlobalExceptionContext {
 
     public static PasswordException exceptionPasswordException(Class<?> sc, String error, String content) {
         return new PasswordException(sc, error, content);
+    }
+
+    public static DataDeserializationException exceptionDataDeserializationException(Class<?> sc, String error, String content) {
+        return new DataDeserializationException(sc, error, content);
+    }
+
+    public static DataSerializationException exceptionDataSerializationException(Class<?> sc, String error, String content) {
+        return new DataSerializationException(sc, error, content);
+    }
+
+    public static CacheException exceptionCacheExpireOrNotExistException(Class<?> sc, String error, String content) {
+        return new CacheException(sc, error, content);
+    }
+
+    public static CacheException exceptionCacheWritingException(Class<?> sc, String error, String content) {
+        return new CacheException(sc, error, content);
     }
 }

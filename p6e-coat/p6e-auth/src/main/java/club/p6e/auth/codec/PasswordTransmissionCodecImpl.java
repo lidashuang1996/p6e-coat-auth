@@ -29,9 +29,9 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
         } else {
             try {
                 if (model.getPublicKey() != null) {
-                    return RsaUtil.encryptionByPublicKey(model.getPublicKey(), content);
+                    return RsaUtil.publicKeyEncryption(model.getPublicKey(), content);
                 } else if (model.getPrivateKey() != null) {
-                    return RsaUtil.encryptionByPrivateKey(model.getPrivateKey(), content);
+                    return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);
                 } else {
                     throw new RuntimeException("[ encryption ] model content exception >> " + model);
                 }
@@ -48,7 +48,7 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
         } else {
             try {
                 if (model.getPrivateKey() != null) {
-                    return RsaUtil.decryptionByPrivateKey(model.getPrivateKey(), content);
+                    return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);
                 } else {
                     throw new RuntimeException("[ decryption ] model content exception >> " + model);
                 }

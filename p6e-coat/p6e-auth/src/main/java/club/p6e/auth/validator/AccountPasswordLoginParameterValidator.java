@@ -53,18 +53,18 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
                 final Properties.Mode mode = properties.getMode();
                 switch (mode) {
                     case PHONE -> {
-                        if (VerificationUtil.phone(param.getAccount())) {
+                        if (VerificationUtil.validationPhone(param.getAccount())) {
                             return Mono.just(true);
                         }
                     }
                     case MAILBOX -> {
-                        if (VerificationUtil.mailbox(param.getAccount())) {
+                        if (VerificationUtil.validationMailbox(param.getAccount())) {
                             return Mono.just(true);
                         }
                     }
                     case PHONE_OR_MAILBOX -> {
-                        if (VerificationUtil.phone(param.getAccount())
-                                || VerificationUtil.mailbox(param.getAccount())) {
+                        if (VerificationUtil.validationPhone(param.getAccount())
+                                || VerificationUtil.validationMailbox(param.getAccount())) {
                             return Mono.just(true);
                         }
                     }

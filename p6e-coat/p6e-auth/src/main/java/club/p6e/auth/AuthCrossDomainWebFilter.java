@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Cross Domain 过滤器
+ * Cross Domain
  *
  * @author lidashuang
  * @version 1.0

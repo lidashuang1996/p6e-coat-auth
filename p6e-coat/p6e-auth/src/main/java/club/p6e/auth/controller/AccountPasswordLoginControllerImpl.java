@@ -30,10 +30,13 @@ public class AccountPasswordLoginControllerImpl implements
     /**
      * 构造方法初始化
      *
-     * @param service    账号密码登录的服务对象
-     * @param authority  认证授权的服务对象
+     * @param service   账号密码登录的服务对象
+     * @param authority 认证授权的服务对象
      */
-    public AccountPasswordLoginControllerImpl(AuthCertificateAuthority authority, AccountPasswordLoginService service) {
+    public AccountPasswordLoginControllerImpl(
+            AuthCertificateAuthority authority,
+            AccountPasswordLoginService service
+    ) {
         this.service = service;
         this.authority = authority;
     }
@@ -54,7 +57,7 @@ public class AccountPasswordLoginControllerImpl implements
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
-                .flatMap(u -> authority.present(exchange, u));
+                .flatMap(u -> authority.award(exchange, u));
     }
 
 }

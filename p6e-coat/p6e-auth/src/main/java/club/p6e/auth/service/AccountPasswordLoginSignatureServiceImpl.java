@@ -58,17 +58,25 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
-                    final String mark = generator.execute();
                     final PasswordTransmissionCodec.Model model = codec.generate();
+                    final String json = JsonUtil.toJson(model);
+                    if (json == null) {
+                        return Mono.error(GlobalExceptionContext.exceptionDataSerializationException(
+                                this.getClass(),
+                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param)",
+                                "Account password login signature cache data serialization exception."
+                        ));
+                    }
+                    final String mark = generator.execute();
                     final Map<String, String> map = new HashMap<>(2);
                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
                     map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
                     return cache
-                            .set(mark, JsonUtil.toJson(model))
-                            .flatMap(cb -> cb ? v.set(map) : Mono.error(GlobalExceptionContext.executeCacheException(
+                            .set(mark, json)
+                            .flatMap(b -> b ? v.set(map) : Mono.error(GlobalExceptionContext.exceptionCacheWritingException(
                                     this.getClass(),
                                     "fun execute(ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param)",
-                                    "Account password login signature cache service exception."
+                                    "Account password login signature cache writing exception."
                             )))
                             .map(rv -> new LoginContext.AccountPasswordSignature.Dto().setContent(model.getPublicKey()));
                 });

@@ -22,6 +22,9 @@ public class AuthVoucher implements Serializable {
 
     public static final String PRIVATE = "PRIVATE";
     public static final String IP = "IP";
+
+
+
     public static final String INDEX = "INDEX";
     public static final String INDEX_DATE = "INDEX_DATE";
 
@@ -173,6 +176,14 @@ public class AuthVoucher implements Serializable {
         return this.get(ACCOUNT);
     }
 
+
+    public Mono<AuthVoucher> setOAuth2User(String uid, String info) {
+        final Map<String, String> map = new HashMap<>();
+        map.put(AuthVoucher.OAUTH2_USER_ID, uid);
+        map.put(AuthVoucher.OAUTH2_USER_INFO, info);
+        return this.set(map);
+    }
+
     /**
      * 获取属性值
      *
@@ -225,7 +236,11 @@ public class AuthVoucher implements Serializable {
     }
 
 
-    public Map<String, Object> oauth2() {
+    public boolean isOAuth2() {
+        return StringUtils.hasText(this.get(AuthVoucher.OAUTH2));
+    }
+
+    public Map<String, Object> getOAuth2() {
         final String clientId = this.get(AuthVoucher.OAUTH2_CLIENT_ID);
         final String clientName = this.get(AuthVoucher.OAUTH2_CLIENT_NAME);
         final String clientAvatar = this.get(AuthVoucher.OAUTH2_CLIENT_AVATAR);

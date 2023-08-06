@@ -5,9 +5,9 @@ import club.p6e.auth.AuthUser;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.cache.AuthCache;
 import club.p6e.auth.context.ResultContext;
+import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.auth.generator.AuthRefreshTokenGenerator;
-import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -65,23 +65,17 @@ public class HttpLocalStorageCacheCertificateAuthority
                 .flatMap(v -> cache
                         .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
-                            final String oauth = v.get(AuthVoucher.OAUTH2);
-                            if (StringUtils.hasText(oauth)) {
-                                final Map<String, String> map = new HashMap<>(2);
+                            if (v.isOAuth2()) {
                                 final Map<String, Object> data = new HashMap<>(1);
-                                map.put(AuthVoucher.OAUTH2_USER_ID, uid);
-                                map.put(AuthVoucher.OAUTH2_USER_INFO, info);
-                                data.put("oauth2", v.oauth2());
-                                return v
-                                        .set(map)
+                                data.put("oauth2", v.getOAuth2());
+                                return v.setOAuth2User(uid, info)
                                         .flatMap(vv -> setHttpLocalStorageToken(
                                                 t.getAccessToken(),
                                                 t.getRefreshToken(),
                                                 data
                                         ));
                             } else {
-                                return v
-                                        .del()
+                                return v.del()
                                         .flatMap(vv -> setHttpLocalStorageToken(
                                                 t.getAccessToken(),
                                                 t.getRefreshToken()
@@ -93,8 +87,18 @@ public class HttpLocalStorageCacheCertificateAuthority
     @Override
     public Mono<Void> abolish(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun abolish(ServerWebExchange exchange)",
+                        "[HTTP/STORAGE/CACHE] HTTP request access token does not exist."
+                )))
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun abolish(ServerWebExchange exchange)",
+                        "[HTTP/STORAGE/CACHE] Verifier validation clean access token exception."
+                )))
                 .flatMap(l -> Mono.empty());
     }
 

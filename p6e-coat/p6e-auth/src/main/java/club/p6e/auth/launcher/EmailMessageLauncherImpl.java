@@ -3,8 +3,6 @@ package club.p6e.auth.launcher;
 import club.p6e.auth.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
@@ -15,11 +13,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnMissingBean(
-        value = EmailMessageLauncher.class,
-        ignored = EmailMessageLauncherImpl.class
-)
 public class EmailMessageLauncherImpl implements EmailMessageLauncher {
 
     /**

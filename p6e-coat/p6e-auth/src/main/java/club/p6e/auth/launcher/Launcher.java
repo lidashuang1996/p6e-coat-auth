@@ -33,7 +33,7 @@ public final class Launcher {
         return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
                 Launcher.class,
                 "fun push(LauncherType type, String account, String template, Map<String, String> content).",
-                "[ " + type + " ] launcher type mismatch"
+                "[ " + type + " ] launcher type mismatch."
         ));
     }
 

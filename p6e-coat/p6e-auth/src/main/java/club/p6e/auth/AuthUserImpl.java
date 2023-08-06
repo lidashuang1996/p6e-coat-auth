@@ -20,7 +20,7 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
     public Model create(String content) {
         final AuthUserImpl.Model model = JsonUtil.fromJson(content, AuthUserImpl.Model.class);
         if (model == null) {
-            throw new RuntimeException("JSON TO OBJECT ERROR");
+            throw new RuntimeException("[ " + this.getClass() + " ] create ==> deserialization failure !!");
         } else {
             return model;
         }

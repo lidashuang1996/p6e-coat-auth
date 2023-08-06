@@ -32,9 +32,14 @@ public class HttpCookieCacheCertificateValidator
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
         return getHttpCookieToken(exchange.getRequest())
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun execute(ServerWebExchange exchange)",
+                        "[HTTP/COOKIE/CACHE] HTTP request access token does not exist."
+                )))
                 .flatMap(this::accessToken)
                 .map(r -> exchange.mutate().request(
-                        exchange.getRequest().mutate().header(USER_HEADER_NAME, r).build()
+                        exchange.getRequest().mutate().header(getUserHeaderName(), r).build()
                 ).build());
     }
 
@@ -45,7 +50,7 @@ public class HttpCookieCacheCertificateValidator
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun accessToken(String token)",
-                        "[HTTP/COOKIE] Verifier validation access token exception."
+                        "[HTTP/COOKIE/CACHE] Verifier validation access token exception."
                 )));
     }
 
@@ -56,7 +61,7 @@ public class HttpCookieCacheCertificateValidator
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun refreshToken(String token)",
-                        "[HTTP/COOKIE] Verifier validation refresh token exception."
+                        "[HTTP/COOKIE/CACHE] Verifier validation refresh token exception."
                 )));
     }
 }

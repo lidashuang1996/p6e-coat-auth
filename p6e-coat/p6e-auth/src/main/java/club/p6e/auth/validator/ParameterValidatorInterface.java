@@ -28,7 +28,8 @@ public interface ParameterValidatorInterface {
     /**
      * 执行验证
      *
-     * @param data    待验证数据的对象
+     * @param exchange ServerWebExchange 对象
+     * @param data     待验证数据的对象
      * @return 验证结果
      */
     public Mono<Boolean> execute(ServerWebExchange exchange, Object data);

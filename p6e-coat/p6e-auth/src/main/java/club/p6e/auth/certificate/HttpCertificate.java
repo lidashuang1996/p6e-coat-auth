@@ -73,7 +73,7 @@ public class HttpCertificate {
     /**
      * 默认的实现
      */
-    private static Achieve ACHIEVE = new Achieve();
+    private static Specification ACHIEVE = new Achieve();
 
     /**
      * 重写默认的实现
@@ -87,7 +87,7 @@ public class HttpCertificate {
      *
      * @return 实现对象
      */
-    public static Achieve getAchieve() {
+    public static Specification getAchieve() {
         return ACHIEVE;
     }
 
@@ -208,6 +208,16 @@ public class HttpCertificate {
      */
     public static Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken, Map<String, Object> data) {
         return ACHIEVE.setHttpLocalStorageToken(accessToken, refreshToken, data);
+    }
+
+    /**
+     * 清除本地缓存令牌
+     *
+     * @param response 返回对象
+     * @return 结果值
+     */
+    public static Mono<Void> cleanHttpCookieToken(ServerHttpResponse response) {
+        return ACHIEVE.cleanHttpCookieToken(response);
     }
 
     /**
@@ -343,6 +353,14 @@ public class HttpCertificate {
          * @return 结果值
          */
         public Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken, Map<String, Object> data);
+
+        /**
+         * 清除本地缓存令牌
+         *
+         * @param response 返回对象
+         * @return 结果值
+         */
+        public Mono<Void> cleanHttpCookieToken(ServerHttpResponse response);
 
         /**
          * JWT 加密
@@ -488,6 +506,12 @@ public class HttpCertificate {
                 }
             }
             return Mono.just(result);
+        }
+
+        @Override
+        public Mono<Void> cleanHttpCookieToken(ServerHttpResponse response) {
+            return setHttpCookieToken(response, "", "", 0L, "")
+                    .flatMap(r -> Mono.empty());
         }
 
         @Override

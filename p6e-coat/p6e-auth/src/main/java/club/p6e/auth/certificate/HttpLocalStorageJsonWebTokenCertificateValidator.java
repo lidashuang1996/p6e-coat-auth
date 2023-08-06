@@ -33,7 +33,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun execute(ServerWebExchange exchange)",
-                        "[HTTP/STORAGE] Verifier validation access token not exist exception."
+                        "[HTTP/STORAGE/JWT] HTTP request access token does not exist."
                 )))
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
@@ -47,7 +47,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun accessToken(String token)",
-                "[HTTP/STORAGE] Verifier validation access token exception."
+                "[HTTP/STORAGE/JWT] Verifier validation access token exception."
         )) : Mono.just(r);
     }
 
@@ -57,7 +57,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun refreshToken(String token)",
-                "[HTTP/STORAGE] Verifier validation refresh token exception."
+                "[HTTP/STORAGE/JWT] Verifier validation refresh token exception."
         )) : Mono.just(r);
     }
 

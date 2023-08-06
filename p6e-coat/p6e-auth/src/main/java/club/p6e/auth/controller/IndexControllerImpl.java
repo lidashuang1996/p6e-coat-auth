@@ -32,7 +32,7 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        final Map<String, String> m = new HashMap<>();
+        final Map<String, String> m = new HashMap<>(2);
         m.put(AuthVoucher.INDEX, "true");
         m.put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
         return service.execute(exchange, m);

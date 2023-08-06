@@ -30,6 +30,11 @@ public class HttpLocalStorageCacheCertificateValidator
     @Override
     public Mono<ServerWebExchange> execute(ServerWebExchange exchange) {
         return getHttpLocalStorageToken(exchange.getRequest())
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
+                        this.getClass(),
+                        "fun execute(ServerWebExchange exchange)",
+                        "[HTTP/STORAGE/CACHE] HTTP request access token does not exist."
+                )))
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
@@ -43,7 +48,7 @@ public class HttpLocalStorageCacheCertificateValidator
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun accessToken(String token)",
-                        "[HTTP/STORAGE] Verifier validation access token exception."
+                        "[HTTP/STORAGE/CACHE] Verifier validation access token exception."
                 )));
     }
 
@@ -54,7 +59,7 @@ public class HttpLocalStorageCacheCertificateValidator
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun refreshToken(String token)",
-                        "[HTTP/STORAGE] Verifier validation refresh token exception."
+                        "[HTTP/STORAGE/CACHE] Verifier validation refresh token exception."
                 )));
     }
 }

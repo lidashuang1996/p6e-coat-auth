@@ -58,9 +58,10 @@ public class ParameterValidator {
                 validatorList.add(validator);
             }
         }
-        validatorList.sort(Comparator.comparingInt(ParameterValidatorInterface::order));
-        System.out.println(validatorList);
-        if (validatorList.size() > 0) {
+        if (validatorList.isEmpty()) {
+            return Mono.just(true).then();
+        } else {
+            validatorList.sort(Comparator.comparingInt(ParameterValidatorInterface::order));
             return Flux
                     .just(validatorList)
                     .flatMap(Flux::fromIterable)
@@ -71,8 +72,6 @@ public class ParameterValidator {
                             "fun execute(ServerWebExchange exchange, Object param)",
                             "Request parameter validation exception."
                     ))).then();
-        } else {
-            return Mono.just(true).then();
         }
     }
 

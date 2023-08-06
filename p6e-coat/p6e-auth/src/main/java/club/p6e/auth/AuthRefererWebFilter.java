@@ -53,7 +53,7 @@ public class AuthRefererWebFilter implements WebFilter, Ordered {
     public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         final ServerHttpRequest request = exchange.getRequest();
         final List<String> refererList = request.getHeaders().get(REFERER_HEADER);
-        if (refererList != null && refererList.size() > 0) {
+        if (refererList != null && !refererList.isEmpty()) {
             for (final String s : refererList) {
                 for (final String w : properties.getReferer().getWhiteList()) {
                     if (!(REFERER_HEADER_ADAPTIVE_CONTENT.equalsIgnoreCase(w) || s.startsWith(w))) {

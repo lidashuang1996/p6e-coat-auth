@@ -6,6 +6,11 @@ package club.p6e.auth;
  */
 public interface Configuration {
 
+    /**
+     * 自定义的配置
+     *
+     * @param properties 配置对象
+     */
     public void execute(Properties properties);
 
 }
