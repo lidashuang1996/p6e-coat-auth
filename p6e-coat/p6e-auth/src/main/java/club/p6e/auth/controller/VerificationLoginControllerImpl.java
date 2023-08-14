@@ -22,6 +22,9 @@ import java.util.List;
 public class VerificationLoginControllerImpl
         implements VerificationLoginController<LoginContext.Verification.Request, ResultContext> {
 
+    /**
+     * 认证用户对象
+     */
     private final AuthUser<?> au;
 
     /**
@@ -32,7 +35,8 @@ public class VerificationLoginControllerImpl
     /**
      * 构造方法
      *
-     * @param validator 验证器
+     * @param au        认证用户对象
+     * @param validator 认证证书拦截器对象
      */
     public VerificationLoginControllerImpl(AuthUser<?> au, AuthCertificateValidator validator) {
         this.au = au;

@@ -38,6 +38,13 @@ public class VerificationCodeLoginControllerImpl implements
         this.authority = authority;
     }
 
+    /**
+     * 参数验证
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    参数对象
+     * @return Mono/Void 对象
+     */
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.VerificationCode.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
@@ -47,7 +54,7 @@ public class VerificationCodeLoginControllerImpl implements
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
-                .flatMap(u -> authority.present(exchange, u));
+                .flatMap(u -> authority.award(exchange, u));
     }
 
 }

@@ -4,7 +4,7 @@ import club.p6e.auth.utils.GeneratorUtil;
 
 /**
  * 二维码登录
- * 二维码生成器默认实现
+ * 二维码生成器实现
  *
  * @author lidashuang
  * @version 1.0
@@ -15,4 +15,5 @@ public class QrCodeLoginGeneratorImpl implements QrCodeLoginGenerator {
     public String execute() {
         return GeneratorUtil.uuid();
     }
+
 }

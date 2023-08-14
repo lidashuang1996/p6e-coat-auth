@@ -1,12 +1,12 @@
 package club.p6e.auth.generator;
 
 /**
- * 生成用户认证令牌
+ * 生成令牌客户端刷新令牌
  *
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2TokenUserAuthRefreshTokenGenerator {
+public interface OAuth2TokenClientAuthRefreshTokenGenerator {
 
     /**
      * 生成令牌

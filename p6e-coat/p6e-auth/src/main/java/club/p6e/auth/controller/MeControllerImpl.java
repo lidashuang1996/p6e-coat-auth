@@ -18,10 +18,23 @@ import java.nio.charset.StandardCharsets;
  */
 public class MeControllerImpl implements MeController<ResultContext> {
 
+    /**
+     * 认证用户对象
+     */
     private final AuthUser<?> au;
+
+    /**
+     * 认证证书验证器对象
+     */
     private final AuthCertificateValidator validator;
 
-    public MeControllerImpl( AuthUser<?> au, AuthCertificateValidator validator) {
+    /**
+     * 构造方法初始化
+     *
+     * @param au        认证用户对象
+     * @param validator 认证证书验证器对象
+     */
+    public MeControllerImpl(AuthUser<?> au, AuthCertificateValidator validator) {
         this.au = au;
         this.validator = validator;
     }

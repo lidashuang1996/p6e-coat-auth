@@ -3,17 +3,16 @@ package club.p6e.auth.generator;
 import club.p6e.auth.utils.GeneratorUtil;
 
 /**
- * 凭证会话
- * 凭证会话序号生成器默认实现
+ * OAuth2 认证回调 CODE 数据实现
  *
  * @author lidashuang
  * @version 1.0
  */
-public class VoucherGeneratorDefaultImpl implements VoucherGenerator {
+public class OAuth2CodeGeneratorImpl implements OAuth2CodeGenerator {
 
     @Override
     public String execute() {
-        return GeneratorUtil.uuid();
+        return GeneratorUtil.random(8, true, false).toLowerCase();
     }
 
 }

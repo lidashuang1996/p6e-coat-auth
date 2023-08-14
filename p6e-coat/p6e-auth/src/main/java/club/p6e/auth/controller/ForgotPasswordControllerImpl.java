@@ -8,7 +8,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 忘记密码的默认实现
+ * 忘记密码的实现
  *
  * @author lidashuang
  * @version 1.0
@@ -16,8 +16,16 @@ import reactor.core.publisher.Mono;
 public class ForgotPasswordControllerImpl
         implements ForgotPasswordController<ForgotPasswordContext.Request, ResultContext> {
 
+    /**
+     * 忘记密码的服务对象
+     */
     private final ForgotPasswordService service;
 
+    /**
+     * 构造方法
+     *
+     * @param service 忘记密码的服务对象
+     */
     public ForgotPasswordControllerImpl(ForgotPasswordService service) {
         this.service = service;
     }

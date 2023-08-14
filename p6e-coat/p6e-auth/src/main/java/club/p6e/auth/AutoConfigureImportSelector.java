@@ -173,7 +173,7 @@ public class AutoConfigureImportSelector {
             registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2UserOpenIdGeneratorDefaultImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
@@ -182,9 +182,9 @@ public class AutoConfigureImportSelector {
             registerOauth2CodeCacheBean(defaultListableBeanFactory);
             registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2CodeGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2CodeGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2UserOpenIdGeneratorDefaultImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
         }
 
         if (properties.isEnable()
@@ -449,7 +449,7 @@ public class AutoConfigureImportSelector {
     private void registerVoucherBean(DefaultListableBeanFactory factory) {
         registerVoucherCacheBean(factory);
         registerBean(AuthVoucher.class, factory);
-        registerBean(VoucherGeneratorDefaultImpl.class, factory);
+        registerBean(VoucherGeneratorImpl.class, factory);
     }
 
     /**

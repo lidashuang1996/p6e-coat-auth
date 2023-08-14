@@ -1,7 +1,7 @@
 package club.p6e.auth.generator;
 
 /**
- * 生成客户端认证令牌
+ * 生成刷新令牌
  *
  * @author lidashuang
  * @version 1.0

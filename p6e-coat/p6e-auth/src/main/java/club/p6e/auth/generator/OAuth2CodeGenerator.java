@@ -1,17 +1,17 @@
 package club.p6e.auth.generator;
 
 /**
- * 凭证会话序号生成器
+ * OAuth2 认证回调 CODE 数据
  *
  * @author lidashuang
  * @version 1.0
  */
-public interface VoucherGenerator {
+public interface OAuth2CodeGenerator {
 
     /**
-     * 生成会话序号
+     * 生成验证码
      *
-     * @return 会话序号
+     * @return 验证码
      */
     public String execute();
 

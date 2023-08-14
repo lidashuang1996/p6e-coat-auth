@@ -5,7 +5,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 验证登录
+ * 登出接口
  *
  * @author lidashuang
  * @version 1.0
@@ -14,6 +14,13 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/logout")
 public interface LogoutController {
 
+    /**
+     * [DELETE]
+     * 登出接口
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 结果对象
+     */
     @DeleteMapping("")
     public Mono<Void> execute(ServerWebExchange exchange);
 

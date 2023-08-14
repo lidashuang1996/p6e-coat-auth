@@ -10,17 +10,23 @@ import org.springframework.util.DigestUtils;
  * @version 1.0
  */
 public class AuthTokenGeneratorImpl implements
+        // 生成认证令牌
         AuthAccessTokenGenerator,
+        // 生成刷新令牌
         AuthRefreshTokenGenerator,
-        Oauth2TokenClientAuthAccessTokenGenerator,
-        Oauth2TokenClientAuthRefreshTokenGenerator,
-        Oauth2TokenUserAuthAccessTokenGenerator,
-        Oauth2TokenUserAuthRefreshTokenGenerator {
+        // 生成令牌客户端认证令牌
+        OAuth2TokenClientAuthAccessTokenGenerator,
+        // 生成令牌客户端刷新令牌
+        OAuth2TokenClientAuthRefreshTokenGenerator,
+        // 生成用户认证令牌
+        OAuth2TokenUserAuthAccessTokenGenerator,
+        // 生成用户刷新令牌
+        OAuth2TokenUserAuthRefreshTokenGenerator {
 
     @Override
     public String execute() {
         return GeneratorUtil.uuid() + DigestUtils.md5DigestAsHex(
-                (GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false)).getBytes()
+                (GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false)).toLowerCase().getBytes()
         );
     }
 

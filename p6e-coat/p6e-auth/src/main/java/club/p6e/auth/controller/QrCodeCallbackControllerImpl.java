@@ -30,6 +30,13 @@ public class QrCodeCallbackControllerImpl
         this.service = service;
     }
 
+    /**
+     * 参数验证
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    参数对象
+     * @return Mono/Void 对象
+     */
     protected Mono<Void> vp(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param) {
         return ParameterValidator.execute(exchange, param);
     }

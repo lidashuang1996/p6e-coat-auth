@@ -8,7 +8,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 账号密码登录的密码签名的默认实现
+ * 账号密码登录的密码签名的实现
  *
  * @author lidashuang
  * @version 1.0

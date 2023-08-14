@@ -19,6 +19,14 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/login/verification")
 public interface VerificationLoginController<P, R> {
 
+    /**
+     * [POST]
+     * 验证登录
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    请求对象
+     * @return 结果对象
+     */
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 

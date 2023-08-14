@@ -160,27 +160,27 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
                                 "fun handleUserResult(String cid, String uid, String info, String scope)",
-                                "Oauth2 [ " + Oauth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+                                "Oauth2 [ " + OAuth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
                         ));
                     }
-                    if (!SpringUtil.exist(Oauth2TokenClientAuthAccessTokenGenerator.class)) {
+                    if (!SpringUtil.exist(OAuth2TokenClientAuthAccessTokenGenerator.class)) {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
                                 "fun handleUserResult(String cid, String uid, String info, String scope)",
-                                "Oauth2 [ " + Oauth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+                                "Oauth2 [ " + OAuth2TokenClientAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
                         ));
                     }
-                    if (!SpringUtil.exist(Oauth2TokenClientAuthRefreshTokenGenerator.class)) {
+                    if (!SpringUtil.exist(OAuth2TokenClientAuthRefreshTokenGenerator.class)) {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
                                 "fun handleUserResult(String cid, String uid, String info, String scope)",
-                                "Oauth2 [ " + Oauth2TokenClientAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
+                                "Oauth2 [ " + OAuth2TokenClientAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
                         ));
                     }
                     final String accessToken = SpringUtil.getBean(
-                            Oauth2TokenClientAuthAccessTokenGenerator.class).execute();
+                            OAuth2TokenClientAuthAccessTokenGenerator.class).execute();
                     final String refreshToken = SpringUtil.getBean(
-                            Oauth2TokenClientAuthRefreshTokenGenerator.class).execute();
+                            OAuth2TokenClientAuthRefreshTokenGenerator.class).execute();
                     final Oauth2TokenClientAuthCache oauth2TokenClientAuthCache = SpringUtil.getBean(Oauth2TokenClientAuthCache.class);
                     return oauth2TokenClientAuthCache
                             .set(String.valueOf(m.getId()), JsonUtil.toJson(m), m.getScope(), accessToken, refreshToken)
@@ -332,18 +332,18 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      * @return 结果对象
      */
     private Mono<Oauth2Context.Token.Dto> handleUserResult(String cid, String uid, String info, String scope) {
-        if (!SpringUtil.exist(Oauth2TokenUserAuthAccessTokenGenerator.class)) {
+        if (!SpringUtil.exist(OAuth2TokenUserAuthAccessTokenGenerator.class)) {
             return Mono.error(GlobalExceptionContext.exceptionBeanException(
                     this.getClass(),
                     "fun handleUserResult(String cid, String uid, String info, String scope)",
-                    "Oauth2 [ " + Oauth2TokenUserAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
+                    "Oauth2 [ " + OAuth2TokenUserAuthAccessTokenGenerator.class + " ] handle bean not exist exception."
             ));
         }
-        if (!SpringUtil.exist(Oauth2TokenUserAuthRefreshTokenGenerator.class)) {
+        if (!SpringUtil.exist(OAuth2TokenUserAuthRefreshTokenGenerator.class)) {
             return Mono.error(GlobalExceptionContext.exceptionBeanException(
                     this.getClass(),
                     "fun handleUserResult(String cid, String uid, String info, String scope)",
-                    "Oauth2 [ " + Oauth2TokenUserAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
+                    "Oauth2 [ " + OAuth2TokenUserAuthRefreshTokenGenerator.class + " ] handle bean not exist exception."
             ));
         }
         if (!SpringUtil.exist(Oauth2TokenUserAuthCache.class)) {
@@ -354,13 +354,13 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
             ));
         }
         final String accessToken = SpringUtil.getBean(
-                Oauth2TokenUserAuthAccessTokenGenerator.class).execute();
+                OAuth2TokenUserAuthAccessTokenGenerator.class).execute();
         final String refreshToken = SpringUtil.getBean(
-                Oauth2TokenUserAuthRefreshTokenGenerator.class).execute();
+                OAuth2TokenUserAuthRefreshTokenGenerator.class).execute();
         final Oauth2TokenUserAuthCache oauth2TokenUserAuthCache =
                 SpringUtil.getBean(Oauth2TokenUserAuthCache.class);
-        final Oauth2UserOpenIdGenerator oauth2UserOpenIdGenerator =
-                SpringUtil.getBean(Oauth2UserOpenIdGenerator.class);
+        final OAuth2UserOpenIdGenerator oauth2UserOpenIdGenerator =
+                SpringUtil.getBean(OAuth2UserOpenIdGenerator.class);
         final String openid = oauth2UserOpenIdGenerator.execute(cid, uid);
         return oauth2TokenUserAuthCache
                 .set(uid, info, scope, accessToken, refreshToken)

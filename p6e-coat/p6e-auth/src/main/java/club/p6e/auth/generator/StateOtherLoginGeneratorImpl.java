@@ -3,6 +3,8 @@ package club.p6e.auth.generator;
 import club.p6e.auth.utils.GeneratorUtil;
 
 /**
+ * 第三方登录的 state 生成器的实现
+ *
  * @author lidashuang
  * @version 1.0
  */

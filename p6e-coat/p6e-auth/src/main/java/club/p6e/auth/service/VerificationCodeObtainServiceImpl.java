@@ -9,7 +9,7 @@ import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
 import club.p6e.auth.context.LoginContext;
 import club.p6e.auth.error.GlobalExceptionContext;
-import club.p6e.auth.generator.CodeLoginGenerator;
+import club.p6e.auth.generator.VerificationCodeLoginGenerator;
 import club.p6e.auth.model.UserModel;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -43,7 +43,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
     /**
      * 验证码生产对象
      */
-    private final CodeLoginGenerator generator;
+    private final VerificationCodeLoginGenerator generator;
 
     /**
      * 验证码缓存对象
@@ -61,7 +61,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
      */
     public VerificationCodeObtainServiceImpl(
             Properties properties, UserRepository repository,
-            VerificationCodeLoginCache codeLoginCache, CodeLoginGenerator codeLoginGenerator) {
+            VerificationCodeLoginCache codeLoginCache, VerificationCodeLoginGenerator codeLoginGenerator) {
         this.cache = codeLoginCache;
         this.properties = properties;
         this.repository = repository;

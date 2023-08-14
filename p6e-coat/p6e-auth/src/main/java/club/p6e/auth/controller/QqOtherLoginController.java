@@ -47,7 +47,7 @@ public class QqOtherLoginController implements OtherLoginController {
     public Mono<ResultContext> callback(ServerWebExchange exchange) {
         return service
                 .callback(exchange)
-                .flatMap(u -> authority.present(exchange, u))
+                .flatMap(u -> authority.award(exchange, u))
                 .map(ResultContext::build);
     }
 

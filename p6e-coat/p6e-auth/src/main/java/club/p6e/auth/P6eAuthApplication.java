@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author lidashuang
  * @version 1.0.0
- * http://127.0.0.1:8080/oauth2/auth?scope=user_info&clientId=123456&redirectUri=http://127.0.0.1:9999/cb&responseType=code&state=111
- * user_info
  */
 @EnableP6eAuth
 @SpringBootApplication

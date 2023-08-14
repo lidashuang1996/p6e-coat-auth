@@ -3,14 +3,17 @@ package club.p6e.auth.generator;
 import club.p6e.auth.utils.GeneratorUtil;
 
 /**
+ * 账号密码登录对密码传输加密标记生成器实现
+ *
  * @author lidashuang
  * @version 1.0
  */
-public class AccountPasswordLoginSignatureGeneratorImpl implements AccountPasswordLoginSignatureGenerator {
+public class AccountPasswordLoginSignatureGeneratorImpl
+        implements AccountPasswordLoginSignatureGenerator {
 
     @Override
     public String execute() {
-        return GeneratorUtil.uuid();
+        return (GeneratorUtil.uuid() + GeneratorUtil.random()).toLowerCase();
     }
 
 }
