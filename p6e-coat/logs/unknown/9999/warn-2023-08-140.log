@@ -1,0 +1,29 @@
+2023-08-13 11:03:44 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:16:30 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:30:23 [http-nio-9999-exec-4] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@9b3be1c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 11:30:33 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:33:55 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:39:42 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:40:46 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:46:33 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 11:59:15 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 12:18:14 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 12:23:35 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 12:23:55 [http-nio-9999-exec-1] WARN - SQL Error: 0, SQLState: 23502
+2023-08-13 12:26:49 [http-nio-9999-exec-3] WARN - SQL Error: 0, SQLState: 23502
+2023-08-13 12:26:57 [http-nio-9999-exec-4] WARN - SQL Error: 0, SQLState: 23502
+2023-08-13 12:27:54 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 16:07:54 [http-nio-9999-exec-2] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@310e2cd0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 16:07:59 [http-nio-9999-exec-2] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@22bba4ba (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 16:08:07 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 16:15:55 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 16:30:01 [http-nio-9999-exec-6] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@35d7386b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 16:30:06 [http-nio-9999-exec-6] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@31848a04 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 16:30:08 [http-nio-9999-exec-6] WARN - HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4d3a0dd5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2023-08-13 16:30:11 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 16:33:04 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 16:33:27 [http-nio-9999-exec-1] WARN - SQL Error: 0, SQLState: 42703
+2023-08-13 16:33:36 [http-nio-9999-exec-3] WARN - SQL Error: 0, SQLState: 42703
+2023-08-13 17:02:46 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-13 17:05:14 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-08-14 10:58:20 [main] WARN - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead

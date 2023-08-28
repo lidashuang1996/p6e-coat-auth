@@ -59,7 +59,7 @@ public class SearchableConverter {
                 } else {
                     hierarchy--;
                     if (hierarchy == 0) {
-                        if (searchable.size() > 0) {
+                        if (!searchable.isEmpty()) {
                             if (SearchableContext.OR_RELATIONSHIP_TYPE
                                     .equalsIgnoreCase(searchable.getRelationship())) {
                                 predicates.add(execute(searchable, rt, cb));

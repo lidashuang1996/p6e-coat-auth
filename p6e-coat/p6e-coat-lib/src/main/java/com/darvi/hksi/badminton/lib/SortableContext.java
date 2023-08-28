@@ -13,6 +13,7 @@ import java.util.List;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class SortableContext<I extends SortableContext.Option> extends ArrayList<I> implements Serializable {
 
     public static final String AES = "AES";
