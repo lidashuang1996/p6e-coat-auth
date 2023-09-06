@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-topbar="light" data-layout="horizontal">
+
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Smart Site</title>
+    <script type="module" crossorigin src="/assets/index-fc3c2936.js"></script>
+    <link rel="stylesheet" href="/assets/index-250a4620.css">
+</head>
+
+<body>
+<div id="test" style="width: 100%;background: red;position: fixed;z-index: 9999;"></div>
+<div id="app"></div>
+<script src="/js/liveplayer-lib.min.js"></script>
+<script src="/js/config.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="/external/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="/external/raphael.min.js"></script>
+<script type="text/javascript" src="/external/bpmn-draw.js"></script>
+<script type="text/javascript" src="/external/bpmn-icons.js"></script>
+<script type="text/javascript" src="/external/Polyline.js"></script>
+<script type="text/javascript" src="/external/displaymodel.js"></script>
+
+<script>
+    setInterval(() => {
+        let id = '';
+        try {
+            id = Android.getId();
+        } catch (e) {
+        }
+        document.getElementById('test').innerHTML = `${id} ---- ${window.location.href}`;
+    }, 5_000)
+</script>
+</body>
+
+</html>
