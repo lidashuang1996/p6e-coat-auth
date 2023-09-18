@@ -23,7 +23,7 @@ public class QrCodeObtainControllerImpl
     private final QrCodeObtainService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
      * @param service 二维码获取的服务对象
      */

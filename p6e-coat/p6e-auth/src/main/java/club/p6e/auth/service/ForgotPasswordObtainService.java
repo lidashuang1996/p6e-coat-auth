@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public interface ForgotPasswordObtainService {
 
     /**
-     * 执行账号密码登录密码签名操作
+     * 忘记密码发送验证码
      *
      * @param exchange ServerWebExchange 对象
      * @param param    请求对象

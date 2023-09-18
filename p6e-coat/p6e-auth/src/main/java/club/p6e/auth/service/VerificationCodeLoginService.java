@@ -16,6 +16,7 @@ public interface VerificationCodeLoginService {
     /**
      * 执行验证码登录操作
      *
+     * @param exchange ServerWebExchange 对象
      * @param param 请求对象
      * @return 结果对象
      */

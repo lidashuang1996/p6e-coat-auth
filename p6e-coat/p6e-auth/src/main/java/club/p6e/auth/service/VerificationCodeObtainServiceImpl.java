@@ -41,31 +41,32 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
     private final UserRepository repository;
 
     /**
+     * 验证码缓存对象
+     */
+    private final VerificationCodeLoginCache cache;
+
+    /**
      * 验证码生产对象
      */
     private final VerificationCodeLoginGenerator generator;
 
     /**
-     * 验证码缓存对象
-     */
-    private final VerificationCodeLoginCache cache;
-
-
-    /**
      * 构造方法初始化
      *
-     * @param properties         配置文件对象
-     * @param repository         用户存储库对象
-     * @param codeLoginCache     验证码缓存对象
-     * @param codeLoginGenerator 验证码生成器对象
+     * @param properties 配置文件对象
+     * @param repository 用户存储库对象
+     * @param cache      验证码缓存对象
+     * @param generator  验证码生成器对象
      */
     public VerificationCodeObtainServiceImpl(
-            Properties properties, UserRepository repository,
-            VerificationCodeLoginCache codeLoginCache, VerificationCodeLoginGenerator codeLoginGenerator) {
-        this.cache = codeLoginCache;
+            Properties properties,
+            UserRepository repository,
+            VerificationCodeLoginCache cache,
+            VerificationCodeLoginGenerator generator) {
+        this.cache = cache;
+        this.generator = generator;
         this.properties = properties;
         this.repository = repository;
-        this.generator = codeLoginGenerator;
     }
 
     @Override
@@ -84,9 +85,9 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
                 mono = repository.findByMailbox(account);
             }
             case PHONE_OR_MAILBOX -> {
-                if (VerificationUtil.phone(account)) {
+                if (VerificationUtil.validationPhone(account)) {
                     type = LauncherType.SMS;
-                } else if (VerificationUtil.mailbox(account)) {
+                } else if (VerificationUtil.validationMailbox(account)) {
                     type = LauncherType.EMAIL;
                 }
                 mono = repository.findByPhoneOrMailbox(account);
@@ -112,7 +113,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
             return AuthVoucher
                     .init(exchange)
                     .flatMap(v -> fm
-                            .flatMap(u -> cache.set(ft.name(), account, code))
+                            .flatMap(u -> cache.set(account, code))
                             .flatMap(b -> {
                                 if (b) {
                                     final Map<String, String> tc = new HashMap<>(1);

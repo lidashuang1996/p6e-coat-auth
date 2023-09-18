@@ -13,12 +13,6 @@ import reactor.core.publisher.Mono;
 public interface Oauth2ConfirmService {
 
     /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION =
-            "#{${p6e.auth.oauth2.enable:false} && ${p6e.auth.oauth2.authorization-code.enable:false}}";
-
-    /**
      * 执行客户端刷新令牌服务
      *
      * @param request 请求对象

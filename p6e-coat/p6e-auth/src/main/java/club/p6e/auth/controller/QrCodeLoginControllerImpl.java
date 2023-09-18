@@ -28,7 +28,7 @@ public class QrCodeLoginControllerImpl
     private final AuthCertificateAuthority authority;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
      * @param service   二维码登录服务
      * @param authority 认证授权的服务对象

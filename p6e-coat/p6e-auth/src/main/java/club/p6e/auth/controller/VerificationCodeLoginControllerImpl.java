@@ -28,10 +28,10 @@ public class VerificationCodeLoginControllerImpl implements
     private final VerificationCodeLoginService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
-     * @param service    验证码登录的服务对象
-     * @param authority  认证授权的服务对象
+     * @param service   验证码登录的服务对象
+     * @param authority 认证授权的服务对象
      */
     public VerificationCodeLoginControllerImpl(AuthCertificateAuthority authority, VerificationCodeLoginService service) {
         this.service = service;

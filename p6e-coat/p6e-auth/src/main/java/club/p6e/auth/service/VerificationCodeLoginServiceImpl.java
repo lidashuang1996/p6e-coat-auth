@@ -19,28 +19,30 @@ import reactor.core.publisher.Mono;
 public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginService {
 
     /**
-     * 验证码缓存对象
+     * 用户认证对象
      */
-    private final VerificationCodeLoginCache cache;
+    private final AuthUser<?> au;
 
     /**
      * 用户存储库
      */
     private final UserRepository repository;
 
-    private final AuthUser<?> au;
+    /**
+     * 验证码缓存对象
+     */
+    private final VerificationCodeLoginCache cache;
 
     /**
      * 构造方法初始化
      *
      * @param cache      验证码缓存对象
-     * @param properties 配置文件对象
      * @param repository 用户存储库
      */
     public VerificationCodeLoginServiceImpl(
             AuthUser<?> au,
-            VerificationCodeLoginCache cache,
-            UserRepository repository) {
+            UserRepository repository,
+            VerificationCodeLoginCache cache) {
         this.au = au;
         this.cache = cache;
         this.repository = repository;
@@ -55,7 +57,7 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                     final String account = v.get(AuthVoucher.ACCOUNT);
                     final String accountType = v.get(AuthVoucher.ACCOUNT_TYPE);
                     return cache
-                            .get(accountType, account)
+                            .get(account)
                             .switchIfEmpty(Mono.error(
                                     GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
@@ -63,11 +65,10 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                                             "Verification code login cache data does not exist or expire exception."
                                     )))
                             .flatMap(list -> {
-                                System.out.println(list);
-                                if (list != null && list.size() > 0) {
+                                if (list != null && !list.isEmpty()) {
                                     final int index = list.indexOf(code);
                                     if (index >= 0) {
-                                        return cache.del(accountType, account, code);
+                                        return cache.del(account);
                                     }
                                 }
                                 return Mono.error(

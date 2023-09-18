@@ -16,9 +16,23 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/me")
 public interface MeController<R> {
 
+    /**
+     * [GET]
+     * 我的信息页面
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 结果对象
+     */
     @GetMapping("")
     public Mono<Void> def(ServerWebExchange exchange);
 
+    /**
+     * [GET]
+     * 我的信息接口
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 结果对象
+     */
     @GetMapping("/info")
     public Mono<R> info(ServerWebExchange exchange);
 

@@ -334,7 +334,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启 OAUTH2 功能
          */
-        private boolean enable = true;
+        private boolean enable = false;
 
         /**
          * 客户端授权登录的配置
@@ -390,11 +390,25 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = true;
+        private boolean enable = false;
         /**
          * 是否开启第三方登录没有对应绑定信息时候进行注册绑定
          */
         private boolean enableOtherLoginBinding = true;
+    }
+
+    /**
+     * 忘记密码配置
+     */
+    private ForgotPassword forgotPassword = new ForgotPassword();
+
+    @Data
+    @Accessors(chain = true)
+    public static class ForgotPassword implements Serializable {
+        /**
+         * 是否开启注册的功能
+         */
+        private boolean enable = false;
     }
 
     /**

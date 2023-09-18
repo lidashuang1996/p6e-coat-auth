@@ -22,7 +22,7 @@ public class ForgotPasswordControllerImpl
     private final ForgotPasswordService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
      * @param service 忘记密码的服务对象
      */

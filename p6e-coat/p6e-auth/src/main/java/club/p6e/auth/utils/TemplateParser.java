@@ -188,7 +188,7 @@ public final class TemplateParser {
      *
      * @param implementation 模板解析实现对象
      */
-    public static void setImplementation(Definition implementation) {
+    public static void set(Definition implementation) {
         DEFINITION = implementation;
     }
 

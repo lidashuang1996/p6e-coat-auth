@@ -17,6 +17,14 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/oauth2/confirm")
 public interface Oauth2ConfirmController<P, R> {
 
+    /**
+     * [POST]
+     * OAuth2 二次确认
+     *
+     * @param param    请求对象
+     * @param exchange ServerWebExchange 对象
+     * @return 结果对象
+     */
     @PostMapping("")
     public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 

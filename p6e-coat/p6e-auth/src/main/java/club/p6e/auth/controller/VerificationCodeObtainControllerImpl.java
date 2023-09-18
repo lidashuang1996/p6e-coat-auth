@@ -8,7 +8,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 验证码获取实现
+ * 验证码获取的实现
  *
  * @author lidashuang
  * @version 1.0
@@ -22,9 +22,9 @@ public class VerificationCodeObtainControllerImpl implements
     private final VerificationCodeObtainService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
-     * @param service    验证码获取的服务对象
+     * @param service 验证码获取的服务对象
      */
     public VerificationCodeObtainControllerImpl(VerificationCodeObtainService service) {
         this.service = service;

@@ -12,6 +12,13 @@ import reactor.core.publisher.Mono;
  */
 public interface ForgotPasswordService {
 
-    Mono<ForgotPasswordContext.Dto> execute(ServerWebExchange exchange, ForgotPasswordContext.Request param);
+    /**
+     * 忘记密码
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    请求对象
+     * @return 结果对象
+     */
+    public Mono<ForgotPasswordContext.Dto> execute(ServerWebExchange exchange, ForgotPasswordContext.Request param);
 
 }

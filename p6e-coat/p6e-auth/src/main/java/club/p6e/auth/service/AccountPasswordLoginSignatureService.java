@@ -20,8 +20,6 @@ public interface AccountPasswordLoginSignatureService {
      * @return 结果对象
      */
     public Mono<LoginContext.AccountPasswordSignature.Dto> execute(
-            ServerWebExchange exchange,
-            LoginContext.AccountPasswordSignature.Request param
-    );
+            ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param);
 
 }

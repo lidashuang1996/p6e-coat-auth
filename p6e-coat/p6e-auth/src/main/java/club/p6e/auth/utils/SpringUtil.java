@@ -98,7 +98,7 @@ public final class SpringUtil {
      *
      * @param implementation SPRING 上下文实现类
      */
-    public static void setImplementation(Definition implementation) {
+    public static void set(Definition implementation) {
         DEFINITION = implementation;
     }
 

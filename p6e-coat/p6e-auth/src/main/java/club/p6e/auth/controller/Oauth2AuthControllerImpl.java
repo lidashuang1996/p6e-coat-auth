@@ -7,7 +7,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * OAUTH2 认证的默认实现
+ * OAUTH2 认证的实现
  *
  * @author lidashuang
  * @version 1.0
@@ -23,6 +23,7 @@ public class Oauth2AuthControllerImpl
     /**
      * 构造方法
      *
+     * @param service OAUTH2 认证的服务对象
      */
     public Oauth2AuthControllerImpl(Oauth2AuthService service) {
         this.service = service;

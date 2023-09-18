@@ -12,11 +12,6 @@ import reactor.core.publisher.Mono;
  */
 public interface Oauth2TokenService {
 
-    /**
-     * 条件注册的条件表达式
-     */
-    public final static String CONDITIONAL_EXPRESSION = "#{${p6e.auth.oauth2.enable:false}}";
-
     public Mono<Oauth2Context.Token.Dto> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param);
 
 }

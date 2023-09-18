@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 账号密码登录的密码签名服务的默认实现
+ * 账号密码登录的密码签名服务的实现
  *
  * @author lidashuang
  * @version 1.0

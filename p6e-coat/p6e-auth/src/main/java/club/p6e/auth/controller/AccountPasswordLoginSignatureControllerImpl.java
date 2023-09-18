@@ -22,9 +22,9 @@ public class AccountPasswordLoginSignatureControllerImpl implements
     private final AccountPasswordLoginSignatureService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
-     * @param service    账号密码登录的密码签名的服务对象
+     * @param service 账号密码登录的密码签名的服务对象
      */
     public AccountPasswordLoginSignatureControllerImpl(AccountPasswordLoginSignatureService service) {
         this.service = service;

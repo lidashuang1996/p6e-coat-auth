@@ -4,7 +4,6 @@ import club.p6e.auth.cache.memory.*;
 import club.p6e.auth.cache.redis.*;
 import club.p6e.auth.controller.*;
 import club.p6e.auth.generator.*;
-import club.p6e.auth.repository.support.R2dbcConfiguration;
 import club.p6e.auth.service.*;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.auth.codec.PasswordTransmissionCodecImpl;
@@ -13,6 +12,7 @@ import club.p6e.auth.launcher.SmsMessageLauncherImpl;
 import club.p6e.auth.repository.Oauth2ClientRepository;
 import club.p6e.auth.repository.UserAuthRepository;
 import club.p6e.auth.repository.UserRepository;
+import club.p6e.auth.utils.SpringUtil;
 import club.p6e.auth.utils.TemplateParser;
 import club.p6e.auth.validator.AccountPasswordLoginParameterValidator;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -47,17 +47,20 @@ public class AutoConfigureImportSelector {
      */
     public AutoConfigureImportSelector(
             Properties properties,
+            Configuration configuration,
             ApplicationContext application
     ) {
         // 初始化
+        SpringUtil.init(application);
+        configuration.execute(properties);
         this.properties = properties;
+
         final AutowireCapableBeanFactory factory = application.getAutowireCapableBeanFactory();
         final DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) factory;
 
         /*
          * 注入需要的bean对象
          */
-
         if (properties.isEnable()) {
             initMePage();
             registerAuthWebFilterBean(defaultListableBeanFactory);
@@ -68,22 +71,24 @@ public class AutoConfigureImportSelector {
             registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
         }
 
+        // 注册内存缓存模式依赖的对象
         if (properties.isEnable()
                 && properties.getCache() != null
                 && properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
             registerBean(ReactiveMemoryTemplate.class, defaultListableBeanFactory);
         }
 
+        // 注册->登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()) {
             initLoginPage();
             registerVoucherBean(defaultListableBeanFactory);
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
-            registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
             registerBean(IndexControllerImpl.class, defaultListableBeanFactory);
             registerBean(VerificationLoginControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->账号密码登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()) {
@@ -94,6 +99,7 @@ public class AutoConfigureImportSelector {
             registerBean(AccountPasswordLoginParameterValidator.class, defaultListableBeanFactory);
         }
 
+        // 注册->账号密码登录签名对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getAccountPassword().isEnable()
@@ -105,6 +111,7 @@ public class AutoConfigureImportSelector {
             registerBean(AccountPasswordLoginSignatureControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->验证码登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getVerificationCode().isEnable()) {
@@ -118,6 +125,7 @@ public class AutoConfigureImportSelector {
             registerBean(VerificationCodeObtainControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->二维码登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
                 && properties.getLogin().getQrCode().isEnable()) {
@@ -130,9 +138,10 @@ public class AutoConfigureImportSelector {
             registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->其它登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()
-                && properties.getLogin().getOthers().size() > 0) {
+                && !properties.getLogin().getOthers().isEmpty()) {
             initOtherLoginConfig();
             registerStateOtherLoginCacheBean(defaultListableBeanFactory);
             registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
@@ -145,12 +154,12 @@ public class AutoConfigureImportSelector {
             }
         }
 
+        // 注册->OAuth2对象
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()) {
             initLoginPage();
             registerOauth2RepositoryBean(defaultListableBeanFactory);
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
-            registerBean(IndexServiceImpl.class, defaultListableBeanFactory);
             registerBean(AuthOauth2ClientImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
@@ -160,6 +169,7 @@ public class AutoConfigureImportSelector {
             registerBean(Oauth2ConfirmControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->OAuth2客户端模式对象
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()
                 && properties.getOauth2().getClient().isEnable()) {
@@ -167,6 +177,7 @@ public class AutoConfigureImportSelector {
             registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->OAuth2密码模式对象
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()
                 && properties.getOauth2().getPassword().isEnable()) {
@@ -176,6 +187,7 @@ public class AutoConfigureImportSelector {
             registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->OAuth2授权模式对象
         if (properties.isEnable()
                 && properties.getOauth2().isEnable()
                 && properties.getOauth2().getAuthorizationCode().isEnable()) {
@@ -187,6 +199,7 @@ public class AutoConfigureImportSelector {
             registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->注册对象
         if (properties.isEnable()
                 && properties.getRegister().isEnable()) {
             initRegisterPage();
@@ -195,32 +208,36 @@ public class AutoConfigureImportSelector {
             registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
         }
 
+        // 注册->第三方登录需要未注册需要进行注册的对象
         if (properties.isEnable()
                 && properties.getRegister().isEnable()
                 && properties.getRegister().isEnableOtherLoginBinding()) {
             registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
             registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+
+            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterCodeMemoryCache.class, defaultListableBeanFactory);
         }
 
-        if (properties.isEnable() && properties.getSignature().isEnable()) {
+        if (properties.isEnable()
+                && properties.getForgotPassword().isEnable()) {
+            registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordCodeMemoryCache.class, defaultListableBeanFactory);
+        }
+
+        // 注册->网络请求签名对象
+        if (properties.isEnable()
+                && properties.getSignature().isEnable()) {
             registerBean(AuthSignatureWebFilter.class, defaultListableBeanFactory, true, false);
         }
-
-
-        registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
-        registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
-        registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
-        registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
-        registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
-        registerBean(RegisterCodeMemoryCache.class, defaultListableBeanFactory);
-
-        registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
-        registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
-        registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
-        registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
-        registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
-        registerBean(ForgotPasswordCodeMemoryCache.class, defaultListableBeanFactory);
-
     }
 
     /**
@@ -453,21 +470,11 @@ public class AutoConfigureImportSelector {
     }
 
     /**
-     * 注册基础的存储库
-     *
-     * @param factory 上下文对象工厂
-     */
-    private void registerRepositoryBean(DefaultListableBeanFactory factory) {
-        registerBean(R2dbcConfiguration.class, factory);
-    }
-
-    /**
      * 注册用户的存储库
      *
      * @param factory 上下文对象工厂
      */
     private void registerUserRepositoryBean(DefaultListableBeanFactory factory) {
-        registerRepositoryBean(factory);
         registerBean(UserRepository.class, factory);
         registerBean(UserAuthRepository.class, factory);
     }
@@ -478,7 +485,6 @@ public class AutoConfigureImportSelector {
      * @param factory 上下文对象工厂
      */
     private void registerOauth2RepositoryBean(DefaultListableBeanFactory factory) {
-        registerRepositoryBean(factory);
         registerUserRepositoryBean(factory);
         registerBean(Oauth2ClientRepository.class, factory);
     }
@@ -643,6 +649,7 @@ public class AutoConfigureImportSelector {
             boolean isScanSelf,
             boolean isScanInterfaces
     ) {
+        System.out.println("bc 2 >> " + bc);
         if (isScanSelf && isExistBean(bc, factory)) {
             return;
         }

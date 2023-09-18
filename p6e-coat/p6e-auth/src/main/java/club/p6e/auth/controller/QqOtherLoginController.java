@@ -5,8 +5,6 @@ import club.p6e.auth.AuthCertificateAuthority;
 import club.p6e.auth.context.ResultContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -15,8 +13,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-//@RestController
-//@RequestMapping("/login/other/qq")
 public class QqOtherLoginController implements OtherLoginController {
 
     private final QqOtherLoginService service;

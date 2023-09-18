@@ -1,14 +1,19 @@
 package club.p6e.auth.service;
 
+import club.p6e.auth.AuthPage;
 import club.p6e.auth.repository.Oauth2ClientRepository;
+import club.p6e.auth.utils.TemplateParser;
 import club.p6e.auth.utils.VerificationUtil;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
 import club.p6e.auth.context.Oauth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,11 +31,6 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
     private static final String CODE_TYPE = "CODE";
 
     /**
-     * 主页的服务对象
-     */
-    private final IndexService service;
-
-    /**
      * 配置文件对象
      */
     private final Properties properties;
@@ -43,15 +43,12 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
     /**
      * 构造方法初始化
      *
-     * @param service    主页服务对象
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
     public Oauth2AuthServiceImpl(
-            IndexService service,
             Properties properties,
             Oauth2ClientRepository repository) {
-        this.service = service;
         this.properties = properties;
         this.repository = repository;
 
@@ -107,7 +104,7 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
                         ));
                     }
                     // 验证作用域
-                    if (!VerificationUtil.oauth2Scope(m.getScope(), scope)) {
+                    if (!VerificationUtil.validationOAuth2Scope(m.getScope(), scope)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2ScopeException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
@@ -115,7 +112,7 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
                         ));
                     }
                     // 验证重定向
-                    if (!VerificationUtil.oauth2RedirectUri(m.getRedirectUri(), redirectUri)) {
+                    if (!VerificationUtil.validationOAuth2RedirectUri(m.getRedirectUri(), redirectUri)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2RedirectUriException(
                                 this.getClass(),
                                 "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
@@ -139,8 +136,25 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
                     map.put(AuthVoucher.OAUTH2_RESPONSE_TYPE, CODE_TYPE);
                     return Mono.just(map);
                 })
-                .flatMap(m -> service.execute(exchange, m));
+                .flatMap(AuthVoucher::create)
+                .flatMap(v -> write(exchange, v.getMark()));
+    }
 
+
+    /**
+     * 写入返回数据
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return Mono/Void 对象
+     */
+    private Mono<Void> write(ServerWebExchange exchange, String voucher) {
+        final ServerHttpResponse response = exchange.getResponse();
+        final AuthPage.Model login = AuthPage.login();
+        response.setStatusCode(HttpStatus.OK);
+        response.getHeaders().setContentType(login.getType());
+        return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
+                TemplateParser.execute(login.getContent(), "voucher", voucher).getBytes(StandardCharsets.UTF_8)
+        )));
     }
 
 

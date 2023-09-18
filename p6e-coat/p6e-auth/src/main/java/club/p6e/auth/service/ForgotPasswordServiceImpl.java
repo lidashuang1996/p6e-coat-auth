@@ -11,27 +11,51 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 忘记密码服务的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
+    /**
+     * 配置文件对象
+     */
     private final Properties properties;
+
+    /**
+     * 忘记密码的验证码缓存
+     */
+    private final ForgotPasswordCodeCache cache;
 
     /**
      * 用户存储库
      */
-    private final UserAuthRepository userAuthRepository;
+    private final UserAuthRepository repository;
 
-    private final AuthPasswordEncryptor passwordEncryptor;
+    /**
+     * 密码加密器
+     */
+    private final AuthPasswordEncryptor encryptor;
 
-    private final ForgotPasswordCodeCache cache;
-
-    public ForgotPasswordServiceImpl(Properties properties, UserAuthRepository userAuthRepository, AuthPasswordEncryptor passwordEncryptor, ForgotPasswordCodeCache cache) {
-        this.properties = properties;
-        this.userAuthRepository = userAuthRepository;
-        this.passwordEncryptor = passwordEncryptor;
+    /**
+     * 构造方法初始化
+     *
+     * @param cache      忘记密码的验证码缓存
+     * @param properties 配置文件对象
+     * @param repository 用户存储库
+     * @param encryptor  密码加密器
+     */
+    public ForgotPasswordServiceImpl(
+            Properties properties,
+            ForgotPasswordCodeCache cache,
+            UserAuthRepository repository,
+            AuthPasswordEncryptor encryptor
+    ) {
         this.cache = cache;
+        this.encryptor = encryptor;
+        this.properties = properties;
+        this.repository = repository;
     }
 
     @Override
@@ -42,23 +66,20 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
                 .flatMap(v -> cache
                         .get(v.getAccount())
                         .filter(l -> l.contains(param.getCode()))
-                        .flatMap(l -> {
-                            param.setAccount(v.getAccount());
-                            return cache.del(v.getAccount()).map(ll -> v);
-                        }))
+                        .flatMap(l -> cache.del(v.getAccount()).map(ll -> v))
+                )
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeQrCodeDataNullException(
                         this.getClass(),
                         "",
                         ""
-                )))
-                .flatMap(v -> switch (mode) {
-                    case PHONE -> userAuthRepository.findByPhone(param.getAccount());
-                    case MAILBOX -> userAuthRepository.findByMailbox(param.getAccount());
-                    case ACCOUNT -> userAuthRepository.findByAccount(param.getAccount());
-                    case PHONE_OR_MAILBOX -> userAuthRepository.findByPhoneOrMailbox(param.getAccount());
-                })
-                .flatMap(m -> userAuthRepository.updatePassword(m.getId(), passwordEncryptor.execute(param.getPassword())))
-                .map(l -> new ForgotPasswordContext.Dto().setAccount(param.getAccount()));
+                ))).flatMap(v -> (switch (mode) {
+                            case PHONE -> repository.findByPhone(v.getAccount());
+                            case MAILBOX -> repository.findByMailbox(v.getAccount());
+                            case ACCOUNT -> repository.findByAccount(v.getAccount());
+                            case PHONE_OR_MAILBOX -> repository.findByPhoneOrMailbox(v.getAccount());
+                        }).flatMap(m -> repository.updatePassword(m.getId(), encryptor.execute(param.getPassword())))
+                                .map(l -> new ForgotPasswordContext.Dto().setAccount(v.getAccount()))
+                );
     }
 
 }

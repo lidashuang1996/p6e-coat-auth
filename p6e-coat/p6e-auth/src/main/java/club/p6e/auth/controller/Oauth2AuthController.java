@@ -16,6 +16,14 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/oauth2/auth")
 public interface Oauth2AuthController<P, R> {
 
+    /**
+     * [GET]
+     * OAuth2 认证页面
+     *
+     * @param param    请求对象
+     * @param exchange ServerWebExchange 对象
+     * @return 结果对象
+     */
     @GetMapping("")
     public Mono<Void> execute(ServerWebExchange exchange, P param);
 

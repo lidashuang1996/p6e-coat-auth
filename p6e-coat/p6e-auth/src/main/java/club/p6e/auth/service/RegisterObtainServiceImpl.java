@@ -52,8 +52,8 @@ public class RegisterObtainServiceImpl implements RegisterObtainService {
     public Mono<RegisterContext.Obtain.Dto> execute(ServerWebExchange exchange, RegisterContext.Obtain.Request param) {
         final String account = param.getAccount();
         final Properties.Mode mode = properties.getMode();
-        final boolean pb = VerificationUtil.phone(param.getAccount());
-        final boolean mb = VerificationUtil.mailbox(param.getAccount());
+        final boolean pb = VerificationUtil.validationPhone(param.getAccount());
+        final boolean mb = VerificationUtil.validationMailbox(param.getAccount());
         final LauncherType type = pb ? LauncherType.SMS : mb ? LauncherType.EMAIL : null;
         return AuthVoucher
                 .init(exchange)
@@ -77,7 +77,7 @@ public class RegisterObtainServiceImpl implements RegisterObtainService {
                         }))
                 .flatMap(v -> v.setAccount(account))
                 .flatMap(v -> {
-                    final String code = generator.execute();
+                    final String code = generator.execute(type.name());
                     return cache
                             .set(account, code)
                             .flatMap(b -> {

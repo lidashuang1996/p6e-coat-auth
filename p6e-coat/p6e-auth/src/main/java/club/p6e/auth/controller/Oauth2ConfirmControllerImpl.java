@@ -14,10 +14,6 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-//@ConditionalOnMissingBean(
-//        value = Oauth2ConfirmController.class,
-//        ignored = Oauth2ConfirmControllerDefaultImpl.class
-//)
 public class Oauth2ConfirmControllerImpl
         implements Oauth2ConfirmController<Oauth2Context.Confirm.Request, ResultContext> {
 

@@ -129,7 +129,7 @@ public final class JsonUtil {
      *
      * @param implementation JSON 实现的对象
      */
-    public static void setImplementation(Definition implementation) {
+    public static void set(Definition implementation) {
         DEFINITION = implementation;
     }
 

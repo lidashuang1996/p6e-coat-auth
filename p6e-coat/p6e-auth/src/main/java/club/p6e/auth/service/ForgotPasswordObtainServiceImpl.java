@@ -17,13 +17,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 忘记密码发送验证码服务的默认实现
+ * 忘记密码发送验证码服务的实现
  *
  * @author lidashuang
  * @version 1.0
  */
 public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainService {
 
+    /**
+     * 忘记密码的模板名称
+     */
+    private static final String FORGOT_PASSWORD_TEMPLATE = "FORGOT_PASSWORD_TEMPLATE";
+
+    /**
+     * 配置文件对象
+     */
     private final Properties properties;
 
     /**
@@ -31,12 +39,15 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
      */
     private final UserRepository repository;
 
-
+    /**
+     * 忘记密码验证码缓存
+     */
     private final ForgotPasswordCodeCache cache;
 
+    /**
+     * 忘记密码验证码生成器
+     */
     private final ForgotPasswordCodeGenerator generator;
-
-    private final String TEMPLATE = "FP_TEMPLATE";
 
     public ForgotPasswordObtainServiceImpl(
             Properties properties,
@@ -69,13 +80,15 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                                         "forgot password obtain code account not exist exception."
                                 )))
                                 .flatMap(m -> {
-                                    final String code = generator.execute();
+                                    final String code;
                                     final String account = param.getAccount();
                                     final LauncherType type;
                                     if (VerificationUtil.validationPhone(account)) {
                                         type = LauncherType.SMS;
+                                        code = generator.execute(LauncherType.SMS.name());
                                     } else if (VerificationUtil.validationMailbox(account)) {
                                         type = LauncherType.EMAIL;
+                                        code = generator.execute(LauncherType.EMAIL.name());
                                     } else {
                                         return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
                                                 this.getClass(),
@@ -93,9 +106,8 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                                                     "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param)",
                                                     "forgot password obtain code cache writing exception."
                                             )))
-                                            .flatMap(b -> Launcher.push(type, account, TEMPLATE, data));
+                                            .flatMap(b -> Launcher.push(type, account, FORGOT_PASSWORD_TEMPLATE, data));
                                 })
-                )
-                .map(s -> new ForgotPasswordContext.Obtain.Dto().setAccount(param.getAccount()).setMessage(s));
+                ).map(s -> new ForgotPasswordContext.Obtain.Dto().setAccount(param.getAccount()).setMessage(s));
     }
 }

@@ -42,11 +42,13 @@ public class RegisterServiceImpl implements RegisterService {
 
     private final UserAuthRepository userAuthRepository;
 
-    public RegisterServiceImpl(Properties properties,
-                               UserRepository userRepository,
-                               UserAuthRepository userAuthRepository,
-                               TransactionalOperator transactional,
-                               AuthPasswordEncryptor encryptor) {
+    public RegisterServiceImpl(
+            Properties properties,
+            UserRepository userRepository,
+            UserAuthRepository userAuthRepository,
+            TransactionalOperator transactional,
+            AuthPasswordEncryptor encryptor
+    ) {
         this.properties = properties;
         this.encryptor = encryptor;
         this.userRepository = userRepository;
@@ -59,19 +61,15 @@ public class RegisterServiceImpl implements RegisterService {
         final Properties.Mode mode = properties.getMode();
         return AuthVoucher
                 .init(exchange)
-                .map(v -> {
-                    param.setAccount(v.getAccount());
-                    return v;
-                })
                 .flatMap(v -> switch (mode) {
-                    case PHONE -> executePhoneMode(param).flatMap(l -> v.del())
-                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
-                    case MAILBOX -> executeMailboxMode(param).flatMap(l -> v.del())
-                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
-                    case ACCOUNT -> executeAccountMode(param).flatMap(l -> v.del())
-                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
-                    case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(param)
-                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(param.getAccount()));
+                    case PHONE -> executePhoneMode(v.getAccount(), param.getPassword()).flatMap(l -> v.del())
+                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(v.getAccount()));
+                    case MAILBOX -> executeMailboxMode(v.getAccount(), param.getPassword()).flatMap(l -> v.del())
+                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(v.getAccount()));
+                    case ACCOUNT -> executeAccountMode(v.getAccount(), param.getPassword()).flatMap(l -> v.del())
+                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(v.getAccount()));
+                    case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(v.getAccount(), param.getPassword())
+                            .flatMap(l -> v.del()).map(b -> new RegisterContext.Dto().setAccount(v.getAccount()));
                 });
     }
 
@@ -79,12 +77,11 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * 执行手机号码登录
      *
-     * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<String> executePhoneMode(RegisterContext.Request param) {
+    private Mono<String> executePhoneMode(String account, String password) {
         return userRepository
-                .findByPhone(param.getAccount())
+                .findByPhone(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
                     System.out.println("mmmm  " + m);
@@ -97,7 +94,7 @@ public class RegisterServiceImpl implements RegisterService {
                     } else {
                         return transactional.transactional(
                                 userRepository
-                                        .create(new UserModel().setPhone(param.getAccount()))
+                                        .create(new UserModel().setPhone(account))
                                         .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
                                                 this.getClass(),
                                                 "fun executePhoneMode(RegisterContext.Request param).",
@@ -105,10 +102,10 @@ public class RegisterServiceImpl implements RegisterService {
                                         )))
                                         .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
                                                 .setId(mm.getId())
-                                                .setPhone(param.getAccount())
-                                                .setPassword(encryptor.execute(param.getPassword()))
+                                                .setPhone(account)
+                                                .setPassword(encryptor.execute(password))
                                         ))
-                        ).map(mm -> param.getAccount());
+                        ).map(mm -> account);
                     }
                 });
     }
@@ -116,12 +113,11 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * 执行邮箱登录
      *
-     * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<String> executeMailboxMode(RegisterContext.Request param) {
+    private Mono<String> executeMailboxMode(String account, String password) {
         return userRepository
-                .findByMailbox(param.getAccount())
+                .findByMailbox(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
                     System.out.println("mmmm  " + m);
@@ -134,7 +130,7 @@ public class RegisterServiceImpl implements RegisterService {
                     } else {
                         return transactional.transactional(
                                 userRepository
-                                        .create(new UserModel().setMailbox(param.getAccount()))
+                                        .create(new UserModel().setMailbox(account))
                                         .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
                                                 this.getClass(),
                                                 "fun executePhoneMode(RegisterContext.Request param).",
@@ -142,10 +138,10 @@ public class RegisterServiceImpl implements RegisterService {
                                         )))
                                         .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
                                                 .setId(mm.getId())
-                                                .setMailbox(param.getAccount())
-                                                .setPassword(encryptor.execute(param.getPassword()))
+                                                .setMailbox(account)
+                                                .setPassword(encryptor.execute(password))
                                         ))
-                        ).map(mm -> param.getAccount());
+                        ).map(mm -> account);
                     }
                 });
     }
@@ -153,12 +149,11 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * 执行账号登录
      *
-     * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<String> executeAccountMode(RegisterContext.Request param) {
+    protected Mono<String> executeAccountMode(String account, String password) {
         return userRepository
-                .findByAccount(param.getAccount())
+                .findByAccount(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
                     System.out.println("mmmm  " + m);
@@ -171,7 +166,7 @@ public class RegisterServiceImpl implements RegisterService {
                     } else {
                         return transactional.transactional(
                                 userRepository
-                                        .create(new UserModel().setAccount(param.getAccount()))
+                                        .create(new UserModel().setAccount(account))
                                         .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
                                                 this.getClass(),
                                                 "fun executePhoneMode(RegisterContext.Request param).",
@@ -179,10 +174,10 @@ public class RegisterServiceImpl implements RegisterService {
                                         )))
                                         .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
                                                 .setId(mm.getId())
-                                                .setAccount(param.getAccount())
-                                                .setPassword(encryptor.execute(param.getPassword()))
+                                                .setAccount(account)
+                                                .setPassword(encryptor.execute(password))
                                         ))
-                        ).map(mm -> param.getAccount());
+                        ).map(mm -> account);
                     }
                 });
     }
@@ -190,12 +185,11 @@ public class RegisterServiceImpl implements RegisterService {
     /**
      * 执行手机号码/邮箱登录
      *
-     * @param param 请求对象
      * @return 结果对象
      */
-    protected Mono<String> executePhoneOrMailboxMode(RegisterContext.Request param) {
+    protected Mono<String> executePhoneOrMailboxMode(String account, String password) {
         return userRepository
-                .findByPhoneOrMailbox(param.getAccount())
+                .findByPhoneOrMailbox(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
                     System.out.println("mmmm  " + m);
@@ -209,8 +203,8 @@ public class RegisterServiceImpl implements RegisterService {
                         return transactional.transactional(
                                 userRepository
                                         .create(new UserModel()
-                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
+                                                .setPhone(VerificationUtil.validationPhone(account) ? account : null)
+                                                .setMailbox(VerificationUtil.validationMailbox(account) ? account : null)
                                         )
                                         .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionDataBaseException(
                                                 this.getClass(),
@@ -219,11 +213,11 @@ public class RegisterServiceImpl implements RegisterService {
                                         )))
                                         .flatMap(mm -> userAuthRepository.create(new UserAuthModel()
                                                 .setId(mm.getId())
-                                                .setPhone(VerificationUtil.phone(param.getAccount()) ? param.getAccount() : null)
-                                                .setMailbox(VerificationUtil.mailbox(param.getAccount()) ? param.getAccount() : null)
-                                                .setPassword(encryptor.execute(param.getPassword()))
+                                                .setPhone(VerificationUtil.validationPhone(account) ? account : null)
+                                                .setMailbox(VerificationUtil.validationMailbox(account) ? account : null)
+                                                .setPassword(encryptor.execute(password))
                                         ))
-                        ).map(mm -> param.getAccount());
+                        ).map(mm -> account);
                     }
                 });
     }

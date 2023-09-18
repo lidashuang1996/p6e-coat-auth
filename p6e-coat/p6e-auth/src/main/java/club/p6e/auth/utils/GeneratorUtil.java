@@ -76,7 +76,7 @@ public final class GeneratorUtil {
      *
      * @param implementation 随机数实现的对象
      */
-    public static void setImplementation(Definition implementation) {
+    public static void set(Definition implementation) {
         DEFINITION = implementation;
     }
 

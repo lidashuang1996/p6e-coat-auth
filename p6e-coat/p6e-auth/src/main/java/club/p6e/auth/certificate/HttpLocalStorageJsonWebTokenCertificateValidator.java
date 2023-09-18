@@ -37,7 +37,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
                 )))
                 .flatMap(this::accessToken)
                 .map(s -> exchange.mutate().request(
-                        exchange.getRequest().mutate().header(USER_HEADER_NAME, s).build()
+                        exchange.getRequest().mutate().header(getUserInfoHeaderName(), s).build()
                 ).build());
     }
 

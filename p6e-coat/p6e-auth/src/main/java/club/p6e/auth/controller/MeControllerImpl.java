@@ -13,6 +13,8 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * 我的信息接口的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -58,7 +60,7 @@ public class MeControllerImpl implements MeController<ResultContext> {
                     final String user = e
                             .getRequest()
                             .getHeaders()
-                            .getFirst(HttpCertificate.getUserHeaderName());
+                            .getFirst(HttpCertificate.getUserInfoHeaderName());
                     return ResultContext.build(au.create(user));
                 });
     }

@@ -131,8 +131,7 @@ public class Oauth2Context implements Serializable {
          */
         @Data
         @Accessors(chain = true)
-        @EqualsAndHashCode(callSuper = true)
-        public static class Request extends Oauth2Context.Request implements Serializable {
+        public static class Request implements Serializable {
         }
 
         /**

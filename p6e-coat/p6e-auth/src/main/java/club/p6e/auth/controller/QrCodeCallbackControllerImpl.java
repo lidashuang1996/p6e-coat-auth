@@ -22,7 +22,7 @@ public class QrCodeCallbackControllerImpl
     private final QrCodeCallbackService service;
 
     /**
-     * 构造方法
+     * 构造方法初始化
      *
      * @param service 二维码登录的服务对象
      */

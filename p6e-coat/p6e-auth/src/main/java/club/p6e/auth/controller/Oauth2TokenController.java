@@ -17,9 +17,11 @@ import reactor.core.publisher.Mono;
 public interface Oauth2TokenController<P, R> {
 
     /**
+     * [POST]
      * TOKEN
      *
-     * @param param 请求对象
+     * @param param    请求对象
+     * @param exchange ServerWebExchange 对象
      * @return 结果对象
      */
     @PostMapping("")

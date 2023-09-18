@@ -39,7 +39,7 @@ public class HttpCookieCacheCertificateValidator
                 )))
                 .flatMap(this::accessToken)
                 .map(r -> exchange.mutate().request(
-                        exchange.getRequest().mutate().header(getUserHeaderName(), r).build()
+                        exchange.getRequest().mutate().header(getUserInfoHeaderName(), r).build()
                 ).build());
     }
 

@@ -16,16 +16,37 @@ import reactor.core.publisher.Mono;
 @RequestMapping("")
 public interface IndexController {
 
+    /**
+     * [GET]
+     * 主页内容
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 主页 HTML 内容
+     */
     @GetMapping("")
     public default Mono<Void> def1(ServerWebExchange exchange) {
         return this.execute(exchange);
     }
 
+    /**
+     * [GET]
+     * 主页内容
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 主页 HTML 内容
+     */
     @GetMapping("/")
     public default Mono<Void> def2(ServerWebExchange exchange) {
         return this.execute(exchange);
     }
 
+    /**
+     * [GET]
+     * 主页内容
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return 主页 HTML 内容
+     */
     @GetMapping("/index")
     public default Mono<Void> def3(ServerWebExchange exchange) {
         return this.execute(exchange);

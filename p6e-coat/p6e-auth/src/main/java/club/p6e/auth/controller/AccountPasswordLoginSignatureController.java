@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 public interface AccountPasswordLoginSignatureController<P, R> {
 
     /**
-     * [ GET ]
+     * [GET]
      * 账号密码登录的密码签名操作
      *
      * @param exchange ServerWebExchange 对象

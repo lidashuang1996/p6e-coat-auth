@@ -23,63 +23,24 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpCertificate {
-
-    /**
-     * 用户信息的头部名称
-     */
-    protected static String USER_HEADER_NAME = "P6e-User-Info";
-
-    /**
-     * 认证头名称
-     */
-    protected static String AUTH_HEADER = "Authorization";
-
-    /**
-     * 认证头类型
-     */
-    protected static String AUTH_HEADER_TOKEN_TYPE = "Bearer";
-
-    /**
-     * 认证头必须的前缀
-     */
-    protected static String AUTH_HEADER_TOKEN_PREFIX = AUTH_HEADER_TOKEN_TYPE + " ";
-
-    /**
-     * Query 方式 ACCESS TOKEN
-     */
-    protected static List<String> ACCESS_TOKEN_PARAM = List.of("accessToken", "access_token");
-
-    /**
-     * AUTH COOKIE ACCESS TOKEN 名称
-     */
-    protected static String AUTH_COOKIE_ACCESS_TOKEN_NAME = "P6E_AUTH_ACCESS_TOKEN";
-
-    /**
-     * AUTH COOKIE REFRESH TOKEN 名称
-     */
-    protected static String AUTH_COOKIE_REFRESH_TOKEN_NAME = "P6E_AUTH_REFRESH_TOKEN";
-
-    /**
-     * 认证过期时间
-     */
-    protected static long EXPIRATION_TIME = 3600 * 3L;
 
     /**
      * 时间格式化对象
      */
-    protected static DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 默认的实现
      */
-    private static Specification ACHIEVE = new Achieve();
+    private static Specification SPECIFICATION = new Achieve();
 
     /**
      * 重写默认的实现
      */
-    public static void setAchieve(Achieve achieve) {
-        ACHIEVE = achieve;
+    public static void set(Specification specification) {
+        SPECIFICATION = specification;
     }
 
     /**
@@ -87,8 +48,33 @@ public class HttpCertificate {
      *
      * @return 实现对象
      */
-    public static Specification getAchieve() {
-        return ACHIEVE;
+    public static Specification get() {
+        return SPECIFICATION;
+    }
+
+    /**
+     * 设置认证头名称
+     *
+     * @param auth 认证头名称
+     */
+    public static void setAuthHeader(String auth) {
+        SPECIFICATION.setAuthHeader(auth);
+    }
+
+    /**
+     * 读取认证头名称
+     */
+    public static String getAuthHeader() {
+        return SPECIFICATION.getAuthHeader();
+    }
+
+    /**
+     * 设置用户信息的头部名称
+     *
+     * @param name 用户信息的头部名称
+     */
+    public static void setUserInfoHeaderName(String name) {
+        SPECIFICATION.setUserInfoHeaderName(name);
     }
 
     /**
@@ -96,8 +82,17 @@ public class HttpCertificate {
      *
      * @return 用户信息的头名称
      */
-    public static String getUserHeaderName() {
-        return USER_HEADER_NAME;
+    public static String getUserInfoHeaderName() {
+        return SPECIFICATION.getUserInfoHeaderName();
+    }
+
+    /**
+     * 设置认证头类型
+     *
+     * @param type 认证头类型
+     */
+    public static void setAuthHeaderTokenType(String type) {
+        SPECIFICATION.setAuthHeaderTokenType(type);
     }
 
     /**
@@ -106,7 +101,43 @@ public class HttpCertificate {
      * @return 认证头类型
      */
     public static String getAuthHeaderTokenType() {
-        return AUTH_HEADER_TOKEN_TYPE;
+        return SPECIFICATION.getAuthHeaderTokenType();
+    }
+
+    /**
+     * 设置认证头必须的前缀
+     *
+     * @param prefix 认证头必须的前缀
+     */
+    public static void setAuthHeaderTokenPrefix(String prefix) {
+        SPECIFICATION.setAuthHeaderTokenPrefix(prefix);
+    }
+
+    /**
+     * 设置 ACCESS TOKEN 请求参数名称
+     *
+     * @param params 请求参数名称
+     */
+    public static void setTokenParams(List<String> params) {
+        SPECIFICATION.setTokenParams(params);
+    }
+
+    /**
+     * 设置 AUTH COOKIE ACCESS TOKEN 名称
+     *
+     * @param name AUTH COOKIE ACCESS TOKEN 名称
+     */
+    public static void setAuthCookieAccessTokenName(String name) {
+        SPECIFICATION.setAuthCookieAccessTokenName(name);
+    }
+
+    /**
+     * 设置  AUTH COOKIE REFRESH TOKEN 名称
+     *
+     * @param name AUTH COOKIE REFRESH TOKEN 名称
+     */
+    public static void setAuthCookieRefreshTokenName(String name) {
+        SPECIFICATION.setAuthCookieRefreshTokenName(name);
     }
 
     /**
@@ -116,7 +147,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static String getHeaderToken(ServerHttpRequest request) {
-        return ACHIEVE.getHeaderToken(request);
+        return SPECIFICATION.getHeaderToken(request);
     }
 
     /**
@@ -126,7 +157,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static String getQueryParamToken(ServerHttpRequest request) {
-        return ACHIEVE.getQueryParamToken(request);
+        return SPECIFICATION.getQueryParamToken(request);
     }
 
     /**
@@ -136,7 +167,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static Mono<String> getHttpCookieToken(ServerHttpRequest request) {
-        return ACHIEVE.getHttpCookieToken(request);
+        return SPECIFICATION.getHttpCookieToken(request);
     }
 
     /**
@@ -146,7 +177,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static Mono<String> getHttpLocalStorageToken(ServerHttpRequest request) {
-        return ACHIEVE.getHttpLocalStorageToken(request);
+        return SPECIFICATION.getHttpLocalStorageToken(request);
     }
 
     /**
@@ -157,21 +188,9 @@ public class HttpCertificate {
      * @param refreshToken 刷新令牌
      * @return 结果值
      */
-    public static Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken) {
-        return setHttpCookieToken(response, accessToken, refreshToken, LocalDateTime.now().format(DTF));
-    }
-
-    /**
-     * 写入 cookie 令牌
-     *
-     * @param response     返回对象
-     * @param accessToken  认证令牌
-     * @param refreshToken 刷新令牌
-     * @param result       结果对象
-     * @return 结果值
-     */
-    public static Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Object result) {
-        return setHttpCookieToken(response, accessToken, refreshToken, EXPIRATION_TIME, result);
+    public static Mono<Object> setHttpCookieToken(
+            ServerHttpResponse response, String accessToken, String refreshToken) {
+        return setHttpCookieToken(response, accessToken, refreshToken, LocalDateTime.now().format(DATE_TIME_FORMATTER));
     }
 
     /**
@@ -183,8 +202,23 @@ public class HttpCertificate {
      * @param result       结果对象
      * @return 结果值
      */
-    public static Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result) {
-        return ACHIEVE.setHttpCookieToken(response, accessToken, refreshToken, age, result);
+    public static Mono<Object> setHttpCookieToken(
+            ServerHttpResponse response, String accessToken, String refreshToken, Object result) {
+        return SPECIFICATION.setHttpCookieToken(response, accessToken, refreshToken, null, result);
+    }
+
+    /**
+     * 写入 cookie 令牌
+     *
+     * @param response     返回对象
+     * @param accessToken  认证令牌
+     * @param refreshToken 刷新令牌
+     * @param result       结果对象
+     * @return 结果值
+     */
+    public static Mono<Object> setHttpCookieToken(
+            ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result) {
+        return SPECIFICATION.setHttpCookieToken(response, accessToken, refreshToken, age, result);
     }
 
     /**
@@ -195,7 +229,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken) {
-        return setHttpLocalStorageToken(accessToken, refreshToken, null);
+        return SPECIFICATION.setHttpLocalStorageToken(accessToken, refreshToken, null, null);
     }
 
     /**
@@ -206,8 +240,22 @@ public class HttpCertificate {
      * @param data         数据对象
      * @return 结果值
      */
-    public static Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken, Map<String, Object> data) {
-        return ACHIEVE.setHttpLocalStorageToken(accessToken, refreshToken, data);
+    public static Mono<Map<String, Object>> setHttpLocalStorageToken(
+            String accessToken, String refreshToken, Map<String, Object> data) {
+        return SPECIFICATION.setHttpLocalStorageToken(accessToken, refreshToken, null, data);
+    }
+
+    /**
+     * 写入本地缓存令牌
+     *
+     * @param accessToken  认证令牌
+     * @param refreshToken 刷新令牌
+     * @param data         数据对象
+     * @return 结果值
+     */
+    public static Mono<Map<String, Object>> setHttpLocalStorageToken(
+            String accessToken, String refreshToken, Long expire, Map<String, Object> data) {
+        return SPECIFICATION.setHttpLocalStorageToken(accessToken, refreshToken, expire, data);
     }
 
     /**
@@ -217,7 +265,7 @@ public class HttpCertificate {
      * @return 结果值
      */
     public static Mono<Void> cleanHttpCookieToken(ServerHttpResponse response) {
-        return ACHIEVE.cleanHttpCookieToken(response);
+        return SPECIFICATION.cleanHttpCookieToken(response);
     }
 
     /**
@@ -229,7 +277,7 @@ public class HttpCertificate {
      * @return 令牌
      */
     public static String jwtCreate(String uid, String content, String secret) {
-        return ACHIEVE.jwtCreate(uid, content, secret);
+        return SPECIFICATION.jwtCreate(uid, content, secret);
     }
 
     /**
@@ -240,9 +288,12 @@ public class HttpCertificate {
      * @return 解密内容
      */
     public static String jwtDecode(String token, String secret) {
-        return ACHIEVE.jwtDecode(token, secret);
+        return SPECIFICATION.jwtDecode(token, secret);
     }
 
+    /**
+     * 接口定义
+     */
     public interface Specification {
 
         /**
@@ -253,11 +304,21 @@ public class HttpCertificate {
         public void setAuthHeader(String auth);
 
         /**
+         * 读取认证头名称
+         */
+        public String getAuthHeader();
+
+        /**
          * 设置用户信息的头部名称
          *
          * @param name 用户信息的头部名称
          */
-        public void setUserHeaderName(String name);
+        public void setUserInfoHeaderName(String name);
+
+        /**
+         * 读取用户信息的头部名称
+         */
+        public String getUserInfoHeaderName();
 
         /**
          * 设置认证头类型
@@ -265,6 +326,11 @@ public class HttpCertificate {
          * @param type 认证头类型
          */
         public void setAuthHeaderTokenType(String type);
+
+        /**
+         * 读取认证头类型
+         */
+        public String getAuthHeaderTokenType();
 
         /**
          * 设置认证头必须的前缀
@@ -339,20 +405,24 @@ public class HttpCertificate {
          * @param response     返回对象
          * @param accessToken  认证令牌
          * @param refreshToken 刷新令牌
+         * @param expire       过期时间
          * @param result       结果对象
          * @return 结果值
          */
-        public Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result);
+        public Mono<Object> setHttpCookieToken(
+                ServerHttpResponse response, String accessToken, String refreshToken, Long expire, Object result);
 
         /**
          * 写入本地缓存令牌
          *
          * @param accessToken  认证令牌
          * @param refreshToken 刷新令牌
+         * @param expire       过期时间
          * @param data         数据对象
          * @return 结果值
          */
-        public Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken, Map<String, Object> data);
+        public Mono<Map<String, Object>> setHttpLocalStorageToken(
+                String accessToken, String refreshToken, Long expire, Map<String, Object> data);
 
         /**
          * 清除本地缓存令牌
@@ -382,46 +452,104 @@ public class HttpCertificate {
         public String jwtDecode(String token, String secret);
     }
 
+    /**
+     * 默认的实现类
+     */
     public static class Achieve implements Specification {
+
+        /**
+         * 认证头名称
+         */
+        private String AUTH_HEADER = "Authorization";
+
+        /**
+         * 认证头类型
+         */
+        private String AUTH_HEADER_TOKEN_TYPE = "Bearer";
+
+        /**
+         * 用户信息的头部名称
+         */
+        private String USER_INFO_HEADER_NAME = "P6e-User-Info";
+
+        /**
+         * 认证头必须的前缀
+         */
+        private String AUTH_HEADER_TOKEN_PREFIX = AUTH_HEADER_TOKEN_TYPE + " ";
+
+        /**
+         * Query 方式 ACCESS TOKEN
+         */
+        private List<String> ACCESS_TOKEN_PARAM = List.of("accessToken", "access_token");
+
+        /**
+         * AUTH COOKIE ACCESS TOKEN 名称
+         */
+        private String AUTH_COOKIE_ACCESS_TOKEN_NAME = "P6E_AUTH_ACCESS_TOKEN";
+
+        /**
+         * AUTH COOKIE REFRESH TOKEN 名称
+         */
+        private String AUTH_COOKIE_REFRESH_TOKEN_NAME = "P6E_AUTH_REFRESH_TOKEN";
+
+        /**
+         * 认证过期时间
+         */
+        private long EXPIRATION_TIME = 3600 * 3L;
 
         @Override
         public void setAuthHeader(String auth) {
-            HttpCertificate.AUTH_HEADER = auth;
+            AUTH_HEADER = auth;
         }
 
         @Override
-        public void setUserHeaderName(String name) {
-            HttpCertificate.USER_HEADER_NAME = name;
+        public String getAuthHeader() {
+            return AUTH_HEADER;
+        }
+
+        @Override
+        public void setUserInfoHeaderName(String name) {
+            USER_INFO_HEADER_NAME = name;
+        }
+
+        @Override
+        public String getUserInfoHeaderName() {
+            return USER_INFO_HEADER_NAME;
         }
 
         @Override
         public void setAuthHeaderTokenType(String type) {
-            HttpCertificate.AUTH_HEADER_TOKEN_TYPE = type;
+            AUTH_HEADER_TOKEN_TYPE = type;
+        }
+
+        @Override
+        public String getAuthHeaderTokenType() {
+            return AUTH_HEADER_TOKEN_TYPE;
         }
 
         @Override
         public void setAuthHeaderTokenPrefix(String prefix) {
-            HttpCertificate.AUTH_HEADER_TOKEN_PREFIX = prefix;
+            AUTH_HEADER_TOKEN_PREFIX = prefix;
         }
 
         @Override
         public void setTokenParams(List<String> params) {
-            HttpCertificate.ACCESS_TOKEN_PARAM = params;
+            ACCESS_TOKEN_PARAM = params;
         }
 
         @Override
         public void setAuthCookieAccessTokenName(String name) {
-            HttpCertificate.AUTH_COOKIE_ACCESS_TOKEN_NAME = name;
+            AUTH_COOKIE_ACCESS_TOKEN_NAME = name;
         }
 
         @Override
         public void setAuthCookieRefreshTokenName(String name) {
-            HttpCertificate.AUTH_COOKIE_REFRESH_TOKEN_NAME = name;
+            AUTH_COOKIE_REFRESH_TOKEN_NAME = name;
         }
 
         @Override
         public void setExpirationTime(long time) {
-            HttpCertificate.EXPIRATION_TIME = time;
+            EXPIRATION_TIME = time;
         }
 
         @Override
@@ -474,16 +602,16 @@ public class HttpCertificate {
 
         @Override
         public Mono<Object> setHttpCookieToken(
-                ServerHttpResponse response, String accessToken, String refreshToken, long age, Object result) {
+                ServerHttpResponse response, String accessToken, String refreshToken, Long expire, Object result) {
             final ResponseCookie accessTokenCookie = ResponseCookie
                     .from(AUTH_COOKIE_ACCESS_TOKEN_NAME, accessToken)
-                    .maxAge(Duration.ofSeconds(age))
+                    .maxAge(Duration.ofSeconds(expire == null ? EXPIRATION_TIME : expire))
                     .httpOnly(true)
                     .path("/")
                     .build();
             final ResponseCookie refreshTokenCookie = ResponseCookie
                     .from(AUTH_COOKIE_REFRESH_TOKEN_NAME, refreshToken)
-                    .maxAge(Duration.ofSeconds(age))
+                    .maxAge(Duration.ofSeconds(expire == null ? EXPIRATION_TIME : expire))
                     .httpOnly(true)
                     .path("/")
                     .build();
@@ -494,17 +622,17 @@ public class HttpCertificate {
 
         @Override
         public Mono<Map<String, Object>> setHttpLocalStorageToken(
-                String accessToken, String refreshToken, Map<String, Object> data) {
-            final Map<String, Object> result = new HashMap<>(5);
-            result.put("expire", EXPIRATION_TIME);
+                String accessToken, String refreshToken, Long expire, Map<String, Object> data) {
+            final Map<String, Object> result;
+            if (data == null) {
+                result = new HashMap<>(4);
+            } else {
+                result = new HashMap<>(data);
+            }
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
             result.put("tokenType", AUTH_HEADER_TOKEN_TYPE);
-            if (data != null && !data.isEmpty()) {
-                for (final String key : data.keySet()) {
-                    result.put(key, data.get(key));
-                }
-            }
+            result.put("expire", expire == null ? EXPIRATION_TIME : expire);
             return Mono.just(result);
         }
 

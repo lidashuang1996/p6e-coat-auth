@@ -17,31 +17,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 注册的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class RegisterControllerImpl implements RegisterController<RegisterContext.Request, ResultContext> {
 
+    /**
+     * 注册的服务对象
+     */
     private final RegisterService service;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param service 注册的服务对象
+     */
     public RegisterControllerImpl(RegisterService service) {
         this.service = service;
     }
 
+    /**
+     * 参数验证
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    参数对象
+     * @return Mono/Void 对象
+     */
     protected Mono<Void> vp(ServerWebExchange exchange, RegisterContext.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
-
-    @Override
-    public Mono<Void> def(ServerWebExchange exchange) {
-        final Map<String, String> m = new HashMap<>();
-        m.put(AuthVoucher.REGISTER, "true");
-        m.put(AuthVoucher.REGISTER_DATE, String.valueOf(System.currentTimeMillis()));
-        return AuthVoucher
-                .create(m)
-                .flatMap(v -> write(exchange, v.getMark()));
-    }
-
 
     /**
      * 写入返回数据
@@ -57,6 +63,16 @@ public class RegisterControllerImpl implements RegisterController<RegisterContex
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
                 (TemplateParser.execute(register.getContent(), "voucher", voucher)).getBytes(StandardCharsets.UTF_8)
         )));
+    }
+
+    @Override
+    public Mono<Void> def(ServerWebExchange exchange) {
+        final Map<String, String> m = new HashMap<>();
+        m.put(AuthVoucher.REGISTER, "true");
+        m.put(AuthVoucher.REGISTER_DATE, String.valueOf(System.currentTimeMillis()));
+        return AuthVoucher
+                .create(m)
+                .flatMap(v -> write(exchange, v.getMark()));
     }
 
     @Override

@@ -17,13 +17,16 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 /**
- * 账号密码登录的默认实现
+ * 账号密码登录的实现
  *
  * @author lidashuang
  * @version 1.0
  */
 public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginService {
 
+    /**
+     * 用户对象
+     */
     private final AuthUser<?> au;
 
     /**
@@ -41,6 +44,9 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     private final UserRepository userRepository;
 
+    /**
+     * 用户密码存储库
+     */
     private final UserAuthRepository userAuthRepository;
 
     /**
@@ -113,12 +119,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     case ACCOUNT -> executeAccountMode(p);
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(p);
                 })
-                .filter(u -> {
-                    System.out.println(u);
-                    System.out.println(param.getPassword());
-                    System.out.println(encryptor.execute(param.getPassword()));
-                    return u.password().equals(encryptor.execute(param.getPassword()));
-                })
+                .filter(u -> u.password().equals(encryptor.execute(param.getPassword())))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param)",

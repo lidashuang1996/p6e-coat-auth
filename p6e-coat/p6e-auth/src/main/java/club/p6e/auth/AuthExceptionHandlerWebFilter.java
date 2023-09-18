@@ -107,6 +107,7 @@ public class AuthExceptionHandlerWebFilter extends DefaultErrorWebExceptionHandl
                 errorMap.remove(STATUS);
                 if (errorMap.get(CODE) != null
                         && properties.isRedirectIndexPage()
+                        && !errorMap.get(PATH).equals(properties.getRedirectIndexPagePath())
                         && Double.valueOf(String.valueOf(errorMap.get(CODE))).intValue() == HttpStatus.NOT_FOUND.value()) {
                     return ServerResponse.temporaryRedirect(URI.create(properties.getRedirectIndexPagePath())).build();
                 }

@@ -112,7 +112,7 @@ public final class VerificationUtil {
      *
      * @param implementation 验证的对象
      */
-    public static void setImplementation(Definition implementation) {
+    public static void set(Definition implementation) {
         DEFINITION = implementation;
     }
 
