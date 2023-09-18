@@ -91,6 +91,12 @@
             <artifactId>java-jwt</artifactId>
             <version>${java.auth.jwt}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.70</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- Java JWT [END] -->
     </dependencies>
 

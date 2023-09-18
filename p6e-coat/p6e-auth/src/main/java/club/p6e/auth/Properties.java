@@ -241,7 +241,7 @@ public class Properties implements Serializable {
             /**
              * 开启账号密码登录时候是否对密码进行加密
              */
-            private boolean enableTransmissionEncryption = false;
+            private boolean enableTransmissionEncryption = true;
         }
 
         /**

@@ -230,9 +230,10 @@ public class AuthVoucher implements Serializable {
      * @return Mono<AuthVoucherContext> 认证凭证上下文对象
      */
     public Mono<AuthVoucher> del() {
-        return cache
-                .del(mark)
-                .map(b -> this);
+//        return cache
+//                .del(mark)
+//                .map(b -> this);
+        return Mono.just(this);
     }
 
 
