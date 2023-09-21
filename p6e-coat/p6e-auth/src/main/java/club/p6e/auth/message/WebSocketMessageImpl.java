@@ -1,6 +1,7 @@
 package club.p6e.auth.message;
 
 import club.p6e.auth.AuthVoucher;
+import club.p6e.auth.Properties;
 import club.p6e.auth.cache.QrCodeWebSocketAuthCache;
 import club.p6e.auth.context.ResultContext;
 import club.p6e.auth.generator.VoucherGenerator;
@@ -20,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import java.util.function.Function;
  * @author lidashuang
  * @version 1.0
  */
+@RestController
 @RequestMapping("/ws")
 public class WebSocketMessageImpl implements WebSocketMessage {
 
@@ -38,10 +41,14 @@ public class WebSocketMessageImpl implements WebSocketMessage {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMessageImpl.class);
 
-    private int port = 8181;
+    private int port;
 
     private EventLoopGroup boss = null;
     private EventLoopGroup work = null;
+
+    public WebSocketMessageImpl(Properties properties) {
+        this.port = properties.getLogin().getQrCode().getWebSocket().getPort();
+    }
 
     @GetMapping("/auth")
     public ResultContext auth(ServerWebExchange exchange) {
@@ -52,7 +59,7 @@ public class WebSocketMessageImpl implements WebSocketMessage {
     public void startup() {
         WebSocketHeartbeat.init();
         WebSocketMessagePush.init();
-        netty(getPort());
+        new Thread(() -> netty(port)).start();
     }
 
     @Override

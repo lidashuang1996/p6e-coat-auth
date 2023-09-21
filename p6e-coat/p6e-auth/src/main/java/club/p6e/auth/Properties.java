@@ -39,7 +39,14 @@ public class Properties implements Serializable {
      */
     private String redirectIndexPagePath = "/";
 
+    /**
+     * JWT ACCESS TOKEN SECRET
+     */
     private String jwtAccessTokenSecret = null;
+
+    /**
+     * JWT REFRESH TOKEN SECRET
+     */
     private String jwtRefreshTokenSecret = null;
 
     /**
@@ -157,13 +164,13 @@ public class Properties implements Serializable {
          * 验证实现的类以及依赖的类
          * 验证的作用是用来验证程序下发的合法的令牌/证书（现在实现的方式有多种主要是需要和授权对应）
          */
-        private Bean validator = new Bean(HTTP_LOCAL_JWT);
+        private Bean validator = new Bean(HTTP_LOCAL_CACHE);
 
         /**
          * 授权实现的类以及依赖的类
          * 授权的作用是用来下发合法的令牌/证书（现在实现的方式有多种主要是需要和验证对应）
          */
-        private Bean authority = new Bean(HTTP_LOCAL_JWT);
+        private Bean authority = new Bean(HTTP_LOCAL_CACHE);
     }
 
     @Data
@@ -271,6 +278,18 @@ public class Properties implements Serializable {
              * 是否开启二维码扫码登录功能
              */
             private boolean enable = true;
+
+            /**
+             * WebSocket
+             */
+            private WebSocket webSocket = new WebSocket();
+
+            @Data
+            @Accessors(chain = true)
+            public static class WebSocket implements Serializable {
+                private int port = 7422;
+                private boolean enable = true;
+            }
         }
 
         /**
@@ -334,7 +353,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启 OAUTH2 功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
 
         /**
          * 客户端授权登录的配置
@@ -390,7 +409,8 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
+
         /**
          * 是否开启第三方登录没有对应绑定信息时候进行注册绑定
          */
@@ -408,7 +428,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
     }
 
     /**
@@ -422,6 +442,7 @@ public class Properties implements Serializable {
         private String me = "classpath:page/me.html";
         private String login = "classpath:page/login.html";
         private String register = "classpath:page/register.html";
+        private String forgotPassword = "classpath:page/forgot-password.html";
     }
 
     /**
@@ -435,7 +456,11 @@ public class Properties implements Serializable {
         /**
          * 是否开启签名的功能
          */
-        private boolean enable = false;
+        private boolean enable = true;
+
+        /**
+         * 签名的密钥
+         */
         private String secret = "ch2b8wh8t57n6r8p6wj6m5nu7ku8nde8";
     }
 

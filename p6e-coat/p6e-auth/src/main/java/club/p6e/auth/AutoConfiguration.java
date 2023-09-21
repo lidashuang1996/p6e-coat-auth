@@ -15,7 +15,7 @@ public class AutoConfiguration implements Configuration {
 
     @Override
     public void execute(Properties properties) {
-        LOGGER.info("Auto Auth >>> " + properties);
+        LOGGER.info("execute [ P6e Auth ] program ...");
     }
 
 }

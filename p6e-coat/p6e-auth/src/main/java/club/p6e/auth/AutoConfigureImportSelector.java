@@ -4,6 +4,8 @@ import club.p6e.auth.cache.memory.*;
 import club.p6e.auth.cache.redis.*;
 import club.p6e.auth.controller.*;
 import club.p6e.auth.generator.*;
+import club.p6e.auth.message.WebSocketMessage;
+import club.p6e.auth.message.WebSocketMessageImpl;
 import club.p6e.auth.service.*;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.auth.codec.PasswordTransmissionCodecImpl;
@@ -78,6 +80,7 @@ public class AutoConfigureImportSelector {
             registerBean(ReactiveMemoryTemplate.class, defaultListableBeanFactory);
         }
 
+
         // 注册->登录对象
         if (properties.isEnable()
                 && properties.getLogin().isEnable()) {
@@ -136,6 +139,10 @@ public class AutoConfigureImportSelector {
             registerBean(QrCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
             registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
+
+            if (properties.getLogin().getQrCode().getWebSocket().isEnable()) {
+                registerQrCodeWebSocketBean(defaultListableBeanFactory);
+            }
         }
 
         // 注册->其它登录对象
@@ -147,11 +154,6 @@ public class AutoConfigureImportSelector {
             registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
             registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
             registerBean(StateOtherLoginGenerator.class, defaultListableBeanFactory);
-            if (properties.getRegister().isEnable()
-                    && properties.getRegister().isEnableOtherLoginBinding()) {
-                registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
-                registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
-            }
         }
 
         // 注册->OAuth2对象
@@ -204,38 +206,33 @@ public class AutoConfigureImportSelector {
                 && properties.getRegister().isEnable()) {
             initRegisterPage();
             registerUserRepositoryBean(defaultListableBeanFactory);
+            registerRegisterCodeCacheBean(defaultListableBeanFactory);
             registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->第三方登录需要未注册需要进行注册的对象
-        if (properties.isEnable()
-                && properties.getRegister().isEnable()
-                && properties.getRegister().isEnableOtherLoginBinding()) {
-            registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
-            registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
-
-            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
             registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
+            registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
             registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterCodeMemoryCache.class, defaultListableBeanFactory);
+
+            // 注册->第三方登录需要未注册需要进行注册的对象
+            if (properties.getRegister().isEnableOtherLoginBinding()) {
+                registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
+                registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+            }
         }
 
         if (properties.isEnable()
                 && properties.getForgotPassword().isEnable()) {
-            registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
+            initForgotPassword();
+            registerForgotPasswordCodeCacheBean(defaultListableBeanFactory);
             registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordCodeMemoryCache.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
         }
 
         // 注册->网络请求签名对象
-        if (properties.isEnable()
-                && properties.getSignature().isEnable()) {
+        if (properties.isEnable() && properties.getSignature().isEnable()) {
             registerBean(AuthSignatureWebFilter.class, defaultListableBeanFactory, true, false);
         }
     }
@@ -245,6 +242,7 @@ public class AutoConfigureImportSelector {
      *
      * @return 文件的内容
      */
+    @SuppressWarnings("ALL")
     private String file(String path) {
         if (path != null) {
             if (path.startsWith("classpath:")) {
@@ -323,23 +321,28 @@ public class AutoConfigureImportSelector {
      * 初始化我的页面内容
      */
     private void initMePage() {
-        AuthPage.me(MediaType.TEXT_HTML, file(properties.getPage().getMe()));
+        AuthPage.setMe(MediaType.TEXT_HTML, file(properties.getPage().getMe()));
     }
 
     /**
      * 初始化登录页面内容
      */
     private void initLoginPage() {
-        AuthPage.login(MediaType.TEXT_HTML, file(properties.getPage().getLogin()));
+        AuthPage.setLogin(MediaType.TEXT_HTML, file(properties.getPage().getLogin()));
     }
 
     /**
      * 初始化注册页面内容
      */
     private void initRegisterPage() {
-        System.out.println(
-                file(properties.getPage().getRegister())
-        );
+        AuthPage.setRegister(MediaType.TEXT_HTML, file(properties.getPage().getRegister()));
+    }
+
+    /**
+     * 初始化忘记密码页面内容
+     */
+    private void initForgotPassword() {
+        AuthPage.setForgotPassword(MediaType.TEXT_HTML, file(properties.getPage().getForgotPassword()));
     }
 
     /**
@@ -354,14 +357,14 @@ public class AutoConfigureImportSelector {
             final Map<String, String> templateData = new HashMap<>();
             final Map<String, String> config = other.getConfig();
             for (final String ck : config.keySet()) {
-                if (!ck.startsWith("#") || !ck.startsWith("@")) {
-                    data.put(ck, config.get(ck));
-                }
                 if (ck.startsWith("#")) {
                     varData.put(ck, config.get(ck));
                 }
                 if (ck.startsWith("@")) {
                     templateData.put(ck, config.get(ck));
+                }
+                if (!ck.startsWith("#") || !ck.startsWith("@")) {
+                    data.put(ck, config.get(ck));
                 }
             }
             varData.replaceAll((k, v) -> TemplateParser.execute(v, data));
@@ -379,20 +382,18 @@ public class AutoConfigureImportSelector {
     private void registerAuthWebFilterBean(DefaultListableBeanFactory factory) {
         final Properties.Bean validator = properties.getAuth().getValidator();
         final Properties.Bean authority = properties.getAuth().getAuthority();
-        String[] dependency1 = new String[]{
+        final String[] dependency1 = new String[]{
                 "club.p6e.auth.AuthJsonWebTokenCipher"
         };
-        String[] dependency2 = new String[0];
-        if (Properties.Cache.Type.REDIS == properties.getCache().getType()) {
-            dependency2 = new String[]{
-                    "club.p6e.auth.cache.memory.AuthMemoryCache"
+        final String[] dependency2 = switch (properties.getCache().getType()) {
+            case REDIS -> new String[]{
+                    "club.p6e.auth.cache.redis.AuthRedisCache",
             };
-        }
-        if (Properties.Cache.Type.MEMORY == properties.getCache().getType()) {
-            dependency2 = new String[]{
-                    "club.p6e.auth.cache.redis.AuthRedisCache"
+            case MEMORY -> new String[]{
+                    "club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate",
+                    "club.p6e.auth.cache.memory.AuthMemoryCache",
             };
-        }
+        };
         switch (validator.getName().toUpperCase()) {
             case Properties.Auth.HTTP_COOKIE_CACHE -> {
                 validator.setName("club.p6e.auth.certificate.HttpCookieCacheCertificateValidator");
@@ -454,7 +455,6 @@ public class AutoConfigureImportSelector {
      * @param factory 上下文对象工厂
      */
     private void registerCrossDomainWebFilterBean(DefaultListableBeanFactory factory) {
-        System.out.println("registerCrossDomainWebFilterBean registerCrossDomainWebFilterBean registerCrossDomainWebFilterBean ");
         registerBean(AuthCrossDomainWebFilter.class, factory, false, false);
     }
 
@@ -467,6 +467,27 @@ public class AutoConfigureImportSelector {
         registerVoucherCacheBean(factory);
         registerBean(AuthVoucher.class, factory);
         registerBean(VoucherGeneratorImpl.class, factory);
+    }
+
+    /**
+     * 注册发射器
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerLauncherBean(DefaultListableBeanFactory factory) {
+        registerBean(SmsMessageLauncherImpl.class, factory);
+        registerBean(EmailMessageLauncherImpl.class, factory);
+    }
+
+    /**
+     * 注册二维码登录缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerQrCodeWebSocketBean(DefaultListableBeanFactory factory) {
+        registerWebSocketCacheBean(factory);
+        registerBean(WebSocketMessageImpl.class, factory);
+        factory.getBean(WebSocketMessage.class).startup();
     }
 
     /**
@@ -487,16 +508,6 @@ public class AutoConfigureImportSelector {
     private void registerOauth2RepositoryBean(DefaultListableBeanFactory factory) {
         registerUserRepositoryBean(factory);
         registerBean(Oauth2ClientRepository.class, factory);
-    }
-
-    /**
-     * 注册发射器
-     *
-     * @param factory 上下文对象工厂
-     */
-    private void registerLauncherBean(DefaultListableBeanFactory factory) {
-        registerBean(SmsMessageLauncherImpl.class, factory);
-        registerBean(EmailMessageLauncherImpl.class, factory);
     }
 
     /**
@@ -552,6 +563,20 @@ public class AutoConfigureImportSelector {
         }
         if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
             registerBean(QrCodeLoginMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册二维码登录 WebSocket 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerWebSocketCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(QrCodeWebSocketAuthRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(QrCodeWebSocketAuthMemoryCache.class, factory);
         }
     }
 
@@ -626,6 +651,34 @@ public class AutoConfigureImportSelector {
     }
 
     /**
+     * 注册 Register code 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerRegisterCodeCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(RegisterCodeRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(RegisterCodeMemoryCache.class, factory);
+        }
+    }
+
+    /**
+     * 注册 ForgotPassword code 缓存
+     *
+     * @param factory 上下文对象工厂
+     */
+    private void registerForgotPasswordCodeCacheBean(DefaultListableBeanFactory factory) {
+        if (properties.getCache().getType() == Properties.Cache.Type.REDIS) {
+            registerBean(ForgotPasswordCodeRedisCache.class, factory);
+        }
+        if (properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+            registerBean(ForgotPasswordCodeMemoryCache.class, factory);
+        }
+    }
+
+    /**
      * 注册 bean 服务
      *
      * @param bc      bean 的类型
@@ -649,7 +702,6 @@ public class AutoConfigureImportSelector {
             boolean isScanSelf,
             boolean isScanInterfaces
     ) {
-        System.out.println("bc 2 >> " + bc);
         if (isScanSelf && isExistBean(bc, factory)) {
             return;
         }
@@ -685,7 +737,7 @@ public class AutoConfigureImportSelector {
     }
 
     /**
-     * 注册 bean 服务
+     * 注册属性 bean 服务
      *
      * @param bean    配置文件的 bean 对象
      * @param factory 上下文对象工厂
@@ -697,7 +749,6 @@ public class AutoConfigureImportSelector {
             }
             registerBean(Class.forName(bean.getName()), factory);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
