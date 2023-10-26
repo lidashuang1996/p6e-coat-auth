@@ -13,6 +13,7 @@ public class P6eAuthApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(P6eAuthApplication.class, args);
+        System.out.println("xxxxxxxxxxxxxx");
     }
 
 }

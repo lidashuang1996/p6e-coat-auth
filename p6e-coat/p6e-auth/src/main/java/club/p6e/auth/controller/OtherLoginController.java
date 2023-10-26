@@ -8,4 +8,11 @@ package club.p6e.auth.controller;
  */
 public interface OtherLoginController {
 
+    /**
+     * 类型名称
+     *
+     * @return 类型名称
+     */
+    public String type();
+
 }

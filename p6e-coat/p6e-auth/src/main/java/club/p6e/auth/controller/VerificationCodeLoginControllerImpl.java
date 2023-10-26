@@ -9,7 +9,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 验证码登录的默认实现
+ * 验证码登录的实现
  *
  * @author lidashuang
  * @version 1.0

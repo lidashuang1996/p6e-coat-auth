@@ -41,16 +41,27 @@ public class WebSocketMessageImpl implements WebSocketMessage {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMessageImpl.class);
 
+    /**
+     * 端口
+     */
     private int port;
 
+    /**
+     * NETTY 对象
+     */
     private EventLoopGroup boss = null;
     private EventLoopGroup work = null;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param properties 配置文件对象
+     */
     public WebSocketMessageImpl(Properties properties) {
         this.port = properties.getLogin().getQrCode().getWebSocket().getPort();
     }
 
-    @GetMapping("/auth")
+    @GetMapping("/qrcode/websocket/auth")
     public ResultContext auth(ServerWebExchange exchange) {
         return ResultContext.build(voucher(exchange));
     }
@@ -91,11 +102,11 @@ public class WebSocketMessageImpl implements WebSocketMessage {
         final VoucherGenerator generator = SpringUtil.getBean(VoucherGenerator.class);
         final QrCodeWebSocketAuthCache cache = SpringUtil.getBean(QrCodeWebSocketAuthCache.class);
         final String voucher = generator.execute();
-        AuthVoucher.init(exchange).flatMap(v -> {
-            final Map<String, Object> data = new HashMap<>(1);
-            data.put("voucher", v.getMark());
-            return cache.set(voucher, JsonUtil.toJson(data));
-        }).block();
+        AuthVoucher
+                .init(exchange)
+                .flatMap(v -> cache.set(voucher, JsonUtil.toJson(new HashMap<>() {{
+                    put("voucher", v.getMark());
+                }}))).block();
         return voucher;
     }
 
@@ -195,7 +206,7 @@ public class WebSocketMessageImpl implements WebSocketMessage {
         private final String id;
 
         /**
-         * WebSocketMessage 消息对象
+         * Web Socket Message 消息对象
          */
         private final WebSocketMessage webSocketMessage;
 

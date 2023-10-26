@@ -1,6 +1,6 @@
 package club.p6e.auth.service;
 
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -12,6 +12,6 @@ import reactor.core.publisher.Mono;
  */
 public interface Oauth2TokenService {
 
-    public Mono<Oauth2Context.Token.Dto> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param);
+    public Mono<OAuth2Context.Token.Dto> execute(ServerWebExchange exchange, OAuth2Context.Token.Request param);
 
 }

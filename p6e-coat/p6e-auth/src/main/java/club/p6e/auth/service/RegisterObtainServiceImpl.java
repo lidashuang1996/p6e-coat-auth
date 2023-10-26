@@ -83,7 +83,7 @@ public class RegisterObtainServiceImpl implements RegisterObtainService {
                             .flatMap(b -> {
                                 final Map<String, String> map = new HashMap<>();
                                 map.put("code", code);
-                                return Launcher.push(type, account, REGISTER_TEMPLATE, map);
+                                return Launcher.push(type, account, REGISTER_TEMPLATE, map, param.getLanguage());
                             });
                 })
                 .map(m -> new RegisterContext.Obtain.Dto().setAccount(account).setMessage(m));

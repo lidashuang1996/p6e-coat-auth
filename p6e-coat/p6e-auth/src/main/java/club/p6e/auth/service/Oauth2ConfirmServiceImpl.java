@@ -2,7 +2,7 @@ package club.p6e.auth.service;
 
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.cache.Oauth2CodeCache;
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.generator.OAuth2CodeGenerator;
 import org.springframework.web.server.ServerWebExchange;
@@ -41,7 +41,7 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
     }
 
     @Override
-    public Mono<Oauth2Context.Confirm.Dto> execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param) {
+    public Mono<OAuth2Context.Confirm.Dto> execute(ServerWebExchange exchange, OAuth2Context.Confirm.Request param) {
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
@@ -104,7 +104,7 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
                     return cache
                             .set(code, map)
                             .flatMap(b -> b ?
-                                    Mono.just(new Oauth2Context.Confirm.Dto()
+                                    Mono.just(new OAuth2Context.Confirm.Dto()
                                             .setCode(code)
                                             .setState(state)
                                             .setRedirectUri(redirectUri)) :

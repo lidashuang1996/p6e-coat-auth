@@ -1,6 +1,6 @@
 package club.p6e.auth.validator;
 
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import org.springframework.web.server.ServerWebExchange;
@@ -41,12 +41,12 @@ public class Oauth2AuthParameterValidator implements ParameterValidatorInterface
 
     @Override
     public Class<?> select() {
-        return Oauth2Context.Auth.Request.class;
+        return OAuth2Context.Auth.Request.class;
     }
 
     @Override
     public Mono<Boolean> execute(ServerWebExchange exchange, Object data) {
-        if (data instanceof final Oauth2Context.Auth.Request param) {
+        if (data instanceof final OAuth2Context.Auth.Request param) {
             final ServerHttpRequest request = exchange.getRequest();
             if (param.getClientId() == null) {
                 param.setClientId(request.getQueryParams().getFirst(CLIENT_ID_PARAM));

@@ -38,6 +38,7 @@ public class AuthWebFilter implements WebFilter, Ordered {
 
     @Override
     public @NonNull Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>");
         if (matcher.match(exchange.getRequest().getPath().value())) {
             return validator
                     .execute(exchange)
@@ -49,7 +50,7 @@ public class AuthWebFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return -1000;
     }
 
 }

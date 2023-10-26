@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 注册的实现
@@ -22,7 +21,8 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class RegisterControllerImpl implements RegisterController<RegisterContext.Request, ResultContext> {
+public class RegisterControllerImpl implements
+        RegisterController<RegisterContext.Request, ResultContext> {
 
     /**
      * 注册的服务对象
@@ -67,11 +67,11 @@ public class RegisterControllerImpl implements RegisterController<RegisterContex
 
     @Override
     public Mono<Void> def(ServerWebExchange exchange) {
-        final Map<String, String> m = new HashMap<>();
-        m.put(AuthVoucher.REGISTER, "true");
-        m.put(AuthVoucher.REGISTER_DATE, String.valueOf(System.currentTimeMillis()));
         return AuthVoucher
-                .create(m)
+                .create(new HashMap<>() {{
+                    put(AuthVoucher.REGISTER, "true");
+                    put(AuthVoucher.REGISTER_DATE, String.valueOf(System.currentTimeMillis()));
+                }})
                 .flatMap(v -> write(exchange, v.getMark()));
     }
 

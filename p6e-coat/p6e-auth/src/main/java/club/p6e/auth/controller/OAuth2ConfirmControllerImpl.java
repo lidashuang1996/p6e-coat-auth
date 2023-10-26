@@ -1,6 +1,6 @@
 package club.p6e.auth.controller;
 
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.context.ResultContext;
 import club.p6e.auth.service.Oauth2ConfirmService;
 import club.p6e.auth.validator.ParameterValidator;
@@ -14,8 +14,8 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2ConfirmControllerImpl
-        implements Oauth2ConfirmController<Oauth2Context.Confirm.Request, ResultContext> {
+public class OAuth2ConfirmControllerImpl
+        implements OAuth2ConfirmController<OAuth2Context.Confirm.Request, ResultContext> {
 
     /**
      * OAUTH2 CODE 模式确认服务
@@ -27,7 +27,7 @@ public class Oauth2ConfirmControllerImpl
      *
      * @param service OAUTH2 CODE 模式确认的服务对象
      */
-    public Oauth2ConfirmControllerImpl(Oauth2ConfirmService service) {
+    public OAuth2ConfirmControllerImpl(Oauth2ConfirmService service) {
         this.service = service;
     }
 
@@ -38,12 +38,12 @@ public class Oauth2ConfirmControllerImpl
      * @param param    参数对象
      * @return Mono/Void 对象
      */
-    protected Mono<Void> vp(ServerWebExchange exchange, Oauth2Context.Confirm.Request param) {
+    protected Mono<Void> vp(ServerWebExchange exchange, OAuth2Context.Confirm.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
 
     @Override
-    public Mono<ResultContext> execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param) {
+    public Mono<ResultContext> execute(ServerWebExchange exchange, OAuth2Context.Confirm.Request param) {
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))

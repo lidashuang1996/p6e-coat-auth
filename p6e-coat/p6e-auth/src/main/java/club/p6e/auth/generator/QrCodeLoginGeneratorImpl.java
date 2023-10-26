@@ -13,7 +13,7 @@ public class QrCodeLoginGeneratorImpl implements QrCodeLoginGenerator {
 
     @Override
     public String execute() {
-        return GeneratorUtil.uuid();
+        return (GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false)).toLowerCase();
     }
 
 }

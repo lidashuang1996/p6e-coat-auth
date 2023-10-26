@@ -9,8 +9,3 @@ spring:
 logging:
   config: 'classpath:p6e-logback.xml'
 
-club:
-  p6e:
-    auth:
-      crossDomain:
-        enabled: true

@@ -38,7 +38,7 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                 .setName(um.getName())
                 .setNickname(um.getNickname())
                 .setAvatar(um.getAvatar())
-                .setDescribe(um.getDescribe());
+                .setDescribe(um.getDescription());
         if (uam != null) {
             model.setPassword(uam.getPassword());
         }

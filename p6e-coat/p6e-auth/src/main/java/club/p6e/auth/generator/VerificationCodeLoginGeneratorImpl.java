@@ -13,13 +13,7 @@ public class VerificationCodeLoginGeneratorImpl implements VerificationCodeLogin
 
     @Override
     public String execute(String type) {
-        if (type.equalsIgnoreCase("SMS") || type.equalsIgnoreCase("EMAIL")) {
-            return GeneratorUtil.random(6, false, false).toLowerCase();
-        }
-//        if (type.equalsIgnoreCase("EMAIL")) {
-//            return GeneratorUtil.random(6, true, false).toUpperCase();
-//        }
-        return "";
+        return GeneratorUtil.random(6, false, false).toLowerCase();
     }
 
 }

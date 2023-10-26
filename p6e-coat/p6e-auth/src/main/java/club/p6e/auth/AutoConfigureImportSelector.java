@@ -6,6 +6,7 @@ import club.p6e.auth.controller.*;
 import club.p6e.auth.generator.*;
 import club.p6e.auth.message.WebSocketMessage;
 import club.p6e.auth.message.WebSocketMessageImpl;
+import club.p6e.auth.password.AuthPasswordEncryptorImpl;
 import club.p6e.auth.service.*;
 import club.p6e.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.auth.codec.PasswordTransmissionCodecImpl;
@@ -47,14 +48,9 @@ public class AutoConfigureImportSelector {
      * @param properties  配置文件对象
      * @param application 应用上下文对象
      */
-    public AutoConfigureImportSelector(
-            Properties properties,
-            Configuration configuration,
-            ApplicationContext application
-    ) {
+    public AutoConfigureImportSelector(Properties properties, ApplicationContext application) {
         // 初始化
         SpringUtil.init(application);
-        configuration.execute(properties);
         this.properties = properties;
 
         final AutowireCapableBeanFactory factory = application.getAutowireCapableBeanFactory();
@@ -66,8 +62,6 @@ public class AutoConfigureImportSelector {
         if (properties.isEnable()) {
             initMePage();
             registerAuthWebFilterBean(defaultListableBeanFactory);
-            registerRefererWebFilterBean(defaultListableBeanFactory);
-            registerCrossDomainWebFilterBean(defaultListableBeanFactory);
             registerBean(MeControllerImpl.class, defaultListableBeanFactory);
             registerBean(LogoutControllerImpl.class, defaultListableBeanFactory);
             registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
@@ -166,9 +160,9 @@ public class AutoConfigureImportSelector {
             registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2AuthControllerImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2TokenControllerImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmControllerImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2ConfirmControllerImpl.class, defaultListableBeanFactory);
         }
 
         // 注册->OAuth2客户端模式对象
@@ -229,11 +223,6 @@ public class AutoConfigureImportSelector {
             registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->网络请求签名对象
-        if (properties.isEnable() && properties.getSignature().isEnable()) {
-            registerBean(AuthSignatureWebFilter.class, defaultListableBeanFactory, true, false);
         }
     }
 
@@ -438,24 +427,6 @@ public class AutoConfigureImportSelector {
         for (final String path : properties.getInterceptor()) {
             matcher.register(path);
         }
-    }
-
-    /**
-     * 注册 referer 过滤器
-     *
-     * @param factory 上下文对象工厂
-     */
-    private void registerRefererWebFilterBean(DefaultListableBeanFactory factory) {
-        registerBean(AuthRefererWebFilter.class, factory, false, false);
-    }
-
-    /**
-     * 注册跨域过滤器
-     *
-     * @param factory 上下文对象工厂
-     */
-    private void registerCrossDomainWebFilterBean(DefaultListableBeanFactory factory) {
-        registerBean(AuthCrossDomainWebFilter.class, factory, false, false);
     }
 
     /**

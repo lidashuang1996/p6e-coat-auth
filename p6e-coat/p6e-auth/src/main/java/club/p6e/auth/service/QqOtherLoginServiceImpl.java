@@ -7,7 +7,7 @@ import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.HttpUtil;
 import club.p6e.auth.utils.JsonUtil;
 import club.p6e.auth.utils.TemplateParser;
-import club.p6e.auth.AuthPasswordEncryptor;
+import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;

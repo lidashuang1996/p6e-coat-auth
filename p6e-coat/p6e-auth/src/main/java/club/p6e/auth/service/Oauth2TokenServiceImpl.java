@@ -11,10 +11,10 @@ import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.JsonUtil;
 import club.p6e.auth.utils.SpringUtil;
 import club.p6e.auth.AuthOauth2Client;
-import club.p6e.auth.AuthPasswordEncryptor;
+import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.Properties;
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -82,7 +82,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     }
 
     @Override
-    public Mono<Oauth2Context.Token.Dto> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
+    public Mono<OAuth2Context.Token.Dto> execute(ServerWebExchange exchange, OAuth2Context.Token.Request param) {
         final String grantType = param.getGrantType();
         switch (grantType) {
             case PASSWORD_TYPE -> {
@@ -138,7 +138,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Oauth2Context.Token.Dto> executeClientType(Oauth2Context.Token.Request param) {
+    private Mono<OAuth2Context.Token.Dto> executeClientType(OAuth2Context.Token.Request param) {
         final String clientId = param.getClientId();
         final String clientSecret = param.getClientId();
         return oauth2ClientRepository
@@ -184,7 +184,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                     final Oauth2TokenClientAuthCache oauth2TokenClientAuthCache = SpringUtil.getBean(Oauth2TokenClientAuthCache.class);
                     return oauth2TokenClientAuthCache
                             .set(String.valueOf(m.getId()), JsonUtil.toJson(m), m.getScope(), accessToken, refreshToken)
-                            .map(t -> new Oauth2Context.Token.ClientDto()
+                            .map(t -> new OAuth2Context.Token.ClientDto()
                                     .setId(String.valueOf(t.getCid()))
                                     .setAccessToken(accessToken)
                                     .setRefreshToken(refreshToken)
@@ -199,7 +199,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Oauth2Context.Token.Dto> executePasswordType(Oauth2Context.Token.Request param) {
+    private Mono<OAuth2Context.Token.Dto> executePasswordType(OAuth2Context.Token.Request param) {
         final String username = param.getUsername();
         final String password = param.getPassword();
         final String clientId = param.getClientId();
@@ -262,7 +262,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Oauth2Context.Token.Dto> executeAuthorizationType(Oauth2Context.Token.Request param) {
+    private Mono<OAuth2Context.Token.Dto> executeAuthorizationType(OAuth2Context.Token.Request param) {
         final String code = param.getCode();
         final String clientId = param.getClientId();
         final String redirectUri = param.getRedirectUri();
@@ -331,7 +331,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
      * @param scope 作用域
      * @return 结果对象
      */
-    private Mono<Oauth2Context.Token.Dto> handleUserResult(String cid, String uid, String info, String scope) {
+    private Mono<OAuth2Context.Token.Dto> handleUserResult(String cid, String uid, String info, String scope) {
         if (!SpringUtil.exist(OAuth2TokenUserAuthAccessTokenGenerator.class)) {
             return Mono.error(GlobalExceptionContext.exceptionBeanException(
                     this.getClass(),
@@ -364,7 +364,7 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         final String openid = oauth2UserOpenIdGenerator.execute(cid, uid);
         return oauth2TokenUserAuthCache
                 .set(uid, info, scope, accessToken, refreshToken)
-                .map(t -> new Oauth2Context.Token.UserDto()
+                .map(t -> new OAuth2Context.Token.UserDto()
                         .setOpenId(openid)
                         .setAccessToken(t.getAccessToken())
                         .setRefreshToken(t.getRefreshToken())

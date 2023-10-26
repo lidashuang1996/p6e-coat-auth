@@ -43,7 +43,8 @@ public class QrCodeCallbackControllerImpl
 
     @Override
     public Mono<ResultContext> execute(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param) {
-        return vp(exchange, param).then(Mono.just(param))
+        return vp(exchange, param)
+                .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
                 .map(ResultContext::build);
     }

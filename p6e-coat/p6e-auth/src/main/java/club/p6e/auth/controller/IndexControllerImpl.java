@@ -10,7 +10,6 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 主页的实现
@@ -22,11 +21,12 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        final Map<String, String> m = new HashMap<>(2);
-        m.put(AuthVoucher.INDEX, "true");
-        m.put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
+        System.out.println("XXXXXXXXXXXXXXXX  " + exchange.getRequest().getURI().getPath());
         return AuthVoucher
-                .create(m)
+                .create(new HashMap<>() {{
+                    put(AuthVoucher.INDEX, "true");
+                    put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
+                }})
                 .flatMap(v -> write(exchange, v.getMark()));
     }
 
@@ -38,6 +38,7 @@ public class IndexControllerImpl implements IndexController {
      */
     protected Mono<Void> write(ServerWebExchange exchange, String voucher) {
         final AuthPage.Model login = AuthPage.login();
+        System.out.println(login.getContent());
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(login.getType());

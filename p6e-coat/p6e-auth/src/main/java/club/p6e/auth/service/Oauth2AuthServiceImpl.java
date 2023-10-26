@@ -6,7 +6,7 @@ import club.p6e.auth.utils.TemplateParser;
 import club.p6e.auth.utils.VerificationUtil;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -55,7 +55,7 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
     }
 
     @Override
-    public Mono<Void> execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param) {
+    public Mono<Void> execute(ServerWebExchange exchange, OAuth2Context.Auth.Request param) {
         final String responseType = param.getResponseType();
         if (CODE_TYPE.equalsIgnoreCase(responseType)) {
             // 判断是否启用 CODE 模型
@@ -83,7 +83,7 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
      * @param param 请求对象
      * @return 结果对象
      */
-    private Mono<Void> executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param) {
+    private Mono<Void> executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param) {
         final String scope = param.getScope();
         final String clientId = param.getClientId();
         final String redirectUri = param.getRedirectUri();

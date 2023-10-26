@@ -5,7 +5,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 二维码登录获取
+ * 二维码登录获取接口
  *
  * @author lidashuang
  * @version 1.0

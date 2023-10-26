@@ -4,7 +4,7 @@ import club.p6e.auth.context.RegisterContext;
 import club.p6e.auth.repository.UserAuthRepository;
 import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.VerificationUtil;
-import club.p6e.auth.AuthPasswordEncryptor;
+import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
 import club.p6e.auth.error.GlobalExceptionContext;

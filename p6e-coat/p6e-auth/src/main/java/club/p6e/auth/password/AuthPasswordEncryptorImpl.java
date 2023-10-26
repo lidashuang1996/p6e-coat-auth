@@ -1,4 +1,4 @@
-package club.p6e.auth;
+package club.p6e.auth.password;
 
 import org.springframework.util.DigestUtils;
 
@@ -15,7 +15,19 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
     /**
      * 种子
      */
-    private static final String SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tns";
+    public static final String SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tn2";
+    private static final String DEFAULT_SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tns";
+
+    /**
+     * 构造方法初始化
+     */
+    @SuppressWarnings("ALL")
+    public AuthPasswordEncryptorImpl() {
+        if (DEFAULT_SEED.equals(SEED)) {
+            throw new RuntimeException("Please modify the default <SEE> value. " +
+                    ">> club.p6e.auth.password.AuthPasswordEncryptorImpl.SEED = \"[your seed]\"");
+        }
+    }
 
     /**
      * 执行密码加密

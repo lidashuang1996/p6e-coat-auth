@@ -17,6 +17,9 @@ final class WebSocketHeartbeat {
      */
     private static final long INTERVAL = 60 * 1000;
 
+    /**
+     * 日志对象
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHeartbeat.class);
 
     /**
@@ -60,7 +63,7 @@ final class WebSocketHeartbeat {
      */
     private static class TI extends Thread {
 
-        @SuppressWarnings("all")
+        @SuppressWarnings("ALL")
         @Override
         public void run() {
             while (true) {
@@ -81,7 +84,9 @@ final class WebSocketHeartbeat {
                             if (context != null) {
                                 if (context.isRemoved()) {
                                     iterator.remove();
-                                } else if (now - model.getDate() > INTERVAL) {
+                                } else if (now - model.getUpdateDate() > INTERVAL) {
+                                    context.close();
+                                } else if (now - model.getCreateDate() > 15 * INTERVAL) {
                                     context.close();
                                 }
                             }

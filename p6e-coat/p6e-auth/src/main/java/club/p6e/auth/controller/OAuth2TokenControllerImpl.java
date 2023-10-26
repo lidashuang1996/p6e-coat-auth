@@ -1,6 +1,6 @@
 package club.p6e.auth.controller;
 
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.context.ResultContext;
 import club.p6e.auth.service.Oauth2TokenService;
 import club.p6e.auth.validator.ParameterValidator;
@@ -16,8 +16,8 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2TokenControllerImpl
-        implements Oauth2TokenController<Oauth2Context.Token.Request, ResultContext> {
+public class OAuth2TokenControllerImpl
+        implements OAuth2TokenController<OAuth2Context.Token.Request, ResultContext> {
 
     /**
      * OAUTH2 TOKEN 服务
@@ -29,16 +29,16 @@ public class Oauth2TokenControllerImpl
      *
      * @param service OAUTH2 TOKEN 服务
      */
-    public Oauth2TokenControllerImpl(Oauth2TokenService service) {
+    public OAuth2TokenControllerImpl(Oauth2TokenService service) {
         this.service = service;
     }
 
-    protected Mono<Void> vp(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
+    protected Mono<Void> vp(ServerWebExchange exchange, OAuth2Context.Token.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
 
     @Override
-    public Mono<ResultContext> execute(ServerWebExchange exchange, Oauth2Context.Token.Request param) {
+    public Mono<ResultContext> execute(ServerWebExchange exchange, OAuth2Context.Token.Request param) {
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))

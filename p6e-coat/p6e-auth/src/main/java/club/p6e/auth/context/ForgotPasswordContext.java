@@ -43,6 +43,7 @@ public class ForgotPasswordContext implements Serializable {
         @Accessors(chain = true)
         public static class Request implements Serializable {
             private String account;
+            private  String language;
         }
 
         @Data

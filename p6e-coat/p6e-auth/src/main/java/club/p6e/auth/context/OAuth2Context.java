@@ -5,8 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * OAUTH2 的上下文对象
@@ -14,7 +12,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2Context implements Serializable {
+public class OAuth2Context implements Serializable {
 
     /**
      * 认证对象

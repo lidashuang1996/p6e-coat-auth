@@ -30,12 +30,11 @@ public class UserModel implements Serializable {
     public static final String NAME = "name";
     public static final String NICKNAME = "nickname";
     public static final String AVATAR = "avatar";
-    public static final String DESCRIBE = "describe";
+    public static final String DESCRIPTION = "description";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
     public static final String VERSION = "version";
-    public static final String IS_DELETE = "isDelete";
 
     @Id
     private Integer id;
@@ -47,11 +46,10 @@ public class UserModel implements Serializable {
     private String name;
     private String nickname;
     private String avatar;
-    private String describe;
+    private String description;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private String operator;
     private Integer version;
-    private Integer isDelete;
 
 }

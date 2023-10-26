@@ -15,12 +15,22 @@ import reactor.core.publisher.Mono;
  */
 public class QqOtherLoginController implements OtherLoginController {
 
+    /**
+     * QQ 第三方登录的服务对象
+     */
     private final QqOtherLoginService service;
+
     /**
      * 认证授权的服务对象
      */
     private final AuthCertificateAuthority authority;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param service   QQ 第三方登录的服务对象
+     * @param authority 认证授权的服务对象
+     */
     public QqOtherLoginController(QqOtherLoginService service, AuthCertificateAuthority authority) {
         this.service = service;
         this.authority = authority;
@@ -43,8 +53,11 @@ public class QqOtherLoginController implements OtherLoginController {
     public Mono<ResultContext> callback(ServerWebExchange exchange) {
         return service
                 .callback(exchange)
-                .flatMap(u -> authority.award(exchange, u))
-                .map(ResultContext::build);
+                .flatMap(u -> authority.award(exchange, u));
     }
 
+    @Override
+    public String type() {
+        return "QQ";
+    }
 }

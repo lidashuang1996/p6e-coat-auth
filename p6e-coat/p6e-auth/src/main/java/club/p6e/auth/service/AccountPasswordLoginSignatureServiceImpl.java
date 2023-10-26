@@ -11,7 +11,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 账号密码登录的密码签名服务的实现
@@ -63,19 +62,21 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                     if (json == null) {
                         return Mono.error(GlobalExceptionContext.exceptionDataSerializationException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param)",
+                                "fun execute(ServerWebExchange exchange, " +
+                                        "LoginContext.AccountPasswordSignature.Request param)",
                                 "Account password login signature cache data serialization exception."
                         ));
                     }
                     final String mark = generator.execute();
-                    final Map<String, String> map = new HashMap<>(2);
-                    map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
-                    map.put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
                     return cache
                             .set(mark, json)
-                            .flatMap(b -> b ? v.set(map) : Mono.error(GlobalExceptionContext.exceptionCacheWritingException(
+                            .flatMap(b -> b ? v.set(new HashMap<>() {{
+                                put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
+                                put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
+                            }}) : Mono.error(GlobalExceptionContext.exceptionCacheWritingException(
                                     this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPasswordSignature.Request param)",
+                                    "fun execute(ServerWebExchange exchange, " +
+                                            "LoginContext.AccountPasswordSignature.Request param)",
                                     "Account password login signature cache writing exception."
                             )))
                             .map(rv -> new LoginContext.AccountPasswordSignature.Dto().setContent(model.getPublicKey()));

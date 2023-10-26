@@ -23,7 +23,7 @@ public final class Launcher {
      * @param content  内容
      * @return 推送的结果返回
      */
-    public static Mono<String> push(LauncherType type, String account, String template, Map<String, String> content) {
+    public static Mono<String> push(LauncherType type, String account, String template, Map<String, String> content, String language) {
         if (LauncherType.SMS == type) {
             return SpringUtil.getBean(SmsMessageLauncher.class).execute(account, template, content);
         }

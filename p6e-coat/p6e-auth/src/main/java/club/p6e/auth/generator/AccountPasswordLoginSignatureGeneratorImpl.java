@@ -13,7 +13,7 @@ public class AccountPasswordLoginSignatureGeneratorImpl
 
     @Override
     public String execute() {
-        return (GeneratorUtil.uuid() + GeneratorUtil.random()).toLowerCase();
+        return (GeneratorUtil.uuid() + GeneratorUtil.random(6, true, false)).toLowerCase();
     }
 
 }

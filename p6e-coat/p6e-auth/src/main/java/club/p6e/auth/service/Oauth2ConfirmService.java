@@ -1,6 +1,6 @@
 package club.p6e.auth.service;
 
-import club.p6e.auth.context.Oauth2Context;
+import club.p6e.auth.context.OAuth2Context;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +18,6 @@ public interface Oauth2ConfirmService {
      * @param request 请求对象
      * @return 结果对象
      */
-    public Mono<Oauth2Context.Confirm.Dto> execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request request);
+    public Mono<OAuth2Context.Confirm.Dto> execute(ServerWebExchange exchange, OAuth2Context.Confirm.Request request);
 
 }

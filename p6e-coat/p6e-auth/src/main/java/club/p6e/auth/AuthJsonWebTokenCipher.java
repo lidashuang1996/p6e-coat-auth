@@ -8,6 +8,8 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * 认证 JWT 加密解密的密钥
+ *
  * @author lidashuang
  * @version 1.0
  */

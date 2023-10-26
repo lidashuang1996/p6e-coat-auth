@@ -50,39 +50,6 @@ public class Properties implements Serializable {
     private String jwtRefreshTokenSecret = null;
 
     /**
-     * Referer
-     */
-    private Referer referer = new Referer();
-
-    @Data
-    @Accessors(chain = true)
-    public static class Referer implements Serializable {
-        /**
-         * 是否开启对请求的 referer 的参数验证
-         */
-        private boolean enabled = false;
-
-        /**
-         * 符合 referer 验证的白名单配置
-         */
-        private String[] whiteList = new String[]{"*"};
-    }
-
-    /**
-     * 跨域
-     */
-    private CrossDomain crossDomain = new CrossDomain();
-
-    @Data
-    @Accessors(chain = true)
-    public static class CrossDomain implements Serializable {
-        /**
-         * 是否开启跨域的支持
-         */
-        private boolean enabled = true;
-    }
-
-    /**
      * 认证的账号模式
      */
     private Mode mode = Mode.PHONE_OR_MAILBOX;

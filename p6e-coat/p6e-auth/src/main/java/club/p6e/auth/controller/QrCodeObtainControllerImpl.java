@@ -9,13 +9,13 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 二维码登录获取实现
+ * 二维码登录获取的实现
  *
  * @author lidashuang
  * @version 1.0
  */
-public class QrCodeObtainControllerImpl
-        implements QrCodeObtainController<LoginContext.QrCodeObtain.Request, ResultContext> {
+public class QrCodeObtainControllerImpl implements
+        QrCodeObtainController<LoginContext.QrCodeObtain.Request, ResultContext> {
 
     /**
      * 二维码获取服务

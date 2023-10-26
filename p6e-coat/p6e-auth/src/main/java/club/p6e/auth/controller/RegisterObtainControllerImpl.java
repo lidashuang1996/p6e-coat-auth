@@ -8,14 +8,24 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 注册的验证码获取的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
 public class RegisterObtainControllerImpl
         implements RegisterObtainController<RegisterContext.Obtain.Request, ResultContext> {
 
+    /**
+     * 注册验证码获取的服务对象
+     */
     private final RegisterObtainService service;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param service 注册验证码获取的服务对象
+     */
     public RegisterObtainControllerImpl(RegisterObtainService service) {
         this.service = service;
     }

@@ -5,7 +5,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * OAUTH2 认证
+ * OAUTH2 CODE 模式
+ * 进行认证的二次确认
  *
  * @param <P> 参数对象类型
  * @param <R> 结果对象类型
@@ -13,18 +14,18 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/oauth2/auth")
-public interface Oauth2AuthController<P, R> {
+@RequestMapping("/oauth2/confirm")
+public interface OAuth2ConfirmController<P, R> {
 
     /**
-     * [GET]
-     * OAuth2 认证页面
+     * [POST]
+     * OAuth2 二次确认
      *
      * @param param    请求对象
      * @param exchange ServerWebExchange 对象
      * @return 结果对象
      */
-    @GetMapping("")
-    public Mono<Void> execute(ServerWebExchange exchange, P param);
+    @PostMapping("")
+    public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

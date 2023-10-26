@@ -5,6 +5,7 @@ import club.p6e.auth.utils.GeneratorUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.CriteriaDefinition;
 import org.springframework.data.relational.core.query.Query;
 import reactor.core.publisher.Mono;
 
@@ -45,7 +46,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findById(Integer id) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.ID).is(id).and(UserModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserModel.ID).is(id)),
                 UserModel.class
         );
     }
@@ -58,7 +59,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findByAccount(String account) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserModel.ACCOUNT).is(account)),
                 UserModel.class
         );
     }
@@ -71,9 +72,8 @@ public class UserRepository {
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
-                .setDescribe("")
+                .setDescription("")
                 .setVersion(0)
-                .setIsDelete(0)
                 .setOperator("register_sys")
                 .setCreateDate(LocalDateTime.now())
                 .setUpdateDate(LocalDateTime.now());
@@ -88,7 +88,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findByPhone(String phone) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.PHONE).is(phone).and(UserModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserModel.PHONE).is(phone)),
                 UserModel.class
         );
     }
@@ -103,9 +103,8 @@ public class UserRepository {
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
-                .setDescribe("")
+                .setDescription("")
                 .setVersion(0)
-                .setIsDelete(0)
                 .setOperator("register_sys")
                 .setCreateDate(LocalDateTime.now())
                 .setUpdateDate(LocalDateTime.now());
@@ -120,7 +119,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findByMailbox(String mailbox) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox).and(UserModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox)),
                 UserModel.class
         );
     }
@@ -135,15 +134,13 @@ public class UserRepository {
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
-                .setDescribe("")
+                .setDescription("")
                 .setVersion(0)
-                .setIsDelete(0)
                 .setOperator("register_sys")
                 .setCreateDate(LocalDateTime.now())
                 .setUpdateDate(LocalDateTime.now());
         return template.insert(model);
     }
-
 
 
     /**
@@ -155,13 +152,9 @@ public class UserRepository {
     public Mono<UserModel> findByPhoneOrMailbox(String content) {
         System.out.println("findByPhoneOrMailbox ::: " + content);
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.IS_DELETE).is(0)
-                        .and(Criteria.empty().or(
-                                List.of(
-                                        Criteria.where(UserModel.PHONE).is(content),
-                                        Criteria.where(UserModel.MAILBOX).is(content)
-                                )
-                        ))),
+                Query.query(Criteria.where(UserModel.PHONE).is(content)
+                                .or(Criteria.where(UserModel.MAILBOX).is(content))
+                ),
                 UserModel.class
         );
     }
@@ -175,9 +168,8 @@ public class UserRepository {
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
-                .setDescribe("")
+                .setDescription("")
                 .setVersion(0)
-                .setIsDelete(0)
                 .setOperator("register_sys")
                 .setCreateDate(LocalDateTime.now())
                 .setUpdateDate(LocalDateTime.now());

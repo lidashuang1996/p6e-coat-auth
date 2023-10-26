@@ -1,4 +1,4 @@
-package club.p6e.auth;
+package club.p6e.auth.password;
 
 /**
  * 认证密码加密

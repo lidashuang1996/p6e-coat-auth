@@ -1,6 +1,6 @@
 package club.p6e.auth.service;
 
-import club.p6e.auth.AuthPasswordEncryptor;
+import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
 import club.p6e.auth.cache.ForgotPasswordCodeCache;

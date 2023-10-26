@@ -1,5 +1,7 @@
 package club.p6e.coat.file.context;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
+@Getter
 public class OpenUploadContext extends HashMap<String, Object> implements Serializable {
 
     /**
@@ -33,10 +36,6 @@ public class OpenUploadContext extends HashMap<String, Object> implements Serial
         if (map.get("name") != null && map.get("name") instanceof final String content) {
             this.setName(content);
         }
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

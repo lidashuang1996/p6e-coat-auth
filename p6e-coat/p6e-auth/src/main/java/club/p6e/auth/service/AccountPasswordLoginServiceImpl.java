@@ -5,7 +5,7 @@ import club.p6e.auth.repository.UserAuthRepository;
 import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.JsonUtil;
 import club.p6e.auth.utils.SpringUtil;
-import club.p6e.auth.AuthPasswordEncryptor;
+import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.Properties;
@@ -70,7 +70,8 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     protected Mono<String> executeTransmissionDecryption(AuthVoucher voucher, String content) {
         final String mark = voucher.get(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK);
-        return Mono.just(mark)
+        return Mono
+                .just(mark)
                 .flatMap(m -> {
                     if (SpringUtil.exist(PasswordSignatureCache.class)) {
                         return SpringUtil.getBean(PasswordSignatureCache.class).get(m);
@@ -103,7 +104,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     }
                 })
                 .publishOn(Schedulers.boundedElastic())
-                .doFinally(signalType -> SpringUtil.getBean(PasswordSignatureCache.class).del(mark).block());
+                .doFinally(t -> SpringUtil.getBean(PasswordSignatureCache.class).del(mark).block());
     }
 
     @Override
@@ -112,7 +113,8 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> ete ? executeTransmissionDecryption(v, param.getPassword()).map(param::setPassword) : Mono.just(param))
+                .flatMap(v -> ete ? executeTransmissionDecryption(
+                        v, param.getPassword()).map(param::setPassword) : Mono.just(param))
                 .flatMap(p -> switch (mode) {
                     case PHONE -> executePhoneMode(p);
                     case MAILBOX -> executeMailboxMode(p);

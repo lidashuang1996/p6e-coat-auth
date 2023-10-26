@@ -44,7 +44,7 @@ public class UserAuthRepository {
      */
     public Mono<UserAuthModel> findById(Integer id) {
         return template.selectOne(
-                Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserAuthModel.ID).is(id)),
                 UserAuthModel.class
         );
     }
@@ -53,7 +53,7 @@ public class UserAuthRepository {
         return template.selectOne(
                 Query.query(Criteria
                         .where(UserAuthModel.ACCOUNT).is(account)
-                        .and(UserAuthModel.IS_DELETE).is(0)
+
                 ), UserAuthModel.class
         );
     }
@@ -62,7 +62,7 @@ public class UserAuthRepository {
         return template.selectOne(
                 Query.query(Criteria
                         .where(UserAuthModel.PHONE).is(account)
-                        .and(UserAuthModel.IS_DELETE).is(0)
+
                 ), UserAuthModel.class
         );
     }
@@ -71,7 +71,7 @@ public class UserAuthRepository {
         return template.selectOne(
                 Query.query(Criteria
                         .where(UserAuthModel.MAILBOX).is(account)
-                        .and(UserAuthModel.IS_DELETE).is(0)
+
                 ), UserAuthModel.class
         );
     }
@@ -81,7 +81,7 @@ public class UserAuthRepository {
                 Query.query(Criteria
                         .where(UserAuthModel.PHONE).is(account)
                         .or(UserAuthModel.MAILBOX).is(account)
-                        .and(UserAuthModel.IS_DELETE).is(0)
+
                 ), UserAuthModel.class
         );
     }
@@ -94,7 +94,7 @@ public class UserAuthRepository {
      */
     public Mono<UserAuthModel> findByQq(String qq) {
         return template.selectOne(
-                Query.query(Criteria.where(UserAuthModel.QQ).is(qq).and(UserAuthModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserAuthModel.QQ).is(qq)),
                 UserAuthModel.class
         );
     }
@@ -103,7 +103,6 @@ public class UserAuthRepository {
     public Mono<UserAuthModel> create(UserAuthModel model) {
         model
                 .setVersion(0)
-                .setIsDelete(0)
                 .setOperator("register_sys")
                 .setCreateDate(LocalDateTime.now())
                 .setUpdateDate(LocalDateTime.now());
@@ -112,7 +111,7 @@ public class UserAuthRepository {
 
     public Mono<Long> updatePassword(Integer id, String password) {
         return template.update(
-                Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(UserAuthModel.ID).is(id)),
                 Update.update(UserAuthModel.PASSWORD, password),
                 UserAuthModel.class
         );

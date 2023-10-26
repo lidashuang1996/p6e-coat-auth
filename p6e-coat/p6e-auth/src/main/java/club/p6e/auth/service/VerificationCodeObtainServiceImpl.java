@@ -118,7 +118,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
                                 if (b) {
                                     final Map<String, String> tc = new HashMap<>(1);
                                     tc.put("code", code);
-                                    return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc);
+                                    return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc, param.getLanguage());
                                 } else {
                                     return Mono.error(GlobalExceptionContext.executeCacheException(
                                             this.getClass(),

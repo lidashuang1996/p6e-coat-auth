@@ -31,7 +31,6 @@ public class UserAuthModel implements Serializable {
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
     public static final String VERSION = "version";
-    public static final String IS_DELETE = "isDelete";
 
     @Id
     private Integer id;
@@ -44,6 +43,5 @@ public class UserAuthModel implements Serializable {
     private LocalDateTime updateDate;
     private String operator;
     private Integer version;
-    private Integer isDelete;
 
 }

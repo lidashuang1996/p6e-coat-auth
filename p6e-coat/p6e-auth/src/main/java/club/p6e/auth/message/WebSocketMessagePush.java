@@ -18,12 +18,19 @@ import java.util.function.Function;
  */
 final class WebSocketMessagePush {
 
+    /**
+     * 推送的线程池长度
+     */
+    private static int THREAD_LENGTH = 10;
+
+    /**
+     * 默认的线程池长度
+     */
     private static final int DEFAULT_THREAD_LENGTH = 10;
 
     /**
      * 推送的线程池对象
      */
-    private static int THREAD_LENGTH = 1;
     private static ThreadPoolExecutor EXECUTOR = null;
 
     /**
@@ -51,7 +58,9 @@ final class WebSocketMessagePush {
         }
     }
 
-
+    /**
+     * 关闭线程池对象
+     */
     public synchronized static void close() {
         if (EXECUTOR != null) {
             EXECUTOR.shutdown();
@@ -76,9 +85,15 @@ final class WebSocketMessagePush {
         return id;
     }
 
+    /**
+     * 执行获取需要发送的客户端会话对象列表
+     *
+     * @param list 获取全部的客户端会话对象列表
+     * @return 需要发送的客户端会话对象分组列表
+     */
     private static List<List<WebSocketSessionManager.Model>> executeLoadBalancing(List<WebSocketSessionManager.Model> list) {
-        final List<List<WebSocketSessionManager.Model>> result = new ArrayList<>();
         final int size = list.size();
+        final List<List<WebSocketSessionManager.Model>> result = new ArrayList<>();
         if (size > 0) {
             for (int i = 0; i < THREAD_LENGTH; i++) {
                 result.add(new ArrayList<>());
@@ -133,7 +148,7 @@ final class WebSocketMessagePush {
             final Map<String, Object> map = new HashMap<>();
             map.put("id", id);
             map.put("content", content);
-            map.put("type", "notice_event");
+            map.put("type", "websocket_event");
             final String message = JsonUtil.toJson(map);
             for (final WebSocketSessionManager.Model model : list) {
                 model.getContext().writeAndFlush(new TextWebSocketFrame(message));
