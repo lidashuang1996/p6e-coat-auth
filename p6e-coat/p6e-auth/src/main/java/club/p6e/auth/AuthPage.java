@@ -25,6 +25,11 @@ public final class AuthPage {
     /**
      * REGISTER PAGE
      */
+    private static final Model OAUTH2_CONFIRM = new Model("I am on the register page.");
+
+    /**
+     * REGISTER PAGE
+     */
     private static final Model REGISTER = new Model("I am on the register page.");
 
     /**
@@ -168,6 +173,10 @@ public final class AuthPage {
     public static void setForgotPassword(MediaType type, String content) {
         FORGOT_PASSWORD.setType(type);
         FORGOT_PASSWORD.setContent(content);
+    }
+
+    public static Model oAuth2Confirm() {
+        return OAUTH2_CONFIRM;
     }
 
     /**

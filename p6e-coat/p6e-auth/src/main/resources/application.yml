@@ -5,7 +5,14 @@ spring:
   application:
     name: 'p6e-coat-parent'
   config:
-    import: D://env/p6e-coat-file-application.yml
+    import: /opt/p6e/auth/p6e-auth-application.yml
 logging:
   config: 'classpath:p6e-logback.xml'
 
+club:
+  p6e:
+    auth:
+      page:
+        login: 'classpath:page/index.html'
+        register: 'classpath:page/index.html'
+        forgot-password: 'classpath:page/index.html'

@@ -13,6 +13,13 @@ import reactor.core.publisher.Mono;
 public interface Oauth2ConfirmService {
 
     /**
+     * 默认的页面
+     * @param exchange 请求对象
+     * @return 结果对象
+     */
+    public Mono<Void> def(ServerWebExchange exchange);
+
+    /**
      * 执行客户端刷新令牌服务
      *
      * @param request 请求对象

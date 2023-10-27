@@ -1,13 +1,19 @@
 package club.p6e.auth.service;
 
+import club.p6e.auth.AuthPage;
 import club.p6e.auth.AuthVoucher;
 import club.p6e.auth.cache.Oauth2CodeCache;
 import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.generator.OAuth2CodeGenerator;
+import club.p6e.auth.utils.JsonUtil;
+import club.p6e.auth.utils.TemplateParser;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +44,31 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
     public Oauth2ConfirmServiceImpl(Oauth2CodeCache cache, OAuth2CodeGenerator generator) {
         this.cache = cache;
         this.generator = generator;
+    }
+
+    /**
+     * 写入返回数据
+     *
+     * @param exchange ServerWebExchange 对象
+     * @return Mono/Void 对象
+     */
+    protected Mono<Void> write(ServerWebExchange exchange, String content) {
+        final ServerHttpResponse response = exchange.getResponse();
+        final AuthPage.Model oAuth2Confirm = AuthPage.oAuth2Confirm();
+        response.setStatusCode(HttpStatus.OK);
+        response.getHeaders().setContentType(oAuth2Confirm.getType());
+        return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
+                TemplateParser.execute(
+                        oAuth2Confirm.getContent(), "page", "oauth2-reconfirm", "data", content
+                ).getBytes(StandardCharsets.UTF_8)
+        )));
+    }
+
+    @Override
+    public Mono<Void> def(ServerWebExchange exchange) {
+        return AuthVoucher
+                .init(exchange)
+                .flatMap(v -> write(exchange, JsonUtil.toJson(v.getOAuth2())));
     }
 
     @Override

@@ -1,0 +1,401 @@
+2023-10-26 09:37:21 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 38888 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 09:37:21 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 09:37:22 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 09:37:22 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 09:37:22 [main] INFO - Finished Spring Data repository scanning in 23 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 09:37:22 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 09:37:22 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 09:37:22 [main] INFO - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2023-10-26 09:37:22 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 09:37:22 [main] INFO - Netty started on port 7322
+2023-10-26 09:37:22 [main] INFO - Started P6eAuthApplication in 1.574 seconds (process running for 1.939)
+2023-10-26 10:30:50 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 32308 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 10:30:50 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 10:30:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 10:30:50 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 10:30:50 [main] INFO - Finished Spring Data repository scanning in 24 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 10:30:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 10:30:50 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 10:30:50 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 10:30:51 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 10:30:51 [main] INFO - Netty started on port 7322
+2023-10-26 10:30:51 [main] INFO - Started P6eAuthApplication in 1.402 seconds (process running for 1.685)
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> handlerAdded
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> channelRegistered
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> channelActive
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> channelReadComplete
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> channelInactive
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> channelUnregistered
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> disconnect
+2023-10-26 10:46:34 [nioEventLoopGroup-4-1] INFO - [ d345c2a62e154dbbabef1edb0239deb9689669 ] ==> handlerRemoved
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> handlerAdded
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> channelRegistered
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> channelActive
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> channelReadComplete
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> channelInactive
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> channelUnregistered
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> disconnect
+2023-10-26 10:46:54 [nioEventLoopGroup-4-2] INFO - [ ea49c6b325614d71866f047e773a848c772167 ] ==> handlerRemoved
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> handlerAdded
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> channelRegistered
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> channelActive
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> channelReadComplete
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> channelInactive
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> channelUnregistered
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> disconnect
+2023-10-26 10:56:57 [nioEventLoopGroup-4-3] INFO - [ a8355c29afcb4c45b8d3b5a84bbe26a8144892 ] ==> handlerRemoved
+2023-10-26 10:57:12 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=198657}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> handlerAdded
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> channelRegistered
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> channelActive
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> channelReadComplete
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> channelInactive
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> channelUnregistered
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> disconnect
+2023-10-26 10:58:31 [nioEventLoopGroup-4-4] INFO - [ 6da36e3bd25c48a3a1ffe031050ba523921440 ] ==> handlerRemoved
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> handlerAdded
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> channelRegistered
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> channelActive
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> channelReadComplete
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> channelInactive
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> channelUnregistered
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> disconnect
+2023-10-26 10:58:33 [nioEventLoopGroup-4-5] INFO - [ c51b5891f3dd454f880d6809715165d3668089 ] ==> handlerRemoved
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> handlerAdded
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> channelRegistered
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> channelActive
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> channelReadComplete
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> channelInactive
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> channelUnregistered
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> disconnect
+2023-10-26 11:01:49 [nioEventLoopGroup-4-6] INFO - [ c2288730312b42fdbe522b314e1a59c0856524 ] ==> handlerRemoved
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> handlerAdded
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> channelRegistered
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> channelActive
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> channelReadComplete
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> channelInactive
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> channelUnregistered
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> disconnect
+2023-10-26 11:01:58 [nioEventLoopGroup-4-7] INFO - [ 845c3bf39c624bb2a2e70d4522ec034e553726 ] ==> handlerRemoved
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> handlerAdded
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> channelRegistered
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> channelActive
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> channelReadComplete
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> channelInactive
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> channelUnregistered
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> disconnect
+2023-10-26 11:02:45 [nioEventLoopGroup-4-8] INFO - [ 2fb782d0f7b34f4683ce9719fd8734b6903903 ] ==> handlerRemoved
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> handlerAdded
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> channelRegistered
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> channelActive
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> channelReadComplete
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> channelInactive
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> channelUnregistered
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> disconnect
+2023-10-26 11:05:12 [nioEventLoopGroup-4-9] INFO - [ 7d5b0127b5954341a9d62a3b4c3da37f084200 ] ==> handlerRemoved
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> handlerAdded
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> channelRegistered
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> channelActive
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> channelReadComplete
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> channelInactive
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> channelUnregistered
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> disconnect
+2023-10-26 11:07:44 [nioEventLoopGroup-4-10] INFO - [ 220ee2a621a3418192aedd0178643189225529 ] ==> handlerRemoved
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> handlerAdded
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> channelRegistered
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> channelActive
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> channelReadComplete
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> channelInactive
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> channelUnregistered
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> disconnect
+2023-10-26 11:07:50 [nioEventLoopGroup-4-11] INFO - [ f5f1f80036784e668668c86c3492dd31736657 ] ==> handlerRemoved
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> handlerAdded
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> channelRegistered
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> channelActive
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> channelReadComplete
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> channelInactive
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> channelUnregistered
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> disconnect
+2023-10-26 11:14:47 [nioEventLoopGroup-4-12] INFO - [ e67ea55172814591bb5f496c5b1dae05042923 ] ==> handlerRemoved
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> handlerAdded
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> channelRegistered
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> channelActive
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> channelReadComplete
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> channelInactive
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> channelUnregistered
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> disconnect
+2023-10-26 11:15:26 [nioEventLoopGroup-4-13] INFO - [ cbfb9f067757463c9ddeb9f6e765c0a9886857 ] ==> handlerRemoved
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> handlerAdded
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> channelRegistered
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> channelActive
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$ServerHandshakeStateEvent
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> userEventTriggered, msg: class io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler$HandshakeComplete
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> channelReadComplete
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> channelInactive
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> channelUnregistered
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> disconnect
+2023-10-26 11:16:21 [nioEventLoopGroup-4-14] INFO - [ eeca5f5754ad47a5a6c484cb7b269093359209 ] ==> handlerRemoved
+2023-10-26 12:52:31 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 34560 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 12:52:31 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 12:52:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 12:52:31 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 12:52:31 [main] INFO - Finished Spring Data repository scanning in 23 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 12:52:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 12:52:31 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 12:52:31 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 12:52:32 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 12:52:32 [main] INFO - Netty started on port 7322
+2023-10-26 12:52:32 [main] INFO - Started P6eAuthApplication in 1.402 seconds (process running for 1.707)
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> handlerAdded
+2023-10-26 12:52:59 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> handlerAdded
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelRegistered
+2023-10-26 12:52:59 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> channelRegistered
+2023-10-26 12:52:59 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> channelActive
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelActive
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelRead, msg: class io.netty.handler.codec.http.DefaultHttpRequest
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelRead, msg: class io.netty.handler.codec.http.LastHttpContent$1
+2023-10-26 12:52:59 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelReadComplete
+2023-10-26 12:53:10 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelReadComplete
+2023-10-26 12:53:10 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelInactive
+2023-10-26 12:53:10 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> channelUnregistered
+2023-10-26 12:53:10 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> disconnect
+2023-10-26 12:53:10 [nioEventLoopGroup-4-1] INFO - [ cca65042ad7241de9ebfa418b2900632100853 ] ==> handlerRemoved
+2023-10-26 12:54:01 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> channelReadComplete
+2023-10-26 12:54:01 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> channelInactive
+2023-10-26 12:54:01 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> channelUnregistered
+2023-10-26 12:54:01 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> disconnect
+2023-10-26 12:54:01 [nioEventLoopGroup-4-2] INFO - [ 69b92ca141d94d72829933219c03955f948528 ] ==> handlerRemoved
+2023-10-26 12:54:01 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=218683}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 12:55:16 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=731682}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 13:22:47 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 41144 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 13:22:47 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 13:22:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 13:22:47 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 13:22:47 [main] INFO - Finished Spring Data repository scanning in 27 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 13:22:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 13:22:47 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 13:22:47 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 13:22:48 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 13:22:48 [main] INFO - Netty started on port 7322
+2023-10-26 13:22:48 [main] INFO - Started P6eAuthApplication in 1.442 seconds (process running for 1.723)
+2023-10-26 15:54:43 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 26952 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 15:54:43 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 15:54:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 15:54:43 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 15:54:43 [main] INFO - Finished Spring Data repository scanning in 24 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 15:54:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 15:54:43 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 15:54:43 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 15:54:43 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 15:54:44 [main] INFO - Netty started on port 7322
+2023-10-26 15:54:44 [main] INFO - Started P6eAuthApplication in 1.363 seconds (process running for 1.647)
+2023-10-26 15:55:01 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=847285}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 15:56:03 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=604243}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 16:18:48 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=814484}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:03:56 [reactor-tcp-nio-2] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=659091}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:16:08 [reactor-tcp-nio-2] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=189118}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:20:14 [reactor-tcp-nio-2] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=417936}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:24:21 [reactor-tcp-nio-2] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=043707}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:28:48 [reactor-tcp-nio-2] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=000545}   |
+--------------------------------------------------------------------
+
+
+2023-10-26 17:30:38 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 33632 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 17:30:38 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 17:30:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:30:38 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 17:30:38 [main] INFO - Finished Spring Data repository scanning in 29 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 17:30:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:30:38 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 17:30:38 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 17:30:38 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 17:30:39 [main] INFO - Netty started on port 7322
+2023-10-26 17:30:39 [main] INFO - Started P6eAuthApplication in 1.422 seconds (process running for 1.812)
+2023-10-26 17:35:47 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 24760 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 17:35:47 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 17:35:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:35:47 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 17:35:47 [main] INFO - Finished Spring Data repository scanning in 22 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 17:35:47 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:35:47 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 17:35:47 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 17:35:48 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 17:35:48 [main] INFO - Netty started on port 7322
+2023-10-26 17:35:48 [main] INFO - Started P6eAuthApplication in 1.356 seconds (process running for 1.726)
+2023-10-26 17:36:46 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 32368 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 17:36:46 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 17:36:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:36:46 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 17:36:46 [main] INFO - Finished Spring Data repository scanning in 25 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 17:36:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:36:46 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 17:36:46 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 17:36:46 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 17:36:47 [main] INFO - Netty started on port 7322
+2023-10-26 17:36:47 [main] INFO - Started P6eAuthApplication in 1.367 seconds (process running for 1.659)
+2023-10-26 17:37:33 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 24176 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 17:37:33 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 17:37:33 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:37:33 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 17:37:33 [main] INFO - Finished Spring Data repository scanning in 23 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 17:37:33 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:37:33 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 17:37:33 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 17:37:33 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 17:37:34 [main] INFO - Netty started on port 7322
+2023-10-26 17:37:34 [main] INFO - Started P6eAuthApplication in 1.371 seconds (process running for 1.646)
+2023-10-26 17:38:28 [main] INFO - Starting P6eAuthApplication using Java 17.0.7 with PID 27176 (D:\CodeContents\github\p6e-coat\p6e-coat\p6e-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat\p6e-coat)
+2023-10-26 17:38:28 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2023-10-26 17:38:28 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:38:28 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2023-10-26 17:38:28 [main] INFO - Finished Spring Data repository scanning in 24 ms. Found 0 R2DBC repository interfaces.
+2023-10-26 17:38:28 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2023-10-26 17:38:28 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-10-26 17:38:28 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2023-10-26 17:38:29 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
+2023-10-26 17:38:29 [main] INFO - Netty started on port 7322
+2023-10-26 17:38:29 [main] INFO - Started P6eAuthApplication in 1.354 seconds (process running for 1.623)
+2023-10-26 17:38:42 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|------------------------   E  M  A  I  L   ------------------------|
+---------------------------------------------------------------------
+|   account   =>   123@qq.com   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=261472}   |
+--------------------------------------------------------------------
+
+

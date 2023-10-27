@@ -162,7 +162,7 @@ public class AutoConfigureImportSelector {
             registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2ConfirmControllerImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2ReconfirmControllerImpl.class, defaultListableBeanFactory);
         }
 
         // 注册->OAuth2客户端模式对象

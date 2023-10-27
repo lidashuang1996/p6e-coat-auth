@@ -59,9 +59,7 @@ public class VerificationLoginControllerImpl
                     final HttpHeaders httpHeaders = request.getHeaders();
                     final List<String> list = httpHeaders.get(HttpCertificate.getUserInfoHeaderName());
                     if (list != null && !list.isEmpty()) {
-                        return authority
-                                .award(exchange, au.create(list.get(0)))
-                                .map(ResultContext::build);
+                        return authority.award(exchange, au.create(list.get(0)));
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                 this.getClass(),

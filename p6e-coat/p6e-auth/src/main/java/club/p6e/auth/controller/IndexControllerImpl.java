@@ -21,7 +21,6 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        System.out.println("XXXXXXXXXXXXXXXX  " + exchange.getRequest().getURI().getPath());
         return AuthVoucher
                 .create(new HashMap<>() {{
                     put(AuthVoucher.INDEX, "true");
@@ -38,12 +37,14 @@ public class IndexControllerImpl implements IndexController {
      */
     protected Mono<Void> write(ServerWebExchange exchange, String voucher) {
         final AuthPage.Model login = AuthPage.login();
-        System.out.println(login.getContent());
+        System.out.println("cccccccc >>>>  " + login.getContent());
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(login.getType());
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
-                TemplateParser.execute(login.getContent(), "voucher", voucher).getBytes(StandardCharsets.UTF_8)
+                TemplateParser.execute(
+                        login.getContent(), "page", "login", "voucher", voucher
+                ).getBytes(StandardCharsets.UTF_8)
         )));
     }
 

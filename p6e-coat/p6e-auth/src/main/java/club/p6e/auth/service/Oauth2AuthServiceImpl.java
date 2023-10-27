@@ -46,12 +46,9 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
-    public Oauth2AuthServiceImpl(
-            Properties properties,
-            Oauth2ClientRepository repository) {
+    public Oauth2AuthServiceImpl(Properties properties, Oauth2ClientRepository repository) {
         this.properties = properties;
         this.repository = repository;
-
     }
 
     @Override
@@ -153,7 +150,9 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(login.getType());
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
-                TemplateParser.execute(login.getContent(), "voucher", voucher).getBytes(StandardCharsets.UTF_8)
+                TemplateParser.execute(
+                        login.getContent(), "page", "login", "voucher", voucher
+                ).getBytes(StandardCharsets.UTF_8)
         )));
     }
 
