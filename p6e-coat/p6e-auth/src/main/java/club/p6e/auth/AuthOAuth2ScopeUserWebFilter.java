@@ -1,5 +1,6 @@
 package club.p6e.auth;
 
+import club.p6e.auth.certificate.HttpCertificate;
 import org.springframework.core.Ordered;
 import org.springframework.lang.NonNull;
 import org.springframework.web.server.ServerWebExchange;
@@ -8,40 +9,40 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
- * 认证过滤器
- *
  * @author lidashuang
  * @version 1.0
  */
-public class AuthWebFilter implements WebFilter, Ordered {
+public class AuthOAuth2ScopeUserWebFilter implements WebFilter, Ordered {
 
     /**
      * 匹配器对象
      */
-    private final AuthPathMatcher matcher;
-
-    /**
-     * 验证器对象
-     */
-    private final AuthCertificateValidator validator;
+    private final AuthOAuth2ScopeUserPathMatcher matcher;
 
     /**
      * 构造方法初始化
      *
      * @param matcher   匹配器对象
-     * @param validator 验证器对象
      */
-    public AuthWebFilter(AuthPathMatcher matcher, AuthCertificateValidator validator) {
+    public AuthOAuth2ScopeUserWebFilter(AuthOAuth2ScopeUserPathMatcher matcher) {
         this.matcher = matcher;
-        this.validator = validator;
     }
 
     @Override
     public @NonNull Mono<Void> filter(ServerWebExchange exchange, @NonNull WebFilterChain chain) {
         if (matcher.match(exchange.getRequest().getPath().value())) {
-            return validator
-                    .execute(exchange)
-                    .flatMap(chain::filter);
+            try {
+                final String user = exchange
+                        .getRequest()
+                        .getQueryParams()
+                        .getFirst(HttpCertificate.getUserInfoHeaderName());
+                if (user != null) {
+
+                }
+            } catch (Exception e) {
+                // ignore
+            }
+            return Mono.empty();
         } else {
             return chain.filter(exchange);
         }
@@ -49,7 +50,7 @@ public class AuthWebFilter implements WebFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -1000;
+        return -500;
     }
 
 }

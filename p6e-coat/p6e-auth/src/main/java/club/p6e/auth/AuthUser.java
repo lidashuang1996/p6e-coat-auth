@@ -4,6 +4,7 @@ import club.p6e.auth.model.UserAuthModel;
 import club.p6e.auth.model.UserModel;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 认证用户
@@ -38,6 +39,8 @@ public interface AuthUser<M extends AuthUser.Model> {
          * @return 序列化后的字符串内容
          */
         public String serialize();
+
+        public Map<String, Object> toMap();
 
     }
 

@@ -1,7 +1,7 @@
 package club.p6e.auth.controller;
 
 import club.p6e.auth.context.OAuth2Context;
-import club.p6e.auth.service.Oauth2AuthService;
+import club.p6e.auth.service.OAuth2AuthorizeService;
 import club.p6e.auth.validator.ParameterValidator;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -18,14 +18,14 @@ public class OAuth2AuthorizeControllerImpl
     /**
      * OAUTH2 认证的服务对象
      */
-    private final Oauth2AuthService service;
+    private final OAuth2AuthorizeService service;
 
     /**
      * 构造方法
      *
      * @param service OAUTH2 认证的服务对象
      */
-    public OAuth2AuthorizeControllerImpl(Oauth2AuthService service) {
+    public OAuth2AuthorizeControllerImpl(OAuth2AuthorizeService service) {
         this.service = service;
     }
 

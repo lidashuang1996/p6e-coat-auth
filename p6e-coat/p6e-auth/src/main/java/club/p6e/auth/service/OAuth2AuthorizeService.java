@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2AuthService {
+public interface OAuth2AuthorizeService {
 
     /**
      * 执行 OAUTH2 认证

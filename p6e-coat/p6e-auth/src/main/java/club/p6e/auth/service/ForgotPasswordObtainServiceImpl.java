@@ -15,6 +15,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,9 +63,9 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
     }
 
     @Override
-    public Mono<ForgotPasswordContext.Obtain.Dto> execute(
+    public Mono<ForgotPasswordContext.CodeObtain.Dto> execute(
             ServerWebExchange exchange,
-            ForgotPasswordContext.Obtain.Request param
+            ForgotPasswordContext.CodeObtain.Request param
     ) {
         final Properties.Mode mode = properties.getMode();
         return AuthVoucher
@@ -104,13 +105,13 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                                     )))
                                     .flatMap(b -> Launcher.push(
                                             type,
-                                            account,
+                                            List.of(account),
                                             FORGOT_PASSWORD_TEMPLATE,
                                             data,
                                             param.getAccount()
                                     ));
                         })
-                ).map(s -> new ForgotPasswordContext.Obtain.Dto().setAccount(param.getAccount()).setMessage(s));
+                ).map(l -> new ForgotPasswordContext.CodeObtain.Dto().setAccount(param.getAccount()).setMessage(String.join(",", l)));
     }
 
     /**

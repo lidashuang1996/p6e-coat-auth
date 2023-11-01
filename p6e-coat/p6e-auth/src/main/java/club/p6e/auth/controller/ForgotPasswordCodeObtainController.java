@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
  */
 @RestController
 @RequestMapping("/forgot/password/obtain")
-public interface ForgotPasswordObtainController<P, R> {
+public interface ForgotPasswordCodeObtainController<P, R> {
 
     /**
      * [GET]

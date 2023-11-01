@@ -10,6 +10,14 @@ import java.util.regex.Pattern;
 @SuppressWarnings("ALL")
 public final class VerificationUtil {
 
+    public static boolean validationCode(String code) {
+        return true;
+    }
+
+    public static boolean validationPassword(String password) {
+        return true;
+    }
+
     /**
      * 定义类
      */

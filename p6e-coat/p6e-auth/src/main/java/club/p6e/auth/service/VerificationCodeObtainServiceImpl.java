@@ -15,6 +15,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -118,7 +119,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
                                 if (b) {
                                     final Map<String, String> tc = new HashMap<>(1);
                                     tc.put("code", code);
-                                    return Launcher.push(ft, account, CODE_LOGIN_TEMPLATE, tc, param.getLanguage());
+                                    return Launcher.push(ft, List.of(account), CODE_LOGIN_TEMPLATE, tc, param.getLanguage());
                                 } else {
                                     return Mono.error(GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
@@ -127,13 +128,14 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
                                     ));
                                 }
                             })
-                            .flatMap(m -> {
+                            .flatMap(l -> {
+                                final String ls = String.join(",", l);
                                 final Map<String, String> map = new HashMap<>(4);
                                 map.put(AuthVoucher.ACCOUNT, account);
                                 map.put(AuthVoucher.ACCOUNT_TYPE, ft.name());
-                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_MARK, m);
+                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_MARK, ls);
                                 map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
-                                return v.set(map).map(vv -> m);
+                                return v.set(map).map(vv -> ls);
                             }))
                     .map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(m));
         }

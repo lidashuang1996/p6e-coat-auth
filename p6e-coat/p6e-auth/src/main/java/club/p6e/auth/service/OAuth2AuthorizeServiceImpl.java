@@ -23,7 +23,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2AuthServiceImpl implements Oauth2AuthService {
+public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
 
     /**
      * CODE 类型
@@ -46,7 +46,7 @@ public class Oauth2AuthServiceImpl implements Oauth2AuthService {
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
-    public Oauth2AuthServiceImpl(Properties properties, Oauth2ClientRepository repository) {
+    public OAuth2AuthorizeServiceImpl(Properties properties, Oauth2ClientRepository repository) {
         this.properties = properties;
         this.repository = repository;
     }

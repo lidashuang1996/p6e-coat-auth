@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class VerificationCodeLoginParameterValidator implements ParameterValidatorInterface {
+public class QrCodeLoginParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
@@ -22,12 +22,12 @@ public class VerificationCodeLoginParameterValidator implements ParameterValidat
 
     @Override
     public Class<?> select() {
-        return LoginContext.VerificationCode.Request.class;
+        return LoginContext.QrCode.Request.class;
     }
 
     @Override
     public Mono<Boolean> execute(ServerWebExchange exchange, Object data) {
-        return Mono.just(data instanceof final LoginContext.VerificationCode.Request param && param.getCode() != null);
+        return Mono.just(data instanceof LoginContext.QrCode.Request);
     }
 
 }

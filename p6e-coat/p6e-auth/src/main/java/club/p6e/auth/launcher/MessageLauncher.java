@@ -2,6 +2,7 @@ package club.p6e.auth.launcher;
 
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,11 +23,11 @@ public interface MessageLauncher {
     /**
      * 执行推送
      *
-     * @param account  账号
-     * @param template 模版名称
-     * @param content  内容
-     * @return 推送消息的返回
+     * @param recipients 收件人
+     * @param template   模版
+     * @param content    内容
+     * @return 推送消息的回执
      */
-    public Mono<String> execute(String account, String template, Map<String, String> content);
+    public Mono<List<String>> execute(List<String> recipients, String template, Map<String, String> content, String language);
 
 }

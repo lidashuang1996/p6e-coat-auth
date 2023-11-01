@@ -6,18 +6,21 @@ import club.p6e.auth.cache.Oauth2TokenUserAuthCache;
 import club.p6e.auth.certificate.HttpCertificate;
 import club.p6e.auth.generator.*;
 import club.p6e.auth.repository.Oauth2ClientRepository;
-import club.p6e.auth.repository.UserAuthRepository;
-import club.p6e.auth.repository.UserRepository;
 import club.p6e.auth.utils.JsonUtil;
 import club.p6e.auth.utils.SpringUtil;
-import club.p6e.auth.AuthOauth2Client;
-import club.p6e.auth.password.AuthPasswordEncryptor;
 import club.p6e.auth.AuthUser;
 import club.p6e.auth.Properties;
 import club.p6e.auth.context.OAuth2Context;
 import club.p6e.auth.error.GlobalExceptionContext;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * OAUTH2 TOKEN 的默认实现
@@ -26,11 +29,6 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public class Oauth2TokenServiceImpl implements Oauth2TokenService {
-
-    /**
-     * 密码模式
-     */
-    private static final String PASSWORD_TYPE = "password";
 
     /**
      * 认证模式
@@ -48,36 +46,22 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     private final Properties properties;
 
     /**
-     * 用户存储库
-     */
-    private final UserRepository userRepository;
-    private final UserAuthRepository userAuthRepository;
-
-    /**
      * OAUTH2 客户端存储库
      */
     private final Oauth2ClientRepository oauth2ClientRepository;
 
     private final AuthUser<?> au;
-    private final AuthOauth2Client<?> aoc;
 
     /**
      * @param properties             配置文件对象
-     * @param userRepository         用户存储库
      * @param oauth2ClientRepository OAUTH2 客户端存储库
      */
     public Oauth2TokenServiceImpl(
             AuthUser<?> au,
-            AuthOauth2Client<?> aoc,
             Properties properties,
-            UserRepository userRepository,
-            UserAuthRepository userAuthRepository,
             Oauth2ClientRepository oauth2ClientRepository) {
         this.au = au;
-        this.aoc = aoc;
         this.properties = properties;
-        this.userRepository = userRepository;
-        this.userAuthRepository = userAuthRepository;
         this.oauth2ClientRepository = oauth2ClientRepository;
     }
 
@@ -85,18 +69,6 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
     public Mono<OAuth2Context.Token.Dto> execute(ServerWebExchange exchange, OAuth2Context.Token.Request param) {
         final String grantType = param.getGrantType();
         switch (grantType) {
-            case PASSWORD_TYPE -> {
-                if (properties.getOauth2().getPassword().isEnable()) {
-                    return executePasswordType(param);
-                } else {
-                    return Mono.error(
-                            GlobalExceptionContext.executeServiceNotEnabledException(
-                                    this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param)",
-                                    "Oauth2 token [ PASSWORD ] service not enabled exception."
-                            ));
-                }
-            }
             case CLIENT_CREDENTIALS_TYPE -> {
                 if (properties.getOauth2().getClient().isEnable()) {
                     return executeClientType(param);
@@ -189,71 +161,8 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                                     .setAccessToken(accessToken)
                                     .setRefreshToken(refreshToken)
                                     .setType(HttpCertificate.getAuthHeaderTokenType())
-                                    .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME));
+                                    .setExpire(Oauth2TokenClientAuthCache.EXPIRATION_TIME));
                 });
-    }
-
-    /**
-     * Oauth2 密码模式
-     *
-     * @param param 请求对象
-     * @return 结果对象
-     */
-    private Mono<OAuth2Context.Token.Dto> executePasswordType(OAuth2Context.Token.Request param) {
-        final String username = param.getUsername();
-        final String password = param.getPassword();
-        final String clientId = param.getClientId();
-        final String clientSecret = param.getClientSecret();
-        return oauth2ClientRepository
-                .findByClientId(clientId)
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
-                        this.getClass(),
-                        "fun executePasswordType(Oauth2Context.Token.Request param)",
-                        "Oauth2 client id not exist exception."
-                )))
-                .flatMap(m -> {
-                    if (!m.getClientSecret().equals(clientSecret)) {
-                        return Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
-                                this.getClass(),
-                                "fun executePasswordType(Oauth2Context.Token.Request param)",
-                                "Oauth2 client secret exception."
-                        ));
-                    }
-                    final Properties.Mode mode = properties.getMode();
-                    return (switch (mode) {
-                        case PHONE -> userRepository.findByPhone(username);
-                        case MAILBOX -> userRepository.findByMailbox(username);
-                        case ACCOUNT -> userRepository.findByAccount(username);
-                        case PHONE_OR_MAILBOX -> userRepository.findByPhoneOrMailbox(username);
-                    })
-                            .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
-                                    this.getClass(),
-                                    "fun executePasswordType(Oauth2Context.Token.Request param)",
-                                    "Oauth2 client account/password exception."
-                            )))
-                            .flatMap(u -> userAuthRepository
-                                    .findById(u.getId())
-                                    .filter(uam -> {
-                                        if (SpringUtil.exist(AuthPasswordEncryptor.class)) {
-                                            final AuthPasswordEncryptor passwordEncryptor = SpringUtil.getBean(AuthPasswordEncryptor.class);
-                                            return uam.getPassword().equals(passwordEncryptor.execute(password));
-                                        } else {
-                                            return false;
-                                        }
-                                    })
-                                    .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
-                                            this.getClass(),
-                                            "fun executePasswordType(Oauth2Context.Token.Request param)",
-                                            "Oauth2 client account/password exception."
-                                    )))
-                                    .flatMap(uam -> handleUserResult(
-                                            m.getClientId(),
-                                            String.valueOf(uam.getId()),
-                                            au.create(u, uam).serialize(),
-                                            m.getScope()
-                                    )));
-                });
-
     }
 
     /**
@@ -362,6 +271,13 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
         final OAuth2UserOpenIdGenerator oauth2UserOpenIdGenerator =
                 SpringUtil.getBean(OAuth2UserOpenIdGenerator.class);
         final String openid = oauth2UserOpenIdGenerator.execute(cid, uid);
+        final Map<String, Object> map = au.create(info).toMap();
+        map.remove("id");
+        final Date date = Date.from(LocalDateTime.now()
+                .plusSeconds(Oauth2TokenUserAuthCache.EXPIRATION_TIME)
+                .atZone(ZoneId.systemDefault())
+                .toInstant()
+        );
         return oauth2TokenUserAuthCache
                 .set(uid, info, scope, accessToken, refreshToken)
                 .map(t -> new OAuth2Context.Token.UserDto()
@@ -369,7 +285,13 @@ public class Oauth2TokenServiceImpl implements Oauth2TokenService {
                         .setAccessToken(t.getAccessToken())
                         .setRefreshToken(t.getRefreshToken())
                         .setType(HttpCertificate.getAuthHeaderTokenType())
-                        .setExpiration(Oauth2TokenUserAuthCache.EXPIRATION_TIME)
+                        .setExpire(Oauth2TokenUserAuthCache.EXPIRATION_TIME)
+                        .setIdToken(JWT
+                                .create()
+                                .withAudience(uid)
+                                .withExpiresAt(date)
+                                .withSubject(JsonUtil.toJson(map))
+                                .sign(Algorithm.HMAC256(ID_TOKEN_SECRET)))
                 );
     }
 

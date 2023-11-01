@@ -11,6 +11,7 @@ import club.p6e.auth.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
@@ -68,7 +69,16 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
     public Mono<Void> def(ServerWebExchange exchange) {
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> write(exchange, JsonUtil.toJson(v.getOAuth2())));
+                .flatMap(v -> {
+                    if (v.isOAuth2() && v.isOAuth2Complete()) {
+                        return write(exchange, JsonUtil.toJson(v.getOAuth2()));
+                    } else {
+                        exchange.getResponse().setStatusCode(HttpStatus.FOUND);
+                        exchange.getResponse().getHeaders().setLocation(
+                                UriComponentsBuilder.fromUriString("/").build().toUri());
+                        return exchange.getResponse().setComplete();
+                    }
+                });
     }
 
     @Override

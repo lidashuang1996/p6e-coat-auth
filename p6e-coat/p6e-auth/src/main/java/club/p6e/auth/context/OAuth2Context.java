@@ -93,8 +93,9 @@ public class OAuth2Context implements Serializable {
         public static class Dto implements Serializable {
             private String accessToken;
             private String refreshToken;
-            private Long expiration;
+            private Long expire;
             private String type;
+            private String idToken;
         }
 
         /**

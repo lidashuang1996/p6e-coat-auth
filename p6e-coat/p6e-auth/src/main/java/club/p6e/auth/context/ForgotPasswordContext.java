@@ -38,18 +38,19 @@ public class ForgotPasswordContext implements Serializable {
     /**
      * 验证码获取上下文
      */
-    public static class Obtain implements Serializable {
+    public static class CodeObtain implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
             private String account;
-            private  String language;
+            private String language;
         }
 
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private String account;
+            private String message;
         }
 
         @Data

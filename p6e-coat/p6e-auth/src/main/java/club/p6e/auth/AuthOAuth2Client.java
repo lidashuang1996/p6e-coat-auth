@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author lidashuang
  * @version 1.0
  */
-public interface AuthOauth2Client<M extends AuthOauth2Client.Model> {
+public interface AuthOAuth2Client<M extends AuthOAuth2Client.Model> {
 
     /**
      * 认证客户端数据的模型

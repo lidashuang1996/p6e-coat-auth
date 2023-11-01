@@ -4,6 +4,7 @@ import club.p6e.auth.error.GlobalExceptionContext;
 import club.p6e.auth.utils.SpringUtil;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,22 +18,25 @@ public final class Launcher {
     /**
      * 推送消息
      *
-     * @param type     类型
-     * @param account  账号
-     * @param template 模版名称
-     * @param content  内容
-     * @return 推送的结果返回
+     * @param type       类型
+     * @param recipients 收件人
+     * @param template   模版
+     * @param content    内容
+     * @param language   语言
+     * @return 推送的结果回执
      */
-    public static Mono<String> push(LauncherType type, String account, String template, Map<String, String> content, String language) {
+    public static Mono<List<String>> push(
+            LauncherType type, List<String> recipients, String template, Map<String, String> content, String language) {
         if (LauncherType.SMS == type) {
-            return SpringUtil.getBean(SmsMessageLauncher.class).execute(account, template, content);
+            return SpringUtil.getBean(SmsMessageLauncher.class).execute(recipients, template, content, language);
         }
         if (LauncherType.EMAIL == type) {
-            return SpringUtil.getBean(EmailMessageLauncher.class).execute(account, template, content);
+            return SpringUtil.getBean(EmailMessageLauncher.class).execute(recipients, template, content, language);
         }
         return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
                 Launcher.class,
-                "fun push(LauncherType type, String account, String template, Map<String, String> content).",
+                "fun push(LauncherType type, List<String> recipients, " +
+                        "String template, Map<String, String> content, String language).",
                 "[ " + type + " ] launcher type mismatch."
         ));
     }

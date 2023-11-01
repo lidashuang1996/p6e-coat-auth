@@ -241,6 +241,10 @@ public class AuthVoucher implements Serializable {
         return StringUtils.hasText(this.get(AuthVoucher.OAUTH2));
     }
 
+    public boolean isOAuth2Complete() {
+        return StringUtils.hasText(this.get(AuthVoucher.OAUTH2));
+    }
+
     public Map<String, Object> getOAuth2() {
         final String clientId = this.get(AuthVoucher.OAUTH2_CLIENT_ID);
         final String clientName = this.get(AuthVoucher.OAUTH2_CLIENT_NAME);

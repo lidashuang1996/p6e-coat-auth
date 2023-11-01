@@ -13,8 +13,8 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class ForgotPasswordObtainControllerImpl
-        implements ForgotPasswordObtainController<ForgotPasswordContext.Obtain.Request, ResultContext> {
+public class ForgotPasswordCodeObtainControllerImpl
+        implements ForgotPasswordCodeObtainController<ForgotPasswordContext.CodeObtain.Request, ResultContext> {
 
     /**
      * 忘记密码验证码获取的服务
@@ -26,7 +26,7 @@ public class ForgotPasswordObtainControllerImpl
      *
      * @param service 忘记密码验证码获取的服务
      */
-    public ForgotPasswordObtainControllerImpl(ForgotPasswordObtainService service) {
+    public ForgotPasswordCodeObtainControllerImpl(ForgotPasswordObtainService service) {
         this.service = service;
     }
 
@@ -37,12 +37,12 @@ public class ForgotPasswordObtainControllerImpl
      * @param param    参数对象
      * @return Mono/Void 对象
      */
-    protected Mono<Void> vp(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param) {
+    protected Mono<Void> vp(ServerWebExchange exchange, ForgotPasswordContext.CodeObtain.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
 
     @Override
-    public Mono<ResultContext> execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param) {
+    public Mono<ResultContext> execute(ServerWebExchange exchange, ForgotPasswordContext.CodeObtain.Request param) {
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 认证用户
@@ -87,6 +88,11 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                     .setAvatar(this.getAvatar())
                     .setDescribe(this.getDescribe())
             );
+        }
+
+        @Override
+        public Map<String, Object> toMap() {
+            return null;
         }
 
     }

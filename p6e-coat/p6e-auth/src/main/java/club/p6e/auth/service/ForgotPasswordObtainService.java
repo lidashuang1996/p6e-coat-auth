@@ -19,9 +19,9 @@ public interface ForgotPasswordObtainService {
      * @param param    请求对象
      * @return 结果对象
      */
-    public Mono<ForgotPasswordContext.Obtain.Dto> execute(
+    public Mono<ForgotPasswordContext.CodeObtain.Dto> execute(
             ServerWebExchange exchange,
-            ForgotPasswordContext.Obtain.Request param
+            ForgotPasswordContext.CodeObtain.Request param
     );
 
 }

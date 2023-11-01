@@ -22,8 +22,7 @@ public class OAuth2UserOpenIdGeneratorImpl implements OAuth2UserOpenIdGenerator 
                 (c.substring(i)
                         + userId
                         + SEASONING
-                        + DigestUtils.md5DigestAsHex(
-                        c.substring(0, i).getBytes(StandardCharsets.UTF_8))
+                        + c.substring(0, i)
                 ).getBytes(StandardCharsets.UTF_8)
         );
     }

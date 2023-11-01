@@ -16,6 +16,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,10 +84,10 @@ public class RegisterObtainServiceImpl implements RegisterObtainService {
                             .flatMap(b -> {
                                 final Map<String, String> map = new HashMap<>();
                                 map.put("code", code);
-                                return Launcher.push(type, account, REGISTER_TEMPLATE, map, param.getLanguage());
+                                return Launcher.push(type, List.of(account), REGISTER_TEMPLATE, map, param.getLanguage());
                             });
                 })
-                .map(m -> new RegisterContext.Obtain.Dto().setAccount(account).setMessage(m));
+                .map(l -> new RegisterContext.Obtain.Dto().setAccount(account).setMessage(String.join(",", l)));
     }
 
 }

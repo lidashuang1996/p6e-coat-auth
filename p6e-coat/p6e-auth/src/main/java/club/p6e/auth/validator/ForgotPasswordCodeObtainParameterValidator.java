@@ -1,19 +1,16 @@
 package club.p6e.auth.validator;
 
-import club.p6e.auth.utils.VerificationUtil;
 import club.p6e.auth.Properties;
-import club.p6e.auth.context.LoginContext;
-
+import club.p6e.auth.context.ForgotPasswordContext;
+import club.p6e.auth.utils.VerificationUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 账号密码登录的参数验证器
- *
  * @author lidashuang
  * @version 1.0
  */
-public class AccountPasswordLoginParameterValidator implements ParameterValidatorInterface {
+public class ForgotPasswordCodeObtainParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
@@ -30,7 +27,7 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
      *
      * @param properties 配置文件对象
      */
-    public AccountPasswordLoginParameterValidator(Properties properties) {
+    public ForgotPasswordCodeObtainParameterValidator(Properties properties) {
         this.properties = properties;
     }
 
@@ -41,17 +38,13 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
 
     @Override
     public Class<?> select() {
-        return LoginContext.AccountPassword.Request.class;
+        return ForgotPasswordContext.CodeObtain.Request.class;
     }
 
     @Override
-    public Mono<Boolean> execute(ServerWebExchange request, Object data) {
-        if (data instanceof final LoginContext.AccountPassword.Request param) {
-            if (param.getAccount() == null || param.getPassword() == null) {
-                return Mono.just(false);
-            } else {
-                return executeAccount(properties, param.getAccount());
-            }
+    public Mono<Boolean> execute(ServerWebExchange exchange, Object data) {
+        if (data instanceof final ForgotPasswordContext.CodeObtain.Request param && param.getAccount() != null) {
+            return executeAccount(properties, param.getAccount());
         }
         return Mono.just(false);
     }
@@ -65,5 +58,4 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
             default -> Mono.just(false);
         };
     }
-
 }

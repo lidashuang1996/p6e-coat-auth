@@ -156,8 +156,8 @@ public class AutoConfigureImportSelector {
             initLoginPage();
             registerOauth2RepositoryBean(defaultListableBeanFactory);
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
-            registerBean(AuthOauth2ClientImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2AuthServiceImpl.class, defaultListableBeanFactory);
+            registerBean(AuthOAuth2ClientImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2AuthorizeServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
@@ -222,7 +222,7 @@ public class AutoConfigureImportSelector {
             registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
             registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordObtainControllerImpl.class, defaultListableBeanFactory);
+            registerBean(ForgotPasswordCodeObtainControllerImpl.class, defaultListableBeanFactory);
         }
     }
 

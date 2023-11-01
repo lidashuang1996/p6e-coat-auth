@@ -1,6 +1,8 @@
 package club.p6e.auth.validator;
 
+import club.p6e.auth.context.ForgotPasswordContext;
 import club.p6e.auth.context.LoginContext;
+import club.p6e.auth.utils.VerificationUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -8,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class VerificationCodeLoginParameterValidator implements ParameterValidatorInterface {
+public class QrCodeLoginCallbackParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
@@ -22,12 +24,12 @@ public class VerificationCodeLoginParameterValidator implements ParameterValidat
 
     @Override
     public Class<?> select() {
-        return LoginContext.VerificationCode.Request.class;
+        return LoginContext.QrCodeCallback.Request.class;
     }
 
     @Override
     public Mono<Boolean> execute(ServerWebExchange exchange, Object data) {
-        return Mono.just(data instanceof final LoginContext.VerificationCode.Request param && param.getCode() != null);
+        return Mono.just(data instanceof final LoginContext.QrCodeCallback.Request param && param.getContent() != null);
     }
 
 }
