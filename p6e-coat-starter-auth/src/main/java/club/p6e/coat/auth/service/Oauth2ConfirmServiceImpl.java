@@ -11,9 +11,10 @@ import club.p6e.coat.auth.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,8 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
         response.getHeaders().setContentType(oAuth2Confirm.getType());
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
                 TemplateParser.execute(
-                        oAuth2Confirm.getContent(), "page", "oauth2-reconfirm", "voucher", voucher, "data", content
+                        oAuth2Confirm.getContent(),
+                        "page", "oauth2-reconfirm", "voucher", voucher, "data", content
                 ).getBytes(StandardCharsets.UTF_8)
         )));
     }
@@ -74,8 +76,11 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
                         return write(exchange, v.getMark(), JsonUtil.toJson(v.getOAuth2()));
                     } else {
                         exchange.getResponse().setStatusCode(HttpStatus.FOUND);
-                        exchange.getResponse().getHeaders().setLocation(
-                                UriComponentsBuilder.fromUriString("/").build().toUri());
+                        try {
+                            exchange.getResponse().getHeaders().setLocation(new URL("").toURI());
+                        } catch (Exception e) {
+                            return Mono.error(new RuntimeException(e));
+                        }
                         return exchange.getResponse().setComplete();
                     }
                 });

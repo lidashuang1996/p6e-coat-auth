@@ -27,11 +27,11 @@ public class Oauth2ClientModel implements Serializable {
     public static final String TYPE = "type";
     public static final String SCOPE = "scope";
     public static final String REDIRECT_URI = "redirectUri";
-    public static final String SECONDARY_CONFIRMATION = "secondaryConfirmation";
+    public static final String RECONFIRM = "reconfirm";
     public static final String CLIENT_ID = "clientId";
     public static final String CLIENT_SECRET = "clientSecret";
     public static final String CLIENT_NAME = "clientName";
-    public static final String CLIENT_DESCRIBE = "clientDescribe";
+    public static final String CLIENT_DESCRIPTION = "clientDescription";
     public static final String CREATE_DATE = "createDate";
     public static final String UPDATE_DATE = "updateDate";
     public static final String OPERATOR = "operator";
@@ -49,7 +49,7 @@ public class Oauth2ClientModel implements Serializable {
     private String clientSecret;
     private String clientName;
     private String clientAvatar;
-    private String clientDescribe;
+    private String clientDescription;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private String operator;
@@ -68,7 +68,7 @@ public class Oauth2ClientModel implements Serializable {
         result.put("clientSecret", clientSecret);
         result.put("clientName", clientName);
         result.put("clientAvatar", clientAvatar);
-        result.put("clientDescribe", clientDescribe);
+        result.put("clientDescription", clientDescription);
         result.put("createDate", createDate);
         result.put("updateDate", updateDate);
         result.put("operator", operator);

@@ -22,6 +22,6 @@ public interface LogoutController {
      * @return 结果对象
      */
     @DeleteMapping("")
-    public Mono<Void> execute(ServerWebExchange exchange);
+    Mono<Void> execute(ServerWebExchange exchange);
 
 }

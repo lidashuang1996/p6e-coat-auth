@@ -24,19 +24,7 @@ public interface IndexController {
      * @return 主页 HTML 内容
      */
     @GetMapping("")
-    public default Mono<Void> def1(ServerWebExchange exchange) {
-        return this.execute(exchange);
-    }
-
-    /**
-     * [GET]
-     * 主页内容
-     *
-     * @param exchange ServerWebExchange 对象
-     * @return 主页 HTML 内容
-     */
-    @GetMapping("/")
-    public default Mono<Void> def2(ServerWebExchange exchange) {
+    default Mono<Void> def(ServerWebExchange exchange) {
         return this.execute(exchange);
     }
 
@@ -48,7 +36,7 @@ public interface IndexController {
      * @return 主页 HTML 内容
      */
     @GetMapping("/index")
-    public default Mono<Void> def3(ServerWebExchange exchange) {
+    default Mono<Void> defIndex(ServerWebExchange exchange) {
         return this.execute(exchange);
     }
 
@@ -58,6 +46,6 @@ public interface IndexController {
      * @param exchange ServerWebExchange 对象
      * @return Mono/Void 对象
      */
-    public Mono<Void> execute(ServerWebExchange exchange);
+    Mono<Void> execute(ServerWebExchange exchange);
 
 }

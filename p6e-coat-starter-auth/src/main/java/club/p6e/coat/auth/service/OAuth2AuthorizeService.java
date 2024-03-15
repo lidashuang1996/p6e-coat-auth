@@ -18,6 +18,6 @@ public interface OAuth2AuthorizeService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<Void> execute(ServerWebExchange exchange, OAuth2Context.Auth.Request param);
+    Mono<Void> execute(ServerWebExchange exchange, OAuth2Context.Auth.Request param);
 
 }

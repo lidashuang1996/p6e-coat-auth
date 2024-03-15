@@ -2,6 +2,7 @@ package club.p6e.coat.auth;
 
 import club.p6e.coat.auth.cache.VoucherCache;
 import club.p6e.coat.auth.generator.VoucherGenerator;
+import club.p6e.coat.auth.model.Oauth2ClientModel;
 import club.p6e.coat.auth.utils.SpringUtil;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -23,7 +24,8 @@ public class AuthVoucher implements Serializable {
     public static final String PRIVATE = "PRIVATE";
     public static final String IP = "IP";
 
-
+    public static final String ME = "ME";
+    public static final String ME_DATE = "ME_DATE";
 
     public static final String INDEX = "INDEX";
     public static final String INDEX_DATE = "INDEX_DATE";
@@ -123,6 +125,39 @@ public class AuthVoucher implements Serializable {
                 )));
     }
 
+    public static Mono<AuthVoucher> createMe() {
+        return create(new HashMap<>() {{
+            put(AuthVoucher.ME, "true");
+            put(AuthVoucher.ME_DATE, String.valueOf(System.currentTimeMillis()));
+        }});
+    }
+
+    public static Mono<AuthVoucher> createIndex() {
+        return create(new HashMap<>() {{
+            put(AuthVoucher.INDEX, "true");
+            put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
+        }});
+    }
+
+    public static Mono<AuthVoucher> createOAuth2Index(Oauth2ClientModel ocm, String type,
+                                                      String redirectUri, String scope, String state) {
+        return create(new HashMap<>() {{
+            put(AuthVoucher.OAUTH2, "true");
+            put(AuthVoucher.OAUTH2_DATE, String.valueOf(System.currentTimeMillis()));
+            put(AuthVoucher.OAUTH2_SCOPE, scope);
+            put(AuthVoucher.OAUTH2_RESPONSE_TYPE, type);
+            put(AuthVoucher.OAUTH2_REDIRECT_URI, redirectUri);
+            put(AuthVoucher.OAUTH2_CLIENT_ID, ocm.getClientId());
+            put(AuthVoucher.OAUTH2_CLIENT_NAME, ocm.getClientName());
+            put(AuthVoucher.OAUTH2_CLIENT_AVATAR, ocm.getClientAvatar());
+            put(AuthVoucher.OAUTH2_CLIENT_DESCRIBE, ocm.getClientDescription());
+            put(AuthVoucher.OAUTH2_CLIENT_RECONFIRM, String.valueOf(ocm.getReconfirm()));
+            if (state != null) {
+                put(AuthVoucher.OAUTH2_STATE, state);
+            }
+        }});
+    }
+
     /**
      * 创建认证凭证上下文对象
      *
@@ -172,6 +207,7 @@ public class AuthVoucher implements Serializable {
         map.put(ACCOUNT, account);
         return this.set(map);
     }
+
     public String getAccount() {
         return this.get(ACCOUNT);
     }

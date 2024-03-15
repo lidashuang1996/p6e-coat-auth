@@ -9,7 +9,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 /**
  * 主页的实现
@@ -21,11 +20,7 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        return AuthVoucher.create(new HashMap<>() {{
-                    put(AuthVoucher.INDEX, "true");
-                    put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
-                }})
-                .flatMap(v -> write(exchange, v.getMark()));
+        return AuthVoucher.createIndex().flatMap(v -> write(exchange, v.getMark()));
     }
 
     /**

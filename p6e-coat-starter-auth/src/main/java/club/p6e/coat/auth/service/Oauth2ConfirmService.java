@@ -17,7 +17,7 @@ public interface Oauth2ConfirmService {
      * @param exchange 请求对象
      * @return 结果对象
      */
-    public Mono<Void> def(ServerWebExchange exchange);
+    Mono<Void> def(ServerWebExchange exchange);
 
     /**
      * 执行客户端刷新令牌服务
@@ -25,6 +25,6 @@ public interface Oauth2ConfirmService {
      * @param request 请求对象
      * @return 结果对象
      */
-    public Mono<OAuth2Context.Confirm.Dto> execute(ServerWebExchange exchange, OAuth2Context.Confirm.Request request);
+    Mono<OAuth2Context.Confirm.Dto> execute(ServerWebExchange exchange, OAuth2Context.Confirm.Request request);
 
 }

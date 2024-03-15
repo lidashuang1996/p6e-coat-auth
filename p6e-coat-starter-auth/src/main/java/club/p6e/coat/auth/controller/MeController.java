@@ -24,7 +24,7 @@ public interface MeController<R> {
      * @return 结果对象
      */
     @GetMapping("")
-    public Mono<Void> def(ServerWebExchange exchange);
+    Mono<Void> def(ServerWebExchange exchange);
 
     /**
      * [GET]
@@ -34,6 +34,6 @@ public interface MeController<R> {
      * @return 结果对象
      */
     @GetMapping("/info")
-    public Mono<R> info(ServerWebExchange exchange);
+    Mono<R> info(ServerWebExchange exchange);
 
 }

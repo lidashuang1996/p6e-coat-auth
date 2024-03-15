@@ -24,6 +24,6 @@ public interface OAuth2AuthorizeController<P> {
      * @return 结果对象
      */
     @GetMapping("")
-    public Mono<Void> execute(ServerWebExchange exchange, P param);
+    Mono<Void> execute(ServerWebExchange exchange, P param);
 
 }

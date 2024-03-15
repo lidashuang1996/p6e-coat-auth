@@ -12,7 +12,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 认证凭证下发（HttpCookieCache）
@@ -67,22 +66,20 @@ public class HttpCookieCacheCertificateAuthority
                         .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
                             if (v.isOAuth2()) {
-                                final Map<String, Object> data = new HashMap<>(1);
-                                data.put("oauth2", v.getOAuth2());
-                                return v.setOAuth2User(uid, info)
-                                        .flatMap(vv -> setHttpCookieToken(
-                                                exchange.getResponse(),
-                                                t.getAccessToken(),
-                                                t.getRefreshToken(),
-                                                data
-                                        ));
+                                return v.setOAuth2User(uid, info).flatMap(vv -> setHttpCookieToken(
+                                        exchange.getResponse(),
+                                        t.getAccessToken(),
+                                        t.getRefreshToken(),
+                                        new HashMap<>() {{
+                                            put("oauth2", v.isOAuth2());
+                                        }}
+                                ));
                             } else {
-                                return v.del()
-                                        .flatMap(vv -> setHttpCookieToken(
-                                                exchange.getResponse(),
-                                                t.getAccessToken(),
-                                                t.getRefreshToken()
-                                        ));
+                                return v.del().flatMap(vv -> setHttpCookieToken(
+                                        exchange.getResponse(),
+                                        t.getAccessToken(),
+                                        t.getRefreshToken()
+                                ));
                             }
                         })).map(ResultContext::build);
     }

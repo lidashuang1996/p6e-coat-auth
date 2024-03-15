@@ -18,13 +18,13 @@ window.g.config.url = 'http://127.0.0.1:7322';
 // PHONE_OR_MAILBOX 电话邮箱模式
 window.p6e.mode = 'PHONE_OR_MAILBOX';
 window.p6e.home = {};
-window.p6e.home.page = 'http://auth.p6e.club/me';
+window.p6e.home.page = 'http://127.0.0.1:7322/me';
 window.p6e.login = {};
 window.p6e.login.ap = {};
 window.p6e.login.ac = {};
 window.p6e.login.qc = {};
 window.p6e.login.reconfirm = {};
-window.p6e.login.page = 'http://auth.p6e.club';
+window.p6e.login.page = 'http://127.0.0.1:7322/';
 window.p6e.login.ap.rsa = false;
 window.p6e.login.ac.countDownTime = 60;
 window.p6e.login.qc.expireTime = 50000;

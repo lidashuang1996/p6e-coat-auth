@@ -28,6 +28,6 @@ public interface AccountPasswordLoginController<P, R> {
      * @return 结果对象
      */
     @PostMapping("")
-    public Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
+    Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

@@ -14,8 +14,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * OAUTH2 认证服务的默认实现
@@ -36,7 +34,7 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
     private final Properties properties;
 
     /**
-     * OAUTH CLIENT2 存储库
+     * OAUTH CLIENT 存储库
      */
     private final Oauth2ClientRepository repository;
 
@@ -81,6 +79,7 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
      * @return 结果对象
      */
     private Mono<Void> executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param) {
+        final String state = param.getState();
         final String scope = param.getScope();
         final String clientId = param.getClientId();
         final String redirectUri = param.getRedirectUri();
@@ -116,24 +115,8 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
                                 "Oauth2 code type mode check redirect uri exception."
                         ));
                     }
-                    final String state = param.getState();
-                    final Map<String, String> map = new HashMap<>(5);
-                    if (state != null) {
-                        map.put(AuthVoucher.OAUTH2_STATE, state);
-                    }
-                    map.put(AuthVoucher.OAUTH2, "true");
-                    map.put(AuthVoucher.OAUTH2_DATE, String.valueOf(System.currentTimeMillis()));
-                    map.put(AuthVoucher.OAUTH2_SCOPE, scope);
-                    map.put(AuthVoucher.OAUTH2_CLIENT_ID, clientId);
-                    map.put(AuthVoucher.OAUTH2_REDIRECT_URI, redirectUri);
-                    map.put(AuthVoucher.OAUTH2_CLIENT_NAME, m.getClientName());
-                    map.put(AuthVoucher.OAUTH2_CLIENT_AVATAR, m.getClientAvatar());
-                    map.put(AuthVoucher.OAUTH2_CLIENT_DESCRIBE, m.getClientDescribe());
-                    map.put(AuthVoucher.OAUTH2_CLIENT_RECONFIRM, String.valueOf(m.getReconfirm()));
-                    map.put(AuthVoucher.OAUTH2_RESPONSE_TYPE, CODE_TYPE);
-                    return Mono.just(map);
+                    return AuthVoucher.createOAuth2Index(m, CODE_TYPE, redirectUri, scope, state);
                 })
-                .flatMap(AuthVoucher::create)
                 .flatMap(v -> write(exchange, v.getMark()));
     }
 
@@ -155,6 +138,5 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
                 ).getBytes(StandardCharsets.UTF_8)
         )));
     }
-
 
 }

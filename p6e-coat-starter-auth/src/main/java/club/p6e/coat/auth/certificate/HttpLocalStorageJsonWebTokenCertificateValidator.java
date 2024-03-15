@@ -43,7 +43,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
 
     @Override
     public Mono<String> accessToken(String token) {
-        final String r = jwtDecode(token, cipher.getAccessTokenSecret());
+        final String r = jwtDecryption(token, cipher.getAccessTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun accessToken(String token)",
@@ -53,7 +53,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
 
     @Override
     public Mono<String> refreshToken(String token) {
-        final String r = jwtDecode(token, cipher.getRefreshTokenSecret());
+        final String r = jwtDecryption(token, cipher.getRefreshTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
                 "fun refreshToken(String token)",

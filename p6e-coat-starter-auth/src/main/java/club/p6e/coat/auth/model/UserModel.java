@@ -24,6 +24,8 @@ public class UserModel implements Serializable {
     public static final String ID = "id";
     public static final String STATUS = "status";
     public static final String ENABLED = "enabled";
+    public static final String INTERNAL = "internal";
+    public static final String ADMINISTRATOR = "administrator";
     public static final String ACCOUNT = "account";
     public static final String PHONE = "phone";
     public static final String MAILBOX = "mailbox";
@@ -40,6 +42,8 @@ public class UserModel implements Serializable {
     private Integer id;
     private Integer status;
     private Integer enabled;
+    private Integer internal;
+    private Integer administrator;
     private String account;
     private String phone;
     private String mailbox;

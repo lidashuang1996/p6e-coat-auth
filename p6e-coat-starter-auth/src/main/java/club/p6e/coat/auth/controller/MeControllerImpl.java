@@ -3,6 +3,7 @@ package club.p6e.coat.auth.controller;
 import club.p6e.coat.auth.AuthCertificateValidator;
 import club.p6e.coat.auth.AuthPage;
 import club.p6e.coat.auth.AuthUser;
+import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.certificate.HttpCertificate;
 import club.p6e.coat.auth.context.ResultContext;
 import club.p6e.coat.auth.utils.TemplateParser;
@@ -48,9 +49,11 @@ public class MeControllerImpl implements MeController<ResultContext> {
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(me.getType());
-        return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
-                TemplateParser.execute(me.getContent(), "page", "me").getBytes(StandardCharsets.UTF_8)
-        )));
+        return AuthVoucher.createMe().flatMap(v -> response.writeWith(
+                Mono.just(exchange.getResponse().bufferFactory().wrap(TemplateParser.execute(
+                        me.getContent(), "page", "me", "voucher", v.getMark()
+                ).getBytes(StandardCharsets.UTF_8)))
+        ));
     }
 
     @Override

@@ -66,20 +66,18 @@ public class HttpLocalStorageCacheCertificateAuthority
                         .set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
                             if (v.isOAuth2()) {
-                                final Map<String, Object> data = new HashMap<>(1);
-                                data.put("oauth2", v.getOAuth2());
-                                return v.setOAuth2User(uid, info)
-                                        .flatMap(vv -> setHttpLocalStorageToken(
-                                                t.getAccessToken(),
-                                                t.getRefreshToken(),
-                                                data
-                                        ));
+                                return v.setOAuth2User(uid, info).flatMap(vv -> setHttpLocalStorageToken(
+                                        t.getAccessToken(),
+                                        t.getRefreshToken(),
+                                        new HashMap<>() {{
+                                            put("oauth2", v.isOAuth2());
+                                        }}
+                                ));
                             } else {
-                                return v.del()
-                                        .flatMap(vv -> setHttpLocalStorageToken(
-                                                t.getAccessToken(),
-                                                t.getRefreshToken()
-                                        ));
+                                return v.del().flatMap(vv -> setHttpLocalStorageToken(
+                                        t.getAccessToken(),
+                                        t.getRefreshToken()
+                                ));
                             }
                         })).map(ResultContext::build);
     }

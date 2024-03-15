@@ -39,28 +39,26 @@ public class HttpCookieJsonWebTokenCertificateAuthority
     public Mono<ResultContext> award(ServerWebExchange exchange, AuthUser.Model model) {
         final String uid = model.id();
         final String info = model.serialize();
-        final String accessToken = jwtCreate(uid, info, cipher.getAccessTokenSecret());
-        final String refreshToken = jwtCreate(uid, info, cipher.getRefreshTokenSecret());
+        final String accessToken = jwtEncryption(uid, info, cipher.getAccessTokenSecret());
+        final String refreshToken = jwtEncryption(uid, info, cipher.getRefreshTokenSecret());
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
                     if (v.isOAuth2()) {
-                        final Map<String, Object> data = new HashMap<>(1);
-                        data.put("oauth2", v.getOAuth2());
-                        return v.setOAuth2User(uid, info)
-                                .flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
-                                        accessToken,
-                                        refreshToken,
-                                        data
-                                ));
+                        return v.setOAuth2User(uid, info).flatMap(vv -> setHttpCookieToken(
+                                exchange.getResponse(),
+                                accessToken,
+                                refreshToken,
+                                new HashMap<>() {{
+                                    put("oauth2", v.isOAuth2());
+                                }}
+                        ));
                     } else {
-                        return v.del()
-                                .flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
-                                        accessToken,
-                                        refreshToken
-                                ));
+                        return v.del().flatMap(vv -> setHttpCookieToken(
+                                exchange.getResponse(),
+                                accessToken,
+                                refreshToken
+                        ));
                     }
                 }).map(ResultContext::build);
     }
