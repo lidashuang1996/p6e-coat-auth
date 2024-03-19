@@ -1,6 +1,0 @@
-com.darvi.hksi.badminton.lib.controller.config.LocalDateTimeSerializerConfig
-com.darvi.hksi.badminton.lib.controller.BaseExceptionController
-com.darvi.hksi.badminton.lib.controller.BaseVersionController
-com.darvi.hksi.badminton.lib.paging.PagingDefaultImpl
-com.darvi.hksi.badminton.lib.CustomHook
-com.darvi.hksi.badminton.lib.Properties
