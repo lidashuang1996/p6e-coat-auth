@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.context.OAuth2Context;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.service.Oauth2ConfirmService;
 import club.p6e.coat.auth.validator.ParameterValidator;
 import org.springframework.web.server.ServerWebExchange;

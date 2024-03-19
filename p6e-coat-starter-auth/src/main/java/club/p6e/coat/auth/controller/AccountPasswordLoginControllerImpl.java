@@ -2,9 +2,9 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.AuthCertificateAuthority;
 import club.p6e.coat.auth.context.LoginContext;
-import club.p6e.coat.auth.context.ResultContext;
 import club.p6e.coat.auth.service.AccountPasswordLoginService;
 import club.p6e.coat.auth.validator.ParameterValidator;
+import club.p6e.coat.common.context.ResultContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 

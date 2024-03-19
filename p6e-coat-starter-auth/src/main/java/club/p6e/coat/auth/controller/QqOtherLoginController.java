@@ -2,7 +2,7 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.service.QqOtherLoginService;
 import club.p6e.coat.auth.AuthCertificateAuthority;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

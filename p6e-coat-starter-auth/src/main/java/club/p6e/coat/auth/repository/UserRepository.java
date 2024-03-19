@@ -13,15 +13,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 用户模型存储库
- *
  * @author lidashuang
  * @version 1.0
  */
-@ConditionalOnMissingBean(
-        value = UserRepository.class,
-        ignored = UserRepository.class
-)
 public class UserRepository {
 
     /**
@@ -153,7 +147,7 @@ public class UserRepository {
         System.out.println("findByPhoneOrMailbox ::: " + content);
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.PHONE).is(content)
-                                .or(Criteria.where(UserModel.MAILBOX).is(content))
+                        .or(Criteria.where(UserModel.MAILBOX).is(content))
                 ),
                 UserModel.class
         );

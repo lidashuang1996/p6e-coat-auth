@@ -4,7 +4,7 @@ import club.p6e.coat.auth.AuthCertificateAuthority;
 import club.p6e.coat.auth.AuthUser;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.cache.AuthCache;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import club.p6e.coat.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.auth.generator.AuthRefreshTokenGenerator;

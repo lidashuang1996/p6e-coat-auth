@@ -5,7 +5,7 @@ import club.p6e.coat.auth.AuthOAuth2Client;
 import club.p6e.coat.auth.cache.OAuth2TokenClientAuthCache;
 import club.p6e.coat.auth.cache.OAuth2TokenUserAuthCache;
 import club.p6e.coat.auth.certificate.HttpCertificate;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.common.utils.SpringUtil;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;

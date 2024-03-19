@@ -11,15 +11,9 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 /**
- * 用户认证模型存储库
- *
  * @author lidashuang
  * @version 1.0
  */
-@ConditionalOnMissingBean(
-        value = UserAuthRepository.class,
-        ignored = UserAuthRepository.class
-)
 public class UserAuthRepository {
 
     /**

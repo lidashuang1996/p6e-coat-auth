@@ -5,7 +5,7 @@ import club.p6e.coat.auth.certificate.HttpCertificate;
 import club.p6e.coat.auth.AuthCertificateValidator;
 import club.p6e.coat.auth.AuthUser;
 import club.p6e.coat.auth.context.LoginContext;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;

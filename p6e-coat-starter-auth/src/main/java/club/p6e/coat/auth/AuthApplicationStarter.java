@@ -1,28 +1,28 @@
 package club.p6e.coat.auth;
 
 import club.p6e.coat.auth.cache.memory.*;
+import club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.coat.auth.cache.redis.*;
+import club.p6e.coat.auth.codec.PasswordTransmissionCodecImpl;
 import club.p6e.coat.auth.controller.*;
 import club.p6e.coat.auth.generator.*;
-import club.p6e.coat.auth.message.WebSocketMessage;
-import club.p6e.coat.auth.message.WebSocketMessageImpl;
-import club.p6e.coat.auth.password.AuthPasswordEncryptorImpl;
-import club.p6e.coat.auth.service.*;
-import club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate;
-import club.p6e.coat.auth.codec.PasswordTransmissionCodecImpl;
 import club.p6e.coat.auth.launcher.EmailMessageLauncherImpl;
 import club.p6e.coat.auth.launcher.SmsMessageLauncherImpl;
+import club.p6e.coat.auth.password.AuthPasswordEncryptorImpl;
 import club.p6e.coat.auth.repository.Oauth2ClientRepository;
 import club.p6e.coat.auth.repository.UserAuthRepository;
 import club.p6e.coat.auth.repository.UserRepository;
+import club.p6e.coat.auth.service.*;
 import club.p6e.coat.auth.validator.AccountPasswordLoginParameterValidator;
-import club.p6e.coat.common.utils.SpringUtil;
 import club.p6e.coat.common.utils.TemplateParser;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -30,200 +30,169 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 自动配置导入选择器
- *
  * @author lidashuang
  * @version 1.0
  */
-public class AutoConfigureImportSelector {
+@Component
+public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcessor {
 
-    /**
-     * 配置文件对象
-     */
-    private final Properties properties;
+    private Properties properties;
 
-    /**
-     * 构造方法初始化
-     *
-     * @param properties  配置文件对象
-     * @param application 应用上下文对象
-     */
-    public AutoConfigureImportSelector(Properties properties, ApplicationContext application) {
-        // 初始化
-        SpringUtil.init(application);
-        this.properties = properties;
-
-        final AutowireCapableBeanFactory factory = application.getAutowireCapableBeanFactory();
-        final DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) factory;
+    private void run(DefaultListableBeanFactory defaultListableBeanFactory) {
+        this.properties = defaultListableBeanFactory.getBean(Properties.class);
 
         initOAuth2Confirm();
-        /*
-         * 注入需要的bean对象
-         */
+
+        // AUTH ENABLE
         if (properties.isEnable()) {
             initMePage();
             registerAuthWebFilterBean(defaultListableBeanFactory);
             registerBean(MeControllerImpl.class, defaultListableBeanFactory);
             registerBean(LogoutControllerImpl.class, defaultListableBeanFactory);
-        }
 
-        // 注册内存缓存模式依赖的对象
-        if (properties.isEnable()
-                && properties.getCache() != null
-                && properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
-            registerBean(ReactiveMemoryTemplate.class, defaultListableBeanFactory);
-        }
+            // MEMORY CACHE
+            if (properties.getCache() != null
+                    && properties.getCache().getType() == Properties.Cache.Type.MEMORY) {
+                registerBean(ReactiveMemoryTemplate.class, defaultListableBeanFactory);
+            }
 
+            // REGISTER
+            if (properties.getLogin().isEnable()) {
+                initLoginPage();
+                registerVoucherBean(defaultListableBeanFactory);
+                registerBean(AuthUserImpl.class, defaultListableBeanFactory);
+                registerBean(IndexControllerImpl.class, defaultListableBeanFactory);
+                registerBean(VerificationLoginControllerImpl.class, defaultListableBeanFactory);
+            }
 
-        // 注册->登录对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()) {
-            initLoginPage();
-            registerVoucherBean(defaultListableBeanFactory);
-            registerBean(AuthUserImpl.class, defaultListableBeanFactory);
-            registerBean(IndexControllerImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationLoginControllerImpl.class, defaultListableBeanFactory);
-        }
+            // LOGIN
+            if (properties.getLogin().isEnable()) {
 
-        // 注册->账号密码登录对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()
-                && properties.getLogin().getAccountPassword().isEnable()) {
-            registerUserRepositoryBean(defaultListableBeanFactory);
-            registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginControllerImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginParameterValidator.class, defaultListableBeanFactory);
-        }
+                // AP
+                if (properties.getLogin().getAccountPassword().isEnable()) {
+                    registerUserRepositoryBean(defaultListableBeanFactory);
+                    registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
+                    registerBean(AccountPasswordLoginServiceImpl.class, defaultListableBeanFactory);
+                    registerBean(AccountPasswordLoginControllerImpl.class, defaultListableBeanFactory);
+                    registerBean(AccountPasswordLoginParameterValidator.class, defaultListableBeanFactory);
 
-        // 注册->账号密码登录签名对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()
-                && properties.getLogin().getAccountPassword().isEnable()
-                && properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
-            registerAccountPasswordLoginSignatureCacheBean(defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginSignatureServiceImpl.class, defaultListableBeanFactory);
-            registerBean(PasswordTransmissionCodecImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginSignatureGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(AccountPasswordLoginSignatureControllerImpl.class, defaultListableBeanFactory);
-        }
+                    // LOGIN TRANSMISSION
+                    if (properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
+                        registerAccountPasswordLoginSignatureCacheBean(defaultListableBeanFactory);
+                        registerBean(AccountPasswordLoginSignatureServiceImpl.class, defaultListableBeanFactory);
+                        registerBean(PasswordTransmissionCodecImpl.class, defaultListableBeanFactory);
+                        registerBean(AccountPasswordLoginSignatureGeneratorImpl.class, defaultListableBeanFactory);
+                        registerBean(AccountPasswordLoginSignatureControllerImpl.class, defaultListableBeanFactory);
+                    }
+                }
 
-        // 注册->验证码登录对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()
-                && properties.getLogin().getVerificationCode().isEnable()) {
-            registerLauncherBean(defaultListableBeanFactory);
-            registerUserRepositoryBean(defaultListableBeanFactory);
-            registerVerificationCodeLoginCacheBean(defaultListableBeanFactory);
-            registerBean(VerificationCodeLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationCodeObtainServiceImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationCodeLoginControllerImpl.class, defaultListableBeanFactory);
-            registerBean(VerificationCodeObtainControllerImpl.class, defaultListableBeanFactory);
-        }
+                // AC
+                if (properties.getLogin().getVerificationCode().isEnable()) {
+                    registerLauncherBean(defaultListableBeanFactory);
+                    registerUserRepositoryBean(defaultListableBeanFactory);
+                    registerVerificationCodeLoginCacheBean(defaultListableBeanFactory);
+                    registerBean(VerificationCodeLoginServiceImpl.class, defaultListableBeanFactory);
+                    registerBean(VerificationCodeObtainServiceImpl.class, defaultListableBeanFactory);
+                    registerBean(VerificationCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
+                    registerBean(VerificationCodeLoginControllerImpl.class, defaultListableBeanFactory);
+                    registerBean(VerificationCodeObtainControllerImpl.class, defaultListableBeanFactory);
+                }
 
-        // 注册->二维码登录对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()
-                && properties.getLogin().getQrCode().isEnable()) {
-            registerUserRepositoryBean(defaultListableBeanFactory);
-            registerQrCodeLoginCacheBean(defaultListableBeanFactory);
-            registerBean(QrCodeLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeObtainServiceImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
-            registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
+                // QC
+                if (properties.getLogin().getQrCode().isEnable()) {
+                    registerUserRepositoryBean(defaultListableBeanFactory);
+                    registerQrCodeLoginCacheBean(defaultListableBeanFactory);
+                    registerBean(QrCodeLoginServiceImpl.class, defaultListableBeanFactory);
+                    registerBean(QrCodeObtainServiceImpl.class, defaultListableBeanFactory);
+                    registerBean(QrCodeLoginGeneratorImpl.class, defaultListableBeanFactory);
+                    registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
+                    registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
 
-            if (properties.getLogin().getQrCode().getWebSocket().isEnable()) {
-                registerQrCodeWebSocketBean(defaultListableBeanFactory);
+                    if (properties.getLogin().getQrCode().getWebSocket().isEnable()) {
+                        registerQrCodeWebSocketBean(defaultListableBeanFactory);
+                    }
+                }
+            }
+
+            // REGISTER
+            if (properties.getRegister().isEnable()) {
+                initRegisterPage();
+                registerUserRepositoryBean(defaultListableBeanFactory);
+                registerRegisterCodeCacheBean(defaultListableBeanFactory);
+                registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
+                registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
+                registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
+                registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
+                registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
+
+                // 注册->第三方登录需要未注册需要进行注册的对象
+                if (properties.getRegister().isEnableOtherLoginBinding()) {
+                    registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
+                    registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
+                }
+            }
+
+            // FORGOT PASSWORD
+            if (properties.getForgotPassword().isEnable()) {
+                initForgotPassword();
+                registerForgotPasswordCodeCacheBean(defaultListableBeanFactory);
+                registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
+                registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
+                registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
+                registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
+                registerBean(ForgotPasswordCodeObtainControllerImpl.class, defaultListableBeanFactory);
+            }
+
+            // OAUTH2
+            if ( properties.getOauth2().isEnable()) {
+                initLoginPage();
+                registerOauth2RepositoryBean(defaultListableBeanFactory);
+                registerBean(AuthUserImpl.class, defaultListableBeanFactory);
+                registerBean(AuthOAuth2ClientImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2AuthorizeServiceImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2TokenServiceImpl.class, defaultListableBeanFactory);
+                registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2ReconfirmControllerImpl.class, defaultListableBeanFactory);
+
+                // OAUTH2 CLIENT
+                if (properties.getOauth2().getClient().isEnable()) {
+                    registerOauth2TokenClientAuthCacheBean(defaultListableBeanFactory);
+                    registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
+                }
+
+                // OAUTH2 PASSWORD
+                if (properties.getOauth2().getPassword().isEnable()) {
+                    registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
+                    registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
+                    registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
+                    registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
+                }
+
+                // OAUTH2 AUTHORIZATION CODE
+                if (properties.getOauth2().getAuthorizationCode().isEnable()) {
+                    registerOauth2CodeCacheBean(defaultListableBeanFactory);
+                    registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
+                    registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
+                    registerBean(OAuth2CodeGeneratorImpl.class, defaultListableBeanFactory);
+                    registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
+                    registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
+                }
             }
         }
 
-        // 注册->其它登录对象
-        if (properties.isEnable()
-                && properties.getLogin().isEnable()
-                && !properties.getLogin().getOthers().isEmpty()) {
-            initOtherLoginConfig();
-            registerStateOtherLoginCacheBean(defaultListableBeanFactory);
-            registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
-//            registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
-            registerBean(StateOtherLoginGenerator.class, defaultListableBeanFactory);
-        }
 
-        // 注册->OAuth2对象
-        if (properties.isEnable()
-                && properties.getOauth2().isEnable()) {
-            initLoginPage();
-            registerOauth2RepositoryBean(defaultListableBeanFactory);
-            registerBean(AuthUserImpl.class, defaultListableBeanFactory);
-            registerBean(AuthOAuth2ClientImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2AuthorizeServiceImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2TokenServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2ReconfirmControllerImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->OAuth2客户端模式对象
-        if (properties.isEnable()
-                && properties.getOauth2().isEnable()
-                && properties.getOauth2().getClient().isEnable()) {
-            registerOauth2TokenClientAuthCacheBean(defaultListableBeanFactory);
-            registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->OAuth2密码模式对象
-        if (properties.isEnable()
-                && properties.getOauth2().isEnable()
-                && properties.getOauth2().getPassword().isEnable()) {
-            registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
-            registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->OAuth2授权模式对象
-        if (properties.isEnable()
-                && properties.getOauth2().isEnable()
-                && properties.getOauth2().getAuthorizationCode().isEnable()) {
-            registerOauth2CodeCacheBean(defaultListableBeanFactory);
-            registerOauth2TokenUserAuthCacheBean(defaultListableBeanFactory);
-            registerBean(AuthTokenGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2CodeGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
-            registerBean(OAuth2UserOpenIdGeneratorImpl.class, defaultListableBeanFactory);
-        }
-
-        // 注册->注册对象
-        if (properties.isEnable()
-                && properties.getRegister().isEnable()) {
-            initRegisterPage();
-            registerUserRepositoryBean(defaultListableBeanFactory);
-            registerRegisterCodeCacheBean(defaultListableBeanFactory);
-            registerBean(RegisterServiceImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterObtainServiceImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterControllerImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterObtainControllerImpl.class, defaultListableBeanFactory);
-            registerBean(RegisterCodeGeneratorImpl.class, defaultListableBeanFactory);
-
-            // 注册->第三方登录需要未注册需要进行注册的对象
-            if (properties.getRegister().isEnableOtherLoginBinding()) {
-                registerRegisterOtherLoginCacheBean(defaultListableBeanFactory);
-                registerBean(RegisterOtherLoginGeneratorImpl.class, defaultListableBeanFactory);
-            }
-        }
-
-        if (properties.isEnable()
-                && properties.getForgotPassword().isEnable()) {
-            initForgotPassword();
-            registerForgotPasswordCodeCacheBean(defaultListableBeanFactory);
-            registerBean(ForgotPasswordServiceImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordCodeGeneratorImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
-            registerBean(ForgotPasswordCodeObtainControllerImpl.class, defaultListableBeanFactory);
-        }
+//        // 注册->其它登录对象
+//        if (properties.isEnable()
+//                && properties.getLogin().isEnable()
+//                && !properties.getLogin().getOthers().isEmpty()) {
+//            initOtherLoginConfig();
+//            registerStateOtherLoginCacheBean(defaultListableBeanFactory);
+//            registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
+////            registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
+//            registerBean(StateOtherLoginGenerator.class, defaultListableBeanFactory);
+//        }
     }
 
     /**
@@ -463,9 +432,9 @@ public class AutoConfigureImportSelector {
      * @param factory 上下文对象工厂
      */
     private void registerQrCodeWebSocketBean(DefaultListableBeanFactory factory) {
-        registerWebSocketCacheBean(factory);
-        registerBean(WebSocketMessageImpl.class, factory);
-        factory.getBean(WebSocketMessage.class).startup();
+//        registerWebSocketCacheBean(factory);
+//        registerBean(WebSocketMessageImpl.class, factory);
+//        factory.getBean(WebSocketMessage.class).startup();
     }
 
     /**
@@ -731,4 +700,14 @@ public class AutoConfigureImportSelector {
         }
     }
 
+
+    @Override
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+        run((DefaultListableBeanFactory) registry);
+    }
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+
+    }
 }

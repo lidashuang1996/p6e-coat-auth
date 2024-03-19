@@ -3,7 +3,7 @@ package club.p6e.coat.auth.message;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.Properties;
 import club.p6e.coat.auth.cache.QrCodeWebSocketAuthCache;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.generator.VoucherGenerator;
 import club.p6e.coat.common.utils.GeneratorUtil;
 import club.p6e.coat.common.utils.JsonUtil;
@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.HashMap;
@@ -32,7 +31,6 @@ import java.util.function.Function;
  * @author lidashuang
  * @version 1.0
  */
-@RestController
 @RequestMapping("/ws")
 public class WebSocketMessageImpl implements WebSocketMessage {
 

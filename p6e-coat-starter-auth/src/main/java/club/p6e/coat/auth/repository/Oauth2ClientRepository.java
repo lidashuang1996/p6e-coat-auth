@@ -1,21 +1,15 @@
 package club.p6e.coat.auth.repository;
 
 import club.p6e.coat.auth.model.Oauth2ClientModel;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import reactor.core.publisher.Mono;
 
 /**
- * Oauth2 Client 模型存储库
  * @author lidashuang
  * @version 1.0
  */
-@ConditionalOnMissingBean(
-        value = Oauth2ClientRepository.class,
-        ignored = Oauth2ClientRepository.class
-)
 public class Oauth2ClientRepository {
 
     /**

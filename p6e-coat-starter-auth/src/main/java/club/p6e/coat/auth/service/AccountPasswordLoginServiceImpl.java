@@ -104,7 +104,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     }
                 })
                 .publishOn(Schedulers.boundedElastic())
-                .doFinally(t -> SpringUtil.getBean(PasswordSignatureCache.class).del(mark).block());
+                .doFinally(t -> SpringUtil.getBean(PasswordSignatureCache.class).del(mark).subscribe());
     }
 
     @Override
@@ -113,8 +113,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> ete ? executeTransmissionDecryption(
-                        v, param.getPassword()).map(param::setPassword) : Mono.just(param))
+                .flatMap(v -> ete ? executeTransmissionDecryption(v, param.getPassword()).map(param::setPassword) : Mono.just(param))
                 .flatMap(p -> switch (mode) {
                     case PHONE -> executePhoneMode(p);
                     case MAILBOX -> executeMailboxMode(p);
@@ -138,9 +137,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private Mono<AuthUser.Model> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository
-                        .findById(u.getId())
-                        .map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
     }
 
     /**
@@ -152,9 +149,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private Mono<AuthUser.Model> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository
-                        .findById(u.getId())
-                        .map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
     }
 
     /**
@@ -166,9 +161,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     protected Mono<AuthUser.Model> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository
-                        .findById(u.getId())
-                        .map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
     }
 
     /**
@@ -180,9 +173,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     protected Mono<AuthUser.Model> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository
-                        .findById(u.getId())
-                        .map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
     }
 
 }

@@ -5,7 +5,7 @@ import club.p6e.coat.auth.AuthPage;
 import club.p6e.coat.auth.AuthUser;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.certificate.HttpCertificate;
-import club.p6e.coat.auth.context.ResultContext;
+import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.common.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
