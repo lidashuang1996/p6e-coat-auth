@@ -402,3 +402,7 @@ Caused by: java.lang.NoSuchMethodException: club.p6e.coat.auth.message.WebSocket
 	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2754) ~[na:na]
 	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:79) ~[spring-beans-6.0.9.jar:6.0.9]
 	... 25 common frames omitted
+2024-03-19 16:22:40 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param)
+2024-03-19 16:23:00 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 16:24:13 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
+2024-03-19 16:24:20 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
