@@ -1,9 +1,9 @@
 package club.p6e.coat.auth.cache.memory;
 
-import club.p6e.coat.auth.utils.JsonUtil;
 import club.p6e.coat.auth.cache.AuthCache;
 import club.p6e.coat.auth.cache.memory.support.MemoryCache;
 import club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate;
+import club.p6e.coat.common.utils.JsonUtil;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;

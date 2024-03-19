@@ -2,7 +2,7 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.AuthPage;
 import club.p6e.coat.auth.AuthVoucher;
-import club.p6e.coat.auth.utils.TemplateParser;
+import club.p6e.coat.common.utils.TemplateParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;

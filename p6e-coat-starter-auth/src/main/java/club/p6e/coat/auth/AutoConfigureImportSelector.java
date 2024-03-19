@@ -15,9 +15,9 @@ import club.p6e.coat.auth.launcher.SmsMessageLauncherImpl;
 import club.p6e.coat.auth.repository.Oauth2ClientRepository;
 import club.p6e.coat.auth.repository.UserAuthRepository;
 import club.p6e.coat.auth.repository.UserRepository;
-import club.p6e.coat.auth.utils.SpringUtil;
-import club.p6e.coat.auth.utils.TemplateParser;
 import club.p6e.coat.auth.validator.AccountPasswordLoginParameterValidator;
+import club.p6e.coat.common.utils.SpringUtil;
+import club.p6e.coat.common.utils.TemplateParser;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -65,7 +65,6 @@ public class AutoConfigureImportSelector {
             registerAuthWebFilterBean(defaultListableBeanFactory);
             registerBean(MeControllerImpl.class, defaultListableBeanFactory);
             registerBean(LogoutControllerImpl.class, defaultListableBeanFactory);
-            registerBean(AuthExceptionHandlerWebFilter.class, defaultListableBeanFactory);
         }
 
         // 注册内存缓存模式依赖的对象
@@ -147,7 +146,7 @@ public class AutoConfigureImportSelector {
             initOtherLoginConfig();
             registerStateOtherLoginCacheBean(defaultListableBeanFactory);
             registerBean(QqOtherLoginController.class, defaultListableBeanFactory);
-            registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
+//            registerBean(QqOtherLoginServiceImpl.class, defaultListableBeanFactory);
             registerBean(StateOtherLoginGenerator.class, defaultListableBeanFactory);
         }
 
@@ -159,7 +158,7 @@ public class AutoConfigureImportSelector {
             registerBean(AuthUserImpl.class, defaultListableBeanFactory);
             registerBean(AuthOAuth2ClientImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2AuthorizeServiceImpl.class, defaultListableBeanFactory);
-            registerBean(Oauth2TokenServiceImpl.class, defaultListableBeanFactory);
+            registerBean(OAuth2TokenServiceImpl.class, defaultListableBeanFactory);
             registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
             registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);

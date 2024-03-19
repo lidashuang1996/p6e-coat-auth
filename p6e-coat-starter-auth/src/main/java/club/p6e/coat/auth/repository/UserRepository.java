@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.repository;
 
 import club.p6e.coat.auth.model.UserModel;
-import club.p6e.coat.auth.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.GeneratorUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;

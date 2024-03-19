@@ -2,11 +2,12 @@ package club.p6e.coat.auth;
 
 import club.p6e.coat.auth.model.UserAuthModel;
 import club.p6e.coat.auth.model.UserModel;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,13 +34,15 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                 .setId(um.getId())
                 .setStatus(um.getStatus())
                 .setEnabled(um.getEnabled())
+                .setInternal(um.getInternal())
+                .setAdministrator(um.getAdministrator())
                 .setAccount(um.getAccount())
                 .setPhone(um.getPhone())
                 .setMailbox(um.getMailbox())
                 .setName(um.getName())
                 .setNickname(um.getNickname())
                 .setAvatar(um.getAvatar())
-                .setDescribe(um.getDescription());
+                .setDescription(um.getDescription());
         if (uam != null) {
             model.setPassword(uam.getPassword());
         }
@@ -55,13 +58,15 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
         private Integer id;
         private Integer status;
         private Integer enabled;
+        private Integer internal;
+        private Integer administrator;
         private String account;
         private String phone;
         private String mailbox;
         private String name;
         private String nickname;
         private String avatar;
-        private String describe;
+        private String description;
         private String password;
 
         @Override
@@ -80,20 +85,34 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                     .setId(this.getId())
                     .setStatus(this.getStatus())
                     .setEnabled(this.getEnabled())
+                    .setInternal(this.getInternal())
+                    .setAdministrator(this.getAdministrator())
                     .setAccount(this.getAccount())
                     .setPhone(this.getPhone())
                     .setMailbox(this.getMailbox())
                     .setName(this.getName())
                     .setNickname(this.getNickname())
                     .setAvatar(this.getAvatar())
-                    .setDescribe(this.getDescribe())
+                    .setDescription(this.getDescription())
             );
         }
 
         @Override
         public Map<String, Object> toMap() {
-            return null;
+            return new HashMap<>() {{
+                put("id", id);
+                put("status", status);
+                put("enabled", enabled);
+                put("internal", internal);
+                put("administrator", administrator);
+                put("account", account);
+                put("phone", phone);
+                put("mailbox", mailbox);
+                put("name", name);
+                put("nickname", nickname);
+                put("avatar", avatar);
+                put("description", description);
+            }};
         }
-
     }
 }

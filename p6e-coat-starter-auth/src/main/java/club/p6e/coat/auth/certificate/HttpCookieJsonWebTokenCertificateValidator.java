@@ -10,8 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class HttpCookieJsonWebTokenCertificateValidator
-        extends HttpCertificate implements AuthCertificateValidator {
+public class HttpCookieJsonWebTokenCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * JWT 密码对象
@@ -32,7 +31,7 @@ public class HttpCookieJsonWebTokenCertificateValidator
         return getHttpCookieToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun execute(ServerWebExchange exchange)",
+                        "fun execute(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/JWT] HTTP request access token does not exist."
                 )))
                 .flatMap(this::accessToken)
@@ -46,7 +45,7 @@ public class HttpCookieJsonWebTokenCertificateValidator
         final String r = jwtDecryption(token, cipher.getAccessTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
-                "fun accessToken(String token)",
+                "fun accessToken(String token).",
                 "[HTTP/COOKIE/JWT] Verifier validation access token exception."
         )) : Mono.just(r);
     }

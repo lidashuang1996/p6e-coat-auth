@@ -25,6 +25,6 @@ public interface VerificationCodeObtainController<P, R> {
      * @return 结果对象
      */
     @GetMapping("")
-    public Mono<R> execute(ServerWebExchange exchange, P param);
+    Mono<R> execute(ServerWebExchange exchange, P param);
 
 }

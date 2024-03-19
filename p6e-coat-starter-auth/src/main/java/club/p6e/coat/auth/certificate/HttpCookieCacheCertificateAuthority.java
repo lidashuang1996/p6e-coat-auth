@@ -14,13 +14,10 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 
 /**
- * 认证凭证下发（HttpCookieCache）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class HttpCookieCacheCertificateAuthority
-        extends HttpCertificate implements AuthCertificateAuthority {
+public class HttpCookieCacheCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * 认证缓存
@@ -81,7 +78,8 @@ public class HttpCookieCacheCertificateAuthority
                                         t.getRefreshToken()
                                 ));
                             }
-                        })).map(ResultContext::build);
+                        })
+                ).map(ResultContext::build);
     }
 
     @Override
@@ -89,14 +87,14 @@ public class HttpCookieCacheCertificateAuthority
         return getHttpCookieToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/CACHE] HTTP request access token does not exist."
                 )))
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/CACHE] Verifier validation clean access token exception."
                 )))
                 .flatMap(l -> cleanHttpCookieToken(exchange.getResponse()));

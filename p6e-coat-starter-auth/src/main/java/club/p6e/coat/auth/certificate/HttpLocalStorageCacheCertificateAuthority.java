@@ -12,16 +12,12 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
- * 认证凭证下发（HttpLocalStorageCache）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class HttpLocalStorageCacheCertificateAuthority
-        extends HttpCertificate implements AuthCertificateAuthority {
+public class HttpLocalStorageCacheCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * 认证缓存
@@ -79,7 +75,8 @@ public class HttpLocalStorageCacheCertificateAuthority
                                         t.getRefreshToken()
                                 ));
                             }
-                        })).map(ResultContext::build);
+                        })
+                ).map(ResultContext::build);
     }
 
     @Override
@@ -87,14 +84,14 @@ public class HttpLocalStorageCacheCertificateAuthority
         return getHttpLocalStorageToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/STORAGE/CACHE] HTTP request access token does not exist."
                 )))
                 .flatMap(cache::getAccessToken)
                 .flatMap(t -> cache.cleanToken(t.getAccessToken()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/STORAGE/CACHE] Verifier validation clean access token exception."
                 )))
                 .flatMap(l -> Mono.empty());

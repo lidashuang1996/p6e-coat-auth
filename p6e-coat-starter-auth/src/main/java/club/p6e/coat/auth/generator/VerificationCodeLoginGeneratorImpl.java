@@ -1,6 +1,6 @@
 package club.p6e.coat.auth.generator;
 
-import club.p6e.coat.auth.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.GeneratorUtil;
 
 /**
  * 验证码登录

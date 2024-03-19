@@ -1,8 +1,8 @@
 package club.p6e.coat.auth.cache.redis;
 
 import club.p6e.coat.auth.cache.redis.support.RedisCache;
-import club.p6e.coat.auth.cache.Oauth2TokenUserAuthCache;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.auth.cache.OAuth2TokenUserAuthCache;
+import club.p6e.coat.common.utils.JsonUtil;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  */
 public class Oauth2TokenUserAuthRedisCache
-        extends RedisCache implements Oauth2TokenUserAuthCache {
+        extends RedisCache implements OAuth2TokenUserAuthCache {
 
     /**
      * 缓存对象

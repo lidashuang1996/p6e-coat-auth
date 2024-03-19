@@ -2,7 +2,7 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.context.OAuth2Context;
 import club.p6e.coat.auth.context.ResultContext;
-import club.p6e.coat.auth.service.Oauth2TokenService;
+import club.p6e.coat.auth.service.OAuth2TokenService;
 import club.p6e.coat.auth.validator.ParameterValidator;
 
 import org.springframework.web.server.ServerWebExchange;
@@ -22,14 +22,14 @@ public class OAuth2TokenControllerImpl
     /**
      * OAUTH2 TOKEN 服务
      */
-    private final Oauth2TokenService service;
+    private final OAuth2TokenService service;
 
     /**
      * 构造方法
      *
      * @param service OAUTH2 TOKEN 服务
      */
-    public OAuth2TokenControllerImpl(Oauth2TokenService service) {
+    public OAuth2TokenControllerImpl(OAuth2TokenService service) {
         this.service = service;
     }
 

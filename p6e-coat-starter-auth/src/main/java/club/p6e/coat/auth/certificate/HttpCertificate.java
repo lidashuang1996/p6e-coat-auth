@@ -23,7 +23,6 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-@SuppressWarnings("ALL")
 public class HttpCertificate {
 
     /**
@@ -301,71 +300,71 @@ public class HttpCertificate {
          *
          * @param auth 认证头名称
          */
-        public void setAuthHeader(String auth);
+        void setAuthHeader(String auth);
 
         /**
          * 读取认证头名称
          */
-        public String getAuthHeader();
+        String getAuthHeader();
 
         /**
          * 设置用户信息的头部名称
          *
          * @param name 用户信息的头部名称
          */
-        public void setUserInfoHeaderName(String name);
+        void setUserInfoHeaderName(String name);
 
         /**
          * 读取用户信息的头部名称
          */
-        public String getUserInfoHeaderName();
+        String getUserInfoHeaderName();
 
         /**
          * 设置认证头类型
          *
          * @param type 认证头类型
          */
-        public void setAuthHeaderTokenType(String type);
+        void setAuthHeaderTokenType(String type);
 
         /**
          * 读取认证头类型
          */
-        public String getAuthHeaderTokenType();
+        String getAuthHeaderTokenType();
 
         /**
          * 设置认证头必须的前缀
          *
          * @param prefix 认证头必须的前缀
          */
-        public void setAuthHeaderTokenPrefix(String prefix);
+        void setAuthHeaderTokenPrefix(String prefix);
 
         /**
          * 设置 ACCESS TOKEN 请求参数名称
          *
          * @param params 请求参数名称
          */
-        public void setTokenParams(List<String> params);
+        void setTokenParams(List<String> params);
 
         /**
          * 设置 AUTH COOKIE ACCESS TOKEN 名称
          *
          * @param name AUTH COOKIE ACCESS TOKEN 名称
          */
-        public void setAuthCookieAccessTokenName(String name);
+        void setAuthCookieAccessTokenName(String name);
 
         /**
          * 设置  AUTH COOKIE REFRESH TOKEN 名称
          *
          * @param name AUTH COOKIE REFRESH TOKEN 名称
          */
-        public void setAuthCookieRefreshTokenName(String name);
+        void setAuthCookieRefreshTokenName(String name);
 
         /**
          * 设置过期时间
          *
          * @param time 过期时间
          */
-        public void setExpirationTime(long time);
+        void setExpirationTime(long time);
 
         /**
          * 从请求头中获取令牌
@@ -373,7 +372,7 @@ public class HttpCertificate {
          * @param request 请求对象
          * @return 结果值
          */
-        public String getHeaderToken(ServerHttpRequest request);
+        String getHeaderToken(ServerHttpRequest request);
 
         /**
          * 从请求参数中获取令牌
@@ -381,7 +380,7 @@ public class HttpCertificate {
          * @param request 请求对象
          * @return 结果值
          */
-        public String getQueryParamToken(ServerHttpRequest request);
+        String getQueryParamToken(ServerHttpRequest request);
 
         /**
          * 从请求 cookies 中获取令牌
@@ -389,7 +388,7 @@ public class HttpCertificate {
          * @param request 请求对象
          * @return 结果值
          */
-        public Mono<String> getHttpCookieToken(ServerHttpRequest request);
+        Mono<String> getHttpCookieToken(ServerHttpRequest request);
 
         /**
          * 从请求头或者参数中获取令牌
@@ -409,8 +408,7 @@ public class HttpCertificate {
          * @param result       结果对象
          * @return 结果值
          */
-        public Mono<Object> setHttpCookieToken(
-                ServerHttpResponse response, String accessToken, String refreshToken, Long expire, Object result);
+        Mono<Object> setHttpCookieToken(ServerHttpResponse response, String accessToken, String refreshToken, Long expire, Object result);
 
         /**
          * 写入本地缓存令牌
@@ -421,8 +419,7 @@ public class HttpCertificate {
          * @param data         数据对象
          * @return 结果值
          */
-        public Mono<Map<String, Object>> setHttpLocalStorageToken(
-                String accessToken, String refreshToken, Long expire, Map<String, Object> data);
+        Mono<Map<String, Object>> setHttpLocalStorageToken(String accessToken, String refreshToken, Long expire, Map<String, Object> data);
 
         /**
          * 清除本地缓存令牌
@@ -430,7 +427,7 @@ public class HttpCertificate {
          * @param response 返回对象
          * @return 结果值
          */
-        public Mono<Void> cleanHttpCookieToken(ServerHttpResponse response);
+        Mono<Void> cleanHttpCookieToken(ServerHttpResponse response);
 
         /**
          * JWT 加密
@@ -440,7 +437,7 @@ public class HttpCertificate {
          * @param secret  密钥
          * @return 令牌
          */
-        public String jwtEncryption(String uid, String content, String secret);
+        String jwtEncryption(String uid, String content, String secret);
 
         /**
          * JWT 解密
@@ -449,7 +446,7 @@ public class HttpCertificate {
          * @param secret 密钥
          * @return 解密内容
          */
-        public String jwtDecryption(String token, String secret);
+        String jwtDecryption(String token, String secret);
     }
 
     /**

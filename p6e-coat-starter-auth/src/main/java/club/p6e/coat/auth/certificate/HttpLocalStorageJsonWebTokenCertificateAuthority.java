@@ -12,13 +12,10 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 
 /**
- * 认证凭证下发（HttpLocalStorageJsonWebToken）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class HttpLocalStorageJsonWebTokenCertificateAuthority
-        extends HttpCertificate implements AuthCertificateAuthority {
+public class HttpLocalStorageJsonWebTokenCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * JWT 密码对象
@@ -65,7 +62,7 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority
         return getHttpLocalStorageToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/STORAGE/JWT] HTTP request access token does not exist."
                 )))
                 .flatMap(l -> Mono.empty());

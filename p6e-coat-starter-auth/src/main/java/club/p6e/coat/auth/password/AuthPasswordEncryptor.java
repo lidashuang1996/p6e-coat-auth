@@ -14,6 +14,15 @@ public interface AuthPasswordEncryptor {
      * @param content 密码
      * @return 密码加密后的内容
      */
-    public String execute(String content);
+    String execute(String content);
+
+    /**
+     * 验证密码是否正确
+     *
+     * @param pwd1 密码
+     * @param pwd2 密码
+     * @return 密码加密后的内容
+     */
+    boolean validate(String pwd1, String pwd2);
 
 }

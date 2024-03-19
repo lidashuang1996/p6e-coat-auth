@@ -13,6 +13,6 @@ public interface OtherLoginController {
      *
      * @return 类型名称
      */
-    public String type();
+    String type();
 
 }

@@ -2,8 +2,8 @@ package club.p6e.coat.auth.service;
 
 import club.p6e.coat.auth.AuthPage;
 import club.p6e.coat.auth.repository.Oauth2ClientRepository;
-import club.p6e.coat.auth.utils.TemplateParser;
-import club.p6e.coat.auth.utils.VerificationUtil;
+import club.p6e.coat.common.utils.TemplateParser;
+import club.p6e.coat.common.utils.VerificationUtil;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.Properties;
 import club.p6e.coat.auth.context.OAuth2Context;

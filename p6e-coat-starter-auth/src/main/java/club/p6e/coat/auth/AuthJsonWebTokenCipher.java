@@ -1,6 +1,6 @@
 package club.p6e.coat.auth;
 
-import club.p6e.coat.auth.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;

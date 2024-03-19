@@ -17,7 +17,7 @@ public interface AuthCertificateValidator {
      * @param token 令牌
      * @return 读取的令牌里面的认证信息
      */
-    public Mono<String> accessToken(String token);
+    Mono<String> accessToken(String token);
 
     /**
      * 刷新令牌的验证
@@ -25,7 +25,7 @@ public interface AuthCertificateValidator {
      * @param token 令牌
      * @return 读取的令牌里面的认证信息
      */
-    public Mono<String> refreshToken(String token);
+    Mono<String> refreshToken(String token);
 
     /**
      * 执行认证方法
@@ -33,6 +33,6 @@ public interface AuthCertificateValidator {
      * @param exchange ServerWebExchange 对象
      * @return ServerWebExchange 对象
      */
-    public Mono<ServerWebExchange> execute(ServerWebExchange exchange);
+    Mono<ServerWebExchange> execute(ServerWebExchange exchange);
 
 }

@@ -24,23 +24,28 @@ public interface AuthUser<M extends AuthUser.Model> {
          *
          * @return 序号
          */
-        public String id();
+        String id();
 
         /**
          * 获取密码
          *
          * @return 密码
          */
-        public String password();
+        String password();
 
         /**
          * 序列化方法
          *
          * @return 序列化后的字符串内容
          */
-        public String serialize();
+        String serialize();
 
-        public Map<String, Object> toMap();
+        /**
+         * 转换为 MAP 对象
+         *
+         * @return MAP 对象
+         */
+        Map<String, Object> toMap();
 
     }
 
@@ -50,7 +55,7 @@ public interface AuthUser<M extends AuthUser.Model> {
      * @param content 序列化的字符串内容
      * @return 认证用户模型
      */
-    public M create(String content);
+    M create(String content);
 
     /**
      * 创建认证用户模型
@@ -59,6 +64,6 @@ public interface AuthUser<M extends AuthUser.Model> {
      * @param uam 用户认证模型
      * @return 认证用户模型
      */
-    public M create(UserModel um, UserAuthModel uam);
+    M create(UserModel um, UserAuthModel uam);
 
 }

@@ -10,8 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class HttpLocalStorageJsonWebTokenCertificateValidator
-        extends HttpCertificate implements AuthCertificateValidator {
+public class HttpLocalStorageJsonWebTokenCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -32,7 +31,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
         return getHttpLocalStorageToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun execute(ServerWebExchange exchange)",
+                        "fun execute(ServerWebExchange exchange).",
                         "[HTTP/STORAGE/JWT] HTTP request access token does not exist."
                 )))
                 .flatMap(this::accessToken)
@@ -46,7 +45,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
         final String r = jwtDecryption(token, cipher.getAccessTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
-                "fun accessToken(String token)",
+                "fun accessToken(String token).",
                 "[HTTP/STORAGE/JWT] Verifier validation access token exception."
         )) : Mono.just(r);
     }
@@ -56,7 +55,7 @@ public class HttpLocalStorageJsonWebTokenCertificateValidator
         final String r = jwtDecryption(token, cipher.getRefreshTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
-                "fun refreshToken(String token)",
+                "fun refreshToken(String token).",
                 "[HTTP/STORAGE/JWT] Verifier validation refresh token exception."
         )) : Mono.just(r);
     }

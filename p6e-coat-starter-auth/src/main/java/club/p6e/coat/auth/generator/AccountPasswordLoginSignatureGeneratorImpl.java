@@ -1,6 +1,6 @@
 package club.p6e.coat.auth.generator;
 
-import club.p6e.coat.auth.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.GeneratorUtil;
 
 /**
  * 账号密码登录对密码传输加密标记生成器实现

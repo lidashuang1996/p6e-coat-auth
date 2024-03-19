@@ -7,13 +7,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 认证凭证拦截验证（HttpCookieCache）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class HttpCookieCacheCertificateValidator
-        extends HttpCertificate implements AuthCertificateValidator {
+public class HttpCookieCacheCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -34,7 +31,7 @@ public class HttpCookieCacheCertificateValidator
         return getHttpCookieToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun execute(ServerWebExchange exchange)",
+                        "fun execute(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/CACHE] HTTP request access token does not exist."
                 )))
                 .flatMap(this::accessToken)
@@ -49,7 +46,7 @@ public class HttpCookieCacheCertificateValidator
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun accessToken(String token)",
+                        "fun accessToken(String token).",
                         "[HTTP/COOKIE/CACHE] Verifier validation access token exception."
                 )));
     }
@@ -60,7 +57,7 @@ public class HttpCookieCacheCertificateValidator
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun refreshToken(String token)",
+                        "fun refreshToken(String token).",
                         "[HTTP/COOKIE/CACHE] Verifier validation refresh token exception."
                 )));
     }

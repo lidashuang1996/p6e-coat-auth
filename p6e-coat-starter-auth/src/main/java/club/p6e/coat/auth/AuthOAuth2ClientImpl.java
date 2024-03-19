@@ -1,6 +1,6 @@
 package club.p6e.coat.auth;
 
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -26,16 +26,11 @@ public class AuthOAuth2ClientImpl implements AuthOAuth2Client<AuthOAuth2ClientIm
     @Accessors(chain = true)
     public static class Model implements AuthOAuth2Client.Model, Serializable {
         private Integer id;
-        private Integer status;
         private Integer enabled;
-        private String account;
-        private String phone;
-        private String mailbox;
         private String name;
-        private String nickname;
         private String avatar;
-        private String describe;
-        private String password;
+        private String description;
+        private String secret;
 
         @Override
         public String id() {
@@ -44,22 +39,17 @@ public class AuthOAuth2ClientImpl implements AuthOAuth2Client<AuthOAuth2ClientIm
 
         @Override
         public String password() {
-            return password;
+            return secret;
         }
 
         @Override
         public String serialize() {
             return JsonUtil.toJson(new Model()
                     .setId(this.getId())
-                    .setStatus(this.getStatus())
                     .setEnabled(this.getEnabled())
-                    .setAccount(this.getAccount())
-                    .setPhone(this.getPhone())
-                    .setMailbox(this.getMailbox())
                     .setName(this.getName())
-                    .setNickname(this.getNickname())
                     .setAvatar(this.getAvatar())
-                    .setDescribe(this.getDescribe())
+                    .setDescription(this.getDescription())
             );
         }
 

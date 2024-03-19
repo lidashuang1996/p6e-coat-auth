@@ -15,43 +15,40 @@ public final class AuthPage {
     /**
      * ME PAGE
      */
-    private static final Model ME = new Model("I am on the me page.");
+    private static final Model ME = new Model("");
 
     /**
      * LOGIN PAGE
      */
-    private static final Model LOGIN = new Model("I am on the login page.");
+    private static final Model LOGIN = new Model("");
 
     /**
      * REGISTER PAGE
      */
-    private static final Model OAUTH2_CONFIRM = new Model("I am on the register page.");
+    private static final Model REGISTER = new Model("");
 
     /**
-     * REGISTER PAGE
+     * OAUTH2 CONFIRM PAGE
      */
-    private static final Model REGISTER = new Model("I am on the register page.");
+    private static final Model OAUTH2_CONFIRM = new Model("");
 
     /**
      * FORGOT PASSWORD PAGE
      */
-    private static final Model FORGOT_PASSWORD = new Model("I am on the forgot password page.");
+    private static final Model FORGOT_PASSWORD = new Model("");
 
     /**
-     * @return
+     * ME PAGE
+     *
+     * @return 我的页面
      */
     public static Model me() {
         return ME;
     }
 
     /**
-     * @param type
-     */
-    public static void setMe(MediaType type) {
-        ME.setType(type);
-    }
-
-    /**
+     * SET ME PAGE
+     *
      * @param content 内容
      */
     public static void setMe(String content) {
@@ -59,7 +56,9 @@ public final class AuthPage {
     }
 
     /**
-     * @param type
+     * SET ME PAGE
+     *
+     * @param type    类型
      * @param content 内容
      */
     public static void setMe(MediaType type, String content) {
@@ -68,6 +67,8 @@ public final class AuthPage {
     }
 
     /**
+     * LOGIN
+     *
      * @return 登录页面
      */
     public static Model login() {
@@ -75,16 +76,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置登录页面
-     *
-     * @param type 类型
-     */
-    public static void setLogin(MediaType type) {
-        LOGIN.setType(type);
-    }
-
-    /**
-     * 设置登录页面
+     * SET LOGIN PAGE
      *
      * @param content 内容
      */
@@ -93,7 +85,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置登录页面
+     * SET LOGIN PAGE
      *
      * @param type    类型
      * @param content 内容
@@ -104,6 +96,8 @@ public final class AuthPage {
     }
 
     /**
+     * REGISTER
+     *
      * @return 注册页面
      */
     public static Model register() {
@@ -111,16 +105,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置注册页面
-     *
-     * @param type 类型
-     */
-    public static void setRegister(MediaType type) {
-        REGISTER.setType(type);
-    }
-
-    /**
-     * 设置注册页面
+     * SET REGISTER PAGE
      *
      * @param content 内容
      */
@@ -129,7 +114,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置注册页面
+     * SET REGISTER PAGE
      *
      * @param type    类型
      * @param content 内容
@@ -140,6 +125,8 @@ public final class AuthPage {
     }
 
     /**
+     * FORGOT PASSWORD
+     *
      * @return 忘记密码页面
      */
     public static Model forgotPassword() {
@@ -147,16 +134,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置忘记密码页面
-     *
-     * @param type 类型
-     */
-    public static void setForgotPassword(MediaType type) {
-        FORGOT_PASSWORD.setType(type);
-    }
-
-    /**
-     * 设置忘记密码页面
+     * SET FORGOT PASSWORD PAGE
      *
      * @param content 内容
      */
@@ -165,7 +143,7 @@ public final class AuthPage {
     }
 
     /**
-     * 设置忘记密码页面
+     * SET FORGOT PASSWORD PAGE
      *
      * @param type    类型
      * @param content 内容
@@ -175,15 +153,30 @@ public final class AuthPage {
         FORGOT_PASSWORD.setContent(content);
     }
 
-
+    /**
+     * OAUTH2 CONFIRM
+     *
+     * @return OAUTH2 CONFIRM PAGE
+     */
     public static Model oAuth2Confirm() {
         return OAUTH2_CONFIRM;
     }
 
+    /**
+     * SET OAUTH2 CONFIRM PAGE
+     *
+     * @param content 内容
+     */
     public static void setOAuth2Confirm(String content) {
         OAUTH2_CONFIRM.setContent(content);
     }
 
+    /**
+     * SET OAUTH2 CONFIRM PAGE
+     *
+     * @param type    类型
+     * @param content 内容
+     */
     public static void setOAuth2Confirm(MediaType type, String content) {
         OAUTH2_CONFIRM.setType(type);
         OAUTH2_CONFIRM.setContent(content);

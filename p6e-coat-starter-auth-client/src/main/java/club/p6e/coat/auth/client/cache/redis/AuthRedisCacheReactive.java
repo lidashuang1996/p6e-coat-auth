@@ -1,0 +1,90 @@
+package club.p6e.coat.auth.client.cache.redis;
+
+import club.p6e.coat.auth.client.cache.AuthCacheReactive;
+import club.p6e.coat.auth.client.cache.redis.support.RedisCacheReactive;
+import club.p6e.coat.common.utils.JsonUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.redis.connection.RedisStringCommands;
+import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
+import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author lidashuang
+ * @version 1.0
+ */
+@Component
+@ConditionalOnBean(ReactiveStringRedisTemplate.class)
+@ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
+@ConditionalOnProperty(name = "club.p6e.coat.auth.client.cache.type", havingValue = "REDIS")
+public class AuthRedisCacheReactive extends RedisCacheReactive implements AuthCacheReactive {
+
+    /**
+     * 缓存对象
+     */
+    private final ReactiveStringRedisTemplate template;
+
+    /**
+     * 构造方法初始化
+     *
+     * @param template 缓存对象
+     */
+    public AuthRedisCacheReactive(ReactiveStringRedisTemplate template) {
+        this.template = template;
+    }
+
+    @Override
+    public Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user) {
+        final Token token = new Token().setUid(uid).setDevice(device)
+                .setAccessToken(accessToken).setRefreshToken(refreshToken);
+        final String json = JsonUtil.toJson(token);
+        if (json == null) {
+            return Mono.empty();
+        } else {
+            final byte[] jcBytes = json.getBytes(StandardCharsets.UTF_8);
+            return template.execute(connection ->
+                    Flux.concat(
+                            connection.stringCommands().set(
+                                    ByteBuffer.wrap((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8)),
+                                    ByteBuffer.wrap(user.getBytes(StandardCharsets.UTF_8)),
+                                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                    RedisStringCommands.SetOption.UPSERT
+                            ),
+                            connection.stringCommands().set(
+                                    ByteBuffer.wrap((ACCESS_TOKEN_PREFIX + accessToken).getBytes(StandardCharsets.UTF_8)),
+                                    ByteBuffer.wrap(jcBytes),
+                                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                    RedisStringCommands.SetOption.UPSERT
+                            ),
+                            connection.stringCommands().set(
+                                    ByteBuffer.wrap((REFRESH_TOKEN_PREFIX + refreshToken).getBytes(StandardCharsets.UTF_8)),
+                                    ByteBuffer.wrap(jcBytes),
+                                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                    RedisStringCommands.SetOption.UPSERT
+                            ),
+                            connection.stringCommands().set(
+                                    ByteBuffer.wrap((USER_ACCESS_TOKEN_PREFIX + uid + DELIMITER + accessToken).getBytes(StandardCharsets.UTF_8)),
+                                    ByteBuffer.wrap(jcBytes),
+                                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                    RedisStringCommands.SetOption.UPSERT
+                            ),
+                            connection.stringCommands().set(
+                                    ByteBuffer.wrap((USER_REFRESH_TOKEN_PREFIX + uid + DELIMITER + refreshToken).getBytes(StandardCharsets.UTF_8)),
+                                    ByteBuffer.wrap(jcBytes),
+                                    Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                    RedisStringCommands.SetOption.UPSERT
+                            )
+                    )
+            ).collectList().map(r -> token);
+        }
+    }
+
+}

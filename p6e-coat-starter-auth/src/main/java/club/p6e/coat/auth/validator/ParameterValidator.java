@@ -1,6 +1,6 @@
 package club.p6e.coat.auth.validator;
 
-import club.p6e.coat.auth.utils.SpringUtil;
+import club.p6e.coat.common.utils.SpringUtil;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;

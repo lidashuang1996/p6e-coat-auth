@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.launcher;
 
 import club.p6e.coat.auth.error.GlobalExceptionContext;
-import club.p6e.coat.auth.utils.SpringUtil;
+import club.p6e.coat.common.utils.SpringUtil;
 import reactor.core.publisher.Mono;
 
 import java.util.List;

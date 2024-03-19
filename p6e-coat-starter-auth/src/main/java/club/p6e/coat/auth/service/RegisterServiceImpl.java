@@ -3,7 +3,7 @@ package club.p6e.coat.auth.service;
 import club.p6e.coat.auth.context.RegisterContext;
 import club.p6e.coat.auth.repository.UserAuthRepository;
 import club.p6e.coat.auth.repository.UserRepository;
-import club.p6e.coat.auth.utils.VerificationUtil;
+import club.p6e.coat.common.utils.VerificationUtil;
 import club.p6e.coat.auth.password.AuthPasswordEncryptor;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.Properties;

@@ -13,13 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 认证凭证下发（HttpCookieJsonWebToken）
- *
  * @author lidashuang
  * @version 1.0
  */
-public class HttpCookieJsonWebTokenCertificateAuthority
-        extends HttpCertificate implements AuthCertificateAuthority {
+public class HttpCookieJsonWebTokenCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
      * 认证缓存的对象
@@ -68,7 +65,7 @@ public class HttpCookieJsonWebTokenCertificateAuthority
         return getHttpCookieToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun abolish(ServerWebExchange exchange)",
+                        "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/JWT] HTTP request access token does not exist."
                 )))
                 .flatMap(u -> cleanHttpCookieToken(exchange.getResponse()));

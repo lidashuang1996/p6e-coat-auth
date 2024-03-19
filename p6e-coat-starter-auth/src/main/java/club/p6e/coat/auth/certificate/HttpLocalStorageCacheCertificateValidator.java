@@ -10,8 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class HttpLocalStorageCacheCertificateValidator
-        extends HttpCertificate implements AuthCertificateValidator {
+public class HttpLocalStorageCacheCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**
      * 认证缓存的对象
@@ -47,7 +46,7 @@ public class HttpLocalStorageCacheCertificateValidator
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun accessToken(String token)",
+                        "fun accessToken(String token).",
                         "[HTTP/STORAGE/CACHE] Verifier validation access token exception."
                 )));
     }
@@ -58,7 +57,7 @@ public class HttpLocalStorageCacheCertificateValidator
                 .flatMap(t -> cache.getUser(t.getUid()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
-                        "fun refreshToken(String token)",
+                        "fun refreshToken(String token).",
                         "[HTTP/STORAGE/CACHE] Verifier validation refresh token exception."
                 )));
     }

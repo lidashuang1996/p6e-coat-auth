@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.service;
 
 import club.p6e.coat.auth.codec.PasswordTransmissionCodec;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.cache.PasswordSignatureCache;
 import club.p6e.coat.auth.context.LoginContext;

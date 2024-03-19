@@ -26,7 +26,7 @@ public interface PasswordTransmissionCodec {
      *
      * @return 密钥对模型
      */
-    public Model generate();
+    Model generate();
 
     /**
      * 加密
@@ -35,7 +35,7 @@ public interface PasswordTransmissionCodec {
      * @param content 待编码内容
      * @return 编码之后的内容
      */
-    public String encryption(Model model, String content);
+    String encryption(Model model, String content);
 
     /**
      * 解密
@@ -44,6 +44,6 @@ public interface PasswordTransmissionCodec {
      * @param content 待解码内容
      * @return 解码之后的内容
      */
-    public String decryption(Model model, String content);
+    String decryption(Model model, String content);
 
 }

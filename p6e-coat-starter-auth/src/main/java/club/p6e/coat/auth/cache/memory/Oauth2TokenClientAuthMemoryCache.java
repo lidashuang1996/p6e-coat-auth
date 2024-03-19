@@ -1,9 +1,9 @@
 package club.p6e.coat.auth.cache.memory;
 
-import club.p6e.coat.auth.cache.Oauth2TokenClientAuthCache;
+import club.p6e.coat.auth.cache.OAuth2TokenClientAuthCache;
 import club.p6e.coat.auth.cache.memory.support.MemoryCache;
 import club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import reactor.core.publisher.Mono;
 
 /**
@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public class Oauth2TokenClientAuthMemoryCache
-        extends MemoryCache implements Oauth2TokenClientAuthCache {
+        extends MemoryCache implements OAuth2TokenClientAuthCache {
 
     /**
      * 内存缓存模板对象

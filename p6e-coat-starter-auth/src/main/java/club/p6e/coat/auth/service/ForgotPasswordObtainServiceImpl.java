@@ -10,7 +10,7 @@ import club.p6e.coat.auth.launcher.Launcher;
 import club.p6e.coat.auth.launcher.LauncherType;
 import club.p6e.coat.auth.model.UserModel;
 import club.p6e.coat.auth.repository.UserRepository;
-import club.p6e.coat.auth.utils.VerificationUtil;
+import club.p6e.coat.common.utils.VerificationUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 

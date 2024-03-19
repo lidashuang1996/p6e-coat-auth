@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.codec;
 
 import club.p6e.coat.auth.error.PasswordTransmissionCodecException;
-import club.p6e.coat.auth.utils.RsaUtil;
+import club.p6e.coat.common.utils.RsaUtil;
 
 /**
  * 密码编码解码器的默认实现
@@ -21,7 +21,7 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
         } catch (Exception e) {
             throw new PasswordTransmissionCodecException(
                     this.getClass(),
-                    "[ PTC ] generate exception >> " + e.getMessage(),
+                    "[ PTC ] generate exception >> " + e.getMessage() + ".",
                     "PTC generate key exception."
             );
         }
@@ -44,15 +44,14 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
                 } else {
                     throw new PasswordTransmissionCodecException(
                             this.getClass(),
-                            "[ PTC ] encryption PublicKey/PrivateKey value is null exception. >> " + model,
+                            "[ PTC ] encryption PublicKey/PrivateKey value is null exception >> " + model + ".",
                             "PTC encryption PublicKey/PrivateKey exception."
                     );
                 }
             } catch (Exception e) {
                 throw new PasswordTransmissionCodecException(
                         this.getClass(),
-                        "[ PTC ] encryption exception model("
-                                + model + ") content(" + content + ") >> " + e.getMessage(),
+                        "[ PTC ] encryption exception model(" + model + ") content(" + content + ") >> " + e.getMessage() + ".",
                         "PTC encryption exception."
                 );
             }
@@ -74,15 +73,14 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
                 } else {
                     throw new PasswordTransmissionCodecException(
                             this.getClass(),
-                            "[ PTC ] decryption PublicKey value is null exception. >> " + model,
+                            "[ PTC ] decryption PublicKey value is null exception >> " + model + ".",
                             "PTC decryption PublicKey exception."
                     );
                 }
             } catch (Exception e) {
                 throw new PasswordTransmissionCodecException(
                         this.getClass(),
-                        "[ PTC ] decryption exception model("
-                                + model + ") content(" + content + ") >> " + e.getMessage(),
+                        "[ PTC ] decryption exception model(" + model + ") content(" + content + ") >> " + e.getMessage() + ".",
                         "PTC decryption exception."
                 );
             }

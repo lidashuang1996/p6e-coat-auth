@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.message;
 
-import club.p6e.coat.auth.utils.GeneratorUtil;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.*;

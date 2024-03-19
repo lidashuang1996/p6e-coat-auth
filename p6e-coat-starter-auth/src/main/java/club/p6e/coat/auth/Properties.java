@@ -42,12 +42,12 @@ public class Properties implements Serializable {
     /**
      * JWT ACCESS TOKEN SECRET
      */
-    private String jwtAccessTokenSecret = null;
+    private String jwtAccessTokenSecret;
 
     /**
      * JWT REFRESH TOKEN SECRET
      */
-    private String jwtRefreshTokenSecret = null;
+    private String jwtRefreshTokenSecret;
 
     /**
      * 认证的账号模式

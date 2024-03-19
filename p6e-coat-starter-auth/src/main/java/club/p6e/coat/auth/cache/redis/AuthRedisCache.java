@@ -2,7 +2,7 @@ package club.p6e.coat.auth.cache.redis;
 
 import club.p6e.coat.auth.cache.redis.support.RedisCache;
 import club.p6e.coat.auth.cache.AuthCache;
-import club.p6e.coat.auth.utils.JsonUtil;
+import club.p6e.coat.common.utils.JsonUtil;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
