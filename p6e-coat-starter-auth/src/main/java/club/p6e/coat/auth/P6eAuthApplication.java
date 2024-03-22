@@ -14,14 +14,7 @@ import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWeb
 public class P6eAuthApplication {
 
     public static void main(String[] args) {
-        // 创建 SpringApplication 实例
-        SpringApplication application = new SpringApplication(P6eAuthApplication.class);
-
-        // 注册自定义的 ApplicationContextInitializer
-        application.addInitializers(new BBB());
-
-        // 运行 SpringApplication
-        application.run(args);
+        SpringApplication.run(P6eAuthApplication.class, args);
     }
 
 }
