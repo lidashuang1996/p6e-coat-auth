@@ -102,6 +102,17 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         }
     }
 
+    @RequestMapping("/refresh")
+    public Mono<ResultContext> refresh(ServerHttpRequest request, ServerHttpResponse response) {
+        final String accessToken = getAccessToken(request);
+        return ResultContext.build(accessToken);
+    }
+
+    @RequestMapping("/logout")
+    public Mono<ResultContext> logout(ServerHttpRequest request, ServerHttpResponse response) {
+
+    }
+
     @SuppressWarnings("ALL")
     protected ResultContext authorization(String id, String info, ServerHttpResponse response) {
         /*
