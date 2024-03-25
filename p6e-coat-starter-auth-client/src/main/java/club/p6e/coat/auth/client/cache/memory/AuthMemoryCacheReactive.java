@@ -49,4 +49,33 @@ public class AuthMemoryCacheReactive extends MemoryCache implements AuthCacheRea
         }
     }
 
+    @Override
+    public Mono<String> getUser(String id) {
+        return Mono.just(template.get(USER_PREFIX + id, String.class));
+    }
+
+    @Override
+    public Mono<Token> getAccessToken(String token) {
+        final String content = template.get(ACCESS_TOKEN_PREFIX + token, String.class);
+        final Token t = JsonUtil.fromJson(content, Token.class);
+        return t == null ? Mono.empty() : Mono.just(t);
+    }
+
+    @Override
+    public Mono<Token> getRefreshToken(String token) {
+        final String content = template.get(REFRESH_TOKEN_PREFIX + token, String.class);
+        final Token t = JsonUtil.fromJson(content, Token.class);
+        return t == null ? Mono.empty() : Mono.just(t);
+    }
+
+    @Override
+    public Mono<Long> cleanAccessToken(String token) {
+        return getAccessToken(token)
+                .map(t -> {
+                    template.del(ACCESS_TOKEN_PREFIX + t.getAccessToken());
+                    template.del(REFRESH_TOKEN_PREFIX + t.getRefreshToken());
+                    return 1L;
+                });
+    }
+
 }

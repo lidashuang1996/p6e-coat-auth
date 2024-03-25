@@ -5,7 +5,7 @@ import club.p6e.coat.auth.client.cache.AuthCacheReactive;
 import club.p6e.coat.auth.client.cache.AuthStateCacheReactive;
 import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.common.controller.BaseWebFluxController;
-import club.p6e.coat.common.error.AuthStateException;
+import club.p6e.coat.common.error.AuthException;
 import club.p6e.coat.common.error.ParameterException;
 import club.p6e.coat.common.utils.GeneratorUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -78,24 +78,24 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         final String code = getParam(request, "code");
         final String state = getParam(request, "state");
         if (code != null && state != null) {
-            return authStateCache.getAndDel(state)
-                    .flatMap(cache -> {
-                        if (cache == null) {
-                            return Mono.error(new AuthStateException(this.getClass(),
-                                    "fun callback().", "Request parameter state expires."));
-                        } else {
-//                            final String tokenResult = HttpUtil.doPost(properties.getAuthorizeTokenUrl()
-//                                    + "?code=" + code
-//                                    + "&client_id=" + properties.getAuthorizeAppId()
-//                                    + "&client_secret=" + properties.getAuthorizeAppSecret()
-//                                    + "&redirect_uri=" + properties.getAuthorizeAppRedirectUri()
-//                            );
-//                            final String token = "!23";
-//                            final String userInfoResult = HttpUtil.doGet(properties.getAuthorizeUserInfoUrl() + "?token=" + token);
-//                            return ;
-                            return Mono.just(authorization("123", "", response));
-                        }
-                    });
+            return authStateCache.getAndDel(state).map(l -> ResultContext.build());
+//                    .flatMap(cache -> {
+//                        if (cache == null) {
+//                            return Mono.error(new AuthStateException(this.getClass(),
+//                                    "fun callback().", "Request parameter state expires."));
+//                        } else {
+////                            final String tokenResult = HttpUtil.doPost(properties.getAuthorizeTokenUrl()
+////                                    + "?code=" + code
+////                                    + "&client_id=" + properties.getAuthorizeAppId()
+////                                    + "&client_secret=" + properties.getAuthorizeAppSecret()
+////                                    + "&redirect_uri=" + properties.getAuthorizeAppRedirectUri()
+////                            );
+////                            final String token = "!23";
+////                            final String userInfoResult = HttpUtil.doGet(properties.getAuthorizeUserInfoUrl() + "?token=" + token);
+////                            return ;
+//                            return Mono.just(authorization("123", "", response));
+//                        }
+//                    });
         } else {
             return Mono.error(new ParameterException(this.getClass(),
                     "fun callback().", "Request parameter code/state does not exist."));
@@ -105,16 +105,56 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     @RequestMapping("/refresh")
     public Mono<ResultContext> refresh(ServerHttpRequest request, ServerHttpResponse response) {
         final String accessToken = getAccessToken(request);
-        return ResultContext.build(accessToken);
+        final String refreshToken = getRefreshToken(request);
+        if (accessToken == null || refreshToken == null) {
+            return Mono.error(new AuthException(
+                    this.getClass(),
+                    "fun refresh(ServerHttpRequest request, ServerHttpResponse response).",
+                    "Request not exist authentication information."
+            ));
+        } else {
+            return authCache.getAccessToken(accessToken)
+                    .flatMap(at -> authCache.getRefreshToken(refreshToken)
+                            .map(rt -> at.getAccessToken().equals(rt.getAccessToken())
+                                    && at.getRefreshToken().equals(rt.getRefreshToken()))
+                            .filter(b -> b)
+                            .flatMap(b -> authCache
+                                    .getUser(at.getUid())
+                                    .flatMap(user -> authCache
+                                            .cleanAccessToken(at.getAccessToken())
+                                            .flatMap(l -> authorization(at.getUid(), user, response))
+                                    )
+                            )
+                    ).switchIfEmpty(Mono.error(new AuthException(
+                            this.getClass(),
+                            "fun refresh(ServerHttpRequest request, ServerHttpResponse response).",
+                            "Request authentication information has expired."
+                    )));
+        }
     }
 
     @RequestMapping("/logout")
     public Mono<ResultContext> logout(ServerHttpRequest request, ServerHttpResponse response) {
-
+        final String accessToken = getAccessToken(request);
+        if (accessToken == null) {
+            return Mono.error(new AuthException(
+                    this.getClass(),
+                    "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
+                    "Request not exist authentication information."
+            ));
+        } else {
+            return authCache.getAccessToken(accessToken)
+                    .flatMap(m -> authCache.cleanAccessToken(m.getAccessToken()))
+                    .switchIfEmpty(Mono.error(new AuthException(
+                            this.getClass(),
+                            "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
+                            "Request authentication information has expired."
+                    )))
+                    .map(l -> ResultContext.build());
+        }
     }
 
-    @SuppressWarnings("ALL")
-    protected ResultContext authorization(String id, String info, ServerHttpResponse response) {
+    protected Mono<ResultContext> authorization(String id, String info, ServerHttpResponse response) {
         /*
         // JWT
         final Date date = Date.from(LocalDateTime.now().plusSeconds(3600L).atZone(ZoneId.systemDefault()).toInstant());
@@ -123,10 +163,6 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         final String refreshToken = JWT.create().withAudience(String.valueOf(id)).withExpiresAt(date)
                 .withSubject(info).sign(Algorithm.HMAC256(authJsonWebTokenCipher.getRefreshTokenSecret()));
          */
-
-        final String accessToken = GeneratorUtil.uuid() + GeneratorUtil.random();
-        final String refreshToken = GeneratorUtil.uuid() + GeneratorUtil.random();
-        authCache.set(id, "PC", accessToken, refreshToken, info);
 
         /*
         // COOKIES
@@ -139,12 +175,15 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         return ResultContext.build();
         */
 
-        return ResultContext.build(new HashMap<>() {{
-            put("accessToken", accessToken);
-            put("refreshToken", refreshToken);
-            put("tokenType", AUTH_HEADER_TOKEN_TYPE);
-            put("expire", AuthCache.EXPIRATION_TIME);
-        }});
+        final String accessToken = GeneratorUtil.uuid() + GeneratorUtil.random();
+        final String refreshToken = GeneratorUtil.uuid() + GeneratorUtil.random();
+        return authCache.set(id, "PC", accessToken, refreshToken, info)
+                .map(t -> ResultContext.build(new HashMap<>() {{
+                    put("accessToken", accessToken);
+                    put("refreshToken", refreshToken);
+                    put("tokenType", AUTH_HEADER_TOKEN_TYPE);
+                    put("expire", AuthCache.EXPIRATION_TIME);
+                }}));
     }
 
 }

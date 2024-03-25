@@ -48,4 +48,33 @@ public class AuthMemoryCache extends MemoryCache implements AuthCache {
         }
     }
 
+    @Override
+    public String getUser(String id) {
+        return template.get(USER_PREFIX + id, String.class);
+    }
+
+    @Override
+    public Token getAccessToken(String token) {
+        final String content = template.get(ACCESS_TOKEN_PREFIX + token, String.class);
+        return JsonUtil.fromJson(content, Token.class);
+    }
+
+    @Override
+    public Token getRefreshToken(String token) {
+        final String content = template.get(REFRESH_TOKEN_PREFIX + token, String.class);
+        return JsonUtil.fromJson(content, Token.class);
+    }
+
+    @Override
+    public Long cleanAccessToken(String token) {
+        final Token t = getAccessToken(token);
+        if (t == null) {
+            return null;
+        } else {
+            template.del(ACCESS_TOKEN_PREFIX + t.getAccessToken());
+            template.del(REFRESH_TOKEN_PREFIX + t.getRefreshToken());
+            return 1L;
+        }
+    }
+
 }

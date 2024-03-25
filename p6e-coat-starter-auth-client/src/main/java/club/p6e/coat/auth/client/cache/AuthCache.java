@@ -90,4 +90,12 @@ public interface AuthCache extends ICache {
      */
     Token set(String uid, String device, String accessToken, String refreshToken, String user);
 
+    String getUser(String id);
+
+    Token getAccessToken(String token);
+
+    Token getRefreshToken(String token);
+
+    Long cleanAccessToken(String token);
+
 }

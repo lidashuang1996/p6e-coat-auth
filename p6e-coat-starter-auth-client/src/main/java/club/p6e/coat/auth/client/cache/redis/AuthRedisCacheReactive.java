@@ -87,4 +87,38 @@ public class AuthRedisCacheReactive extends RedisCacheReactive implements AuthCa
         }
     }
 
+    @Override
+    public Mono<String> getUser(String id) {
+        return template.opsForValue().get(USER_PREFIX + id);
+    }
+
+    @Override
+    public Mono<Token> getAccessToken(String token) {
+        return template.opsForValue()
+                .get(ACCESS_TOKEN_PREFIX + token)
+                .flatMap(c -> {
+                    final Token t = JsonUtil.fromJson(c, Token.class);
+                    return t == null ? Mono.empty() : Mono.just(t);
+                });
+    }
+
+    @Override
+    public Mono<Token> getRefreshToken(String token) {
+        return template.opsForValue()
+                .get(REFRESH_TOKEN_PREFIX + token)
+                .flatMap(c -> {
+                    final Token t = JsonUtil.fromJson(c, Token.class);
+                    return t == null ? Mono.empty() : Mono.just(t);
+                });
+    }
+
+    @Override
+    public Mono<Long> cleanAccessToken(String token) {
+        return getAccessToken(token)
+                .flatMap(t -> template.delete(
+                        ACCESS_TOKEN_PREFIX + t.getAccessToken(),
+                        REFRESH_TOKEN_PREFIX + t.getRefreshToken()
+                ));
+    }
+
 }

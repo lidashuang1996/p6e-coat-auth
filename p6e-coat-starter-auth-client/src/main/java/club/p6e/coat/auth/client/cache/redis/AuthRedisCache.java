@@ -82,4 +82,33 @@ public class AuthRedisCache extends RedisCache implements AuthCache {
         }
     }
 
+    @Override
+    public String getUser(String id) {
+        return template.opsForValue().get(USER_PREFIX + id);
+    }
+
+    @Override
+    public Token getAccessToken(String token) {
+        final String content = template.opsForValue().get(ACCESS_TOKEN_PREFIX + token);
+        return JsonUtil.fromJson(content, Token.class);
+    }
+
+    @Override
+    public Token getRefreshToken(String token) {
+        final String content = template.opsForValue().get(REFRESH_TOKEN_PREFIX + token);
+        return JsonUtil.fromJson(content, Token.class);
+    }
+
+    @Override
+    public Long cleanAccessToken(String token) {
+        final Token t = getAccessToken(token);
+        if (t == null) {
+            return null;
+        } else {
+            template.delete(ACCESS_TOKEN_PREFIX + t.getAccessToken());
+            template.delete(REFRESH_TOKEN_PREFIX + t.getRefreshToken());
+            return 1L;
+        }
+    }
+
 }

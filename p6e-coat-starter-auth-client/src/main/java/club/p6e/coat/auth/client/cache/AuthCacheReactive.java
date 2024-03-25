@@ -91,4 +91,11 @@ public interface AuthCacheReactive extends ICache {
      */
     Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user);
 
+    Mono<String> getUser(String id);
+
+    Mono<Token> getAccessToken(String token);
+
+    Mono<Token> getRefreshToken(String token);
+
+    Mono<Long> cleanAccessToken(String token);
 }
