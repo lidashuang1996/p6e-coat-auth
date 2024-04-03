@@ -85,6 +85,10 @@ public final class GlobalExceptionContext {
         return new VerificationCodeException(sc, error, content);
     }
 
+    public static VerificationCodeException exceptionForgotPasswordCodeException(Class<?> sc, String error, String content) {
+        return new VerificationCodeException(sc, error, content);
+    }
+
     public static QuickResponseCodeException exceptionQuickResponseCodeException(Class<?> sc, String error, String content) {
         return new QuickResponseCodeException(sc, error, content);
     }
@@ -122,19 +126,11 @@ public final class GlobalExceptionContext {
         return new PasswordException(sc, error, content);
     }
 
-    public static DataDeserializationException exceptionDataDeserializationException(Class<?> sc, String error, String content) {
-        return new DataDeserializationException(sc, error, content);
-    }
-
-    public static DataSerializationException exceptionDataSerializationException(Class<?> sc, String error, String content) {
-        return new DataSerializationException(sc, error, content);
-    }
-
     public static CacheException exceptionCacheExpireOrNotExistException(Class<?> sc, String error, String content) {
         return new CacheException(sc, error, content);
     }
 
-    public static CacheException exceptionCacheWritingException(Class<?> sc, String error, String content) {
+    public static CacheException exceptionCacheWriteException(Class<?> sc, String error, String content) {
         return new CacheException(sc, error, content);
     }
 }

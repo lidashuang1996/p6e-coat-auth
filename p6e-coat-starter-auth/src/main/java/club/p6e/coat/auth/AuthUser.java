@@ -2,6 +2,7 @@ package club.p6e.coat.auth;
 
 import club.p6e.coat.auth.model.UserAuthModel;
 import club.p6e.coat.auth.model.UserModel;
+import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -55,7 +56,7 @@ public interface AuthUser<M extends AuthUser.Model> {
      * @param content 序列化的字符串内容
      * @return 认证用户模型
      */
-    M create(String content);
+    Mono<M> create(String content);
 
     /**
      * 创建认证用户模型
@@ -64,6 +65,6 @@ public interface AuthUser<M extends AuthUser.Model> {
      * @param uam 用户认证模型
      * @return 认证用户模型
      */
-    M create(UserModel um, UserAuthModel uam);
+    Mono<M> create(UserModel um, UserAuthModel uam);
 
 }

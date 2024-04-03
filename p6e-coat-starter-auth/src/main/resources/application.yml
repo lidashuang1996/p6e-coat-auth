@@ -9,8 +9,13 @@ spring:
 logging:
   config: 'classpath:p6e-logback.xml'
 
-club:
-  p6e:
+p6e:
+  coat:
+    common:
+      cross-domain:
+        enable: true
+        white-list:
+          - '*'
     auth:
       page:
         login: 'classpath:page/index.html'

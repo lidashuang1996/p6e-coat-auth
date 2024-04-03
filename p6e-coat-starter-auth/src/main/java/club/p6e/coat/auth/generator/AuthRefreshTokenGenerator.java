@@ -13,6 +13,6 @@ public interface AuthRefreshTokenGenerator {
      *
      * @return 令牌
      */
-    public String execute();
+    String execute();
 
 }

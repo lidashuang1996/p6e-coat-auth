@@ -13,6 +13,6 @@ public interface VoucherGenerator {
      *
      * @return 会话序号
      */
-    public String execute();
+    String execute();
 
 }

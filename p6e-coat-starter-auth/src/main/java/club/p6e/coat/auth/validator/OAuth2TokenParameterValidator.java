@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2TokenParameterValidator implements ParameterValidatorInterface {
+public class OAuth2TokenParameterValidator implements ParameterValidatorInterface {
 
     /**
      * 执行顺序
@@ -65,15 +65,17 @@ public class Oauth2TokenParameterValidator implements ParameterValidatorInterfac
             if (param.getClientId() == null) {
                 param.setClientSecret(request.getQueryParams().getFirst(CLIENT_SECRET_PARAM));
             }
-            return Mono.just(
-                    param.getGrantType() != null
+            return Mono.just((param.getGrantType() != null
                     && param.getClientId() != null
                     && param.getClientSecret() != null
                     && param.getRedirectUri() != null
                     && param.getCode() != null
+            ) || (param.getGrantType() != null
+                    && param.getClientId() != null
+                    && param.getClientSecret() != null
                     && param.getUsername() != null
                     && param.getPassword() != null
-            );
+            ));
         }
         return Mono.just(false);
     }

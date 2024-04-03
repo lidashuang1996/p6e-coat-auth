@@ -5,28 +5,27 @@ import club.p6e.coat.auth.client.cache.AuthCacheReactive;
 import club.p6e.coat.auth.client.cache.AuthStateCacheReactive;
 import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.common.controller.BaseWebFluxController;
-import club.p6e.coat.common.error.AuthException;
-import club.p6e.coat.common.error.ParameterException;
+import club.p6e.coat.common.error.*;
 import club.p6e.coat.common.utils.GeneratorUtil;
+import club.p6e.coat.common.utils.JsonUtil;
+import club.p6e.coat.common.utils.TransformationUtil;
+import club.p6e.coat.common.utils.reactor.HttpUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ResponseBody
+@RestController
 @RequestMapping("/auth")
 @ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
 public class AuthWebFluxClientController extends BaseWebFluxController {
@@ -50,7 +49,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         this.authJsonWebTokenCipher = authJsonWebTokenCipher;
     }
 
-
+    @SuppressWarnings("ALL")
     @GetMapping("")
     public Mono<Void> def(ServerHttpRequest request, ServerHttpResponse response) {
         final String url = getParam(request, "url");
@@ -68,41 +67,96 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                 + "&state=" + state));
                         return response.setComplete();
                     } else {
-                        return Mono.empty();
+                        return Mono.error(new CacheException(
+                                this.getClass(),
+                                "fun def(ServerHttpRequest request, ServerHttpResponse response).",
+                                "Request state cache write exception."
+                        ));
                     }
                 });
     }
 
+    @SuppressWarnings("ALL")
     @RequestMapping("/callback")
     public Mono<ResultContext> callback(ServerHttpRequest request, ServerHttpResponse response) {
         final String code = getParam(request, "code");
         final String state = getParam(request, "state");
-        if (code != null && state != null) {
-            return authStateCache.getAndDel(state).map(l -> ResultContext.build());
-//                    .flatMap(cache -> {
-//                        if (cache == null) {
-//                            return Mono.error(new AuthStateException(this.getClass(),
-//                                    "fun callback().", "Request parameter state expires."));
-//                        } else {
-////                            final String tokenResult = HttpUtil.doPost(properties.getAuthorizeTokenUrl()
-////                                    + "?code=" + code
-////                                    + "&client_id=" + properties.getAuthorizeAppId()
-////                                    + "&client_secret=" + properties.getAuthorizeAppSecret()
-////                                    + "&redirect_uri=" + properties.getAuthorizeAppRedirectUri()
-////                            );
-////                            final String token = "!23";
-////                            final String userInfoResult = HttpUtil.doGet(properties.getAuthorizeUserInfoUrl() + "?token=" + token);
-////                            return ;
-//                            return Mono.just(authorization("123", "", response));
-//                        }
-//                    });
+        if (code == null || state == null) {
+            return Mono.error(new ParameterException(
+                    this.getClass(),
+                    "fun callback(ServerHttpRequest request, ServerHttpResponse response).",
+                    "Request parameter code/state does not exist exception."
+            ));
         } else {
-            return Mono.error(new ParameterException(this.getClass(),
-                    "fun callback().", "Request parameter code/state does not exist."));
+            return authStateCache.getAndDel(state)
+                    .flatMap(cache -> {
+                        if (cache == null) {
+                            return Mono.error(new CacheException(
+                                    this.getClass(),
+                                    "fun callback(ServerHttpRequest request, ServerHttpResponse response).",
+                                    "Request parameter cache data does no exist exception."
+                            ));
+                        } else {
+                            return HttpUtil.doPost(
+                                    properties.getAuthorizeTokenUrl(),
+                                    new HashMap<>(),
+                                    JsonUtil.toJson(new HashMap<>() {{
+                                        put("code", code);
+                                        put("grantType", "authorization_code");
+                                        put("clientId", properties.getAuthorizeAppId());
+                                        put("clientSecret", properties.getAuthorizeAppSecret());
+                                        put("redirectUri", properties.getAuthorizeAppRedirectUri());
+                                    }})
+                            ).flatMap(result -> {
+                                final AuthModel.BaseResultModel brm = JsonUtil.fromJson(result, AuthModel.BaseResultModel.class);
+                                if (brm == null || brm.getCode() != 0) {
+                                    return Mono.error(new ResourceException(
+                                            this.getClass(),
+                                            "fun callback(HttpServletRequest request, HttpServletResponse response).",
+                                            "Get user information exception."
+                                    ));
+                                } else {
+                                    final AuthModel.TokenResultModel trm = JsonUtil.fromJson(result, AuthModel.TokenResultModel.class);
+                                    if (trm == null || trm.getData() == null) {
+                                        return Mono.error(new ResourceException(
+                                                this.getClass(),
+                                                "fun callback(HttpServletRequest request, HttpServletResponse response).",
+                                                "Get user information exception."
+                                        ));
+                                    } else {
+                                        final String user = TransformationUtil.objectToString(trm.getData().getUser());
+                                        if (user == null) {
+                                            return Mono.error(new ResourceException(
+                                                    this.getClass(),
+                                                    "fun callback(HttpServletRequest request, HttpServletResponse response).",
+                                                    "Get user information exception."
+                                            ));
+                                        } else {
+                                            final AuthModel.UserModel um = JsonUtil.fromJson(user, AuthModel.UserModel.class);
+                                            if (um == null) {
+                                                return Mono.error(new ResourceException(
+                                                        this.getClass(),
+                                                        "fun callback(HttpServletRequest request, HttpServletResponse response).",
+                                                        "Get user information exception."
+                                                ));
+                                            } else {
+                                                return authorization(String.valueOf(um.getId()), user, response)
+                                                        .map(data -> {
+                                                            data.put("url", cache);
+                                                            return ResultContext.build(data);
+                                                        });
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
         }
     }
 
-    @RequestMapping("/refresh")
+    @SuppressWarnings("ALL")
+    @PutMapping("/refresh")
     public Mono<ResultContext> refresh(ServerHttpRequest request, ServerHttpResponse response) {
         final String accessToken = getAccessToken(request);
         final String refreshToken = getRefreshToken(request);
@@ -110,7 +164,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
             return Mono.error(new AuthException(
                     this.getClass(),
                     "fun refresh(ServerHttpRequest request, ServerHttpResponse response).",
-                    "Request not exist authentication information."
+                    "Request not exist authentication information exception."
             ));
         } else {
             return authCache.getAccessToken(accessToken)
@@ -123,38 +177,45 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                     .flatMap(user -> authCache
                                             .cleanAccessToken(at.getAccessToken())
                                             .flatMap(l -> authorization(at.getUid(), user, response))
-                                    )
-                            )
+                                            .map(ResultContext::build)))
                     ).switchIfEmpty(Mono.error(new AuthException(
                             this.getClass(),
                             "fun refresh(ServerHttpRequest request, ServerHttpResponse response).",
-                            "Request authentication information has expired."
+                            "Request authentication information has exception."
                     )));
         }
     }
 
-    @RequestMapping("/logout")
+    @SuppressWarnings("ALL")
+    @DeleteMapping("/logout")
     public Mono<ResultContext> logout(ServerHttpRequest request, ServerHttpResponse response) {
         final String accessToken = getAccessToken(request);
         if (accessToken == null) {
             return Mono.error(new AuthException(
                     this.getClass(),
                     "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
-                    "Request not exist authentication information."
+                    "Request not exist authentication information exception."
             ));
         } else {
-            return authCache.getAccessToken(accessToken)
-                    .flatMap(m -> authCache.cleanAccessToken(m.getAccessToken()))
+            return authCache
+                    .getAccessToken(accessToken)
                     .switchIfEmpty(Mono.error(new AuthException(
                             this.getClass(),
                             "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
-                            "Request authentication information has expired."
+                            "Request authentication information has exception."
                     )))
-                    .map(l -> ResultContext.build());
+                    .flatMap(m -> authCache
+                            .cleanAccessToken(m.getAccessToken())
+                            .switchIfEmpty(Mono.error(new CacheException(
+                                    this.getClass(),
+                                    "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
+                                    "Request clean token data exception."
+                            ))).map(l -> ResultContext.build()));
         }
     }
 
-    protected Mono<ResultContext> authorization(String id, String info, ServerHttpResponse response) {
+    @SuppressWarnings("ALL")
+    protected Mono<Map<String, Object>> authorization(String id, String info, ServerHttpResponse response) {
         /*
         // JWT
         final Date date = Date.from(LocalDateTime.now().plusSeconds(3600L).atZone(ZoneId.systemDefault()).toInstant());
@@ -178,12 +239,12 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
         final String accessToken = GeneratorUtil.uuid() + GeneratorUtil.random();
         final String refreshToken = GeneratorUtil.uuid() + GeneratorUtil.random();
         return authCache.set(id, "PC", accessToken, refreshToken, info)
-                .map(t -> ResultContext.build(new HashMap<>() {{
+                .map(t -> new HashMap<>() {{
                     put("accessToken", accessToken);
                     put("refreshToken", refreshToken);
                     put("tokenType", AUTH_HEADER_TOKEN_TYPE);
                     put("expire", AuthCache.EXPIRATION_TIME);
-                }}));
+                }});
     }
 
 }

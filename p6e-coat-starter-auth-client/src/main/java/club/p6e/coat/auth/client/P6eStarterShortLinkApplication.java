@@ -12,10 +12,7 @@ public class P6eStarterShortLinkApplication {
 
 
     public static void main(String[] args) {
-        System.out.println(
-                SpringApplication.run(P6eStarterShortLinkApplication.class, args)
-                // .getBean(PaymentService.class).execute(null).block()
-        );
+        SpringApplication.run(P6eStarterShortLinkApplication.class, args);
     }
 
 }

@@ -7,5 +7,5 @@ package club.p6e.coat.auth.generator;
  * @version 1.0
  */
 public interface RegisterOtherLoginGenerator {
-    public String execute();
+    String execute();
 }

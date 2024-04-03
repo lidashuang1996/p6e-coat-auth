@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2ClientRepository {
+public class OAuth2ClientRepository {
 
     /**
      * 模板对象
@@ -22,7 +22,7 @@ public class Oauth2ClientRepository {
      *
      * @param template 模板对象
      */
-    public Oauth2ClientRepository(R2dbcEntityTemplate template) {
+    public OAuth2ClientRepository(R2dbcEntityTemplate template) {
         this.template = template;
     }
 

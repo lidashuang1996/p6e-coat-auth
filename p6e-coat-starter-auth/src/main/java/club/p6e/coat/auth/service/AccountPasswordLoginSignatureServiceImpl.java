@@ -60,11 +60,11 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                     final PasswordTransmissionCodec.Model model = codec.generate();
                     final String json = JsonUtil.toJson(model);
                     if (json == null) {
-                        return Mono.error(GlobalExceptionContext.exceptionDataSerializationException(
+                        return Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginTransmissionException(
                                 this.getClass(),
                                 "fun execute(ServerWebExchange exchange, " +
-                                        "LoginContext.AccountPasswordSignature.Request param)",
-                                "Account password login signature cache data serialization exception."
+                                        "LoginContext.AccountPasswordSignature.Request param).",
+                                "Account password login signature key generation exception."
                         ));
                     }
                     final String mark = generator.execute();
@@ -73,11 +73,11 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                             .flatMap(b -> b ? v.set(new HashMap<>() {{
                                 put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
                                 put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
-                            }}) : Mono.error(GlobalExceptionContext.exceptionCacheWritingException(
+                            }}) : Mono.error(GlobalExceptionContext.exceptionCacheWriteException(
                                     this.getClass(),
                                     "fun execute(ServerWebExchange exchange, " +
-                                            "LoginContext.AccountPasswordSignature.Request param)",
-                                    "Account password login signature cache writing exception."
+                                            "LoginContext.AccountPasswordSignature.Request param).",
+                                    "Account password login signature cache write exception."
                             )))
                             .map(rv -> new LoginContext.AccountPasswordSignature.Dto().setContent(model.getPublicKey()));
                 });

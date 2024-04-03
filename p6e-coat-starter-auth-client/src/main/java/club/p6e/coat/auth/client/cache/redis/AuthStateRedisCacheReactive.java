@@ -2,11 +2,7 @@ package club.p6e.coat.auth.client.cache.redis;
 
 import club.p6e.coat.auth.client.cache.AuthStateCacheReactive;
 import club.p6e.coat.auth.client.cache.redis.support.RedisCacheReactive;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -15,10 +11,6 @@ import java.time.Duration;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnBean(ReactiveStringRedisTemplate.class)
-@ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
-@ConditionalOnProperty(name = "club.p6e.coat.auth.client.cache.type", havingValue = "REDIS")
 public class AuthStateRedisCacheReactive extends RedisCacheReactive implements AuthStateCacheReactive {
 
     /**

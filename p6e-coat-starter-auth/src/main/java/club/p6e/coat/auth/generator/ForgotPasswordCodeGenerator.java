@@ -15,6 +15,6 @@ public interface ForgotPasswordCodeGenerator {
      * @param type 类型
      * @return 验证码
      */
-    public String execute(String type);
+    String execute(String type);
 
 }

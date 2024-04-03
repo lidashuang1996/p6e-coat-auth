@@ -53,8 +53,8 @@ public class QrCodeCallbackServiceImpl implements QrCodeCallbackService {
                     final ServerHttpRequest request = e.getRequest();
                     final HttpHeaders httpHeaders = request.getHeaders();
                     final List<String> list = httpHeaders.get(USER_HEADER_NAME);
-                    if (list != null && list.size() > 0) {
-                        return Mono.just(au.create(list.get(0)));
+                    if (list != null && !list.isEmpty()) {
+                        return au.create(list.get(0));
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                 this.getClass(),

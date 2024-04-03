@@ -13,6 +13,6 @@ public interface OAuth2CodeGenerator {
      *
      * @return 验证码
      */
-    public String execute();
+    String execute();
 
 }

@@ -95,7 +95,7 @@ public class OAuth2Context implements Serializable {
             private String refreshToken;
             private Long expire;
             private String type;
-            private String idToken;
+            private String user;
         }
 
         /**

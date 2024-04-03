@@ -9,11 +9,13 @@ import club.p6e.coat.auth.generator.*;
 import club.p6e.coat.auth.launcher.EmailMessageLauncherImpl;
 import club.p6e.coat.auth.launcher.SmsMessageLauncherImpl;
 import club.p6e.coat.auth.password.AuthPasswordEncryptorImpl;
-import club.p6e.coat.auth.repository.Oauth2ClientRepository;
+import club.p6e.coat.auth.repository.OAuth2ClientRepository;
 import club.p6e.coat.auth.repository.UserAuthRepository;
 import club.p6e.coat.auth.repository.UserRepository;
 import club.p6e.coat.auth.service.*;
 import club.p6e.coat.auth.validator.AccountPasswordLoginParameterValidator;
+import club.p6e.coat.auth.validator.OAuth2AuthParameterValidator;
+import club.p6e.coat.auth.validator.OAuth2TokenParameterValidator;
 import club.p6e.coat.common.utils.TemplateParser;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -144,7 +146,9 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
             }
 
             // OAUTH2
-            if ( properties.getOauth2().isEnable()) {
+            if (properties.getOauth2().isEnable()) {
+                registerBean(OAuth2AuthParameterValidator.class, defaultListableBeanFactory);
+                registerBean(OAuth2TokenParameterValidator.class, defaultListableBeanFactory);
                 initLoginPage();
                 registerOauth2RepositoryBean(defaultListableBeanFactory);
                 registerBean(AuthUserImpl.class, defaultListableBeanFactory);
@@ -412,7 +416,6 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
      */
     private void registerVoucherBean(DefaultListableBeanFactory factory) {
         registerVoucherCacheBean(factory);
-        registerBean(AuthVoucher.class, factory);
         registerBean(VoucherGeneratorImpl.class, factory);
     }
 
@@ -454,7 +457,7 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
      */
     private void registerOauth2RepositoryBean(DefaultListableBeanFactory factory) {
         registerUserRepositoryBean(factory);
-        registerBean(Oauth2ClientRepository.class, factory);
+        registerBean(OAuth2ClientRepository.class, factory);
     }
 
     /**

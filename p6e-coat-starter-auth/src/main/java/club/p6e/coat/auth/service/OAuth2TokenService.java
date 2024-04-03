@@ -12,8 +12,6 @@ import reactor.core.publisher.Mono;
  */
 public interface OAuth2TokenService {
 
-    public static final String ID_TOKEN_SECRET = "t4kz@hen6efq2g6dn8xhfejw3kj6zccs";
-
     Mono<OAuth2Context.Token.Dto> execute(ServerWebExchange exchange, OAuth2Context.Token.Request param);
 
 }

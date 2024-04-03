@@ -1,0 +1,408 @@
+2024-03-19 13:01:58 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:03:48 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:04:06 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:06:25 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:07:17 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:08:44 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:10:47 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 13:11:53 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 14:51:15 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.ClassCastException: class org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext cannot be cast to class org.springframework.context.annotation.AnnotationConfigApplicationContext (org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext and org.springframework.context.annotation.AnnotationConfigApplicationContext are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:228) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 14:52:40 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.ClassCastException: class org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext cannot be cast to class org.springframework.context.annotation.AnnotationConfigApplicationContext (org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext and org.springframework.context.annotation.AnnotationConfigApplicationContext are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 14:52:59 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 14:58:33 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 15:02:35 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean of type 'club.p6e.coat.auth.AuthPathMatcher' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.auth.AuthPathMatcher' in your configuration.
+
+2024-03-19 15:06:04 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:239) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 15:15:10 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 15:15:43 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 5 common frames omitted
+2024-03-19 15:21:06 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 3 common frames omitted
+2024-03-19 15:21:44 [main] ERROR - Application run failed
+java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@26f3d90c has not been refreshed yet
+	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AAA.initialize(AAA.java:17) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:606) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:386) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
+2024-03-19 15:25:15 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 3 common frames omitted
+2024-03-19 15:26:36 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 3 common frames omitted
+2024-03-19 15:28:27 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 3 common frames omitted
+2024-03-19 15:29:55 [main] ERROR - Application run failed
+java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@30865a90 has not been refreshed yet
+	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AAA.contextLoaded(AAA.java:26) ~[classes/:na]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$contextLoaded$4(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplicationRunListeners.contextLoaded(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:415) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
+2024-03-19 15:33:28 [main] ERROR - Application run failed
+java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@30865a90 has not been refreshed yet
+	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155) ~[spring-context-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AAA.contextLoaded(AAA.java:20) ~[classes/:na]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$contextLoaded$4(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplicationRunListeners.contextLoaded(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:415) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
+2024-03-19 15:36:31 [main] ERROR - Application run failed
+java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@6134ac4a has not been refreshed yet
+	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.BBB.initialize(BBB.java:13) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:606) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:386) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
+2024-03-19 15:40:02 [main] ERROR - Application run failed
+java.lang.IllegalStateException: Failed to execute ApplicationRunner
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
+	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:56) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
+	... 3 common frames omitted
+2024-03-19 15:45:59 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authApplicationRunner' defined in file [D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes\club\p6e\coat\auth\AuthApplicationRunner.class]: Failed to instantiate [club.p6e.coat.auth.AuthApplicationRunner]: No default constructor found
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1314) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1199) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:138) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [club.p6e.coat.auth.AuthApplicationRunner]: No default constructor found
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:83) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 15 common frames omitted
+Caused by: java.lang.NoSuchMethodException: club.p6e.coat.auth.AuthApplicationRunner.<init>()
+	at java.base/java.lang.Class.getConstructor0(Class.java:3585) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2754) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:79) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 16 common frames omitted
+2024-03-19 15:52:42 [main] ERROR - Application run failed
+java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:736) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 15:53:34 [main] ERROR - Application run failed
+java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:734) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 15:54:46 [main] ERROR - Application run failed
+java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:734) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 15:55:02 [main] ERROR - Application run failed
+java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:735) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 15:55:42 [main] ERROR - Application run failed
+org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1299) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:464) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:134) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:735) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 15:56:07 [main] ERROR - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in club.p6e.coat.auth.controller.QqOtherLoginController required a bean of type 'club.p6e.coat.auth.service.QqOtherLoginService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'club.p6e.coat.auth.service.QqOtherLoginService' in your configuration.
+
+2024-03-19 16:00:45 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param)
+2024-03-19 16:20:05 [main] ERROR - Application run failed
+org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1299) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:439) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:114) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:710) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+2024-03-19 16:20:50 [main] ERROR - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'club.p6e.coat.auth.message.WebSocketMessageImpl': Failed to instantiate [club.p6e.coat.auth.message.WebSocketMessageImpl]: No default constructor found
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1314) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1199) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:225) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1310) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1271) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
+	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:439) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:114) ~[classes/:na]
+	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:710) ~[classes/:na]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
+	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [club.p6e.coat.auth.message.WebSocketMessageImpl]: No default constructor found
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:83) ~[spring-beans-6.0.9.jar:6.0.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 24 common frames omitted
+Caused by: java.lang.NoSuchMethodException: club.p6e.coat.auth.message.WebSocketMessageImpl.<init>()
+	at java.base/java.lang.Class.getConstructor0(Class.java:3585) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2754) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:79) ~[spring-beans-6.0.9.jar:6.0.9]
+	... 25 common frames omitted
+2024-03-19 16:22:40 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param)
+2024-03-19 16:23:00 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-19 16:24:13 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
+2024-03-19 16:24:20 [reactor-http-nio-4] ERROR - 404 NOT_FOUND

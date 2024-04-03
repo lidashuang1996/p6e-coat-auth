@@ -35,7 +35,7 @@ public interface OAuth2ReconfirmController<P, R> {
      * @param exchange ServerWebExchange 对象
      * @return 结果对象
      */
-    @PostMapping("/save")
+    @PostMapping("/submit")
     Mono<R> execute(ServerWebExchange exchange, @RequestBody P param);
 
 }

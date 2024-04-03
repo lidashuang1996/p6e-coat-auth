@@ -1,822 +1,358 @@
-2024-03-19 12:38:56 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 28544 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 12:38:56 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 12:38:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 12:38:57 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 12:38:57 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 12:38:57 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 12:38:57 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 12:38:57 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 12:38:58 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 12:38:58 [main] INFO - Netty started on port 7322
-2024-03-19 12:38:58 [main] INFO - Started P6eAuthApplication in 2.169 seconds (process running for 2.597)
-2024-03-19 12:41:17 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 24032 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 12:41:17 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 12:41:17 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 12:41:17 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 12:41:17 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 12:41:17 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 12:41:17 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 12:41:17 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 12:41:17 [Thread-2] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 12:41:18 [main] INFO - Netty started on port 7322
-2024-03-19 12:41:18 [main] INFO - Started P6eAuthApplication in 1.368 seconds (process running for 1.71)
-2024-03-19 13:01:46 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23884 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:01:46 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:01:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:01:46 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:01:46 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:01:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:01:46 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:01:46 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:01:47 [main] INFO - Netty started on port 7322
-2024-03-19 13:01:47 [main] INFO - Started P6eAuthApplication in 1.345 seconds (process running for 1.699)
-2024-03-19 13:01:58 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:02:43 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 1120 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:02:43 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:02:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:02:43 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:02:43 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:02:43 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:02:43 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:02:43 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:02:44 [main] INFO - Netty started on port 7322
-2024-03-19 13:02:44 [main] INFO - Started P6eAuthApplication in 1.329 seconds (process running for 1.675)
-2024-03-19 13:03:43 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 16360 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:03:43 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:03:44 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:03:44 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:03:44 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:03:44 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:03:44 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:03:44 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:03:44 [main] INFO - Netty started on port 7322
-2024-03-19 13:03:44 [main] INFO - Started P6eAuthApplication in 1.322 seconds (process running for 1.675)
-2024-03-19 13:03:44 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 13:03:48 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:04:06 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:06:21 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 29192 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:06:21 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:06:21 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:06:21 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:06:22 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:06:22 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:06:22 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:06:22 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:06:22 [main] INFO - Netty started on port 7322
-2024-03-19 13:06:22 [main] INFO - Started P6eAuthApplication in 1.409 seconds (process running for 1.822)
-2024-03-19 13:06:22 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 13:06:25 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:07:17 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:08:44 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:09:08 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 10040 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:09:08 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:09:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:09:08 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:09:08 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:09:08 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:09:08 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:09:08 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:09:09 [main] INFO - Netty started on port 7322
-2024-03-19 13:09:09 [main] INFO - Started P6eAuthApplication in 1.33 seconds (process running for 1.681)
-2024-03-19 13:09:09 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 13:10:42 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 13172 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:10:42 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:10:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:10:42 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:10:42 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:10:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:10:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:10:42 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:10:43 [main] INFO - Netty started on port 7322
-2024-03-19 13:10:43 [main] INFO - Started P6eAuthApplication in 1.321 seconds (process running for 1.667)
-2024-03-19 13:10:43 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 13:10:47 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 13:11:23 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 26708 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 13:11:23 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 13:11:24 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:11:24 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 13:11:24 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 13:11:24 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 13:11:24 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 13:11:24 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 13:11:24 [main] INFO - Netty started on port 7322
-2024-03-19 13:11:24 [main] INFO - Started P6eAuthApplication in 1.33 seconds (process running for 1.672)
-2024-03-19 13:11:24 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 13:11:53 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 14:51:13 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 15748 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 14:51:13 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 14:51:14 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:51:14 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 14:51:14 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 14:51:14 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:51:14 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 14:51:14 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 14:51:14 [main] INFO - Netty started on port 7322
-2024-03-19 14:51:14 [main] INFO - Started P6eAuthApplication in 1.338 seconds (process running for 1.689)
-2024-03-19 14:51:15 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 14:51:15 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.ClassCastException: class org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext cannot be cast to class org.springframework.context.annotation.AnnotationConfigApplicationContext (org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext and org.springframework.context.annotation.AnnotationConfigApplicationContext are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:228) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 14:51:15 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 14:52:39 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 29688 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 14:52:39 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 14:52:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:52:39 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 14:52:39 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 14:52:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:52:39 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 14:52:39 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 14:52:40 [main] INFO - Netty started on port 7322
-2024-03-19 14:52:40 [main] INFO - Started P6eAuthApplication in 1.344 seconds (process running for 1.69)
-2024-03-19 14:52:40 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 14:52:40 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.ClassCastException: class org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext cannot be cast to class org.springframework.context.annotation.AnnotationConfigApplicationContext (org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext and org.springframework.context.annotation.AnnotationConfigApplicationContext are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 14:52:40 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 14:52:58 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 28452 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 14:52:58 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 14:52:58 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:52:58 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 14:52:59 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 14:52:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:52:59 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 14:52:59 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 14:52:59 [main] INFO - Netty started on port 7322
-2024-03-19 14:52:59 [main] INFO - Started P6eAuthApplication in 1.31 seconds (process running for 1.655)
-2024-03-19 14:52:59 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 14:52:59 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 14:58:32 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 26304 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 14:58:32 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 14:58:32 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:58:32 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 14:58:32 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 14:58:32 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 14:58:32 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 14:58:32 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 14:58:33 [main] INFO - Netty started on port 7322
-2024-03-19 14:58:33 [main] INFO - Started P6eAuthApplication in 1.335 seconds (process running for 1.676)
-2024-03-19 14:58:33 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:229) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 14:58:33 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:02:34 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 14024 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:02:34 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:02:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:02:34 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:02:34 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:02:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:02:34 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:02:34 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:02:35 [main] INFO - Netty started on port 7322
-2024-03-19 15:02:35 [main] INFO - Started P6eAuthApplication in 1.37 seconds (process running for 1.714)
-2024-03-19 15:02:35 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 15:02:35 [main] ERROR - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-A component required a bean of type 'club.p6e.coat.auth.AuthPathMatcher' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'club.p6e.coat.auth.AuthPathMatcher' in your configuration.
-
-2024-03-19 15:06:02 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 18132 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:06:02 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:06:03 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:06:03 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:06:03 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:06:03 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:06:03 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:06:03 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:06:03 [main] INFO - Netty started on port 7322
-2024-03-19 15:06:03 [main] INFO - Started P6eAuthApplication in 1.443 seconds (process running for 1.794)
-2024-03-19 15:06:04 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:239) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 15:06:04 [Thread-23] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:15:09 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 5904 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:15:09 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:15:09 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:15:09 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:15:09 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:15:09 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:15:09 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:15:09 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:15:10 [main] INFO - Netty started on port 7322
-2024-03-19 15:15:10 [main] INFO - Started P6eAuthApplication in 1.553 seconds (process running for 1.908)
-2024-03-19 15:15:10 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 15:15:10 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:15:42 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 20980 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:15:42 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:15:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:15:42 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:15:42 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:15:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:15:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:15:42 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:15:43 [main] INFO - Netty started on port 7322
-2024-03-19 15:15:43 [main] INFO - Started P6eAuthApplication in 1.419 seconds (process running for 1.788)
-2024-03-19 15:15:43 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1305) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1294) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:16) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 5 common frames omitted
-2024-03-19 15:15:43 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:21:05 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 25132 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:21:05 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:21:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:21:05 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:21:05 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:21:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:21:05 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:21:05 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:21:06 [main] INFO - Netty started on port 7322
-2024-03-19 15:21:06 [main] INFO - Started P6eAuthApplication in 1.424 seconds (process running for 1.804)
-2024-03-19 15:21:06 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 3 common frames omitted
-2024-03-19 15:21:06 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:21:44 [main] ERROR - Application run failed
-java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@26f3d90c has not been refreshed yet
-	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AAA.initialize(AAA.java:17) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:606) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:386) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
-2024-03-19 15:25:14 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 8740 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:25:14 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:25:14 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:25:14 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:25:14 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:25:14 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:25:14 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:25:14 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:25:15 [main] INFO - Netty started on port 7322
-2024-03-19 15:25:15 [main] INFO - Started P6eAuthApplication in 1.418 seconds (process running for 1.764)
-2024-03-19 15:25:15 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 3 common frames omitted
-2024-03-19 15:25:15 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:26:35 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 27752 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:26:35 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:26:36 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:26:36 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:26:36 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:26:36 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:26:36 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:26:36 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:26:36 [main] INFO - Netty started on port 7322
-2024-03-19 15:26:36 [main] INFO - Started P6eAuthApplication in 1.315 seconds (process running for 1.671)
-2024-03-19 15:26:36 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 3 common frames omitted
-2024-03-19 15:26:36 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:28:25 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 22656 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:28:25 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:28:26 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:28:26 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:28:26 [main] INFO - Finished Spring Data repository scanning in 20 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:28:26 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:28:26 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:28:26 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:28:27 [main] INFO - Netty started on port 7322
-2024-03-19 15:28:27 [main] INFO - Started P6eAuthApplication in 1.422 seconds (process running for 1.785)
-2024-03-19 15:28:27 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:230) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 3 common frames omitted
-2024-03-19 15:28:27 [Thread-4] INFO - [ WEBSOCKET SERVICE ] ==> START SUCCESSFULLY... BIND ( 7422 )
-2024-03-19 15:29:55 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 6240 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:29:55 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:29:55 [main] ERROR - Application run failed
-java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@30865a90 has not been refreshed yet
-	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AAA.contextLoaded(AAA.java:26) ~[classes/:na]
-	at org.springframework.boot.SpringApplicationRunListeners.lambda$contextLoaded$4(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplicationRunListeners.contextLoaded(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:415) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
-2024-03-19 15:33:28 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 16480 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:33:28 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:33:28 [main] ERROR - Application run failed
-java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@30865a90 has not been refreshed yet
-	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1155) ~[spring-context-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AAA.contextLoaded(AAA.java:20) ~[classes/:na]
-	at org.springframework.boot.SpringApplicationRunListeners.lambda$contextLoaded$4(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:112) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplicationRunListeners.contextLoaded(SpringApplicationRunListeners.java:72) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:415) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:21) ~[classes/:na]
-2024-03-19 15:36:31 [main] ERROR - Application run failed
-java.lang.IllegalStateException: org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@6134ac4a has not been refreshed yet
-	at org.springframework.context.support.AbstractApplicationContext.assertBeanFactoryActive(AbstractApplicationContext.java:1143) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.BBB.initialize(BBB.java:13) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.applyInitializers(SpringApplication.java:606) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:386) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:23) ~[classes/:na]
-2024-03-19 15:39:37 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 26008 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:39:37 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:39:37 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:39:37 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:39:37 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:39:37 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:39:37 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:39:37 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:39:38 [main] INFO - Netty started on port 7322
-2024-03-19 15:39:38 [main] INFO - Started P6eAuthApplication in 1.444 seconds (process running for 1.799)
-2024-03-19 15:40:01 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 21384 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:40:01 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:40:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:40:02 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:40:02 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:40:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:40:02 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:40:02 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:40:02 [main] INFO - Netty started on port 7322
-2024-03-19 15:40:02 [main] INFO - Started P6eAuthApplication in 1.333 seconds (process running for 1.722)
-2024-03-19 15:40:02 [main] ERROR - Application run failed
-java.lang.IllegalStateException: Failed to execute ApplicationRunner
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:764) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:751) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-Caused by: java.lang.IllegalStateException: GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once
-	at org.springframework.context.support.GenericApplicationContext.refreshBeanFactory(GenericApplicationContext.java:293) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:696) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:578) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:56) ~[classes/:na]
-	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:761) ~[spring-boot-3.1.0.jar:3.1.0]
-	... 3 common frames omitted
-2024-03-19 15:45:58 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 18076 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:45:58 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:45:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:45:59 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:45:59 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:45:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:45:59 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:45:59 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:45:59 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authApplicationRunner' defined in file [D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes\club\p6e\coat\auth\AuthApplicationRunner.class]: Failed to instantiate [club.p6e.coat.auth.AuthApplicationRunner]: No default constructor found
-2024-03-19 15:45:59 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 15:45:59 [main] ERROR - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'authApplicationRunner' defined in file [D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes\club\p6e\coat\auth\AuthApplicationRunner.class]: Failed to instantiate [club.p6e.coat.auth.AuthApplicationRunner]: No default constructor found
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1314) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1199) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:138) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [club.p6e.coat.auth.AuthApplicationRunner]: No default constructor found
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:83) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.9.jar:6.0.9]
-	... 15 common frames omitted
-Caused by: java.lang.NoSuchMethodException: club.p6e.coat.auth.AuthApplicationRunner.<init>()
-	at java.base/java.lang.Class.getConstructor0(Class.java:3585) ~[na:na]
-	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2754) ~[na:na]
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:79) ~[spring-beans-6.0.9.jar:6.0.9]
-	... 16 common frames omitted
-2024-03-19 15:46:39 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 24224 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:46:39 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:46:40 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:46:40 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:46:40 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:46:40 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:46:40 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:46:40 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:46:40 [main] INFO - Netty started on port 7322
-2024-03-19 15:46:40 [main] INFO - Started P6eAuthApplication in 1.345 seconds (process running for 1.69)
-2024-03-19 15:47:58 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 15512 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:47:58 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:47:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:47:59 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:47:59 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:47:59 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:47:59 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:47:59 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:47:59 [main] INFO - Netty started on port 7322
-2024-03-19 15:47:59 [main] INFO - Started P6eAuthApplication in 1.39 seconds (process running for 1.749)
-2024-03-19 15:52:41 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 27948 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:52:41 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:52:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:52:42 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:52:42 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:52:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:52:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:52:42 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:52:42 [main] ERROR - Application run failed
-java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:736) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 15:53:34 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 13968 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:53:34 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:53:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:53:34 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:53:34 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:53:34 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:53:34 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:53:34 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:53:34 [main] ERROR - Application run failed
-java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:734) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 15:54:46 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 9612 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:54:46 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:54:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:54:46 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:54:46 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:54:46 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:54:46 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:54:46 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:54:46 [main] ERROR - Application run failed
-java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:734) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 15:55:01 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 29612 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:55:01 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:55:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:55:02 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:55:02 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:55:02 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:55:02 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:55:02 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:55:02 [main] ERROR - Application run failed
-java.lang.ClassCastException: class org.springframework.context.annotation.ScannedGenericBeanDefinition cannot be cast to class club.p6e.coat.auth.Properties (org.springframework.context.annotation.ScannedGenericBeanDefinition and club.p6e.coat.auth.Properties are in unnamed module of loader 'app')
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:735) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 15:55:41 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23688 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:55:41 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:55:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:55:42 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:55:42 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:55:42 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:55:42 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:55:42 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:55:42 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
-2024-03-19 15:55:42 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 15:55:42 [main] ERROR - Application run failed
-org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1299) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:464) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:134) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:735) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 15:56:06 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 28732 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:56:06 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:56:06 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:56:06 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:56:06 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:56:06 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:56:06 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:56:06 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:56:07 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'club.p6e.coat.auth.controller.QqOtherLoginController': Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'club.p6e.coat.auth.service.QqOtherLoginService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
-2024-03-19 15:56:07 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 15:56:07 [main] ERROR - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Parameter 0 of constructor in club.p6e.coat.auth.controller.QqOtherLoginController required a bean of type 'club.p6e.coat.auth.service.QqOtherLoginService' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'club.p6e.coat.auth.service.QqOtherLoginService' in your configuration.
-
-2024-03-19 15:56:28 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 13640 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 15:56:28 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 15:56:29 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:56:29 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 15:56:29 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 15:56:29 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 15:56:29 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 15:56:29 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 15:56:29 [main] INFO - Netty started on port 7322
-2024-03-19 15:56:29 [main] INFO - Started P6eAuthApplication in 1.392 seconds (process running for 1.741)
-2024-03-19 16:00:45 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param)
-2024-03-19 16:20:04 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 18412 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 16:20:04 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 16:20:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:20:05 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 16:20:05 [main] INFO - Finished Spring Data repository scanning in 18 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 16:20:05 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:20:05 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 16:20:05 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
-2024-03-19 16:20:05 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
-2024-03-19 16:20:05 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 16:20:05 [main] ERROR - Application run failed
-org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'club.p6e.coat.auth.message.WebSocketMessage' available: expected single matching bean but found 2: webSocketMessageImpl,club.p6e.coat.auth.message.WebSocketMessageImpl
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1299) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:439) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:114) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:710) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-2024-03-19 16:20:50 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23156 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 16:20:50 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 16:20:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:20:50 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 16:20:50 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 16:20:50 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:20:50 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 16:20:50 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 16:20:50 [main] WARN - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'club.p6e.coat.auth.message.WebSocketMessageImpl': Failed to instantiate [club.p6e.coat.auth.message.WebSocketMessageImpl]: No default constructor found
-2024-03-19 16:20:50 [main] INFO - 
-
-Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2024-03-19 16:20:50 [main] ERROR - Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'club.p6e.coat.auth.message.WebSocketMessageImpl': Failed to instantiate [club.p6e.coat.auth.message.WebSocketMessageImpl]: No default constructor found
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1314) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1199) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:225) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1310) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveNamedBean(DefaultListableBeanFactory.java:1271) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:484) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:339) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBean(DefaultListableBeanFactory.java:332) ~[spring-beans-6.0.9.jar:6.0.9]
-	at club.p6e.coat.auth.AuthApplicationRunner.registerQrCodeWebSocketBean(AuthApplicationRunner.java:439) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.run(AuthApplicationRunner.java:114) ~[classes/:na]
-	at club.p6e.coat.auth.AuthApplicationRunner.postProcessBeanDefinitionRegistry(AuthApplicationRunner.java:710) ~[classes/:na]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:145) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:771) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:589) ~[spring-context-6.0.9.jar:6.0.9]
-	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:66) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435) ~[spring-boot-3.1.0.jar:3.1.0]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311) ~[spring-boot-3.1.0.jar:3.1.0]
-	at club.p6e.coat.auth.P6eAuthApplication.main(P6eAuthApplication.java:24) ~[classes/:na]
-Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [club.p6e.coat.auth.message.WebSocketMessageImpl]: No default constructor found
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:83) ~[spring-beans-6.0.9.jar:6.0.9]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1308) ~[spring-beans-6.0.9.jar:6.0.9]
-	... 24 common frames omitted
-Caused by: java.lang.NoSuchMethodException: club.p6e.coat.auth.message.WebSocketMessageImpl.<init>()
-	at java.base/java.lang.Class.getConstructor0(Class.java:3585) ~[na:na]
-	at java.base/java.lang.Class.getDeclaredConstructor(Class.java:2754) ~[na:na]
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:79) ~[spring-beans-6.0.9.jar:6.0.9]
-	... 25 common frames omitted
-2024-03-19 16:21:16 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 28452 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 16:21:16 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 16:21:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:21:16 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 16:21:16 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 16:21:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:21:16 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 16:21:16 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 16:21:17 [main] INFO - Netty started on port 7322
-2024-03-19 16:21:17 [main] INFO - Started P6eAuthApplication in 1.374 seconds (process running for 1.726)
-2024-03-19 16:22:21 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 24056 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
-2024-03-19 16:22:21 [main] INFO - No active profile set, falling back to 1 default profile: "default"
-2024-03-19 16:22:21 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:22:21 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
-2024-03-19 16:22:21 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
-2024-03-19 16:22:21 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
-2024-03-19 16:22:21 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-03-19 16:22:21 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-03-19 16:22:22 [main] INFO - Netty started on port 7322
-2024-03-19 16:22:22 [main] INFO - Started P6eAuthApplication in 1.391 seconds (process running for 1.744)
-2024-03-19 16:22:40 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param)
-2024-03-19 16:23:00 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
-2024-03-19 16:24:02 [reactor-tcp-nio-1] INFO - 
+2024-03-26 11:21:29 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 17796 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 11:21:29 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 11:21:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 11:21:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 11:21:30 [main] INFO - Finished Spring Data repository scanning in 15 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 11:21:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 11:21:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 11:21:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 11:21:31 [main] INFO - Netty started on port 7322
+2024-03-26 11:21:31 [main] INFO - Started P6eAuthApplication in 2.157 seconds (process running for 2.606)
+2024-03-26 12:02:39 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 22600 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 12:02:39 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 12:02:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:02:39 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 12:02:39 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 12:02:39 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:02:39 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 12:02:39 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 12:02:40 [main] INFO - Netty started on port 7322
+2024-03-26 12:02:40 [main] INFO - Started P6eAuthApplication in 1.379 seconds (process running for 1.732)
+2024-03-26 12:02:44 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Voucher request parameter does not data or expired exception.] } ::: [ class club.p6e.coat.auth.AuthVoucher ] => (class club.p6e.coat.auth.error.VoucherException) ===> fun init(ServerWebExchange exchange)
+2024-03-26 12:03:27 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Account password inside login account or password exception.] } ::: [ class club.p6e.coat.auth.service.AccountPasswordLoginServiceImpl ] => (class club.p6e.coat.auth.error.AccountPasswordLoginAccountOrPasswordException) ===> fun execute(LoginContext.AccountPassword.Request param).
+2024-03-26 12:03:38 [reactor-tcp-nio-1] INFO - 
 
 ---------------------------------------------------------------------
 |--------------------------   S   M   S   --------------------------|
 ---------------------------------------------------------------------
 |   account   =>   15549562863   |
 |   template   =>   CODE_LOGIN_TEMPLATE   |
-|   content   =>   {code=907057}   |
+|   content   =>   {code=333343}   |
 --------------------------------------------------------------------
 
 
-2024-03-19 16:24:13 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
-2024-03-19 16:24:20 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
+2024-03-26 12:33:24 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 2200 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 12:33:24 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 12:33:24 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:33:24 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 12:33:24 [main] INFO - Finished Spring Data repository scanning in 19 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 12:33:24 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:33:24 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 12:33:24 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 12:33:25 [main] INFO - Netty started on port 7322
+2024-03-26 12:33:25 [main] INFO - Started P6eAuthApplication in 1.509 seconds (process running for 1.858)
+2024-03-26 12:33:41 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=663364}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 12:50:29 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 22512 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 12:50:29 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 12:50:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:50:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 12:50:30 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 12:50:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:50:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 12:50:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 12:50:31 [main] INFO - Netty started on port 7322
+2024-03-26 12:50:31 [main] INFO - Started P6eAuthApplication in 1.456 seconds (process running for 1.841)
+2024-03-26 12:50:35 [reactor-http-nio-4] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 12:51:29 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 15580 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 12:51:29 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 12:51:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:51:30 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 12:51:30 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 12:51:30 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:51:30 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 12:51:30 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 12:51:31 [main] INFO - Netty started on port 7322
+2024-03-26 12:51:31 [main] INFO - Started P6eAuthApplication in 1.495 seconds (process running for 1.864)
+2024-03-26 12:51:50 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=010412}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 12:55:23 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23060 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 12:55:23 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 12:55:23 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:55:23 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 12:55:23 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 12:55:23 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 12:55:23 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 12:55:23 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 12:55:24 [main] INFO - Netty started on port 7322
+2024-03-26 12:55:24 [main] INFO - Started P6eAuthApplication in 1.397 seconds (process running for 1.738)
+2024-03-26 12:55:29 [reactor-http-nio-4] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 12:55:37 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=092468}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 12:58:06 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=885644}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 12:58:15 [reactor-http-nio-7] ERROR - 404 NOT_FOUND
+2024-03-26 12:58:15 [reactor-http-nio-9] ERROR - 404 NOT_FOUND
+2024-03-26 12:58:21 [reactor-http-nio-9] ERROR - 404 NOT_FOUND
+2024-03-26 12:58:21 [reactor-http-nio-7] ERROR - 404 NOT_FOUND
+2024-03-26 13:03:19 [reactor-http-nio-7] ERROR - 404 NOT_FOUND
+2024-03-26 13:05:52 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23684 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 13:05:52 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 13:05:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:05:52 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 13:05:52 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 13:05:52 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:05:52 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 13:05:52 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 13:05:53 [main] INFO - Netty started on port 7322
+2024-03-26 13:05:53 [main] INFO - Started P6eAuthApplication in 1.449 seconds (process running for 1.819)
+2024-03-26 13:05:56 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Voucher request parameter does not data or expired exception.] } ::: [ class club.p6e.coat.auth.AuthVoucher ] => (class club.p6e.coat.auth.error.VoucherException) ===> fun init(ServerWebExchange exchange)
+2024-03-26 13:06:11 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Voucher request parameter does not exist exception.] } ::: [ class club.p6e.coat.auth.AuthVoucher ] => (class club.p6e.coat.auth.error.VoucherException) ===> fun init(ServerWebExchange exchange)
+2024-03-26 13:06:23 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 13:06:27 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=560718}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 13:06:35 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 13:06:35 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 13:06:39 [reactor-http-nio-2] ERROR - 405 METHOD_NOT_ALLOWED "Request method 'POST' is not supported."
+2024-03-26 13:08:36 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 21996 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 13:08:36 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 13:08:36 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:08:36 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 13:08:36 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 13:08:36 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:08:36 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 13:08:36 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 13:08:37 [main] INFO - Netty started on port 7322
+2024-03-26 13:08:37 [main] INFO - Started P6eAuthApplication in 1.448 seconds (process running for 1.809)
+2024-03-26 13:08:40 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 13:08:45 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=078733}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 13:08:51 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
+2024-03-26 13:08:51 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 13:08:55 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Voucher request parameter does not data or expired exception.] } ::: [ class club.p6e.coat.auth.AuthVoucher ] => (class club.p6e.coat.auth.error.VoucherException) ===> fun init(ServerWebExchange exchange)
+2024-03-26 13:16:38 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 24244 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 13:16:38 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 13:16:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:16:38 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 13:16:38 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 13:16:38 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 13:16:38 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 13:16:38 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 13:16:39 [main] INFO - Netty started on port 7322
+2024-03-26 13:16:39 [main] INFO - Started P6eAuthApplication in 1.476 seconds (process running for 1.845)
+2024-03-26 13:21:38 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 13:21:41 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=803680}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 13:21:47 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 13:21:47 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 13:22:07 [reactor-http-nio-4] ERROR - 400 BAD_REQUEST "No request body"
+2024-03-26 13:25:06 [reactor-http-nio-4] ERROR - 400 BAD_REQUEST "No request body"
+2024-03-26 14:37:27 [reactor-http-nio-7] ERROR - 400 BAD_REQUEST "No request body"
+2024-03-26 14:37:49 [reactor-http-nio-4] ERROR - 400 BAD_REQUEST "No request body"
+2024-03-26 14:39:36 [reactor-tcp-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Oauth2 parameter code exception.] } ::: [ class club.p6e.coat.auth.service.OAuth2TokenServiceImpl ] => (class club.p6e.coat.auth.error.Oauth2ParameterException) ===> fun executeAuthorizationType(Oauth2Context.Token.Request param)
+2024-03-26 14:42:39 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 21848 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 14:42:39 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 14:42:40 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:42:40 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 14:42:40 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 14:42:40 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:42:40 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 14:42:40 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 14:42:40 [main] INFO - Netty started on port 7322
+2024-03-26 14:42:40 [main] INFO - Started P6eAuthApplication in 1.401 seconds (process running for 1.767)
+2024-03-26 14:42:51 [reactor-http-nio-2] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter validation exception.] } ::: [ class club.p6e.coat.auth.validator.ParameterValidator ] => (class club.p6e.coat.auth.error.ParameterException) ===> fun execute(ServerWebExchange exchange, Object param)
+2024-03-26 14:43:47 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 25744 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 14:43:47 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 14:43:48 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:43:48 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 14:43:48 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 14:43:48 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:43:48 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 14:43:48 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 14:43:48 [main] INFO - Netty started on port 7322
+2024-03-26 14:43:48 [main] INFO - Started P6eAuthApplication in 1.383 seconds (process running for 1.729)
+2024-03-26 14:44:01 [reactor-http-nio-2] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter validation exception.] } ::: [ class club.p6e.coat.auth.validator.ParameterValidator ] => (class club.p6e.coat.auth.error.ParameterException) ===> fun execute(ServerWebExchange exchange, Object param)
+2024-03-26 14:46:03 [reactor-http-nio-2] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter validation exception.] } ::: [ class club.p6e.coat.auth.validator.ParameterValidator ] => (class club.p6e.coat.auth.error.ParameterException) ===> fun execute(ServerWebExchange exchange, Object param)
+2024-03-26 14:47:35 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 1628 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 14:47:35 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 14:47:35 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:47:35 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 14:47:35 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 14:47:35 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:47:35 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 14:47:35 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 14:47:36 [main] INFO - Netty started on port 7322
+2024-03-26 14:47:36 [main] INFO - Started P6eAuthApplication in 1.386 seconds (process running for 1.734)
+2024-03-26 14:47:38 [reactor-http-nio-2] ERROR - { PARAMETER_EXCEPTION <1000> [Request parameter validation exception.] } ::: [ class club.p6e.coat.auth.validator.ParameterValidator ] => (class club.p6e.coat.auth.error.ParameterException) ===> fun execute(ServerWebExchange exchange, Object param)
+2024-03-26 14:50:16 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 23744 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 14:50:16 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 14:50:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:50:16 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 14:50:16 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 14:50:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:50:16 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 14:50:16 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 14:50:17 [main] INFO - Netty started on port 7322
+2024-03-26 14:50:17 [main] INFO - Started P6eAuthApplication in 1.452 seconds (process running for 1.82)
+2024-03-26 14:50:19 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Oauth2 parameter code exception.] } ::: [ class club.p6e.coat.auth.service.OAuth2TokenServiceImpl ] => (class club.p6e.coat.auth.error.Oauth2ParameterException) ===> fun executeAuthorizationType(Oauth2Context.Token.Request param)
+2024-03-26 14:50:53 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 16852 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 14:50:53 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 14:50:53 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:50:53 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 14:50:53 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 14:50:53 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 14:50:53 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 14:50:53 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 14:50:54 [main] INFO - Netty started on port 7322
+2024-03-26 14:50:54 [main] INFO - Started P6eAuthApplication in 1.381 seconds (process running for 1.727)
+2024-03-26 14:51:15 [reactor-tcp-nio-1] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Oauth2 parameter code exception.] } ::: [ class club.p6e.coat.auth.service.OAuth2TokenServiceImpl ] => (class club.p6e.coat.auth.error.Oauth2ParameterException) ===> fun executeAuthorizationType(Oauth2Context.Token.Request param)
+2024-03-26 14:54:16 [reactor-http-nio-3] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 14:54:19 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=894616}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 14:54:27 [reactor-http-nio-4] ERROR - 404 NOT_FOUND
+2024-03-26 14:54:27 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 15:21:30 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 22612 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 15:21:30 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 15:21:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:21:31 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 15:21:31 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 15:21:31 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:21:31 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 15:21:31 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 15:21:31 [main] INFO - Netty started on port 7322
+2024-03-26 15:21:31 [main] INFO - Started P6eAuthApplication in 1.464 seconds (process running for 1.933)
+2024-03-26 15:21:40 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 15:21:44 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=632660}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 15:21:52 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 15:21:52 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 15:27:16 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 25148 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 15:27:16 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 15:27:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:27:16 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 15:27:16 [main] INFO - Finished Spring Data repository scanning in 16 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 15:27:16 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:27:16 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 15:27:16 [main] INFO - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-03-26 15:27:17 [main] INFO - Netty started on port 7322
+2024-03-26 15:27:17 [main] INFO - Started P6eAuthApplication in 1.477 seconds (process running for 1.851)
+2024-03-26 15:27:24 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 15:27:26 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=715432}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 15:27:36 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 15:27:36 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 15:28:57 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 7380 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 15:28:57 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 15:28:58 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:28:58 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 15:28:58 [main] INFO - Finished Spring Data repository scanning in 17 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 15:28:58 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:28:58 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 15:28:58 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 15:28:58 [main] INFO - Netty started on port 7322
+2024-03-26 15:28:58 [main] INFO - Started P6eAuthApplication in 1.493 seconds (process running for 1.865)
+2024-03-26 15:29:05 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [Voucher request parameter does not data or expired exception.] } ::: [ class club.p6e.coat.auth.AuthVoucher ] => (class club.p6e.coat.auth.error.VoucherException) ===> fun init(ServerWebExchange exchange)
+2024-03-26 15:29:06 [reactor-http-nio-2] ERROR - { TYPE_MISMATCH_EXCEPTION <14000> [[HTTP/STORAGE/CACHE] Verifier validation access token exception.] } ::: [ class club.p6e.coat.auth.certificate.HttpLocalStorageCacheCertificateValidator ] => (class club.p6e.coat.auth.error.AuthException) ===> fun accessToken(String token).
+2024-03-26 15:29:08 [reactor-tcp-nio-1] INFO - 
+
+---------------------------------------------------------------------
+|--------------------------   S   M   S   --------------------------|
+---------------------------------------------------------------------
+|   account   =>   15549562863   |
+|   template   =>   CODE_LOGIN_TEMPLATE   |
+|   content   =>   {code=683724}   |
+--------------------------------------------------------------------
+
+
+2024-03-26 15:29:14 [reactor-http-nio-3] ERROR - 404 NOT_FOUND
+2024-03-26 15:29:14 [reactor-http-nio-2] ERROR - 404 NOT_FOUND
+2024-03-26 15:43:21 [main] INFO - Starting P6eAuthApplication using Java 17.0.9 with PID 26132 (D:\CodeContents\github\p6e-coat-auth\p6e-coat-starter-auth\target\classes started by a1294 in D:\CodeContents\github\p6e-coat-auth)
+2024-03-26 15:43:21 [main] INFO - No active profile set, falling back to 1 default profile: "default"
+2024-03-26 15:43:23 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:43:23 [main] INFO - Bootstrapping Spring Data R2DBC repositories in DEFAULT mode.
+2024-03-26 15:43:23 [main] INFO - Finished Spring Data repository scanning in 21 ms. Found 0 R2DBC repository interfaces.
+2024-03-26 15:43:23 [main] INFO - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-03-26 15:43:23 [main] INFO - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-03-26 15:43:23 [main] INFO - Finished Spring Data repository scanning in 4 ms. Found 0 Redis repository interfaces.
+2024-03-26 15:43:24 [main] INFO - Netty started on port 7322
+2024-03-26 15:43:24 [main] INFO - Started P6eAuthApplication in 2.824 seconds (process running for 3.215)

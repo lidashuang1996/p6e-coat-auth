@@ -84,7 +84,7 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
                                 case ACCOUNT -> repository.findByAccount(account);
                                 case PHONE_OR_MAILBOX -> repository.findByPhoneOrMailbox(account);
                             })
-                            .map(m -> au.create(m, null));
+                            .flatMap(m -> au.create(m, null));
                 });
 
     }

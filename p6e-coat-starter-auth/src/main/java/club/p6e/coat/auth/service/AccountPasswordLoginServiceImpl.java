@@ -78,14 +78,14 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     } else {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
-                                "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
+                                "fun executeTransmissionDecryption(AuthVoucher voucher, String content).",
                                 "Account password login transmission decryption cache handle bean not exist exception."
                         ));
                     }
                 })
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeCacheException(
                         this.getClass(),
-                        "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
+                        "fun executeTransmissionDecryption(AuthVoucher voucher, String content).",
                         "Account password login transmission decryption cache data does not exist or expire exception."
                 )))
                 .flatMap(s -> {
@@ -98,7 +98,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     } catch (Exception e) {
                         return Mono.error(GlobalExceptionContext.executeCacheException(
                                 this.getClass(),
-                                "fun executeTransmissionDecryption(AuthVoucher voucher, String content)",
+                                "fun executeTransmissionDecryption(AuthVoucher voucher, String content).",
                                 "Account password login transmission decryption cache data does not exist or expire exception."
                         ));
                     }
@@ -123,7 +123,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                 .filter(u -> u.password().equals(encryptor.execute(param.getPassword())))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
-                        "fun execute(LoginContext.AccountPassword.Request param)",
+                        "fun execute(LoginContext.AccountPassword.Request param).",
                         "Account password inside login account or password exception."
                 )));
     }
@@ -137,7 +137,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private Mono<AuthUser.Model> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
     /**
@@ -149,7 +149,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     private Mono<AuthUser.Model> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
     /**
@@ -161,7 +161,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     protected Mono<AuthUser.Model> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
     /**
@@ -173,7 +173,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     protected Mono<AuthUser.Model> executePhoneOrMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).map(a -> au.create(u, a)));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
 }

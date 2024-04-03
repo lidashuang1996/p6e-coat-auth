@@ -5,22 +5,15 @@ import club.p6e.coat.auth.cache.OAuth2TokenClientAuthCache;
 import club.p6e.coat.auth.cache.OAuth2TokenUserAuthCache;
 import club.p6e.coat.auth.certificate.HttpCertificate;
 import club.p6e.coat.auth.generator.*;
-import club.p6e.coat.auth.repository.Oauth2ClientRepository;
+import club.p6e.coat.auth.repository.OAuth2ClientRepository;
 import club.p6e.coat.common.utils.JsonUtil;
 import club.p6e.coat.common.utils.SpringUtil;
 import club.p6e.coat.auth.AuthUser;
 import club.p6e.coat.auth.Properties;
 import club.p6e.coat.auth.context.OAuth2Context;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * OAUTH2 TOKEN 的默认实现
@@ -48,7 +41,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     /**
      * OAUTH2 客户端存储库
      */
-    private final Oauth2ClientRepository oauth2ClientRepository;
+    private final OAuth2ClientRepository oauth2ClientRepository;
 
     private final AuthUser<?> au;
 
@@ -59,7 +52,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     public OAuth2TokenServiceImpl(
             AuthUser<?> au,
             Properties properties,
-            Oauth2ClientRepository oauth2ClientRepository) {
+            OAuth2ClientRepository oauth2ClientRepository) {
         this.au = au;
         this.properties = properties;
         this.oauth2ClientRepository = oauth2ClientRepository;
@@ -271,28 +264,17 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         final OAuth2UserOpenIdGenerator oauth2UserOpenIdGenerator =
                 SpringUtil.getBean(OAuth2UserOpenIdGenerator.class);
         final String openid = oauth2UserOpenIdGenerator.execute(cid, uid);
-        final Map<String, Object> map = au.create(info).toMap();
-        map.remove("id");
-        final Date date = Date.from(LocalDateTime.now()
-                .plusSeconds(OAuth2TokenUserAuthCache.EXPIRATION_TIME)
-                .atZone(ZoneId.systemDefault())
-                .toInstant()
-        );
-        return oauth2TokenUserAuthCache
-                .set(uid, info, scope, accessToken, refreshToken)
-                .map(t -> new OAuth2Context.Token.UserDto()
-                        .setOpenId(openid)
-                        .setAccessToken(t.getAccessToken())
-                        .setRefreshToken(t.getRefreshToken())
-                        .setType("Bearer")
-                        .setExpire(OAuth2TokenUserAuthCache.EXPIRATION_TIME)
-                        .setIdToken(JWT
-                                .create()
-                                .withAudience(uid)
-                                .withExpiresAt(date)
-                                .withSubject(JsonUtil.toJson(map))
-                                .sign(Algorithm.HMAC256(ID_TOKEN_SECRET)))
-                );
+        return au.create(info)
+                .flatMap(u -> oauth2TokenUserAuthCache
+                        .set(uid, scope, accessToken, refreshToken, info)
+                        .map(t -> new OAuth2Context.Token.UserDto()
+                                .setOpenId(openid)
+                                .setAccessToken(t.getAccessToken())
+                                .setRefreshToken(t.getRefreshToken())
+                                .setType("Bearer")
+                                .setExpire(OAuth2TokenUserAuthCache.EXPIRATION_TIME)
+                                .setUser(u.serialize())
+                        ));
     }
 
 }

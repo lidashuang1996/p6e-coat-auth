@@ -22,17 +22,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.auth.jwt>4.4.0</java.auth.jwt>
-        <netty.version>4.1.92.Final</netty.version>
-        <r2dbc.postgresql>0.8.13.RELEASE</r2dbc.postgresql>
+        <r2dbc.postgresql>1.0.0.RELEASE</r2dbc.postgresql>
     </properties>
 
     <dependencies>
-        <!-- Spring Aop [START] -->
+        <!-- Java JWT [START] -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java.auth.jwt}</version>
         </dependency>
-        <!-- Spring Aop [END] -->
+        <!-- Java JWT [END] -->
 
         <!-- Spring Reactive Redis [START] -->
         <dependency>
@@ -44,78 +44,42 @@
         <!-- Spring Data [ START ] -->
         <!-- Spring Data R2DBC [ START ] -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-spi</artifactId>
+            <version>${r2dbc.postgresql}</version>
         </dependency>
-        <!-- Spring Data R2DBC [ END ] -->
-        <!-- Spring Data R2DBC PostGrepSQL [ START ] -->
-        <!--        <dependency>-->
-        <!--            <groupId>io.r2dbc</groupId>-->
-        <!--            <artifactId>r2dbc-postgresql</artifactId>-->
-        <!--            <version>${r2dbc.postgresql}</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>io.netty</groupId>-->
-        <!--                    <artifactId>netty-all</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>r2dbc-postgresql</artifactId>
-            <version>1.0.0.RELEASE</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.r2dbc/r2dbc-spi -->
-        <dependency>
-            <groupId>io.r2dbc</groupId>
-            <artifactId>r2dbc-spi</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <version>${r2dbc.postgresql}</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+        </dependency>
         <!--  Spring Data R2DBC PostGrepSQL [ END ] -->
         <!-- Spring Data [ END ] -->
 
-        <!-- Java JWT [START] -->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>${java.auth.jwt}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.70</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- Java JWT [END] -->
-
+        <!-- P6e Coat Common [ START ] -->
         <dependency>
             <groupId>club.p6e.coat</groupId>
             <artifactId>p6e-coat-starter-common</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                    <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- P6e Coat Common [ END ] -->
     </dependencies>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
-
 </project>

@@ -4,18 +4,12 @@ import club.p6e.coat.auth.client.cache.AuthCacheReactive;
 import club.p6e.coat.auth.client.cache.memory.support.MemoryCache;
 import club.p6e.coat.auth.client.cache.memory.support.MemoryTemplate;
 import club.p6e.coat.common.utils.JsonUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
-@ConditionalOnProperty(name = "club.p6e.coat.auth.client.cache.type", havingValue = "MEMORY")
 public class AuthMemoryCacheReactive extends MemoryCache implements AuthCacheReactive {
 
     /**

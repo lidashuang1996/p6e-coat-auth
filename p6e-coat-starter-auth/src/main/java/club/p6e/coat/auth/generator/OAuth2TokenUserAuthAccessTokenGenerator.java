@@ -13,6 +13,6 @@ public interface OAuth2TokenUserAuthAccessTokenGenerator {
      *
      * @return 令牌
      */
-    public String execute();
+    String execute();
 
 }

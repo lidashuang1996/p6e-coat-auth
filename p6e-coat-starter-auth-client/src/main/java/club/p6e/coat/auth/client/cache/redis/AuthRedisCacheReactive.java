@@ -3,13 +3,9 @@ package club.p6e.coat.auth.client.cache.redis;
 import club.p6e.coat.auth.client.cache.AuthCacheReactive;
 import club.p6e.coat.auth.client.cache.redis.support.RedisCacheReactive;
 import club.p6e.coat.common.utils.JsonUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -21,10 +17,6 @@ import java.util.concurrent.TimeUnit;
  * @author lidashuang
  * @version 1.0
  */
-@Component
-@ConditionalOnBean(ReactiveStringRedisTemplate.class)
-@ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
-@ConditionalOnProperty(name = "club.p6e.coat.auth.client.cache.type", havingValue = "REDIS")
 public class AuthRedisCacheReactive extends RedisCacheReactive implements AuthCacheReactive {
 
     /**

@@ -1,11 +1,13 @@
 package club.p6e.coat.auth.client;
 
+import club.p6e.coat.common.ApplicationProperties;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lidashuang
@@ -27,11 +29,6 @@ public class Properties implements Serializable {
     private String authorizeTokenUrl;
 
     /**
-     * AUTHORIZE USER INFO URL
-     */
-    private String authorizeUserInfoUrl;
-
-    /**
      * AUTHORIZE APP ID
      */
     private String authorizeAppId;
@@ -47,6 +44,11 @@ public class Properties implements Serializable {
     private String authorizeAppRedirectUri;
 
     /**
+     * APP EXTEND
+     */
+    private Map<String, String> authorizeAppExtend = new HashMap<>();
+
+    /**
      * JWT ACCESS TOKEN SECRET
      */
     private String jwtAccessTokenSecret;
@@ -56,26 +58,8 @@ public class Properties implements Serializable {
      */
     private String jwtRefreshTokenSecret;
 
-    /**
-     * 缓存类型
-     */
-    private Cache cache = new Cache();
-
-    @Data
-    @Accessors(chain = true)
-    public static class Cache implements Serializable {
-        /**
-         * 缓存方式的配置
-         */
-        private Type type = Type.REDIS;
-
-        /**
-         * 缓存枚举类型
-         */
-        public enum Type implements Serializable {
-            REDIS,
-            MEMORY
-        }
+    public Properties() {
+        ApplicationProperties.register(this.getClass().getName(), this);
     }
 
 }

@@ -14,6 +14,6 @@ public interface QrCodeLoginGenerator {
      *
      * @return 二维码序号
      */
-    public String execute();
+    String execute();
 
 }

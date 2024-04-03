@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.service;
 
 import club.p6e.coat.auth.AuthPage;
-import club.p6e.coat.auth.repository.Oauth2ClientRepository;
+import club.p6e.coat.auth.repository.OAuth2ClientRepository;
 import club.p6e.coat.common.utils.TemplateParser;
 import club.p6e.coat.common.utils.VerificationUtil;
 import club.p6e.coat.auth.AuthVoucher;
@@ -36,7 +36,7 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
     /**
      * OAUTH CLIENT 存储库
      */
-    private final Oauth2ClientRepository repository;
+    private final OAuth2ClientRepository repository;
 
     /**
      * 构造方法初始化
@@ -44,7 +44,7 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
-    public OAuth2AuthorizeServiceImpl(Properties properties, Oauth2ClientRepository repository) {
+    public OAuth2AuthorizeServiceImpl(Properties properties, OAuth2ClientRepository repository) {
         this.properties = properties;
         this.repository = repository;
     }

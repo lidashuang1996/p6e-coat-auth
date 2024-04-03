@@ -8,6 +8,6 @@ package club.p6e.coat.auth.generator;
  */
 public interface OAuth2UserOpenIdGenerator {
 
-    public String execute(String clientId, String userId);
+    String execute(String clientId, String userId);
 
 }

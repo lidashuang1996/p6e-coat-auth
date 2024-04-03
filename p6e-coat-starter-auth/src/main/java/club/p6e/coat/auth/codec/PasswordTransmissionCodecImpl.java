@@ -4,7 +4,7 @@ import club.p6e.coat.auth.error.PasswordTransmissionCodecException;
 import club.p6e.coat.common.utils.RsaUtil;
 
 /**
- * 密码编码解码器的默认实现
+ * 密码传输编码解码器的默认实现
  *
  * @author lidashuang
  * @version 1.0
@@ -68,14 +68,14 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
             );
         } else {
             try {
-                if (model.getPrivateKey() != null) {
-                    return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);
-                } else {
+                if (model.getPrivateKey() == null) {
                     throw new PasswordTransmissionCodecException(
                             this.getClass(),
                             "[ PTC ] decryption PublicKey value is null exception >> " + model + ".",
-                            "PTC decryption PublicKey exception."
+                            "PTC decryption private key is null exception."
                     );
+                } else {
+                    return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);
                 }
             } catch (Exception e) {
                 throw new PasswordTransmissionCodecException(

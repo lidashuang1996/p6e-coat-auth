@@ -16,7 +16,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 忘记密码发送验证码服务的实现
@@ -78,8 +77,8 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                         )))
                         .flatMap(m -> {
                             final String code;
-                            final String account = param.getAccount();
                             final LauncherType type;
+                            final String account = param.getAccount();
                             if (VerificationUtil.validationPhone(account)) {
                                 type = LauncherType.SMS;
                                 code = generator.execute(LauncherType.SMS.name());
@@ -93,21 +92,21 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                                         "forgot password obtain code type (LauncherType) exception."
                                 ));
                             }
-                            final Map<String, String> data = new HashMap<>(1);
-                            data.put("code", code);
                             return v.setAccount(account)
                                     .flatMap(a -> cache.set(account, code))
                                     .filter(b -> b)
-                                    .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionCacheWritingException(
+                                    .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionCacheWriteException(
                                             this.getClass(),
                                             "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param)",
-                                            "forgot password obtain code cache writing exception."
+                                            "forgot password obtain code cache write exception."
                                     )))
                                     .flatMap(b -> Launcher.push(
                                             type,
                                             List.of(account),
                                             FORGOT_PASSWORD_TEMPLATE,
-                                            data,
+                                            new HashMap<>(0) {{
+                                                put("code", code);
+                                            }},
                                             param.getAccount()
                                     ));
                         })

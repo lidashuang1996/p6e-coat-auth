@@ -8,6 +8,6 @@ package club.p6e.coat.auth.generator;
  */
 public interface AccountPasswordLoginSignatureGenerator {
 
-    public String execute();
+    String execute();
 
 }

@@ -29,7 +29,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     private final ForgotPasswordCodeCache cache;
 
     /**
-     * 用户存储库
+     * 用户密码存储库
      */
     private final UserAuthRepository repository;
 
@@ -68,10 +68,10 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
                         .filter(l -> l.contains(param.getCode()))
                         .flatMap(l -> cache.del(v.getAccount()).map(ll -> v))
                 )
-                .switchIfEmpty(Mono.error(GlobalExceptionContext.executeQrCodeDataNullException(
+                .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionForgotPasswordCodeException(
                         this.getClass(),
-                        "",
-                        ""
+                        "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Request param).",
+                        "forgot password submit verification code expired."
                 ))).flatMap(v -> (switch (mode) {
                             case PHONE -> repository.findByPhone(v.getAccount());
                             case MAILBOX -> repository.findByMailbox(v.getAccount());

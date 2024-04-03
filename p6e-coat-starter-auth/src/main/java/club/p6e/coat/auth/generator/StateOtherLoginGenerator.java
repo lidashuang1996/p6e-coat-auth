@@ -13,6 +13,6 @@ public interface StateOtherLoginGenerator {
      *
      * @return 码
      */
-    public String execute();
+    String execute();
 
 }

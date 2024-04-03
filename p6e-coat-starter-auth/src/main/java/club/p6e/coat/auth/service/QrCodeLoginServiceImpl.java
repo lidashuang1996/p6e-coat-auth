@@ -28,7 +28,7 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
      */
     private final UserRepository repository;
 
-    private final  AuthUser au;
+    private final AuthUser<?> au;
 
     /**
      * 构造方法初始化
@@ -37,7 +37,7 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
      * @param repository 用户存储库
      */
     public QrCodeLoginServiceImpl(
-            AuthUser au,
+            AuthUser<?> au,
             QrCodeLoginCache cache,
             UserRepository repository) {
         this.au = au;
@@ -78,7 +78,7 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
                                                                     "QrCode login user id select data does not exist exception."
                                                             ));
                                                         } else {
-                                                            return Mono.just(au.create(m, null));
+                                                            return au.create(m, null);
                                                         }
                                                     }));
                                 }

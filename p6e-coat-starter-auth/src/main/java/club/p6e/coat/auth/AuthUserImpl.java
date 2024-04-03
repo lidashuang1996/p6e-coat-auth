@@ -5,6 +5,7 @@ import club.p6e.coat.auth.model.UserModel;
 import club.p6e.coat.common.utils.JsonUtil;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -19,17 +20,17 @@ import java.util.Map;
 public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
 
     @Override
-    public Model create(String content) {
+    public Mono<AuthUserImpl.Model> create(String content) {
         final AuthUserImpl.Model model = JsonUtil.fromJson(content, AuthUserImpl.Model.class);
         if (model == null) {
             throw new RuntimeException("[ " + this.getClass() + " ] create ==> deserialization failure !!");
         } else {
-            return model;
+            return Mono.just(model);
         }
     }
 
     @Override
-    public Model create(UserModel um, UserAuthModel uam) {
+    public Mono<AuthUserImpl.Model> create(UserModel um, UserAuthModel uam) {
         final Model model = new Model()
                 .setId(um.getId())
                 .setStatus(um.getStatus())
@@ -46,7 +47,7 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
         if (uam != null) {
             model.setPassword(uam.getPassword());
         }
-        return model;
+        return Mono.just(model);
     }
 
     /**
@@ -81,20 +82,7 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
 
         @Override
         public String serialize() {
-            return JsonUtil.toJson(new Model()
-                    .setId(this.getId())
-                    .setStatus(this.getStatus())
-                    .setEnabled(this.getEnabled())
-                    .setInternal(this.getInternal())
-                    .setAdministrator(this.getAdministrator())
-                    .setAccount(this.getAccount())
-                    .setPhone(this.getPhone())
-                    .setMailbox(this.getMailbox())
-                    .setName(this.getName())
-                    .setNickname(this.getNickname())
-                    .setAvatar(this.getAvatar())
-                    .setDescription(this.getDescription())
-            );
+            return JsonUtil.toJson(toMap());
         }
 
         @Override
