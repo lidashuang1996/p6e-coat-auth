@@ -22,6 +22,7 @@ public class EmailMessageLauncherImpl implements EmailMessageLauncher {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailMessageLauncherImpl.class);
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<List<String>> execute(List<String> recipients, String template, Map<String, String> content, String language) {
         final List<String> result = new ArrayList<>();
@@ -35,9 +36,11 @@ public class EmailMessageLauncherImpl implements EmailMessageLauncher {
                     "|   recipient   =>   " + recipient + "   |\n" +
                     "|   template    =>   " + template + "    |\n" +
                     "|   content     =>   " + content + "     |\n" +
+                    "|   language    =>   " + language + "    |\n" +
                     "--------------------------------------------------------------------\n" +
                     "\n");
         }
         return Mono.just(result);
     }
+
 }

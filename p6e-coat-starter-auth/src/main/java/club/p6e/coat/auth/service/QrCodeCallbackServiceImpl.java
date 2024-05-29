@@ -23,24 +23,39 @@ public class QrCodeCallbackServiceImpl implements QrCodeCallbackService {
     /**
      * 用户信息的请求头名称
      */
+    @SuppressWarnings("ALL")
     private static final String USER_HEADER_NAME = "P6e-User-Info";
+
+    /**
+     * 认证用户
+     */
+    private final AuthUser<?> au;
 
     /**
      * 二维码登录缓存
      */
     private final QrCodeLoginCache cache;
+
+    /**
+     * 认证证书验证器
+     */
     private final AuthCertificateValidator validator;
 
-    private final AuthUser<?> au;
 
     /**
      * 构造方法初始化
      *
-     * @param cache 二维码登录缓存
+     * @param au        认证用户
+     * @param cache     二维码登录缓存
+     * @param validator 认证证书验证器
      */
-    public QrCodeCallbackServiceImpl(QrCodeLoginCache cache, AuthCertificateValidator validator, AuthUser<?> authUser) {
+    public QrCodeCallbackServiceImpl(
+            AuthUser<?> au,
+            QrCodeLoginCache cache,
+            AuthCertificateValidator validator
+    ) {
+        this.au = au;
         this.cache = cache;
-        this.au = authUser;
         this.validator = validator;
     }
 

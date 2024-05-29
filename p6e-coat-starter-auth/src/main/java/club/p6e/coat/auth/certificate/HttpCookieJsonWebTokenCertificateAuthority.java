@@ -12,9 +12,12 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 
 /**
+ * [ HTTP/COOKIE/JWT ] CertificateAuthority
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpCookieJsonWebTokenCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
@@ -41,20 +44,14 @@ public class HttpCookieJsonWebTokenCertificateAuthority extends HttpCertificate 
                 .init(exchange)
                 .flatMap(v -> {
                     if (v.isOAuth2()) {
-                        return v.setOAuth2User(uid, info).flatMap(vv -> setHttpCookieToken(
-                                exchange.getResponse(),
-                                accessToken,
-                                refreshToken,
-                                new HashMap<>() {{
-                                    put("oauth2", v.isOAuth2());
-                                }}
-                        ));
+                        return v.setOAuth2User(uid, info).flatMap(vv ->
+                                setHttpCookieToken(exchange.getResponse(), accessToken, refreshToken,
+                                        new HashMap<>() {{
+                                            put("oauth2", v.isOAuth2());
+                                        }}
+                                ));
                     } else {
-                        return v.del().flatMap(vv -> setHttpCookieToken(
-                                exchange.getResponse(),
-                                accessToken,
-                                refreshToken
-                        ));
+                        return v.del().flatMap(vv -> setHttpCookieToken(exchange.getResponse(), accessToken, refreshToken));
                     }
                 }).map(ResultContext::build);
     }

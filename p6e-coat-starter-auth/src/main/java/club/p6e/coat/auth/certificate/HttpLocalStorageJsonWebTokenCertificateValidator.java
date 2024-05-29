@@ -7,9 +7,12 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * [ HTTP/STORAGE/JWT ] CertificateValidator
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpLocalStorageJsonWebTokenCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**

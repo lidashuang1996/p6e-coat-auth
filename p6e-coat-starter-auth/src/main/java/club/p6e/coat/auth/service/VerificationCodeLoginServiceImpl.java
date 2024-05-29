@@ -42,7 +42,8 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
     public VerificationCodeLoginServiceImpl(
             AuthUser<?> au,
             UserRepository repository,
-            VerificationCodeLoginCache cache) {
+            VerificationCodeLoginCache cache
+    ) {
         this.au = au;
         this.cache = cache;
         this.repository = repository;
@@ -54,8 +55,8 @@ public class VerificationCodeLoginServiceImpl implements VerificationCodeLoginSe
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
-                    final String account = v.get(AuthVoucher.ACCOUNT);
-                    final String accountType = v.get(AuthVoucher.ACCOUNT_TYPE);
+                    final String account = v.getAccount();
+                    final String accountType = v.getAccountType();
                     return cache
                             .get(account)
                             .switchIfEmpty(Mono.error(

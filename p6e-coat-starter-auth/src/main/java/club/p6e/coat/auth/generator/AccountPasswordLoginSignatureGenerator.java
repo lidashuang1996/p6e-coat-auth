@@ -8,6 +8,11 @@ package club.p6e.coat.auth.generator;
  */
 public interface AccountPasswordLoginSignatureGenerator {
 
+    /**
+     * 生成标记
+     *
+     * @return 标记内容
+     */
     String execute();
 
 }

@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2ConfirmService {
+public interface OAuth2ConfirmService {
 
     /**
      * 默认的页面

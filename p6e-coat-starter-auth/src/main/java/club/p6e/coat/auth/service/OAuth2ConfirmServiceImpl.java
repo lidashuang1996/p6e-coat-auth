@@ -2,7 +2,7 @@ package club.p6e.coat.auth.service;
 
 import club.p6e.coat.auth.AuthPage;
 import club.p6e.coat.auth.AuthVoucher;
-import club.p6e.coat.auth.cache.Oauth2CodeCache;
+import club.p6e.coat.auth.cache.OAuth2CodeCache;
 import club.p6e.coat.auth.context.OAuth2Context;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
 import club.p6e.coat.auth.generator.OAuth2CodeGenerator;
@@ -13,7 +13,6 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -25,25 +24,25 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
+public class OAuth2ConfirmServiceImpl implements OAuth2ConfirmService {
 
     /**
-     * Oauth2 Code 缓存对象
+     * OAuth2 Code 缓存对象
      */
-    private final Oauth2CodeCache cache;
+    private final OAuth2CodeCache cache;
 
     /**
-     * Oauth2 Code 生成器对象
+     * OAuth2 Code 生成器对象
      */
     private final OAuth2CodeGenerator generator;
 
     /**
      * 构造方法初始化
      *
-     * @param cache     Oauth2 Code 缓存对象
-     * @param generator Oauth2 Code 生成器对象
+     * @param cache     OAuth2 Code 缓存对象
+     * @param generator OAuth2 Code 生成器对象
      */
-    public Oauth2ConfirmServiceImpl(Oauth2CodeCache cache, OAuth2CodeGenerator generator) {
+    public OAuth2ConfirmServiceImpl(OAuth2CodeCache cache, OAuth2CodeGenerator generator) {
         this.cache = cache;
         this.generator = generator;
     }
@@ -142,11 +141,11 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
                     }
                     final String code = generator.execute();
                     final Map<String, String> map = new HashMap<>(5);
-                    map.put(Oauth2CodeCache.OAUTH2_SCOPE, scope);
-                    map.put(Oauth2CodeCache.OAUTH2_CLIENT_ID, clientId);
-                    map.put(Oauth2CodeCache.OAUTH2_USER_ID, userId);
-                    map.put(Oauth2CodeCache.OAUTH2_USER_INFO, userInfo);
-                    map.put(Oauth2CodeCache.OAUTH2_REDIRECT_URI, redirectUri);
+                    map.put(OAuth2CodeCache.OAUTH2_SCOPE, scope);
+                    map.put(OAuth2CodeCache.OAUTH2_CLIENT_ID, clientId);
+                    map.put(OAuth2CodeCache.OAUTH2_USER_ID, userId);
+                    map.put(OAuth2CodeCache.OAUTH2_USER_INFO, userInfo);
+                    map.put(OAuth2CodeCache.OAUTH2_REDIRECT_URI, redirectUri);
                     return cache
                             .set(code, map)
                             .flatMap(b -> b ?
@@ -156,8 +155,8 @@ public class Oauth2ConfirmServiceImpl implements Oauth2ConfirmService {
                                             .setRedirectUri(redirectUri)) :
                                     Mono.error(GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
-                                            "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param)",
-                                            "Oauth2 cache data write exception."
+                                            "fun execute(ServerWebExchange exchange, Oauth2Context.Confirm.Request param).",
+                                            "OAuth2 cache data write exception."
                                     ))
                             );
                 });

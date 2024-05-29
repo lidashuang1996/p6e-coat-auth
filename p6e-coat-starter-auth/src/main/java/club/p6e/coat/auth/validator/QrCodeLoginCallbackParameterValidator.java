@@ -1,12 +1,12 @@
 package club.p6e.coat.auth.validator;
 
-import club.p6e.coat.auth.context.ForgotPasswordContext;
 import club.p6e.coat.auth.context.LoginContext;
-import club.p6e.coat.common.utils.VerificationUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 二维码登录的回调参数验证器
+ *
  * @author lidashuang
  * @version 1.0
  */

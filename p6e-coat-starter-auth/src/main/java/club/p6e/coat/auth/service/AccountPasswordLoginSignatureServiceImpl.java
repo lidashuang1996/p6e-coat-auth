@@ -10,8 +10,6 @@ import club.p6e.coat.auth.generator.AccountPasswordLoginSignatureGenerator;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-
 /**
  * 账号密码登录的密码签名服务的实现
  *
@@ -70,10 +68,9 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                     final String mark = generator.execute();
                     return cache
                             .set(mark, json)
-                            .flatMap(b -> b ? v.set(new HashMap<>() {{
-                                put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
-                                put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
-                            }}) : Mono.error(GlobalExceptionContext.exceptionCacheWriteException(
+                            .flatMap(b -> b ?
+                                    v.setAccountPasswordCodecMark(mark)
+                                    : Mono.error(GlobalExceptionContext.exceptionCacheWriteException(
                                     this.getClass(),
                                     "fun execute(ServerWebExchange exchange, " +
                                             "LoginContext.AccountPasswordSignature.Request param).",
@@ -82,4 +79,5 @@ public class AccountPasswordLoginSignatureServiceImpl implements AccountPassword
                             .map(rv -> new LoginContext.AccountPasswordSignature.Dto().setContent(model.getPublicKey()));
                 });
     }
+
 }

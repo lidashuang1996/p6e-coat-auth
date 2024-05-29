@@ -62,7 +62,7 @@ public class AccountPasswordLoginParameterValidator implements ParameterValidato
             case MAILBOX -> Mono.just(VerificationUtil.validationMailbox(account));
             case PHONE_OR_MAILBOX -> Mono.just(VerificationUtil.validationPhone(account)
                     || VerificationUtil.validationMailbox(account));
-            default -> Mono.just(false);
+            default -> Mono.just(true);
         };
     }
 

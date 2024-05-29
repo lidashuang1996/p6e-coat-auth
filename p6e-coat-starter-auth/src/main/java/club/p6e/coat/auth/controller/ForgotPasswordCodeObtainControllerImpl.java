@@ -4,6 +4,7 @@ import club.p6e.coat.auth.context.ForgotPasswordContext;
 import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.service.ForgotPasswordObtainService;
 import club.p6e.coat.auth.validator.ParameterValidator;
+import club.p6e.coat.common.utils.CopyUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -46,7 +47,7 @@ public class ForgotPasswordCodeObtainControllerImpl
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
-                .map(ResultContext::build);
+                .map(r -> ResultContext.build(CopyUtil.run(r, ForgotPasswordContext.CodeObtain.Vo.class)));
     }
 
 }

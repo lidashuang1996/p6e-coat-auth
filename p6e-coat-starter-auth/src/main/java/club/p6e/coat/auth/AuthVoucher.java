@@ -212,6 +212,10 @@ public class AuthVoucher implements Serializable {
         return this.get(ACCOUNT);
     }
 
+    public String getAccountType() {
+        return this.get(ACCOUNT);
+    }
+
 
     public Mono<AuthVoucher> setOAuth2User(String uid, String info) {
         final Map<String, String> map = new HashMap<>();
@@ -257,6 +261,41 @@ public class AuthVoucher implements Serializable {
                     return this;
                 });
     }
+
+
+    public Mono<AuthVoucher> setAccountPasswordCodecMark(String mark) {
+        put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK, mark);
+        put(AuthVoucher.ACCOUNT_PASSWORD_CODEC_DATE, String.valueOf(System.currentTimeMillis()));
+        return this;
+    }
+
+    public String getAccountPasswordCodecMark() {
+        return "123";
+    }
+
+
+    public Mono<AuthVoucher> setVerificationCode(String account, String type, String mark) {
+//        final Map<String, String> map = new HashMap<>(4);
+//        map.put(AuthVoucher.ACCOUNT, account);
+//        map.put(AuthVoucher.ACCOUNT_TYPE, ft.name());
+//        map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_MARK, ls);
+//        map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
+        return set(new HashMap<>());
+    }
+
+
+    public String getQuickResponseCodeLoginMark() {
+        return "123";
+    }
+
+    public Mono<AuthVoucher> setQuickResponseCodeLoginData(String code) {
+//        final Map<String, String> map = new HashMap<>(2);
+//        map.put(AuthVoucher.QUICK_RESPONSE_CODE_LOGIN_MARK, qrCode);
+//        map.put(AuthVoucher.QUICK_RESPONSE_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
+        return set(new HashMap<>());
+    }
+
+
 
 
     /**

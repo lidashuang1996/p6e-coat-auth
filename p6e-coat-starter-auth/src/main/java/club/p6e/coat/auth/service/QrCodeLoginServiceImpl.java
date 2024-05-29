@@ -9,7 +9,6 @@ import club.p6e.coat.auth.error.GlobalExceptionContext;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-
 /**
  * 二维码登录服务的默认实现
  *
@@ -17,6 +16,11 @@ import reactor.core.publisher.Mono;
  * @version 1.0
  */
 public class QrCodeLoginServiceImpl implements QrCodeLoginService {
+
+    /**
+     * 认证用户
+     */
+    private final AuthUser<?> au;
 
     /**
      * 二维码缓存对象
@@ -28,11 +32,10 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
      */
     private final UserRepository repository;
 
-    private final AuthUser<?> au;
-
     /**
      * 构造方法初始化
      *
+     * @param au         认证用户
      * @param cache      二维码缓存对象
      * @param repository 用户存储库
      */
@@ -50,19 +53,19 @@ public class QrCodeLoginServiceImpl implements QrCodeLoginService {
         return AuthVoucher
                 .init(exchange)
                 .flatMap(v -> {
-                    final String mark = v.get(AuthVoucher.QUICK_RESPONSE_CODE_LOGIN_MARK);
+                    final String mark = v.getQuickResponseCodeLoginMark();
                     return cache
                             .get(mark)
                             .switchIfEmpty(Mono.error(GlobalExceptionContext.executeCacheException(
                                     this.getClass(),
-                                    "fun execute(ServerWebExchange exchange, LoginContext.QrCode.Request param)",
+                                    "fun execute(ServerWebExchange exchange, LoginContext.QrCode.Request param).",
                                     "QrCode login cache data does not exist or expire exception."
                             )))
                             .flatMap(s -> {
                                 if (QrCodeLoginCache.isEmpty(s)) {
                                     return Mono.error(GlobalExceptionContext.executeQrCodeDataNullException(
                                             this.getClass(),
-                                            "fun execute(ServerWebExchange exchange, LoginContext.QrCode.Request param)",
+                                            "fun execute(ServerWebExchange exchange, LoginContext.QrCode.Request param).",
                                             "QrCode login data is null exception."
                                     ));
                                 } else {

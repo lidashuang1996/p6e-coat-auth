@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public interface PasswordTransmissionCodec {
 
     /**

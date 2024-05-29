@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 登录的上下文对象
+ * 登录的上下文
  *
  * @author lidashuang
  * @version 1.0
@@ -18,9 +18,6 @@ public class LoginContext implements Serializable {
      */
     public static class Verification implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -33,29 +30,11 @@ public class LoginContext implements Serializable {
      */
     public static class AccountPassword implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
             private String account;
             private String password;
-        }
-
-        /**
-         * 结果对象
-         */
-        @Data
-        @Accessors(chain = true)
-        public static class Dto implements Serializable {
-            private Integer id;
-            private String account;
-            private Integer status;
-            private String name;
-            private String nickname;
-            private String avatar;
-            private String describe;
         }
 
     }
@@ -65,17 +44,18 @@ public class LoginContext implements Serializable {
      */
     public static class AccountPasswordSignature implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
         }
 
-        /**
-         * 结果对象
-         */
+        @Data
+        @Accessors(chain = true)
+        public static class Vo implements Serializable {
+            private String content;
+        }
+
+
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -89,18 +69,12 @@ public class LoginContext implements Serializable {
      */
     public static class VerificationCode implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
             private String code;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -120,9 +94,6 @@ public class LoginContext implements Serializable {
      */
     public static class VerificationCodeObtain implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -130,9 +101,6 @@ public class LoginContext implements Serializable {
             private String language;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
@@ -140,9 +108,6 @@ public class LoginContext implements Serializable {
             private String message;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -157,17 +122,11 @@ public class LoginContext implements Serializable {
      */
     public static class QrCode implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -187,26 +146,17 @@ public class LoginContext implements Serializable {
      */
     public static class QrCodeObtain implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private String content;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -220,27 +170,18 @@ public class LoginContext implements Serializable {
      */
     public static class QrCodeCallback implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
             private String content;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private String content;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -254,9 +195,6 @@ public class LoginContext implements Serializable {
      */
     public static class Other implements Serializable {
 
-        /**
-         * 第三方登录 QQ 对象
-         */
         public static class Qq implements Serializable {
 
             /**

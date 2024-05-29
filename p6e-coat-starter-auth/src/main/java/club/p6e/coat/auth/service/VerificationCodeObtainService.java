@@ -19,7 +19,7 @@ public interface VerificationCodeObtainService {
      * @param param    请求对象
      * @return 结果对象
      */
-    public Mono<LoginContext.VerificationCodeObtain.Dto> execute(
+    Mono<LoginContext.VerificationCodeObtain.Dto> execute(
             ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param);
 
 }

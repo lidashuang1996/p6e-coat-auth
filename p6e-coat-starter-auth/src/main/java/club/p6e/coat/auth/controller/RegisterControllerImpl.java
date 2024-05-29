@@ -5,6 +5,7 @@ import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.context.RegisterContext;
 import club.p6e.coat.auth.service.RegisterService;
 import club.p6e.coat.common.context.ResultContext;
+import club.p6e.coat.common.utils.CopyUtil;
 import club.p6e.coat.common.utils.TemplateParser;
 import club.p6e.coat.auth.validator.ParameterValidator;
 import org.springframework.http.HttpStatus;
@@ -80,7 +81,7 @@ public class RegisterControllerImpl implements
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
-                .map(ResultContext::build);
+                .map(r -> ResultContext.build(CopyUtil.run(r, RegisterContext.Vo.class)));
     }
 
 }

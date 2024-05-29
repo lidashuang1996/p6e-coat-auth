@@ -10,8 +10,8 @@ import reactor.core.publisher.Mono;
  */
 public interface QqOtherLoginService {
 
-    public Mono<String> home(ServerWebExchange exchange);
+    Mono<String> home(ServerWebExchange exchange);
 
-    public Mono<AuthUser.Model> callback(ServerWebExchange exchange);
+    Mono<AuthUser.Model> callback(ServerWebExchange exchange);
 
 }

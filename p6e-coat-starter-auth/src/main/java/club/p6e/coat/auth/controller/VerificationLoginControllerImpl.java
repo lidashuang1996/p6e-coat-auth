@@ -57,12 +57,13 @@ public class VerificationLoginControllerImpl
                             final List<String> list = httpHeaders.get(HttpCertificate.getUserInfoHeaderName());
                             if (list != null && !list.isEmpty()) {
                                 return au.create(list.get(0))
-                                        .flatMap(u -> v.setOAuth2User(u.id(), u.serialize()).map(vv ->
-                                                ResultContext.build(new HashMap<>() {{
+                                        .flatMap(u -> v.setOAuth2User(u.id(), u.serialize())
+                                                .map(vv -> ResultContext.build(new HashMap<>() {{
                                                     if (v.isOAuth2()) {
                                                         put("oauth2", true);
                                                     }
-                                                }})));
+                                                }}))
+                                        );
                             } else {
                                 return Mono.error(GlobalExceptionContext.exceptionAuthException(
                                         this.getClass(),

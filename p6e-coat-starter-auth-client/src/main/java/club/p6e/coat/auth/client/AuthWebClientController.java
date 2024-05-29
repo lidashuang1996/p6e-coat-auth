@@ -52,9 +52,12 @@ public class AuthWebClientController extends BaseWebController {
     @GetMapping("")
     public void def(HttpServletRequest request, HttpServletResponse response) {
         try {
-            final String url = getParam("url");
+            final String source = getParam("source");
+            final String redirectUri = getParam("redirect_uri", "redirectUri");
+            System.out.println("source ::: " + source);
+            System.out.println("redirectUri ::: " + redirectUri);
             final String state = GeneratorUtil.random(8, true, false);
-            final Boolean bool = authStateCache.set(state, url == null ? "" : url);
+            final Boolean bool = authStateCache.set(state, source == null ? "" : source);
             if (bool == null || bool == false) {
                 throw new CacheException(
                         this.getClass(),
@@ -65,7 +68,7 @@ public class AuthWebClientController extends BaseWebController {
                 response.sendRedirect(properties.getAuthorizeUrl()
                         + "?response_type=code"
                         + "&client_id=" + properties.getAuthorizeAppId()
-                        + "&redirect_uri=" + properties.getAuthorizeAppRedirectUri()
+                        + "&redirect_uri=" + (redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri)
                         + "&scope=open_id,user_info"
                         + "&state=" + state
                 );

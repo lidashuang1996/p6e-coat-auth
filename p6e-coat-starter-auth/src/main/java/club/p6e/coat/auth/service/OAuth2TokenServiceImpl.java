@@ -1,6 +1,6 @@
 package club.p6e.coat.auth.service;
 
-import club.p6e.coat.auth.cache.Oauth2CodeCache;
+import club.p6e.coat.auth.cache.OAuth2CodeCache;
 import club.p6e.coat.auth.cache.OAuth2TokenClientAuthCache;
 import club.p6e.coat.auth.cache.OAuth2TokenUserAuthCache;
 import club.p6e.coat.auth.certificate.HttpCertificate;
@@ -177,14 +177,14 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
                         "OAuth2 client id not exist exception."
                 )))
                 .flatMap(m -> {
-                    if (!SpringUtil.exist(Oauth2CodeCache.class)) {
+                    if (!SpringUtil.exist(OAuth2CodeCache.class)) {
                         return Mono.error(GlobalExceptionContext.exceptionBeanException(
                                 this.getClass(),
                                 "fun executeAuthorizationType(Oauth2Context.Token.Request param).",
-                                "OAuth2 [ " + Oauth2CodeCache.class + " ] handle bean not exist exception."
+                                "OAuth2 [ " + OAuth2CodeCache.class + " ] handle bean not exist exception."
                         ));
                     }
-                    final Oauth2CodeCache oauth2CodeCache = SpringUtil.getBean(Oauth2CodeCache.class);
+                    final OAuth2CodeCache oauth2CodeCache = SpringUtil.getBean(OAuth2CodeCache.class);
                     return oauth2CodeCache
                             .get(code)
                             .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ParameterException(
@@ -193,11 +193,11 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
                                     "Oauth2 parameter code exception."
                             )))
                             .flatMap(map -> {
-                                final String codeContentScope = map.get(Oauth2CodeCache.OAUTH2_SCOPE);
-                                final String codeContentUserId = map.get(Oauth2CodeCache.OAUTH2_USER_ID);
-                                final String codeContentUserInfo = map.get(Oauth2CodeCache.OAUTH2_USER_INFO);
-                                final String codeContentClientId = map.get(Oauth2CodeCache.OAUTH2_CLIENT_ID);
-                                final String codeContentRedirectUri = map.get(Oauth2CodeCache.OAUTH2_REDIRECT_URI);
+                                final String codeContentScope = map.get(OAuth2CodeCache.OAUTH2_SCOPE);
+                                final String codeContentUserId = map.get(OAuth2CodeCache.OAUTH2_USER_ID);
+                                final String codeContentUserInfo = map.get(OAuth2CodeCache.OAUTH2_USER_INFO);
+                                final String codeContentClientId = map.get(OAuth2CodeCache.OAUTH2_CLIENT_ID);
+                                final String codeContentRedirectUri = map.get(OAuth2CodeCache.OAUTH2_REDIRECT_URI);
                                 if (!m.getClientSecret().equals(clientSecret)) {
                                     return Mono.error(GlobalExceptionContext.executeOauth2ClientException(
                                             this.getClass(),

@@ -77,8 +77,9 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
                             case MAILBOX -> repository.findByMailbox(v.getAccount());
                             case ACCOUNT -> repository.findByAccount(v.getAccount());
                             case PHONE_OR_MAILBOX -> repository.findByPhoneOrMailbox(v.getAccount());
-                        }).flatMap(m -> repository.updatePassword(m.getId(), encryptor.execute(param.getPassword())))
-                                .map(l -> new ForgotPasswordContext.Dto().setAccount(v.getAccount()))
+                        }).flatMap(m -> repository.updatePassword(
+                                m.getId(), encryptor.execute(param.getPassword())
+                        )).map(l -> new ForgotPasswordContext.Dto().setAccount(v.getAccount()))
                 );
     }
 

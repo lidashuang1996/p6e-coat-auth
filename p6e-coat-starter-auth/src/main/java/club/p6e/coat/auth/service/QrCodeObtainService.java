@@ -18,6 +18,6 @@ public interface QrCodeObtainService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<LoginContext.QrCodeObtain.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param);
+    Mono<LoginContext.QrCodeObtain.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeObtain.Request param);
 
 }

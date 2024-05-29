@@ -12,9 +12,12 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 
 /**
+ * [HTTP/STORAGE/JWT] CertificateAuthority
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpLocalStorageJsonWebTokenCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
@@ -41,18 +44,14 @@ public class HttpLocalStorageJsonWebTokenCertificateAuthority extends HttpCertif
                 .init(exchange)
                 .flatMap(v -> {
                     if (v.isOAuth2()) {
-                        return v.setOAuth2User(uid, info).flatMap(vv -> setHttpLocalStorageToken(
-                                accessToken,
-                                refreshToken,
-                                new HashMap<>() {{
-                                    put("oauth2", v.isOAuth2());
-                                }}
-                        ));
+                        return v.setOAuth2User(uid, info).flatMap(vv ->
+                                setHttpLocalStorageToken(accessToken, refreshToken,
+                                        new HashMap<>() {{
+                                            put("oauth2", v.isOAuth2());
+                                        }}
+                                ));
                     } else {
-                        return v.del().flatMap(vv -> setHttpLocalStorageToken(
-                                accessToken,
-                                refreshToken
-                        ));
+                        return v.del().flatMap(vv -> setHttpLocalStorageToken(accessToken, refreshToken));
                     }
                 }).map(ResultContext::build);
     }

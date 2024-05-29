@@ -8,16 +8,16 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * AUTH OAuth2 客户端的实现
+ * AUTH OAuth2 用户的实现
  *
  * @author lidashuang
  * @version 1.0
  */
-public class AuthOAuth2ClientImpl implements AuthOAuth2Client<AuthOAuth2ClientImpl.Model> {
+public class AuthOAuth2UserImpl implements AuthOAuth2Client<AuthOAuth2UserImpl.Model> {
 
     @Override
     public Model create(String content) {
-        final AuthOAuth2ClientImpl.Model model = JsonUtil.fromJson(content, AuthOAuth2ClientImpl.Model.class);
+        final AuthOAuth2UserImpl.Model model = JsonUtil.fromJson(content, AuthOAuth2UserImpl.Model.class);
         if (model == null) {
             throw new RuntimeException("[ " + this.getClass() + " ] " +
                     "fun create(String content) ==> deserialization failure !!");
@@ -30,11 +30,18 @@ public class AuthOAuth2ClientImpl implements AuthOAuth2Client<AuthOAuth2ClientIm
     @Accessors(chain = true)
     public static class Model implements AuthOAuth2Client.Model, Serializable {
         private Integer id;
+        private Integer status;
         private Integer enabled;
+        private Integer internal;
+        private Integer administrator;
+        private String account;
+        private String phone;
+        private String mailbox;
         private String name;
+        private String nickname;
         private String avatar;
         private String description;
-        private String secret;
+        private String language;
 
         @Override
         public String id() {
@@ -43,17 +50,25 @@ public class AuthOAuth2ClientImpl implements AuthOAuth2Client<AuthOAuth2ClientIm
 
         @Override
         public String password() {
-            return secret;
+            return null;
         }
 
         @Override
         public String serialize() {
             return JsonUtil.toJson(new HashMap<>() {{
                 put("id", id);
+                put("status", status);
                 put("enabled", enabled);
+                put("internal", internal);
+                put("administrator", administrator);
+                put("phone", phone);
+                put("account", account);
+                put("mailbox", mailbox);
                 put("name", name);
                 put("avatar", avatar);
+                put("nickname", nickname);
                 put("description", description);
+                put("language", language);
             }});
         }
 

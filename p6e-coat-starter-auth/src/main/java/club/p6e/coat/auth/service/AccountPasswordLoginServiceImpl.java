@@ -69,7 +69,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     }
 
     protected Mono<String> executeTransmissionDecryption(AuthVoucher voucher, String content) {
-        final String mark = voucher.get(AuthVoucher.ACCOUNT_PASSWORD_CODEC_MARK);
+        final String mark = voucher.getAccountPasswordCodecMark();
         return Mono
                 .just(mark)
                 .flatMap(m -> {
@@ -124,7 +124,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param).",
-                        "Account password inside login account or password exception."
+                        "Account or password exception."
                 )));
     }
 

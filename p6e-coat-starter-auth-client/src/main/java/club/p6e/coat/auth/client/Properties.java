@@ -1,6 +1,5 @@
 package club.p6e.coat.auth.client;
 
-import club.p6e.coat.common.ApplicationProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -57,9 +56,5 @@ public class Properties implements Serializable {
      * JWT REFRESH TOKEN SECRET
      */
     private String jwtRefreshTokenSecret;
-
-    public Properties() {
-        ApplicationProperties.register(this.getClass().getName(), this);
-    }
 
 }

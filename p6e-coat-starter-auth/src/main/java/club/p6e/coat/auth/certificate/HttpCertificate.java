@@ -20,9 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * HttpCertificate
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpCertificate {
 
     /**
@@ -54,14 +57,16 @@ public class HttpCertificate {
     /**
      * 设置认证头名称
      *
-     * @param auth 认证头名称
+     * @param header 认证头名称
      */
-    public static void setAuthHeader(String auth) {
-        SPECIFICATION.setAuthHeader(auth);
+    public static void setAuthHeader(String header) {
+        SPECIFICATION.setAuthHeader(header);
     }
 
     /**
      * 读取认证头名称
+     *
+     * @return 认证头名称
      */
     public static String getAuthHeader() {
         return SPECIFICATION.getAuthHeader();

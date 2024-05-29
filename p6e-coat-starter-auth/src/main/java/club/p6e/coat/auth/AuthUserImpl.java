@@ -23,7 +23,9 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
     public Mono<AuthUserImpl.Model> create(String content) {
         final AuthUserImpl.Model model = JsonUtil.fromJson(content, AuthUserImpl.Model.class);
         if (model == null) {
-            throw new RuntimeException("[ " + this.getClass() + " ] create ==> deserialization failure !!");
+            return Mono.error(new RuntimeException(
+                    "[ " + this.getClass() + " ] " +
+                            "fun create(String content) ==> deserialization failure !!"));
         } else {
             return Mono.just(model);
         }
@@ -43,7 +45,8 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                 .setName(um.getName())
                 .setNickname(um.getNickname())
                 .setAvatar(um.getAvatar())
-                .setDescription(um.getDescription());
+                .setDescription(um.getDescription())
+                .setLanguage(um.getLanguage());
         if (uam != null) {
             model.setPassword(uam.getPassword());
         }
@@ -68,6 +71,11 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
         private String nickname;
         private String avatar;
         private String description;
+        private String language;
+
+        /**
+         * [ PASSWORD ] sensitive data should not be returned to the front-end
+         */
         private String password;
 
         @Override
@@ -100,6 +108,7 @@ public class AuthUserImpl implements AuthUser<AuthUserImpl.Model> {
                 put("nickname", nickname);
                 put("avatar", avatar);
                 put("description", description);
+                put("language", language);
             }};
         }
     }

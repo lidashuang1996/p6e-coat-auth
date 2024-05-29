@@ -18,6 +18,6 @@ public interface QrCodeCallbackService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<LoginContext.QrCodeCallback.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param);
+    Mono<LoginContext.QrCodeCallback.Dto> execute(ServerWebExchange exchange, LoginContext.QrCodeCallback.Request param);
 
 }

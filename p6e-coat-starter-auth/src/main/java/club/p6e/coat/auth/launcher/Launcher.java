@@ -26,12 +26,19 @@ public final class Launcher {
      * @return 推送的结果回执
      */
     public static Mono<List<String>> push(
-            LauncherType type, List<String> recipients, String template, Map<String, String> content, String language) {
+            LauncherType type,
+            List<String> recipients,
+            String template,
+            Map<String, String> content,
+            String language
+    ) {
         if (LauncherType.SMS == type) {
-            return SpringUtil.getBean(SmsMessageLauncher.class).execute(recipients, template, content, language);
+            return SpringUtil.getBean(SmsMessageLauncher.class)
+                    .execute(recipients, template, content, language);
         }
         if (LauncherType.EMAIL == type) {
-            return SpringUtil.getBean(EmailMessageLauncher.class).execute(recipients, template, content, language);
+            return SpringUtil.getBean(EmailMessageLauncher.class)
+                    .execute(recipients, template, content, language);
         }
         return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
                 Launcher.class,

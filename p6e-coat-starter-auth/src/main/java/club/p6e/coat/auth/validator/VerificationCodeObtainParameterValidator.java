@@ -52,8 +52,8 @@ public class VerificationCodeObtainParameterValidator implements ParameterValida
 
     private Mono<Boolean> executeAccount(Properties properties, String account) {
         return switch (properties.getMode()) {
-            case PHONE -> Mono.just(VerificationUtil.validationPhone(account));
             case MAILBOX -> Mono.just(VerificationUtil.validationMailbox(account));
+            case PHONE -> Mono.just(VerificationUtil.validationPhone(account));
             case PHONE_OR_MAILBOX -> Mono.just(VerificationUtil.validationPhone(account)
                     || VerificationUtil.validationMailbox(account));
             default -> Mono.just(false);

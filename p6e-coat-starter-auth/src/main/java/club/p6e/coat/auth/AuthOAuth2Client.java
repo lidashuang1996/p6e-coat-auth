@@ -3,6 +3,8 @@ package club.p6e.coat.auth;
 import java.io.Serializable;
 
 /**
+ * AUTH OAuth2 客户端的接口
+ *
  * @author lidashuang
  * @version 1.0
  */

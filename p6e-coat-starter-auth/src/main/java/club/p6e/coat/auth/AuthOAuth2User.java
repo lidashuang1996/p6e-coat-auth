@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * 认证用户
+ * AUTH OAuth2 用户的接口
  *
  * @author lidashuang
  * @version 1.0

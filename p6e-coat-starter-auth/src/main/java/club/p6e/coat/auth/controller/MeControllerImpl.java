@@ -51,7 +51,7 @@ public class MeControllerImpl implements MeController<ResultContext> {
         response.getHeaders().setContentType(me.getType());
         return AuthVoucher.createMe().flatMap(v -> response.writeWith(
                 Mono.just(exchange.getResponse().bufferFactory().wrap(TemplateParser.execute(
-                        me.getContent(), "page", "me", "voucher", v.getMark()
+                        me.getContent(), "page", "me"
                 ).getBytes(StandardCharsets.UTF_8)))
         ));
     }
@@ -60,13 +60,8 @@ public class MeControllerImpl implements MeController<ResultContext> {
     public Mono<ResultContext> info(ServerWebExchange exchange) {
         return validator
                 .execute(exchange)
-                .map(e -> {
-                    final String user = e
-                            .getRequest()
-                            .getHeaders()
-                            .getFirst(HttpCertificate.getUserInfoHeaderName());
-                    return ResultContext.build(au.create(user));
-                });
+                .flatMap(e -> au.create(e.getRequest().getHeaders().getFirst(HttpCertificate.getUserInfoHeaderName())))
+                .map(um -> ResultContext.build(um.toMap()));
     }
 
 }

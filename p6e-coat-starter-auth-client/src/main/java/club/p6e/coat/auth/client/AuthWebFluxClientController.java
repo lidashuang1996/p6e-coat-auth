@@ -52,17 +52,20 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     @SuppressWarnings("ALL")
     @GetMapping("")
     public Mono<Void> def(ServerHttpRequest request, ServerHttpResponse response) {
-        final String url = getParam(request, "url");
+        final String source = getParam(request, "source");
+        final String redirectUri = getParam(request, "redirect_uri", "redirectUri");
+        System.out.println("source ::: " + source);
+        System.out.println("redirectUri ::: " + redirectUri);
         final String state = GeneratorUtil.random(8, true, false);
         return authStateCache
-                .set(state, url == null ? "" : url)
+                .set(state, source == null ? "" : source)
                 .flatMap(b -> {
                     if (b) {
                         response.setStatusCode(HttpStatus.FOUND);
                         response.getHeaders().setLocation(URI.create(properties.getAuthorizeUrl()
                                 + "?response_type=code"
                                 + "&client_id=" + properties.getAuthorizeAppId()
-                                + "&redirect_uri=" + properties.getAuthorizeAppRedirectUri()
+                                + "&redirect_uri=" + (redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri)
                                 + "&scope=open_id,user_info"
                                 + "&state=" + state));
                         return response.setComplete();
@@ -142,7 +145,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                             } else {
                                                 return authorization(String.valueOf(um.getId()), user, response)
                                                         .map(data -> {
-                                                            data.put("url", cache);
+                                                            data.put("entranceUrl", cache);
                                                             return ResultContext.build(data);
                                                         });
                                             }

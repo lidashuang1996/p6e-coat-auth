@@ -5,9 +5,9 @@ import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.service.OAuth2TokenService;
 import club.p6e.coat.auth.validator.ParameterValidator;
 
+import club.p6e.coat.common.utils.CopyUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
 
 /**
  * OAUTH2 TOKEN
@@ -33,6 +33,13 @@ public class OAuth2TokenControllerImpl
         this.service = service;
     }
 
+    /**
+     * 参数验证
+     *
+     * @param exchange ServerWebExchange 对象
+     * @param param    参数对象
+     * @return Mono/Void 对象
+     */
     protected Mono<Void> vp(ServerWebExchange exchange, OAuth2Context.Token.Request param) {
         return ParameterValidator.execute(exchange, param);
     }
@@ -42,7 +49,7 @@ public class OAuth2TokenControllerImpl
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))
-                .map(ResultContext::build);
+                .map(r -> ResultContext.build(CopyUtil.run(r, OAuth2Context.Token.Vo.class)));
     }
 
 }

@@ -13,6 +13,6 @@ public interface ICache {
      *
      * @return 缓存的类型
      */
-    public String toType();
+    String toType();
 
 }

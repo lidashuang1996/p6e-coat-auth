@@ -19,9 +19,6 @@ public class OAuth2Context implements Serializable {
      */
     public static class Auth implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -32,18 +29,12 @@ public class OAuth2Context implements Serializable {
             private String state;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private String voucher;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -57,9 +48,6 @@ public class OAuth2Context implements Serializable {
      */
     public static class Token implements Serializable {
 
-        /**
-         * 请求对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -72,9 +60,6 @@ public class OAuth2Context implements Serializable {
             private String redirectUri;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
@@ -85,9 +70,6 @@ public class OAuth2Context implements Serializable {
             private Long expiration;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         public static class Dto implements Serializable {
@@ -98,10 +80,6 @@ public class OAuth2Context implements Serializable {
             private String user;
         }
 
-        /**
-         * 结果对象
-         */
-
         @Data
         @Accessors(chain = true)
         @EqualsAndHashCode(callSuper = true)
@@ -109,9 +87,6 @@ public class OAuth2Context implements Serializable {
             private String openId;
         }
 
-        /**
-         * 结果对象
-         */
         @Data
         @Accessors(chain = true)
         @EqualsAndHashCode(callSuper = true)

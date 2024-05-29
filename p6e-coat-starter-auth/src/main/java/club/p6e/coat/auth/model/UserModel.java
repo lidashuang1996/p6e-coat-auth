@@ -1,5 +1,6 @@
 package club.p6e.coat.auth.model;
 
+import club.p6e.DatabaseConfig;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户模型
+ * User Model
  *
  * @author lidashuang
  * @version 1.0
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(UserModel.TABLE)
 public class UserModel implements Serializable {
 
-    public static final String TABLE = "p6e_user";
+    public static final String TABLE = DatabaseConfig.TABLE_PREFIX + "user";
 
     public static final String ID = "id";
     public static final String STATUS = "status";
@@ -33,10 +34,13 @@ public class UserModel implements Serializable {
     public static final String NICKNAME = "nickname";
     public static final String AVATAR = "avatar";
     public static final String DESCRIPTION = "description";
-    public static final String CREATE_DATE = "createDate";
-    public static final String UPDATE_DATE = "updateDate";
-    public static final String OPERATOR = "operator";
+    public static final String LANGUAGE = "language";
+    public static final String CREATOR = "creator";
+    public static final String MODIFIER = "modifier";
+    public static final String CREATION_DATE_TIME = "creationDateTime";
+    public static final String MODIFICATION_DATE_TIME = "modificationDateTime";
     public static final String VERSION = "version";
+    public static final String IS_DELETED = "isDeleted";
 
     @Id
     private Integer id;
@@ -51,9 +55,12 @@ public class UserModel implements Serializable {
     private String nickname;
     private String avatar;
     private String description;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
-    private String operator;
+    private String language;
+    private String creator;
+    private String modifier;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime modificationDateTime;
     private Integer version;
+    private Integer isDeleted;
 
 }

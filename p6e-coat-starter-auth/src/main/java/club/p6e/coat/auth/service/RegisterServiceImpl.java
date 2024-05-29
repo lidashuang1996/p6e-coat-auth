@@ -15,6 +15,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 注册服务的实现
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -40,14 +42,26 @@ public class RegisterServiceImpl implements RegisterService {
      */
     private final UserRepository userRepository;
 
+    /**
+     * 用户认证存储库
+     */
     private final UserAuthRepository userAuthRepository;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param properties         配置文件
+     * @param encryptor          密码加密器
+     * @param transactional      模板对象
+     * @param userRepository     用户存储库
+     * @param userAuthRepository 用户认证存储库
+     */
     public RegisterServiceImpl(
             Properties properties,
+            AuthPasswordEncryptor encryptor,
             UserRepository userRepository,
             UserAuthRepository userAuthRepository,
-            TransactionalOperator transactional,
-            AuthPasswordEncryptor encryptor
+            TransactionalOperator transactional
     ) {
         this.properties = properties;
         this.encryptor = encryptor;
@@ -75,7 +89,7 @@ public class RegisterServiceImpl implements RegisterService {
 
 
     /**
-     * 执行手机号码登录
+     * 执行手机号码注册
      *
      * @return 结果对象
      */

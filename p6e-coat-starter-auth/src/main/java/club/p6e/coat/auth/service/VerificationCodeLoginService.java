@@ -20,6 +20,6 @@ public interface VerificationCodeLoginService {
      * @param param 请求对象
      * @return 结果对象
      */
-    public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param);
+    Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.VerificationCode.Request param);
 
 }

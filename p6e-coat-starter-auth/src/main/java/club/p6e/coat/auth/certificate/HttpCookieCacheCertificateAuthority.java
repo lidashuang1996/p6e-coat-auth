@@ -14,9 +14,12 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 
 /**
+ * [ HTTP/COOKIE/CACHE ] CertificateAuthority
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpCookieCacheCertificateAuthority extends HttpCertificate implements AuthCertificateAuthority {
 
     /**
@@ -59,24 +62,18 @@ public class HttpCookieCacheCertificateAuthority extends HttpCertificate impleme
         final String refreshToken = refreshTokenGenerator.execute();
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> cache
-                        .set(uid, v.device(), accessToken, refreshToken, info)
+                .flatMap(v -> cache.set(uid, v.device(), accessToken, refreshToken, info)
                         .flatMap(t -> {
                             if (v.isOAuth2()) {
-                                return v.setOAuth2User(uid, info).flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
-                                        t.getAccessToken(),
-                                        t.getRefreshToken(),
-                                        new HashMap<>() {{
-                                            put("oauth2", v.isOAuth2());
-                                        }}
-                                ));
+                                return v.setOAuth2User(uid, info).flatMap(vv ->
+                                        setHttpCookieToken(exchange.getResponse(), t.getAccessToken(), t.getRefreshToken(),
+                                                new HashMap<>() {{
+                                                    put("oauth2", v.isOAuth2());
+                                                }}
+                                        ));
                             } else {
                                 return v.del().flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(),
-                                        t.getAccessToken(),
-                                        t.getRefreshToken()
-                                ));
+                                        exchange.getResponse(), t.getAccessToken(), t.getRefreshToken()));
                             }
                         })
                 ).map(ResultContext::build);

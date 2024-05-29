@@ -12,7 +12,7 @@ public class RegisterOtherLoginGeneratorImpl implements RegisterOtherLoginGenera
 
     @Override
     public String execute() {
-        return GeneratorUtil.uuid();
+        return GeneratorUtil.uuid() + GeneratorUtil.random(6, false, false).toLowerCase();
     }
 
 }

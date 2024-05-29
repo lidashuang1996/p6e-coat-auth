@@ -16,14 +16,14 @@ public interface ParameterValidatorInterface {
      *
      * @return 排序
      */
-    public int order();
+    int order();
 
     /**
      * 选择验证对象的类型
      *
      * @return 验证对象的类型
      */
-    public Class<?> select();
+    Class<?> select();
 
     /**
      * 执行验证
@@ -32,6 +32,6 @@ public interface ParameterValidatorInterface {
      * @param data     待验证数据的对象
      * @return 验证结果
      */
-    public Mono<Boolean> execute(ServerWebExchange exchange, Object data);
+    Mono<Boolean> execute(ServerWebExchange exchange, Object data);
 
 }

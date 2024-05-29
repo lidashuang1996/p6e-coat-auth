@@ -5,13 +5,16 @@ import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 生成用户 OPENID 数据实现
+ * 生成 OPENID 实现
  *
  * @author lidashuang
  * @version 1.0
  */
 public class OAuth2UserOpenIdGeneratorImpl implements OAuth2UserOpenIdGenerator {
 
+    /**
+     * 盐值
+     */
     private static final String SEASONING = "C6xfd#lKCF!6$IQB1NQZo&%m1jenVc3p";
 
     @Override

@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 /**
+ * QQ 第三方登录
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -44,9 +47,7 @@ public class QqOtherLoginController implements OtherLoginController {
                 .home(exchange)
                 .flatMap(s -> {
                     exchange.getResponse().setStatusCode(HttpStatus.FOUND);
-                    exchange.getResponse().getHeaders().setLocation(
-                            UriComponentsBuilder.fromUriString(s).build().toUri()
-                    );
+                    exchange.getResponse().getHeaders().setLocation(URI.create(s));
                     return exchange.getResponse().setComplete();
                 });
     }
@@ -62,4 +63,5 @@ public class QqOtherLoginController implements OtherLoginController {
     public String type() {
         return "QQ";
     }
+
 }

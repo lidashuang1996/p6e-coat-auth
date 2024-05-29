@@ -11,7 +11,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
-public interface Oauth2CodeCache extends ICache {
+public interface OAuth2CodeCache extends ICache {
 
     /**
      * 过期的时间

@@ -50,6 +50,14 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
      */
     private final ForgotPasswordCodeGenerator generator;
 
+    /**
+     * 构造方法初始化
+     *
+     * @param properties 配置文件
+     * @param repository 用户存储库
+     * @param cache      验证码缓存
+     * @param generator  验证码生成器
+     */
     public ForgotPasswordObtainServiceImpl(
             Properties properties,
             UserRepository repository,

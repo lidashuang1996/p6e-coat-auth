@@ -155,7 +155,7 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
                 registerBean(AuthOAuth2ClientImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2AuthorizeServiceImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2TokenServiceImpl.class, defaultListableBeanFactory);
-                registerBean(Oauth2ConfirmServiceImpl.class, defaultListableBeanFactory);
+                registerBean(OAuth2ConfirmServiceImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2ReconfirmControllerImpl.class, defaultListableBeanFactory);

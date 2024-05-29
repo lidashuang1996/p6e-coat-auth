@@ -2,8 +2,9 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.context.OAuth2Context;
 import club.p6e.coat.common.context.ResultContext;
-import club.p6e.coat.auth.service.Oauth2ConfirmService;
+import club.p6e.coat.auth.service.OAuth2ConfirmService;
 import club.p6e.coat.auth.validator.ParameterValidator;
+import club.p6e.coat.common.utils.CopyUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -20,14 +21,14 @@ public class OAuth2ReconfirmControllerImpl
     /**
      * OAUTH2 CODE 模式确认服务
      */
-    private final Oauth2ConfirmService service;
+    private final OAuth2ConfirmService service;
 
     /**
      * 构造方法
      *
      * @param service OAUTH2 CODE 模式确认的服务对象
      */
-    public OAuth2ReconfirmControllerImpl(Oauth2ConfirmService service) {
+    public OAuth2ReconfirmControllerImpl(OAuth2ConfirmService service) {
         this.service = service;
     }
 
@@ -52,7 +53,7 @@ public class OAuth2ReconfirmControllerImpl
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(f -> service.execute(exchange, param))
-                .map(ResultContext::build);
+                .map(r -> ResultContext.build(CopyUtil.run(r, OAuth2Context.Confirm.Vo.class)));
     }
 
 }

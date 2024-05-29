@@ -97,9 +97,10 @@ public class UserAuthRepository {
     public Mono<UserAuthModel> create(UserAuthModel model) {
         model
                 .setVersion(0)
-                .setOperator("register_sys")
-                .setCreateDate(LocalDateTime.now())
-                .setUpdateDate(LocalDateTime.now());
+                .setCreator("register_sys")
+                .setModifier("register_sys")
+                .setCreationDateTime(LocalDateTime.now())
+                .setModificationDateTime(LocalDateTime.now());
         return template.insert(model);
     }
 

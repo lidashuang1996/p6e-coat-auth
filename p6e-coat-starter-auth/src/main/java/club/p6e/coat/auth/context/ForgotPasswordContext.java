@@ -13,9 +13,6 @@ import java.io.Serializable;
  */
 public class ForgotPasswordContext implements Serializable {
 
-    /**
-     * 登录的请求对象
-     */
     @Data
     @Accessors(chain = true)
     public static class Request implements Serializable {
@@ -35,10 +32,8 @@ public class ForgotPasswordContext implements Serializable {
         private String account;
     }
 
-    /**
-     * 验证码获取上下文
-     */
     public static class CodeObtain implements Serializable {
+
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -59,5 +54,7 @@ public class ForgotPasswordContext implements Serializable {
             private String account;
             private String message;
         }
+
     }
+
 }

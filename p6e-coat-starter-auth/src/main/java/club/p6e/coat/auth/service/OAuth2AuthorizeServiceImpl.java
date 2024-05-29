@@ -44,7 +44,10 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
      * @param properties 配置文件对象
      * @param repository OAUTH CLIENT2 存储库
      */
-    public OAuth2AuthorizeServiceImpl(Properties properties, OAuth2ClientRepository repository) {
+    public OAuth2AuthorizeServiceImpl(
+            Properties properties,
+            OAuth2ClientRepository repository
+    ) {
         this.properties = properties;
         this.repository = repository;
     }
@@ -60,15 +63,15 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
             } else {
                 return Mono.error(GlobalExceptionContext.executeServiceNotEnabledException(
                         this.getClass(),
-                        "fun execute(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                        "Oauth2 auth type [" + responseType + "] not enabled exception."
+                        "fun execute(ServerWebExchange exchange, OAuth2Context.Auth.Request param)",
+                        "OAuth2 auth type [" + responseType + "] not enabled exception."
                 ));
             }
         }
         return Mono.error(GlobalExceptionContext.executeTypeNotSupportedException(
                 this.getClass(),
                 "fun execute(Oauth2Context.Auth.Request param).",
-                "Oauth2 auth service not supported exception."
+                "OAuth2 auth service not supported exception."
         ));
     }
 
@@ -87,32 +90,32 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
                 .findByClientId(clientId)
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.executeOauth2ClientException(
                         this.getClass(),
-                        "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                        "Oauth2 code type mode client id exception."
+                        "fun executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param)",
+                        "OAuth2 code type mode client id exception."
                 )))
                 .flatMap(m -> {
                     // 验证是否启用
                     if (m.getEnabled() == null || !"1".equals(String.valueOf(m.getEnabled()))) {
                         return Mono.error(GlobalExceptionContext.executeOauth2ClientException(
                                 this.getClass(),
-                                "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                                "Oauth2 code type mode client not enabled exception."
+                                "fun executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param)",
+                                "OAuth2 code type mode client not enabled exception."
                         ));
                     }
                     // 验证作用域
                     if (!VerificationUtil.validationOAuth2Scope(m.getScope(), scope)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2ScopeException(
                                 this.getClass(),
-                                "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                                "Oauth2 code type mode check scope exception."
+                                "fun executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param)",
+                                "OAuth2 code type mode check scope exception."
                         ));
                     }
                     // 验证重定向
                     if (!VerificationUtil.validationOAuth2RedirectUri(m.getRedirectUri(), redirectUri)) {
                         return Mono.error(GlobalExceptionContext.executeOauth2RedirectUriException(
                                 this.getClass(),
-                                "fun executeCodeType(ServerWebExchange exchange, Oauth2Context.Auth.Request param)",
-                                "Oauth2 code type mode check redirect uri exception."
+                                "fun executeCodeType(ServerWebExchange exchange, OAuth2Context.Auth.Request param)",
+                                "OAuth2 code type mode check redirect uri exception."
                         ));
                     }
                     return AuthVoucher.createOAuth2Index(m, CODE_TYPE, redirectUri, scope, state);

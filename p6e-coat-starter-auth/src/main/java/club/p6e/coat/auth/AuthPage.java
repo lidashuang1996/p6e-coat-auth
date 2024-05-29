@@ -7,9 +7,12 @@ import org.springframework.http.MediaType;
 import java.io.Serializable;
 
 /**
+ * 认证相关页面
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public final class AuthPage {
 
     /**

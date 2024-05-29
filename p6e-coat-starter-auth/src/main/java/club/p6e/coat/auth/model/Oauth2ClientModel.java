@@ -1,5 +1,6 @@
 package club.p6e.coat.auth.model;
 
+import club.p6e.DatabaseConfig;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Oauth2 Client 模型
+ * OAuth2 Client Model
  *
  * @author lidashuang
  * @version 1.0
@@ -20,7 +21,8 @@ import java.util.Map;
 @Accessors(chain = true)
 @Table(Oauth2ClientModel.TABLE)
 public class Oauth2ClientModel implements Serializable {
-    public static final String TABLE = "p6e_oauth2_client";
+
+    public static final String TABLE = DatabaseConfig.TABLE_PREFIX + "oauth2_client";
 
     public static final String ID = "id";
     public static final String ENABLED = "enabled";

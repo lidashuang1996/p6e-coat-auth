@@ -19,7 +19,7 @@ public class QrCodeLoginGeneratorImpl implements QrCodeLoginGenerator {
         return DigestUtils.md5DigestAsHex(
                 (GeneratorUtil.uuid() + GeneratorUtil.random(12,
                         true, false).toLowerCase()).getBytes(StandardCharsets.UTF_8)
-        );
+        ).toLowerCase();
     }
 
 }

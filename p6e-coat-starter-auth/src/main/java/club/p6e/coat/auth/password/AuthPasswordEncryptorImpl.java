@@ -16,17 +16,17 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
     /**
      * 种子
      */
-    public static final String SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tn2";
-    private static final String DEFAULT_SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tns";
+    public static String SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tn2";
 
     /**
      * 构造方法初始化
      */
     @SuppressWarnings("ALL")
     public AuthPasswordEncryptorImpl() {
-        if (DEFAULT_SEED.equals(SEED)) {
-            throw new RuntimeException("Please modify the default <SEED> value. " +
-                    ">> club.p6e.coat.auth.password.AuthPasswordEncryptorImpl.SEED = \"[your seed]\"");
+        if (SEED == null || SEED.isEmpty()) {
+            throw new RuntimeException(
+                    "fun AuthPasswordEncryptorImpl(). [ SEED ] has no configuration exceptions. " +
+                            ">> club.p6e.coat.auth.password.AuthPasswordEncryptorImpl.SEED = \"[your seed]\"");
         }
     }
 
@@ -76,15 +76,14 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
         if (pwd1 == null || pwd2 == null || pwd1.isEmpty() || pwd2.isEmpty()) {
             return false;
         } else {
-            boolean bool = false;
+            boolean bool = true;
             final StringBuilder random = new StringBuilder();
             for (final char ch : pwd2.toCharArray()) {
                 if (ch == '.') {
-                    bool = true;
+                    bool = false;
+                    break;
                 } else {
-                    if (!bool) {
-                        random.append(ch);
-                    }
+                    random.append(ch);
                 }
             }
             if (bool) {

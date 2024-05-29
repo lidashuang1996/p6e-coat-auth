@@ -18,7 +18,7 @@ public interface MessageLauncher {
      *
      * @return 类型
      */
-    public String toType();
+    String toType();
 
     /**
      * 执行推送
@@ -26,8 +26,9 @@ public interface MessageLauncher {
      * @param recipients 收件人
      * @param template   模版
      * @param content    内容
+     * @param language   语言
      * @return 推送消息的回执
      */
-    public Mono<List<String>> execute(List<String> recipients, String template, Map<String, String> content, String language);
+    Mono<List<String>> execute(List<String> recipients, String template, Map<String, String> content, String language);
 
 }

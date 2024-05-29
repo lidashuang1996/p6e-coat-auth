@@ -6,6 +6,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * 忘记密码的参数验证器
+ *
  * @author lidashuang
  * @version 1.0
  */

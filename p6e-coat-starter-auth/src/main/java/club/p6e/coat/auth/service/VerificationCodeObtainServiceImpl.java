@@ -4,6 +4,7 @@ import club.p6e.coat.auth.cache.VerificationCodeLoginCache;
 import club.p6e.coat.auth.launcher.Launcher;
 import club.p6e.coat.auth.launcher.LauncherType;
 import club.p6e.coat.auth.repository.UserRepository;
+import club.p6e.coat.common.utils.JsonUtil;
 import club.p6e.coat.common.utils.VerificationUtil;
 import club.p6e.coat.auth.AuthVoucher;
 import club.p6e.coat.auth.Properties;
@@ -16,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 验证码获取服务的实现
@@ -47,7 +47,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
     private final VerificationCodeLoginCache cache;
 
     /**
-     * 验证码生产对象
+     * 验证码生成对象
      */
     private final VerificationCodeLoginGenerator generator;
 
@@ -63,7 +63,8 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
             Properties properties,
             UserRepository repository,
             VerificationCodeLoginCache cache,
-            VerificationCodeLoginGenerator generator) {
+            VerificationCodeLoginGenerator generator
+    ) {
         this.cache = cache;
         this.generator = generator;
         this.properties = properties;
@@ -96,16 +97,16 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
             default -> {
                 return Mono.error(GlobalExceptionContext.executeServiceNotSupportException(
                         this.getClass(),
-                        "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                        "Verification code obtain service not supported. [" + account + "]"
+                        "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).",
+                        "Verification code obtain service not supported. [" + account + "]."
                 ));
             }
         }
         if (type == null) {
             return Mono.error(GlobalExceptionContext.executeServiceNotSupportException(
                     this.getClass(),
-                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
-                    "Verification code obtain <type> service not supported. [" + account + "]"
+                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).",
+                    "Verification code obtain <type> service not supported. [" + account + "]."
             ));
         } else {
             final LauncherType ft = type;
@@ -114,30 +115,27 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
             return AuthVoucher
                     .init(exchange)
                     .flatMap(v -> fm
+                            .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountException(
+                                    this.getClass(),
+                                    "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).",
+                                    "Verification code login obtain code account not exist exception."
+                            )))
                             .flatMap(u -> cache.set(account, code))
                             .flatMap(b -> {
                                 if (b) {
-                                    final Map<String, String> tc = new HashMap<>(1);
-                                    tc.put("code", code);
-                                    return Launcher.push(ft, List.of(account), CODE_LOGIN_TEMPLATE, tc, param.getLanguage());
+                                    return Launcher.push(ft, List.of(account), CODE_LOGIN_TEMPLATE, new HashMap<>(1) {{
+                                        put("code", code);
+                                    }}, param.getLanguage());
                                 } else {
                                     return Mono.error(GlobalExceptionContext.executeCacheException(
                                             this.getClass(),
-                                            "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param)",
+                                            "fun execute(ServerWebExchange exchange, LoginContext.VerificationCodeObtain.Request param).",
                                             "Verification code obtain write cache error."
                                     ));
                                 }
                             })
-                            .flatMap(l -> {
-                                final String ls = String.join(",", l);
-                                final Map<String, String> map = new HashMap<>(4);
-                                map.put(AuthVoucher.ACCOUNT, account);
-                                map.put(AuthVoucher.ACCOUNT_TYPE, ft.name());
-                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_MARK, ls);
-                                map.put(AuthVoucher.VERIFICATION_CODE_LOGIN_DATE, String.valueOf(System.currentTimeMillis()));
-                                return v.set(map).map(vv -> ls);
-                            }))
-                    .map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(m));
+                            .flatMap(l -> v.setVerificationCode(account, ft.name(), String.valueOf(l)).map(vv -> l))
+                    ).map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(JsonUtil.toJson(m)));
         }
     }
 

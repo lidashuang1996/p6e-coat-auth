@@ -7,5 +7,12 @@ package club.p6e.coat.auth.generator;
  * @version 1.0
  */
 public interface RegisterOtherLoginGenerator {
+
+    /**
+     * 生成标记
+     *
+     * @return 标记内容
+     */
     String execute();
+
 }

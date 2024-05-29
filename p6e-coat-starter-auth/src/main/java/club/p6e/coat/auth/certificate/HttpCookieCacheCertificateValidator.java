@@ -7,9 +7,12 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
+ * [ HTTP/COOKIE/CACHE ] CertificateValidator
+ *
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 public class HttpCookieCacheCertificateValidator extends HttpCertificate implements AuthCertificateValidator {
 
     /**

@@ -70,7 +70,7 @@ public class ParameterValidator {
                     .switchIfEmpty(Mono.error(GlobalExceptionContext.executeParameterException(
                             ParameterValidator.class,
                             "fun execute(ServerWebExchange exchange, Object param)",
-                            "Request parameter validation exception."
+                            "Request parameter exception."
                     ))).then();
         }
     }

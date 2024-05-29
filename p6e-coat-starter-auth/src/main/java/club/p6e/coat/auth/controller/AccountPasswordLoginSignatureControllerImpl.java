@@ -4,6 +4,7 @@ import club.p6e.coat.auth.context.LoginContext;
 import club.p6e.coat.common.context.ResultContext;
 import club.p6e.coat.auth.service.AccountPasswordLoginSignatureService;
 import club.p6e.coat.auth.validator.ParameterValidator;
+import club.p6e.coat.common.utils.CopyUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -46,7 +47,7 @@ public class AccountPasswordLoginSignatureControllerImpl implements
         return vp(exchange, param)
                 .then(Mono.just(param))
                 .flatMap(p -> service.execute(exchange, p))
-                .map(ResultContext::build);
+                .map(p -> ResultContext.build(CopyUtil.run(p, LoginContext.AccountPasswordSignature.Vo.class)));
     }
 
 }

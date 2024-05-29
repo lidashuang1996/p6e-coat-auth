@@ -36,6 +36,7 @@ public class RegisterContext implements Serializable {
      * 验证码获取上下文
      */
     public static class Obtain implements Serializable {
+
         @Data
         @Accessors(chain = true)
         public static class Request implements Serializable {
@@ -47,6 +48,7 @@ public class RegisterContext implements Serializable {
         @Accessors(chain = true)
         public static class Vo implements Serializable {
             private String account;
+            private String message;
         }
 
         @Data
@@ -55,6 +57,7 @@ public class RegisterContext implements Serializable {
             private String account;
             private String message;
         }
+        
     }
 
 }

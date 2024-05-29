@@ -1,7 +1,7 @@
 package club.p6e.coat.auth.cache.redis;
 
 import club.p6e.coat.auth.cache.redis.support.RedisCache;
-import club.p6e.coat.auth.cache.Oauth2CodeCache;
+import club.p6e.coat.auth.cache.OAuth2CodeCache;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import reactor.core.publisher.Mono;
 
@@ -15,7 +15,7 @@ import java.util.Map;
  * @version 1.0
  */
 public class Oauth2CodeRedisCache
-        extends RedisCache implements Oauth2CodeCache {
+        extends RedisCache implements OAuth2CodeCache {
 
     /**
      * 缓存对象

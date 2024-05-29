@@ -40,12 +40,12 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
                 if (model.getPublicKey() != null) {
                     return RsaUtil.publicKeyEncryption(model.getPublicKey(), content);
                 } else if (model.getPrivateKey() != null) {
-                    return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);
+                    return RsaUtil.privateKeyEncryption(model.getPrivateKey(), content);
                 } else {
                     throw new PasswordTransmissionCodecException(
                             this.getClass(),
-                            "[ PTC ] encryption PublicKey/PrivateKey value is null exception >> " + model + ".",
-                            "PTC encryption PublicKey/PrivateKey exception."
+                            "[ PTC ] encryption ( PublicKey/PrivateKey ) value is null exception >> " + model + ".",
+                            "PTC encryption ( PublicKey/PrivateKey ) exception."
                     );
                 }
             } catch (Exception e) {
@@ -71,8 +71,8 @@ public class PasswordTransmissionCodecImpl implements PasswordTransmissionCodec 
                 if (model.getPrivateKey() == null) {
                     throw new PasswordTransmissionCodecException(
                             this.getClass(),
-                            "[ PTC ] decryption PublicKey value is null exception >> " + model + ".",
-                            "PTC decryption private key is null exception."
+                            "[ PTC ] decryption ( PrivateKey ) value is null exception >> " + model + ".",
+                            "PTC decryption ( PrivateKey ) is null exception."
                     );
                 } else {
                     return RsaUtil.privateKeyDecryption(model.getPrivateKey(), content);

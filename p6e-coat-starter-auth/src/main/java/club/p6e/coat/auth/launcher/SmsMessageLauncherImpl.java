@@ -22,6 +22,7 @@ public class SmsMessageLauncherImpl implements SmsMessageLauncher {
      */
     private final static Logger LOGGER = LoggerFactory.getLogger(SmsMessageLauncherImpl.class);
 
+    @SuppressWarnings("ALL")
     @Override
     public Mono<List<String>> execute(List<String> recipients, String template, Map<String, String> content, String language) {
         final List<String> result = new ArrayList<>();
@@ -32,9 +33,10 @@ public class SmsMessageLauncherImpl implements SmsMessageLauncher {
                     "---------------------------------------------------------------------\n" +
                     "|--------------------------   S   M   S   --------------------------|\n" +
                     "---------------------------------------------------------------------\n" +
-                    "|   account   =>   " + recipient + "   |\n" +
-                    "|   template   =>   " + template + "   |\n" +
-                    "|   content   =>   " + content + "   |\n" +
+                    "|   account    =>   " + recipient + "   |\n" +
+                    "|   template   =>   " + template + "    |\n" +
+                    "|   content    =>   " + content + "     |\n" +
+                    "|   language   =>   " + language + "    |\n" +
                     "--------------------------------------------------------------------\n" +
                     "\n");
         }
