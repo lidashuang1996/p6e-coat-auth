@@ -8,6 +8,8 @@ import reactor.core.publisher.Mono;
 import java.io.Serializable;
 
 /**
+ * OAuth2 客户端授权令牌缓存
+ *
  * @author lidashuang
  * @version 1.0
  */

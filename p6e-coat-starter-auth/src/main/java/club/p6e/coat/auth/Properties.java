@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 配置文件
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -140,6 +142,7 @@ public class Properties implements Serializable {
         private Bean authority = new Bean(HTTP_LOCAL_CACHE);
     }
 
+    @SuppressWarnings("ALL")
     @Data
     @Accessors(chain = true)
     public static class Bean implements Serializable {
@@ -230,7 +233,7 @@ public class Properties implements Serializable {
              * 是否开启验证码登录功能
              * 开启验证码登录功能，账号模式需要为手机模式或邮箱模式或手机或者邮箱模式
              */
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         /**
@@ -244,19 +247,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启二维码扫码登录功能
              */
-            private boolean enable = true;
-
-            /**
-             * WebSocket
-             */
-            private WebSocket webSocket = new WebSocket();
-
-            @Data
-            @Accessors(chain = true)
-            public static class WebSocket implements Serializable {
-                private int port = 7422;
-                private boolean enable = true;
-            }
+            private boolean enable = false;
         }
 
         /**
@@ -269,7 +260,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启此第三方登录功能
              */
-            private boolean enable = true;
+            private boolean enable = false;
 
             /**
              * 此第三方登录需要的配置对象
@@ -333,7 +324,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启客户端授权登录
              */
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         /**
@@ -347,7 +338,7 @@ public class Properties implements Serializable {
             /**
              * 是否开启密码授权登录
              */
-            private boolean enable = true;
+            private boolean enable = false;
         }
 
         /**
@@ -406,31 +397,10 @@ public class Properties implements Serializable {
     @Data
     @Accessors(chain = true)
     public static class Page implements Serializable {
-        private String me = "classpath:page/index.html";
-        private String login = "classpath:page/index.html";
-        private String register = "classpath:page/index.html";
-        private String forgotPassword = "classpath:page/index.html";
-    }
-
-    /**
-     * 签名配置
-     */
-    private Signature signature = new Signature();
-
-    @Data
-    @Accessors(chain = true)
-    public static class Signature implements Serializable {
-
-        /**
-         * 是否开启签名的功能
-         */
-        private boolean enable = true;
-
-        /**
-         * 签名的密钥
-         */
-        private String secret = "ch2b8wh8t57n6r8p6wj6m5nu7ku8nde8";
-
+        private String me;
+        private String login;
+        private String register;
+        private String forgotPassword;
     }
 
 }

@@ -52,8 +52,12 @@ public class VerificationCodeLoginRedisCache
                     final Map<String, String> tmp = new HashMap<>(list.size());
                     list.forEach(item -> tmp.put((String) item.getKey(), (String) item.getValue()));
                     for (final String k : tmp.keySet()) {
-                        if (map.get(k) != null && now <= Long.parseLong(map.get(k))) {
-                            map.put(k, map.get(k));
+                        try {
+                            if (map.get(k) != null && now <= Long.parseLong(map.get(k))) {
+                                map.put(k, map.get(k));
+                            }
+                        } catch (Exception e) {
+                            // ignore
                         }
                     }
                     return map;
@@ -70,11 +74,8 @@ public class VerificationCodeLoginRedisCache
     public Mono<Boolean> set(String key, String value) {
         return template
                 .opsForHash()
-                .put(
-                        CACHE_PREFIX + key,
-                        value,
-                        String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000)
-                )
+                .put(CACHE_PREFIX + key, value,
+                        String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000))
                 .flatMap(b -> {
                     if (b) {
                         return template.expire(

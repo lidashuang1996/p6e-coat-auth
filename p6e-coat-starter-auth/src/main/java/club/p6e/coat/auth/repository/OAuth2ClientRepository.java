@@ -1,6 +1,6 @@
 package club.p6e.coat.auth.repository;
 
-import club.p6e.coat.auth.model.Oauth2ClientModel;
+import club.p6e.coat.auth.model.OAuth2ClientModel;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
@@ -32,10 +32,10 @@ public class OAuth2ClientRepository {
      * @param clientId 客户端 ID
      * @return Mono/UserAuthModel 用户认证模型对象
      */
-    public Mono<Oauth2ClientModel> findByClientId(String clientId) {
+    public Mono<OAuth2ClientModel> findByClientId(String clientId) {
         return template.selectOne(
-                Query.query(Criteria.where(Oauth2ClientModel.CLIENT_ID).is(clientId).and(Oauth2ClientModel.IS_DELETE).is(0)),
-                Oauth2ClientModel.class
+                Query.query(Criteria.where(OAuth2ClientModel.CLIENT_ID).is(clientId).and(OAuth2ClientModel.IS_DELETE).is(0)),
+                OAuth2ClientModel.class
         );
     }
 

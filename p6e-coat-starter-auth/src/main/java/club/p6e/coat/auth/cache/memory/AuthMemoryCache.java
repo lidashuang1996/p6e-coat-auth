@@ -6,9 +6,6 @@ import club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate;
 import club.p6e.coat.common.utils.JsonUtil;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author lidashuang
  * @version 1.0
@@ -29,7 +26,6 @@ public class AuthMemoryCache extends MemoryCache implements AuthCache {
         this.template = template;
     }
 
-    @SuppressWarnings("ALL")
     @Override
     public Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user) {
         final Token token = new Token()
@@ -41,15 +37,11 @@ public class AuthMemoryCache extends MemoryCache implements AuthCache {
         if (json == null) {
             return Mono.empty();
         }
-        final Map<String, String> map = get0(uid);
-        map.put(ACCESS_TOKEN_PREFIX + accessToken,
-                String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
-        map.put(REFRESH_TOKEN_PREFIX + refreshToken,
-                String.valueOf(System.currentTimeMillis() + EXPIRATION_TIME * 1000));
         template.set(USER_PREFIX + uid, user, EXPIRATION_TIME);
-        template.set(USER_TOKEN_LIST_PREFIX + uid, map, EXPIRATION_TIME);
         template.set(ACCESS_TOKEN_PREFIX + accessToken, json, EXPIRATION_TIME);
         template.set(REFRESH_TOKEN_PREFIX + refreshToken, json, EXPIRATION_TIME);
+        template.set(USER_ACCESS_TOKEN_PREFIX + uid + DELIMITER + accessToken, json, EXPIRATION_TIME);
+        template.set(USER_REFRESH_TOKEN_PREFIX + uid + DELIMITER + refreshToken, json, EXPIRATION_TIME);
         return Mono.just(token);
     }
 
@@ -83,49 +75,29 @@ public class AuthMemoryCache extends MemoryCache implements AuthCache {
     @SuppressWarnings("ALL")
     @Override
     public Mono<Long> cleanToken(String content) {
-        final String r = template.get(ACCESS_TOKEN_PREFIX + content, String.class);
-        if (r != null) {
-            final Token token = JsonUtil.fromJson(r, Token.class);
-            if (token != null) {
-                template.del(ACCESS_TOKEN_PREFIX + token.getAccessToken());
-                template.del(REFRESH_TOKEN_PREFIX + token.getRefreshToken());
-                return Mono.just(1L);
-            }
-        }
-        return Mono.just(0L);
+        return getAccessToken(content)
+                .flatMap(t -> {
+                    template.del(ACCESS_TOKEN_PREFIX + t.getAccessToken());
+                    template.del(REFRESH_TOKEN_PREFIX + t.getRefreshToken());
+                    template.del(USER_ACCESS_TOKEN_PREFIX + t.getUid() + DELIMITER + t.getAccessToken());
+                    template.del(USER_REFRESH_TOKEN_PREFIX + t.getUid() + DELIMITER + t.getRefreshToken());
+                    return Mono.just(1L);
+                });
     }
 
     @Override
     public Mono<Long> cleanUserAll(String uid) {
         final String r = template.get(USER_PREFIX + uid, String.class);
         if (r != null) {
-            final Map<String, String> map = get0(uid);
-            for (final String key : map.keySet()) {
-                template.del(key);
-            }
-            template.del(USER_PREFIX + uid);
-            template.del(USER_TOKEN_LIST_PREFIX + uid);
-        }
-        return Mono.just(0L);
-    }
-
-    @SuppressWarnings("ALL")
-    private Map<String, String> get0(String uid) {
-        final Map map = template.get(USER_TOKEN_LIST_PREFIX + uid, Map.class);
-        if (map == null) {
-            return new HashMap<>();
-        } else {
-            final long now = System.currentTimeMillis();
-            final Map<String, String> result = new HashMap<>();
-            final Map<String, String> data = (Map<String, String>) map;
-            for (final String key : data.keySet()) {
-                final String value = data.get(key);
-                if (now <= Long.parseLong(value)) {
-                    result.put(key, data.get(key));
+            template.names().forEach(n -> {
+                if (n.startsWith(USER_ACCESS_TOKEN_PREFIX + uid + DELIMITER)
+                        || n.startsWith(USER_REFRESH_TOKEN_PREFIX + uid + DELIMITER)) {
+                    template.del(n);
                 }
-            }
-            return result;
+            });
         }
+        template.del(USER_PREFIX + uid);
+        return Mono.just(1L);
     }
 
 }

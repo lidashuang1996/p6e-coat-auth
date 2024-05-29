@@ -45,6 +45,11 @@ public interface AuthCache extends ICache {
     }
 
     /**
+     * 分割符号
+     */
+    String DELIMITER = ":";
+
+    /**
      * 过期的时间
      */
     long EXPIRATION_TIME = 3600 * 3L;
@@ -65,9 +70,14 @@ public interface AuthCache extends ICache {
     String REFRESH_TOKEN_PREFIX = "AUTH:REFRESH_TOKEN:";
 
     /**
-     * 用户令牌缓存前缀
+     * ACCESS TOKEN 缓存前缀
      */
-    String USER_TOKEN_LIST_PREFIX = "AUTH:USER:TOKEN:";
+    String USER_ACCESS_TOKEN_PREFIX = "AUTH:ACCESS_TOKEN:USER:";
+
+    /**
+     * REFRESH TOKEN 缓存前缀
+     */
+    String USER_REFRESH_TOKEN_PREFIX = "AUTH:REFRESH_TOKEN:USER:";
 
     /**
      * 写入认证数据

@@ -31,7 +31,7 @@ public class VoucherMemoryCache
 
     @Override
     public Mono<Long> del(String key) {
-        // template.del(CACHE_PREFIX + key)
+        template.del(CACHE_PREFIX + key);
         return Mono.just(1L);
     }
 
@@ -57,4 +57,5 @@ public class VoucherMemoryCache
             return (Map<String, String>) map;
         }
     }
+
 }

@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 凭证缓存的实现
- *
  * @author lidashuang
  * @version 1.0
  */

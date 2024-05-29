@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -64,6 +66,15 @@ public class ReactiveMemoryTemplate {
                 }
             }
         }, initialDelay, period, unit);
+    }
+
+    /**
+     * 读取缓存全部名称
+     *
+     * @return 缓存全部名称
+     */
+    public List<String> names() {
+        return new ArrayList<>(CACHE.keySet());
     }
 
     /**

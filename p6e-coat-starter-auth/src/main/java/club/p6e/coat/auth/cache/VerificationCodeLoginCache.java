@@ -6,6 +6,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
+ * 验证码登录的验证码缓存
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -27,7 +29,7 @@ public interface VerificationCodeLoginCache extends ICache {
      * @param key 键
      * @return 删除数据的条数
      */
-    public Mono<Long> del(String key);
+    Mono<Long> del(String key);
 
     /**
      * 读取数据
@@ -35,7 +37,7 @@ public interface VerificationCodeLoginCache extends ICache {
      * @param key 键
      * @return 读取的列表数据
      */
-    public Mono<List<String>> get(String key);
+    Mono<List<String>> get(String key);
 
     /**
      * 写入数据
@@ -44,6 +46,6 @@ public interface VerificationCodeLoginCache extends ICache {
      * @param value 值
      * @return 是否写入数据成功
      */
-    public Mono<Boolean> set(String key, String value);
+    Mono<Boolean> set(String key, String value);
 
 }

@@ -49,10 +49,8 @@ public class MeControllerImpl implements MeController<ResultContext> {
         final ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(me.getType());
-        return AuthVoucher.createMe().flatMap(v -> response.writeWith(
-                Mono.just(exchange.getResponse().bufferFactory().wrap(TemplateParser.execute(
-                        me.getContent(), "page", "me"
-                ).getBytes(StandardCharsets.UTF_8)))
+        return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(
+                TemplateParser.execute(me.getContent(), "page", "me").getBytes(StandardCharsets.UTF_8))
         ));
     }
 

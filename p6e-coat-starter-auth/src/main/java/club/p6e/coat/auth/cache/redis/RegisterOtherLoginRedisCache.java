@@ -35,16 +35,12 @@ public class RegisterOtherLoginRedisCache
 
     @Override
     public Mono<String> get(String key) {
-        return template
-                .opsForValue()
-                .get(CACHE_PREFIX + key);
+        return template.opsForValue().get(CACHE_PREFIX + key);
     }
 
     @Override
     public Mono<Boolean> set(String key, String value) {
-        return template
-                .opsForValue()
-                .set(CACHE_PREFIX + key, value, Duration.ofSeconds(EXPIRATION_TIME));
+        return template.opsForValue().set(CACHE_PREFIX + key, value, Duration.ofSeconds(EXPIRATION_TIME));
     }
 
 }

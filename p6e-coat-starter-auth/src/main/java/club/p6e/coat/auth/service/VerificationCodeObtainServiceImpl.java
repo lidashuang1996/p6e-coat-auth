@@ -134,7 +134,7 @@ public class VerificationCodeObtainServiceImpl implements VerificationCodeObtain
                                     ));
                                 }
                             })
-                            .flatMap(l -> v.setVerificationCode(account, ft.name(), String.valueOf(l)).map(vv -> l))
+                            .flatMap(l -> v.setVerificationCodeData(account, ft.name(), String.valueOf(l)).map(vv -> l))
                     ).map(m -> new LoginContext.VerificationCodeObtain.Dto().setAccount(account).setMessage(JsonUtil.toJson(m)));
         }
     }

@@ -80,7 +80,7 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                 .flatMap(v -> getUserModel(mode, param.getAccount())
                         .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
-                                "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param)",
+                                "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param).",
                                 "forgot password obtain code account not exist exception."
                         )))
                         .flatMap(m -> {
@@ -96,7 +96,7 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                             } else {
                                 return Mono.error(GlobalExceptionContext.exceptionLauncherTypeException(
                                         this.getClass(),
-                                        "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param)",
+                                        "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param).",
                                         "forgot password obtain code type (LauncherType) exception."
                                 ));
                             }
@@ -105,7 +105,7 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
                                     .filter(b -> b)
                                     .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionCacheWriteException(
                                             this.getClass(),
-                                            "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param)",
+                                            "fun execute(ServerWebExchange exchange, ForgotPasswordContext.Obtain.Request param).",
                                             "forgot password obtain code cache write exception."
                                     )))
                                     .flatMap(b -> Launcher.push(
@@ -124,7 +124,7 @@ public class ForgotPasswordObtainServiceImpl implements ForgotPasswordObtainServ
     /**
      * 获取用户模型
      *
-     * @param mode    模式对象
+     * @param mode    模式
      * @param account 账号
      * @return 用户模型对象
      */

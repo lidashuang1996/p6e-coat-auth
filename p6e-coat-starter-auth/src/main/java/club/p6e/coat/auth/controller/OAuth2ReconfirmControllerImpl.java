@@ -2,7 +2,7 @@ package club.p6e.coat.auth.controller;
 
 import club.p6e.coat.auth.context.OAuth2Context;
 import club.p6e.coat.common.context.ResultContext;
-import club.p6e.coat.auth.service.OAuth2ConfirmService;
+import club.p6e.coat.auth.service.OAuth2ReconfirmService;
 import club.p6e.coat.auth.validator.ParameterValidator;
 import club.p6e.coat.common.utils.CopyUtil;
 import org.springframework.web.server.ServerWebExchange;
@@ -21,14 +21,14 @@ public class OAuth2ReconfirmControllerImpl
     /**
      * OAUTH2 CODE 模式确认服务
      */
-    private final OAuth2ConfirmService service;
+    private final OAuth2ReconfirmService service;
 
     /**
      * 构造方法
      *
      * @param service OAUTH2 CODE 模式确认的服务对象
      */
-    public OAuth2ReconfirmControllerImpl(OAuth2ConfirmService service) {
+    public OAuth2ReconfirmControllerImpl(OAuth2ReconfirmService service) {
         this.service = service;
     }
 

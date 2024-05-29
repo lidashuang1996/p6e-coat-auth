@@ -4,6 +4,8 @@ import club.p6e.coat.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 /**
+ * 其他登录的 STATE 缓存
+ *
  * @author lidashuang
  * @version 1.0
  */

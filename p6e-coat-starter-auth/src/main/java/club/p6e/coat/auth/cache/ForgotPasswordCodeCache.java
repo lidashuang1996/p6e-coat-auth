@@ -6,6 +6,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
+ * 忘记密码验证码缓存
+ *
  * @author lidashuang
  * @version 1.0
  */

@@ -4,6 +4,8 @@ import club.p6e.coat.auth.cache.support.ICache;
 import reactor.core.publisher.Mono;
 
 /**
+ * 二维码登录缓存
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -32,16 +34,6 @@ public interface QrCodeLoginCache extends ICache {
      */
     static boolean isEmpty(String content) {
         return EMPTY_CONTENT.equalsIgnoreCase(content);
-    }
-
-    /**
-     * 是否不为空判断
-     *
-     * @param content 待判断内容
-     * @return 判断结果
-     */
-    static boolean isNotEmpty(String content) {
-        return !isEmpty(content);
     }
 
     /**

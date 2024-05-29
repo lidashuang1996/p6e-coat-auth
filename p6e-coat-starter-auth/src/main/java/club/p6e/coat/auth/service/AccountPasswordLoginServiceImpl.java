@@ -52,15 +52,18 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     /**
      * 构造方法初始化
      *
-     * @param encryptor  密码加密器
-     * @param properties 配置文件对象
+     * @param encryptor          密码加密器
+     * @param properties         配置文件对象
+     * @param userRepository     用户存储库
+     * @param userAuthRepository 用户密码存储库
      */
     public AccountPasswordLoginServiceImpl(
             AuthUser<?> au,
             Properties properties,
+            AuthPasswordEncryptor encryptor,
             UserRepository userRepository,
-            UserAuthRepository userAuthRepository,
-            AuthPasswordEncryptor encryptor) {
+            UserAuthRepository userAuthRepository
+    ) {
         this.au = au;
         this.encryptor = encryptor;
         this.properties = properties;

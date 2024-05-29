@@ -35,16 +35,12 @@ public class StateOtherLoginRedisCache
 
     @Override
     public Mono<String> get(String type, String key) {
-        return template
-                .opsForValue()
-                .get(CACHE_PREFIX + type + DELIMITER + key);
+        return template.opsForValue().get(CACHE_PREFIX + type + DELIMITER + key);
     }
 
     @Override
     public Mono<Boolean> set(String type, String key, String value) {
-        return template
-                .opsForValue()
-                .set(CACHE_PREFIX + type + DELIMITER + key, value, Duration.ofSeconds(EXPIRATION_TIME));
+        return template.opsForValue().set(CACHE_PREFIX + type + DELIMITER + key, value, Duration.ofSeconds(EXPIRATION_TIME));
     }
 
 }

@@ -1,7 +1,6 @@
 package club.p6e.coat.auth.repository;
 
 import club.p6e.coat.auth.model.UserAuthModel;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
@@ -11,6 +10,8 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 /**
+ * User Auth Repository
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -31,7 +32,7 @@ public class UserAuthRepository {
     }
 
     /**
-     * 根据 ID 查询一条数据
+     * 根据 ID 查询数据
      *
      * @param id ID
      * @return Mono/UserAuthModel 用户认证模型对象
@@ -43,47 +44,62 @@ public class UserAuthRepository {
         );
     }
 
+    /**
+     * 根据账号查询数据
+     *
+     * @param account 账号
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
     public Mono<UserAuthModel> findByAccount(String account) {
         return template.selectOne(
-                Query.query(Criteria
-                        .where(UserAuthModel.ACCOUNT).is(account)
-
-                ), UserAuthModel.class
-        );
-    }
-
-    public Mono<UserAuthModel> findByPhone(String account) {
-        return template.selectOne(
-                Query.query(Criteria
-                        .where(UserAuthModel.PHONE).is(account)
-
-                ), UserAuthModel.class
-        );
-    }
-
-    public Mono<UserAuthModel> findByMailbox(String account) {
-        return template.selectOne(
-                Query.query(Criteria
-                        .where(UserAuthModel.MAILBOX).is(account)
-
-                ), UserAuthModel.class
-        );
-    }
-
-    public Mono<UserAuthModel> findByPhoneOrMailbox(String account) {
-        return template.selectOne(
-                Query.query(Criteria
-                        .where(UserAuthModel.PHONE).is(account)
-                        .or(UserAuthModel.MAILBOX).is(account)
-
-                ), UserAuthModel.class
+                Query.query(Criteria.where(UserAuthModel.ACCOUNT).is(account)),
+                UserAuthModel.class
         );
     }
 
     /**
-     * 根据 ID 查询一条数据
+     * 根据账号查询数据
      *
-     * @param id ID
+     * @param account 账号
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
+    public Mono<UserAuthModel> findByPhone(String account) {
+        return template.selectOne(
+                Query.query(Criteria.where(UserAuthModel.PHONE).is(account)),
+                UserAuthModel.class
+        );
+    }
+
+    /**
+     * 根据账号查询数据
+     *
+     * @param account 账号
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
+    public Mono<UserAuthModel> findByMailbox(String account) {
+        return template.selectOne(
+                Query.query(Criteria.where(UserAuthModel.MAILBOX).is(account)),
+                UserAuthModel.class
+        );
+    }
+
+    /**
+     * 根据账号查询数据
+     *
+     * @param account 账号
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
+    public Mono<UserAuthModel> findByPhoneOrMailbox(String account) {
+        return template.selectOne(
+                Query.query(Criteria.where(UserAuthModel.PHONE).is(account).or(UserAuthModel.MAILBOX).is(account)),
+                UserAuthModel.class
+        );
+    }
+
+    /**
+     * 查询 QQ 数据
+     *
+     * @param qq QQ
      * @return Mono/UserAuthModel 用户认证模型对象
      */
     public Mono<UserAuthModel> findByQq(String qq) {
@@ -93,7 +109,12 @@ public class UserAuthRepository {
         );
     }
 
-
+    /**
+     * 创建数据
+     *
+     * @param model 用户认证模型对象
+     * @return Mono/UserAuthModel 用户认证模型对象
+     */
     public Mono<UserAuthModel> create(UserAuthModel model) {
         model
                 .setVersion(0)
@@ -104,11 +125,22 @@ public class UserAuthRepository {
         return template.insert(model);
     }
 
+    /**
+     * 更新密码
+     *
+     * @param id       ID
+     * @param password 密码数据
+     * @return Mono/UserAuthModel 修改的数据条数
+     */
     public Mono<Long> updatePassword(Integer id, String password) {
-        return template.update(
+        return template.selectOne(
                 Query.query(Criteria.where(UserAuthModel.ID).is(id)),
-                Update.update(UserAuthModel.PASSWORD, password),
                 UserAuthModel.class
-        );
+        ).flatMap(m -> template.update(
+                Query.query(Criteria.where(UserAuthModel.ID).is(id).and(UserAuthModel.VERSION).is(m.getVersion())),
+                Update.update(UserAuthModel.PASSWORD, password).set(UserAuthModel.VERSION, m.getVersion() + 1),
+                UserAuthModel.class
+        ));
     }
+
 }

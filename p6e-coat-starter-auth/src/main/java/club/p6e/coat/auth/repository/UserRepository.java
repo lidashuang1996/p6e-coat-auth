@@ -10,6 +10,8 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 /**
+ * User Repository
+ *
  * @author lidashuang
  * @version 1.0
  */
@@ -37,7 +39,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findById(Integer id) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.ID).is(id)),
+                Query.query(Criteria.where(UserModel.ID).is(id).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
         );
     }
@@ -50,21 +52,32 @@ public class UserRepository {
      */
     public Mono<UserModel> findByAccount(String account) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.ACCOUNT).is(account)),
+                Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
         );
     }
 
+    /**
+     * 创建用户
+     *
+     * @param model 用户模型对象
+     * @return 用户模型对象
+     */
     public Mono<UserModel> create(UserModel model) {
         model
                 .setId(null)
                 .setStatus(0)
                 .setEnabled(1)
-                .setName(GeneratorUtil.uuid())
-                .setNickname(GeneratorUtil.uuid())
+                .setInternal(0)
+                .setAdministrator(0)
+                .setPhone(null)
+                .setMailbox(null)
+                .setName(model.getAccount())
+                .setNickname(model.getAccount())
                 .setAvatar("default.jpg")
                 .setDescription("")
                 .setVersion(0)
+                .setIsDeleted(0)
                 .setCreator("register_sys")
                 .setModifier("register_sys")
                 .setCreationDateTime(LocalDateTime.now())
@@ -80,23 +93,32 @@ public class UserRepository {
      */
     public Mono<UserModel> findByPhone(String phone) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.PHONE).is(phone)),
+                Query.query(Criteria.where(UserModel.PHONE).is(phone).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
         );
     }
 
+    /**
+     * 创建用户
+     *
+     * @param model 用户模型对象
+     * @return 用户模型对象
+     */
     public Mono<UserModel> createPhone(UserModel model) {
         model
                 .setId(null)
                 .setStatus(0)
                 .setEnabled(1)
+                .setInternal(0)
+                .setAdministrator(0)
                 .setAccount(null)
                 .setMailbox(null)
-                .setName(GeneratorUtil.uuid())
-                .setNickname(GeneratorUtil.uuid())
+                .setName(model.getPhone())
+                .setNickname(model.getPhone())
                 .setAvatar("default.jpg")
                 .setDescription("")
                 .setVersion(0)
+                .setIsDeleted(0)
                 .setCreator("register_sys")
                 .setModifier("register_sys")
                 .setCreationDateTime(LocalDateTime.now())
@@ -112,23 +134,32 @@ public class UserRepository {
      */
     public Mono<UserModel> findByMailbox(String mailbox) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox)),
+                Query.query(Criteria.where(UserModel.MAILBOX).is(mailbox).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
         );
     }
 
+    /**
+     * 创建用户
+     *
+     * @param model 用户模型对象
+     * @return 用户模型对象
+     */
     public Mono<UserModel> createMailbox(UserModel model) {
         model
                 .setId(null)
                 .setStatus(0)
                 .setEnabled(1)
-                .setPhone(null)
+                .setInternal(0)
+                .setAdministrator(0)
                 .setAccount(null)
-                .setName(GeneratorUtil.uuid())
-                .setNickname(GeneratorUtil.uuid())
+                .setPhone(null)
+                .setName(model.getMailbox())
+                .setNickname(model.getMailbox())
                 .setAvatar("default.jpg")
                 .setDescription("")
                 .setVersion(0)
+                .setIsDeleted(0)
                 .setCreator("register_sys")
                 .setModifier("register_sys")
                 .setCreationDateTime(LocalDateTime.now())
@@ -136,34 +167,39 @@ public class UserRepository {
         return template.insert(model);
     }
 
-
     /**
-     * 根据手机号码或者邮箱查询一条数据
+     * 根据手机号码或者邮箱查询数据
      *
      * @param content ID
      * @return Mono/UserModel 用户模型对象
      */
     public Mono<UserModel> findByPhoneOrMailbox(String content) {
-        System.out.println("findByPhoneOrMailbox ::: " + content);
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.PHONE).is(content)
-                        .or(Criteria.where(UserModel.MAILBOX).is(content))
-                ),
+                Query.query(Criteria.where(UserModel.PHONE).is(content).or(Criteria.where(UserModel.MAILBOX).is(content))),
                 UserModel.class
         );
     }
 
+    /**
+     * 创建用户
+     *
+     * @param model 用户模型对象
+     * @return 用户模型对象
+     */
     public Mono<UserModel> createPhoneOrMailbox(UserModel model) {
         model
                 .setId(null)
                 .setStatus(0)
                 .setEnabled(1)
+                .setInternal(0)
+                .setAdministrator(0)
                 .setAccount(null)
                 .setName(GeneratorUtil.uuid())
                 .setNickname(GeneratorUtil.uuid())
                 .setAvatar("default.jpg")
                 .setDescription("")
                 .setVersion(0)
+                .setIsDeleted(0)
                 .setCreator("register_sys")
                 .setModifier("register_sys")
                 .setCreationDateTime(LocalDateTime.now())

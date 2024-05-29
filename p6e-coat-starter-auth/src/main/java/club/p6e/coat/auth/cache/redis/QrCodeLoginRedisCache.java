@@ -39,9 +39,7 @@ public class QrCodeLoginRedisCache extends RedisCache implements QrCodeLoginCach
 
     @Override
     public Mono<Boolean> set(String key, String value) {
-        return template
-                .opsForValue()
-                .set(CACHE_PREFIX + key, value, Duration.ofSeconds(EXPIRATION_TIME));
+        return template.opsForValue().set(CACHE_PREFIX + key, value, Duration.ofSeconds(EXPIRATION_TIME));
     }
 
 }

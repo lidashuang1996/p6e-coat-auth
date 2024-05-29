@@ -57,13 +57,14 @@ public class RegisterCodeMemoryCache
             return new HashMap<>();
         } else {
             final long now = System.currentTimeMillis();
-            final Map<String, String> result = new HashMap<>();
-            final Map<String, String> data = (Map<String, String>) map;
-            for (final String k : data.keySet()) {
-                final String v = data.get(k);
-                final long lv = Long.valueOf(v);
-                if (now <= lv) {
-                    result.put(k, v);
+            final Map<String, String> result = (Map<String, String>) map;
+            for (final String k : result.keySet()) {
+                try {
+                    if (result.get(k) == null || now > Long.parseLong(result.get(k))) {
+                        result.remove(k);
+                    }
+                } catch (Exception e) {
+                    // ignore
                 }
             }
             return result;

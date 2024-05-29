@@ -59,11 +59,15 @@ public class VerificationCodeLoginMemoryCache
         if (map == null) {
             return new HashMap<>();
         } else {
-            final Map<String, String> result = (Map<String, String>) map;
             final long now = System.currentTimeMillis();
+            final Map<String, String> result = (Map<String, String>) map;
             for (final String k : result.keySet()) {
-                if (map.get(k) == null || now > Long.parseLong(result.get(k))) {
-                    map.remove(k);
+                try {
+                    if (result.get(k) == null || now > Long.parseLong(result.get(k))) {
+                        result.remove(k);
+                    }
+                } catch (Exception e) {
+                    // ignore
                 }
             }
             return result;
