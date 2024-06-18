@@ -72,12 +72,12 @@ public interface AuthCache extends ICache {
     /**
      * ACCESS TOKEN 缓存前缀
      */
-    String USER_ACCESS_TOKEN_PREFIX = "AUTH:ACCESS_TOKEN:USER:";
+    String USER_ACCESS_TOKEN_PREFIX = "AUTH:USER:ACCESS_TOKEN:";
 
     /**
      * REFRESH TOKEN 缓存前缀
      */
-    String USER_REFRESH_TOKEN_PREFIX = "AUTH:REFRESH_TOKEN:USER:";
+    String USER_REFRESH_TOKEN_PREFIX = "AUTH:USER:REFRESH_TOKEN:";
 
     /**
      * 写入认证数据

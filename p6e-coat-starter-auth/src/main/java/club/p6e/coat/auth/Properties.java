@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Data
 @Component("club.p6e.coat.auth.Properties")
-@ConfigurationProperties(prefix = "club.p6e.coat.auth")
+@ConfigurationProperties(prefix = "p6e.coat.auth")
 public class Properties implements Serializable {
 
     /**
@@ -367,12 +367,12 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = true;
+        private boolean enable = false;
 
         /**
          * 是否开启第三方登录没有对应绑定信息时候进行注册绑定
          */
-        private boolean enableOtherLoginBinding = true;
+        private boolean enableOtherLoginBinding = false;
     }
 
     /**
@@ -386,7 +386,7 @@ public class Properties implements Serializable {
         /**
          * 是否开启注册的功能
          */
-        private boolean enable = true;
+        private boolean enable = false;
     }
 
     /**

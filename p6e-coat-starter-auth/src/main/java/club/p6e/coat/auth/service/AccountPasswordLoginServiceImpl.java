@@ -73,6 +73,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     protected Mono<String> executeTransmissionDecryption(AuthVoucher voucher, String content) {
         final String mark = voucher.getAccountPasswordCodecMark();
+        System.out.println("222  " + content);
         return Mono
                 .just(mark)
                 .flatMap(m -> {
@@ -97,6 +98,8 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                                 = SpringUtil.getBean(PasswordTransmissionCodec.class);
                         final PasswordTransmissionCodec.Model model
                                 = JsonUtil.fromJson(s, PasswordTransmissionCodec.Model.class);
+
+                        System.out.println("33333  " + model);
                         return Mono.just(codec.decryption(model, content));
                     } catch (Exception e) {
                         return Mono.error(GlobalExceptionContext.executeCacheException(
@@ -112,6 +115,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     @Override
     public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
+        System.out.println("111" + param);
         final Properties.Mode mode = properties.getMode();
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
         return AuthVoucher
@@ -123,7 +127,16 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     case ACCOUNT -> executeAccountMode(p);
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(p);
                 })
-                .filter(u -> u.password().equals(encryptor.execute(param.getPassword())))
+                .filter(u -> {
+                    System.out.println("=========================================");
+                    System.out.println(param);
+                    System.out.println(param.getPassword());
+                    System.out.println(u);
+                    System.out.println(u.password());
+                    System.out.println(encryptor.validate(param.getPassword(), u.password()));
+                    System.out.println("=========================================");
+                    return ete ? encryptor.validate(param.getPassword(), u.password()) : u.password().equals(param.getPassword());
+                })
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param).",
@@ -139,7 +152,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     private Mono<AuthUser.Model> executePhoneMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findByPhoneOrMailbox(param.getAccount())
+                .findByPhone(param.getAccount())
                 .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
@@ -151,7 +164,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     private Mono<AuthUser.Model> executeMailboxMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findByPhoneOrMailbox(param.getAccount())
+                .findByMailbox(param.getAccount())
                 .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
@@ -163,8 +176,11 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
      */
     protected Mono<AuthUser.Model> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
-                .findByPhoneOrMailbox(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
+                .findByAccount(param.getAccount())
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> {
+                    System.out.println(a);
+                    return au.create(u, a);
+                }));
     }
 
     /**

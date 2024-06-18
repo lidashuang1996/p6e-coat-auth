@@ -1,8 +1,0 @@
-server:
-  port: 7322
-
-spring:
-  application:
-    name: 'p6e-coat-parent'
-  config:
-    import: D://env/p6e-coat-file-application.yml

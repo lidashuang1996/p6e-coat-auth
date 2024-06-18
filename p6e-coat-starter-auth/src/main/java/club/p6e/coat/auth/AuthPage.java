@@ -18,27 +18,27 @@ public final class AuthPage {
     /**
      * ME PAGE
      */
-    private static final Model ME = new Model("");
+    private static final Model ME = new Model("@{page}");
 
     /**
      * LOGIN PAGE
      */
-    private static final Model LOGIN = new Model("");
+    private static final Model LOGIN = new Model("@{page}");
 
     /**
      * REGISTER PAGE
      */
-    private static final Model REGISTER = new Model("");
+    private static final Model REGISTER = new Model("@{page}");
 
     /**
      * OAUTH2 CONFIRM PAGE
      */
-    private static final Model OAUTH2_CONFIRM = new Model("");
+    private static final Model OAUTH2_CONFIRM = new Model("@{page}");
 
     /**
      * FORGOT PASSWORD PAGE
      */
-    private static final Model FORGOT_PASSWORD = new Model("");
+    private static final Model FORGOT_PASSWORD = new Model("@{page}");
 
     /**
      * ME PAGE

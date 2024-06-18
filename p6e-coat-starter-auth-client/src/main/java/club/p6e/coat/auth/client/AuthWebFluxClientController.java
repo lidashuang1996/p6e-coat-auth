@@ -26,7 +26,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/oauth2/auth")
 @ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
 public class AuthWebFluxClientController extends BaseWebFluxController {
 

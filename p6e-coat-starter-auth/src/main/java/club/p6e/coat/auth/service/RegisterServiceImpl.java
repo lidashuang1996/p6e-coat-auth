@@ -98,7 +98,6 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByPhone(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
-                    System.out.println("mmmm  " + m);
                     if (m != null && m.getId() != null && m.getId() > 0) {
                         return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
@@ -134,7 +133,6 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByMailbox(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
-                    System.out.println("mmmm  " + m);
                     if (m != null && m.getId() != null && m.getId() > 0) {
                         return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
@@ -170,7 +168,6 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByAccount(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
-                    System.out.println("mmmm  " + m);
                     if (m != null && m.getId() != null && m.getId() > 0) {
                         return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),
@@ -206,7 +203,6 @@ public class RegisterServiceImpl implements RegisterService {
                 .findByPhoneOrMailbox(account)
                 .switchIfEmpty(Mono.just(new UserModel().setId(-1)))
                 .flatMap(m -> {
-                    System.out.println("mmmm  " + m);
                     if (m != null && m.getId() != null && m.getId() > 0) {
                         return Mono.error(GlobalExceptionContext.exceptionAccountException(
                                 this.getClass(),

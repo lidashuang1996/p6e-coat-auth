@@ -51,6 +51,7 @@ public class UserRepository {
      * @return Mono/UserModel 用户模型对象
      */
     public Mono<UserModel> findByAccount(String account) {
+        System.out.println("ACCOUTN >?>> " + account);
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
@@ -175,7 +176,7 @@ public class UserRepository {
      */
     public Mono<UserModel> findByPhoneOrMailbox(String content) {
         return template.selectOne(
-                Query.query(Criteria.where(UserModel.PHONE).is(content).or(Criteria.where(UserModel.MAILBOX).is(content))),
+                Query.query(Criteria.where(UserModel.PHONE).is(content).or(UserModel.MAILBOX).is(content).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class
         );
     }

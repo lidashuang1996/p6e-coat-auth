@@ -15,11 +15,6 @@ import club.p6e.coat.auth.repository.UserRepository;
 import club.p6e.coat.auth.service.*;
 import club.p6e.coat.auth.validator.*;
 import club.p6e.coat.common.utils.TemplateParser;
-import jakarta.annotation.Nonnull;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.http.MediaType;
@@ -35,21 +30,19 @@ import java.util.Map;
  * @version 1.0
  */
 @Component
-public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcessor {
+public class AuthApplicationStarter {
 
     /**
      * 配置文件对象
      */
-    private Properties properties;
+    private final Properties properties;
+
+    public AuthApplicationStarter(Properties properties, DefaultListableBeanFactory defaultListableBeanFactory) {
+        this.properties = properties;
+        run(defaultListableBeanFactory);
+    }
 
     private void run(DefaultListableBeanFactory defaultListableBeanFactory) {
-        /*
-         * 读取配置文件对象
-         */
-        this.properties = defaultListableBeanFactory.getBean(Properties.class);
-
-//        initOAuth2Confirm();
-
         // AUTH ENABLE
         if (properties.isEnable()) {
             initMePage();
@@ -283,35 +276,50 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
      * 初始化我的页面内容
      */
     private void initMePage() {
-        AuthPage.setMe(MediaType.TEXT_HTML, file(this.getClass(), properties.getPage().getMe()));
+        final String page = file(this.getClass(), properties.getPage().getMe());
+        if (!page.isEmpty()) {
+            AuthPage.setMe(MediaType.TEXT_HTML, page);
+        }
     }
 
     /**
      * 初始化登录页面内容
      */
     private void initLoginPage() {
-        AuthPage.setLogin(MediaType.TEXT_HTML, file(this.getClass(), properties.getPage().getLogin()));
+        final String page = file(this.getClass(), properties.getPage().getLogin());
+        if (!page.isEmpty()) {
+            AuthPage.setLogin(MediaType.TEXT_HTML, page);
+        }
     }
 
     /**
      * 初始化注册页面内容
      */
     private void initRegisterPage() {
-        AuthPage.setRegister(MediaType.TEXT_HTML, file(this.getClass(), properties.getPage().getRegister()));
+        final String page = file(this.getClass(), properties.getPage().getRegister());
+        if (!page.isEmpty()) {
+            AuthPage.setRegister(MediaType.TEXT_HTML, page);
+        }
     }
 
     /**
      * 初始化忘记密码页面内容
      */
     private void initForgotPassword() {
-        AuthPage.setForgotPassword(MediaType.TEXT_HTML, file(this.getClass(), properties.getPage().getForgotPassword()));
+        final String page = file(this.getClass(), properties.getPage().getForgotPassword());
+        if (!page.isEmpty()) {
+            AuthPage.setForgotPassword(MediaType.TEXT_HTML, page);
+        }
     }
 
     /**
      * 初始化忘记密码页面内容
      */
     private void initOAuth2Confirm() {
-        AuthPage.setOAuth2Confirm(MediaType.TEXT_HTML, file(this.getClass(), properties.getPage().getLogin()));
+        final String page = file(this.getClass(), properties.getPage().getLogin());
+        if (!page.isEmpty()) {
+            AuthPage.setOAuth2Confirm(MediaType.TEXT_HTML, page);
+        }
     }
 
     /**
@@ -677,16 +685,6 @@ public class AuthApplicationStarter implements BeanDefinitionRegistryPostProcess
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    @Override
-    public void postProcessBeanDefinitionRegistry(@Nonnull BeanDefinitionRegistry registry) throws BeansException {
-        run((DefaultListableBeanFactory) registry);
-    }
-
-    @Override
-    public void postProcessBeanFactory(@Nonnull ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
 }

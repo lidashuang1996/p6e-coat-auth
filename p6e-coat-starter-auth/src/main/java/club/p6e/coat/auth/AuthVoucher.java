@@ -55,7 +55,7 @@ public class AuthVoucher implements Serializable {
     public static final String OAUTH2_USER_ID = "OAUTH2_USER_ID";
     public static final String OAUTH2_USER_INFO = "OAUTH2_USER_INFO";
 
-    private static final String VOUCHER_HEADER_NAME = "X-P6e-Voucher";
+    private static final String VOUCHER_HEADER_NAME = "X-Voucher";
     private static final String VOUCHER_URL_PARAM_NAME = "voucher";
 
     /**

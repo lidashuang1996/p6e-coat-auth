@@ -87,11 +87,10 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
                 }
             }
             if (bool) {
-                return execute(random.toString(), format(pwd1)).equals(pwd2);
-            } else {
                 return false;
+            } else {
+                return execute(random.toString(), format(pwd1)).equals(pwd2);
             }
         }
     }
-
 }
