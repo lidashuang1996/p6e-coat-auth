@@ -13,7 +13,6 @@
     <name>p6e-coat-starter-auth</name>
     <description>p6e-coat-starter-auth</description>
 
-
     <properties>
         <skipTests>true</skipTests>
         <java.version>17</java.version>
@@ -26,6 +25,7 @@
     </properties>
 
     <dependencies>
+
         <!-- Java JWT [START] -->
         <dependency>
             <groupId>com.auth0</groupId>
@@ -76,5 +76,6 @@
             <artifactId>p6e-coat-starter-common</artifactId>
         </dependency>
         <!-- P6e Coat Common [ END ] -->
+        
     </dependencies>
 </project>

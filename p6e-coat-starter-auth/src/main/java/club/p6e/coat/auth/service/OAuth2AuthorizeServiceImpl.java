@@ -132,7 +132,7 @@ public class OAuth2AuthorizeServiceImpl implements OAuth2AuthorizeService {
      */
     private Mono<Void> write(ServerWebExchange exchange, String voucher) {
         final ServerHttpResponse response = exchange.getResponse();
-        final AuthPage.Model login = AuthPage.login();
+        final AuthPage.Model login = AuthPage.oAuth2Login();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().setContentType(login.getType());
         return response.writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(

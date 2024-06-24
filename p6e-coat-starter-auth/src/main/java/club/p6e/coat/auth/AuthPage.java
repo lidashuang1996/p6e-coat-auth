@@ -33,6 +33,11 @@ public final class AuthPage {
     /**
      * OAUTH2 CONFIRM PAGE
      */
+    private static final Model OAUTH2_LOGIN = new Model("@{page}");
+
+    /**
+     * OAUTH2 CONFIRM PAGE
+     */
     private static final Model OAUTH2_CONFIRM = new Model("@{page}");
 
     /**
@@ -154,6 +159,35 @@ public final class AuthPage {
     public static void setForgotPassword(MediaType type, String content) {
         FORGOT_PASSWORD.setType(type);
         FORGOT_PASSWORD.setContent(content);
+    }
+
+    /**
+     * OAUTH2 LOGIN
+     *
+     * @return OAUTH2 LOGIN PAGE
+     */
+    public static Model oAuth2Login() {
+        return OAUTH2_LOGIN;
+    }
+
+    /**
+     * SET OAUTH2 LOGIN PAGE
+     *
+     * @param content 内容
+     */
+    public static void setOAuth2Login(String content) {
+        OAUTH2_LOGIN.setContent(content);
+    }
+
+    /**
+     * SET OAUTH2 LOGIN PAGE
+     *
+     * @param type    类型
+     * @param content 内容
+     */
+    public static void setOAuth2Login(MediaType type, String content) {
+        OAUTH2_LOGIN.setType(type);
+        OAUTH2_LOGIN.setContent(content);
     }
 
     /**
