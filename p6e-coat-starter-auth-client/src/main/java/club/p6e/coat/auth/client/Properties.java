@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Data
 @Component("club.p6e.coat.auth.client.Properties")
-@ConfigurationProperties(prefix = "club.p6e.coat.auth.client")
+@ConfigurationProperties(prefix = "p6e.coat.auth.client")
 public class Properties implements Serializable {
 
     /**

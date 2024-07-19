@@ -50,13 +50,13 @@ public class AuthJsonWebTokenCipher {
             this.accessTokenSecret = DigestUtils.md5DigestAsHex(
                     ("AS_" + GeneratorUtil.uuid() + GeneratorUtil.random()).getBytes(StandardCharsets.UTF_8)
             );
-            LOGGER.info("[ JWT ( ACCESS_TOKEN ) ] INIT >>> " + this.accessTokenSecret);
+            LOGGER.info("[ JWT ( ACCESS_TOKEN ) ] INIT >>> {}", this.accessTokenSecret);
         }
         if (this.refreshTokenSecret == null) {
             this.refreshTokenSecret = DigestUtils.md5DigestAsHex(
                     ("RS_" + GeneratorUtil.uuid() + GeneratorUtil.random()).getBytes(StandardCharsets.UTF_8)
             );
-            LOGGER.info("[ JWT ( REFRESH_TOKEN ) ] INIT >>> " + this.refreshTokenSecret);
+            LOGGER.info("[ JWT ( REFRESH_TOKEN ) ] INIT >>> {}", this.refreshTokenSecret);
         }
     }
 

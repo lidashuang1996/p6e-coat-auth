@@ -26,7 +26,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/oauth2/auth")
+@RequestMapping("/sso/oauth2/auth")
 @ConditionalOnClass(name = "org.springframework.web.reactive.package-info")
 public class AuthWebFluxClientController extends BaseWebFluxController {
 
@@ -84,6 +84,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     public Mono<ResultContext> callback(ServerHttpRequest request, ServerHttpResponse response) {
         final String code = getParam(request, "code");
         final String state = getParam(request, "state");
+        final String redirectUri = getParam(request, "redirect_uri", "redirectUri");
         if (code == null || state == null) {
             return Mono.error(new ParameterException(
                     this.getClass(),
@@ -108,10 +109,12 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                         put("grantType", "authorization_code");
                                         put("clientId", properties.getAuthorizeAppId());
                                         put("clientSecret", properties.getAuthorizeAppSecret());
-                                        put("redirectUri", properties.getAuthorizeAppRedirectUri());
+                                        put("redirectUri", redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri);
                                     }})
                             ).flatMap(result -> {
+                                System.out.println("result >>> " + result);
                                 final AuthModel.BaseResultModel brm = JsonUtil.fromJson(result, AuthModel.BaseResultModel.class);
+                                System.out.println("brm >>> " + brm);
                                 if (brm == null || brm.getCode() != 0) {
                                     return Mono.error(new ResourceException(
                                             this.getClass(),

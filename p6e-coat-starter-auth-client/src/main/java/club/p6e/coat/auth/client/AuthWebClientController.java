@@ -25,7 +25,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/oauth2/auth")
+@RequestMapping("/sso/oauth2/auth")
 @ConditionalOnClass(name = "org.springframework.web.servlet.package-info")
 public class AuthWebClientController extends BaseWebController {
 

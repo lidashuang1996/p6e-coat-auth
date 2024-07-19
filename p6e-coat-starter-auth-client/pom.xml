@@ -22,10 +22,17 @@
         </dependency>
         <!-- Java JWT [END] -->
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+
         <!-- Spring Redis [START] -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+            <!-- scope provided dependency -->
+            <scope>provided</scope>
         </dependency>
         <!-- Spring Redis [END] -->
 
@@ -33,6 +40,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+            <!-- scope provided dependency -->
+            <scope>provided</scope>
         </dependency>
         <!-- Spring Reactive Redis [END] -->
 
@@ -40,6 +49,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- scope provided dependency -->
+            <scope>provided</scope>
         </dependency>
         <!-- Spring Web [ END ] -->
 
@@ -47,31 +58,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+            <!-- scope provided dependency -->
+            <scope>provided</scope>
         </dependency>
         <!-- Spring Web Flux [ END ] -->
 
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>club.p6e.coat</groupId>
             <artifactId>p6e-coat-starter-common</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jpa</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-webflux</artifactId>
-                </exclusion>
-            </exclusions>
+            <!-- scope provided dependency -->
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

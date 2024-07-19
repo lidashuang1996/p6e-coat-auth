@@ -63,11 +63,11 @@ public class OAuth2Context implements Serializable {
         @Data
         @Accessors(chain = true)
         public static class Vo implements Serializable {
-            private String id;
-            private String openId;
             private String accessToken;
             private String refreshToken;
-            private Long expiration;
+            private Long expire;
+            private String type;
+            private String user;
         }
 
         @Data

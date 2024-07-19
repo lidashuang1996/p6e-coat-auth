@@ -16,7 +16,7 @@ public class AuthPasswordEncryptorImpl implements AuthPasswordEncryptor {
     /**
      * 种子
      */
-    public static String SEED = "yu#u2wu3wf737ztxc@xntut34hzw#tn2";
+    public static String SEED = "";
 
     /**
      * 构造方法初始化

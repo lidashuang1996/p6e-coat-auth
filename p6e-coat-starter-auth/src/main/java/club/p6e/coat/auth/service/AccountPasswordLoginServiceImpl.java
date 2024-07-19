@@ -73,7 +73,6 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     protected Mono<String> executeTransmissionDecryption(AuthVoucher voucher, String content) {
         final String mark = voucher.getAccountPasswordCodecMark();
-        System.out.println("222  " + content);
         return Mono
                 .just(mark)
                 .flatMap(m -> {
@@ -99,7 +98,6 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                         final PasswordTransmissionCodec.Model model
                                 = JsonUtil.fromJson(s, PasswordTransmissionCodec.Model.class);
 
-                        System.out.println("33333  " + model);
                         return Mono.just(codec.decryption(model, content));
                     } catch (Exception e) {
                         return Mono.error(GlobalExceptionContext.executeCacheException(
@@ -115,7 +113,6 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
 
     @Override
     public Mono<AuthUser.Model> execute(ServerWebExchange exchange, LoginContext.AccountPassword.Request param) {
-        System.out.println("111" + param);
         final Properties.Mode mode = properties.getMode();
         final boolean ete = properties.getLogin().getAccountPassword().isEnableTransmissionEncryption();
         return AuthVoucher
@@ -127,16 +124,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
                     case ACCOUNT -> executeAccountMode(p);
                     case PHONE_OR_MAILBOX -> executePhoneOrMailboxMode(p);
                 })
-                .filter(u -> {
-                    System.out.println("=========================================");
-                    System.out.println(param);
-                    System.out.println(param.getPassword());
-                    System.out.println(u);
-                    System.out.println(u.password());
-                    System.out.println(encryptor.validate(param.getPassword(), u.password()));
-                    System.out.println("=========================================");
-                    return ete ? encryptor.validate(param.getPassword(), u.password()) : u.password().equals(param.getPassword());
-                })
+                .filter(u -> ete ? encryptor.validate(param.getPassword(), u.password()) : u.password().equals(param.getPassword()))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAccountPasswordLoginAccountOrPasswordException(
                         this.getClass(),
                         "fun execute(LoginContext.AccountPassword.Request param).",

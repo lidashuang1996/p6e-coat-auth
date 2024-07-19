@@ -51,7 +51,6 @@ public class UserRepository {
      * @return Mono/UserModel 用户模型对象
      */
     public Mono<UserModel> findByAccount(String account) {
-        System.out.println("ACCOUTN >?>> " + account);
         return template.selectOne(
                 Query.query(Criteria.where(UserModel.ACCOUNT).is(account).and(UserModel.IS_DELETED).is(0)),
                 UserModel.class

@@ -71,7 +71,7 @@ public class AuthApplicationStarter {
                     registerBean(AuthPasswordEncryptorImpl.class, defaultListableBeanFactory);
                     registerBean(AccountPasswordLoginServiceImpl.class, defaultListableBeanFactory);
                     registerBean(AccountPasswordLoginControllerImpl.class, defaultListableBeanFactory);
-                    registerBean(AccountPasswordLoginParameterValidator.class, defaultListableBeanFactory);
+                    registerBean(AccountPasswordLoginParameterValidator.class, defaultListableBeanFactory, true, false);
 
                     // LOGIN TRANSMISSION
                     if (properties.getLogin().getAccountPassword().isEnableTransmissionEncryption()) {
@@ -93,8 +93,8 @@ public class AuthApplicationStarter {
                     registerBean(VerificationCodeObtainServiceImpl.class, defaultListableBeanFactory);
                     registerBean(VerificationCodeLoginControllerImpl.class, defaultListableBeanFactory);
                     registerBean(VerificationCodeObtainControllerImpl.class, defaultListableBeanFactory);
-                    registerBean(VerificationCodeLoginParameterValidator.class, defaultListableBeanFactory);
-                    registerBean(VerificationCodeObtainParameterValidator.class, defaultListableBeanFactory);
+                    registerBean(VerificationCodeLoginParameterValidator.class, defaultListableBeanFactory, true, false);
+                    registerBean(VerificationCodeObtainParameterValidator.class, defaultListableBeanFactory, true, false);
                 }
 
                 // QC
@@ -106,7 +106,7 @@ public class AuthApplicationStarter {
                     registerBean(QrCodeObtainServiceImpl.class, defaultListableBeanFactory);
                     registerBean(QrCodeLoginControllerImpl.class, defaultListableBeanFactory);
                     registerBean(QrCodeObtainControllerImpl.class, defaultListableBeanFactory);
-                    registerBean(QrCodeLoginCallbackParameterValidator.class, defaultListableBeanFactory);
+                    registerBean(QrCodeLoginCallbackParameterValidator.class, defaultListableBeanFactory, true, false);
                 }
 
                 // OTHER
@@ -144,8 +144,8 @@ public class AuthApplicationStarter {
                 registerBean(ForgotPasswordObtainServiceImpl.class, defaultListableBeanFactory);
                 registerBean(ForgotPasswordControllerImpl.class, defaultListableBeanFactory);
                 registerBean(ForgotPasswordCodeObtainControllerImpl.class, defaultListableBeanFactory);
-                registerBean(ForgotPasswordParameterValidator.class, defaultListableBeanFactory);
-                registerBean(ForgotPasswordCodeObtainParameterValidator.class, defaultListableBeanFactory);
+                registerBean(ForgotPasswordParameterValidator.class, defaultListableBeanFactory, true, false);
+                registerBean(ForgotPasswordCodeObtainParameterValidator.class, defaultListableBeanFactory, true, false);
             }
 
             // OAUTH2
@@ -186,8 +186,8 @@ public class AuthApplicationStarter {
                 registerBean(OAuth2TokenControllerImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2ReconfirmControllerImpl.class, defaultListableBeanFactory);
                 registerBean(OAuth2AuthorizeControllerImpl.class, defaultListableBeanFactory);
-                registerBean(OAuth2AuthParameterValidator.class, defaultListableBeanFactory);
-                registerBean(OAuth2TokenParameterValidator.class, defaultListableBeanFactory);
+                registerBean(OAuth2AuthParameterValidator.class, defaultListableBeanFactory, true, false);
+                registerBean(OAuth2TokenParameterValidator.class, defaultListableBeanFactory, true, false);
             }
         }
     }
