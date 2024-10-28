@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 @Data
 @Accessors(chain = true)
 @Table(UserModel.TABLE)

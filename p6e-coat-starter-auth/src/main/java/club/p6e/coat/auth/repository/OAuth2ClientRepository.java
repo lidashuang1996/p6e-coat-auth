@@ -34,7 +34,7 @@ public class OAuth2ClientRepository {
      */
     public Mono<OAuth2ClientModel> findByClientId(String clientId) {
         return template.selectOne(
-                Query.query(Criteria.where(OAuth2ClientModel.CLIENT_ID).is(clientId).and(OAuth2ClientModel.IS_DELETE).is(0)),
+                Query.query(Criteria.where(OAuth2ClientModel.CLIENT_ID).is(clientId).and(OAuth2ClientModel.IS_DELETED).is(0)),
                 OAuth2ClientModel.class
         );
     }

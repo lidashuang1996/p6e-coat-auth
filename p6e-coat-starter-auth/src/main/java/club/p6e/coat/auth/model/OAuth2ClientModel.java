@@ -17,6 +17,7 @@ import java.util.Map;
  * @author lidashuang
  * @version 1.0
  */
+@SuppressWarnings("ALL")
 @Data
 @Accessors(chain = true)
 @Table(OAuth2ClientModel.TABLE)
@@ -34,11 +35,12 @@ public class OAuth2ClientModel implements Serializable {
     public static final String CLIENT_SECRET = "clientSecret";
     public static final String CLIENT_NAME = "clientName";
     public static final String CLIENT_DESCRIPTION = "clientDescription";
-    public static final String CREATE_DATE = "createDate";
-    public static final String UPDATE_DATE = "updateDate";
-    public static final String OPERATOR = "operator";
+    public static final String CREATOR = "creator";
+    public static final String MODIFIER = "modifier";
+    public static final String CREATION_DATE_TIME = "creationDateTime";
+    public static final String MODIFICATION_DATE_TIME = "modificationDateTime";
     public static final String VERSION = "version";
-    public static final String IS_DELETE = "isDelete";
+    public static final String IS_DELETED = "isDeleted";
 
     @Id
     private Integer id;
@@ -52,11 +54,12 @@ public class OAuth2ClientModel implements Serializable {
     private String clientName;
     private String clientAvatar;
     private String clientDescription;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
-    private String operator;
+    private String creator;
+    private String modifier;
+    private LocalDateTime creationDateTime;
+    private LocalDateTime modificationDateTime;
     private Integer version;
-    private Integer isDelete;
+    private Integer isDeleted;
 
     public Map<String, Object> toMap() {
         final Map<String, Object> result = new HashMap<>();
@@ -71,9 +74,10 @@ public class OAuth2ClientModel implements Serializable {
         result.put("clientName", clientName);
         result.put("clientAvatar", clientAvatar);
         result.put("clientDescription", clientDescription);
-        result.put("createDate", createDate);
-        result.put("updateDate", updateDate);
-        result.put("operator", operator);
+        result.put("creator", creator);
+        result.put("modifier", modifier);
+        result.put("creationDateTime", creationDateTime);
+        result.put("modificationDateTime", modificationDateTime);
         return result;
     }
 
