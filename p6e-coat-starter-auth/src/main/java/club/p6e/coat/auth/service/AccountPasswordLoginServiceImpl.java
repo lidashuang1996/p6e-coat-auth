@@ -165,10 +165,7 @@ public class AccountPasswordLoginServiceImpl implements AccountPasswordLoginServ
     protected Mono<AuthUser.Model> executeAccountMode(LoginContext.AccountPassword.Request param) {
         return userRepository
                 .findByAccount(param.getAccount())
-                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> {
-                    System.out.println(a);
-                    return au.create(u, a);
-                }));
+                .flatMap(u -> userAuthRepository.findById(u.getId()).flatMap(a -> au.create(u, a)));
     }
 
     /**

@@ -59,9 +59,6 @@ public class OAuth2AuthParameterValidator implements ParameterValidatorInterface
             if (param.getResponseType() == null) {
                 param.setResponseType(request.getQueryParams().getFirst(RESPONSE_TYPE_PARAM));
             }
-            System.out.println("------------");
-            System.out.println(JsonUtil.toJson(param));
-            System.out.println("------------");
             return Mono.just(param.getScope() != null
                     && param.getClientId() != null
                     && param.getRedirectUri() != null

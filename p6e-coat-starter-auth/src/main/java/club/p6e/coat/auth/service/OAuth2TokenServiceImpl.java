@@ -267,19 +267,13 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         return au.create(info)
                 .flatMap(u -> oauth2TokenUserAuthCache
                         .set(uid, scope, accessToken, refreshToken, info)
-                        .map(t -> {
-
-                            System.out.println("T >>>>  " + t);
-                            System.out.println("serialize >>> " + u.serialize());
-
-                            return new OAuth2Context.Token.UserDto()
-                                    .setOpenId(openid)
-                                    .setAccessToken(t.getAccessToken())
-                                    .setRefreshToken(t.getRefreshToken())
-                                    .setType("Bearer")
-                                    .setExpire(OAuth2TokenUserAuthCache.EXPIRATION_TIME)
-                                    .setUser(u.serialize());
-                        }));
+                        .map(t -> new OAuth2Context.Token.UserDto()
+                                .setOpenId(openid)
+                                .setAccessToken(t.getAccessToken())
+                                .setRefreshToken(t.getRefreshToken())
+                                .setType("Bearer")
+                                .setExpire(OAuth2TokenUserAuthCache.EXPIRATION_TIME)
+                                .setUser(u.serialize())));
     }
 
 }

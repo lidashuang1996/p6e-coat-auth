@@ -118,7 +118,8 @@ public class AuthRedisCache
                         ACCESS_TOKEN_PREFIX + t.getAccessToken(),
                         REFRESH_TOKEN_PREFIX + t.getRefreshToken(),
                         USER_ACCESS_TOKEN_PREFIX + t.getUid() + DELIMITER + t.getAccessToken(),
-                        USER_REFRESH_TOKEN_PREFIX + t.getUid() + DELIMITER + t.getRefreshToken()));
+                        USER_REFRESH_TOKEN_PREFIX + t.getUid() + DELIMITER + t.getRefreshToken()
+                ));
     }
 
     @Override

@@ -54,8 +54,6 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     public Mono<Void> def(ServerHttpRequest request, ServerHttpResponse response) {
         final String source = getParam(request, "source");
         final String redirectUri = getParam(request, "redirect_uri", "redirectUri");
-        System.out.println("source ::: " + source);
-        System.out.println("redirectUri ::: " + redirectUri);
         final String state = GeneratorUtil.random(8, true, false);
         return authStateCache
                 .set(state, source == null ? "" : source)
@@ -112,9 +110,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                         put("redirectUri", redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri);
                                     }})
                             ).flatMap(result -> {
-                                System.out.println("result >>> " + result);
                                 final AuthModel.BaseResultModel brm = JsonUtil.fromJson(result, AuthModel.BaseResultModel.class);
-                                System.out.println("brm >>> " + brm);
                                 if (brm == null || brm.getCode() != 0) {
                                     return Mono.error(new ResourceException(
                                             this.getClass(),

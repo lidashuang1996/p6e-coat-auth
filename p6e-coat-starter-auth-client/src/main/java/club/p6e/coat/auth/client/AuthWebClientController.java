@@ -54,8 +54,6 @@ public class AuthWebClientController extends BaseWebController {
         try {
             final String source = getParam("source");
             final String redirectUri = getParam("redirect_uri", "redirectUri");
-            System.out.println("source ::: " + source);
-            System.out.println("redirectUri ::: " + redirectUri);
             final String state = GeneratorUtil.random(8, true, false);
             final Boolean bool = authStateCache.set(state, source == null ? "" : source);
             if (bool == null || bool == false) {
