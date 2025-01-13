@@ -20,7 +20,7 @@ public class IndexControllerImpl implements IndexController {
 
     @Override
     public Mono<Void> execute(ServerWebExchange exchange) {
-        return AuthVoucher.createIndex().flatMap(v -> write(exchange, v.getMark()));
+        return AuthVoucher.createIndex(exchange).flatMap(v -> write(exchange, v.getMark()));
     }
 
     /**

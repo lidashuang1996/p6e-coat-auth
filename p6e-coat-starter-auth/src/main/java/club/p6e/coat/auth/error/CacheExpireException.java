@@ -1,5 +1,7 @@
 package club.p6e.coat.auth.error;
 
+import club.p6e.coat.common.error.CustomException;
+
 /**
  * 自定义异常
  * 类型不匹配异常
@@ -17,7 +19,7 @@ public class CacheExpireException extends CustomException {
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "TYPE_MISMATCH_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "CACHE_EXPIRE_EXCEPTION";
 
     /**
      * 类型不匹配异常

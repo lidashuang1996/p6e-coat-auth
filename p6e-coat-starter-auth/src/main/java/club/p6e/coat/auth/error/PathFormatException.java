@@ -1,5 +1,7 @@
 package club.p6e.coat.auth.error;
 
+import club.p6e.coat.common.error.CustomException;
+
 /**
  * 自定义异常
  * 资源节点异常
@@ -17,7 +19,7 @@ public class PathFormatException extends CustomException {
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "RESOURCE_NODE_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "PATH_FORMAT_EXCEPTION";
 
     /**
      * 资源节点异常

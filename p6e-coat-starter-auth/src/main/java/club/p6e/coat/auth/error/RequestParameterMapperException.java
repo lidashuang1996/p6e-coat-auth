@@ -1,5 +1,7 @@
 package club.p6e.coat.auth.error;
 
+import club.p6e.coat.common.error.CustomException;
+
 /**
  * 自定义异常
  * 请求参数映射器异常

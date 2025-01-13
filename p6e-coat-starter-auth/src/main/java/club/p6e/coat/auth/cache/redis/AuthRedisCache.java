@@ -47,37 +47,42 @@ public class AuthRedisCache
         if (json == null) {
             return Mono.empty();
         }
+        long expirationTime = EXPIRATION_TIME;
+        if ("ANDROID".equalsIgnoreCase(device)) {
+            expirationTime = 3600 * 24 * 15L;
+        }
+        final long finalExpirationTime = expirationTime;
         final byte[] jcBytes = json.getBytes(StandardCharsets.UTF_8);
         return template.execute(connection ->
                 Flux.concat(
                         connection.stringCommands().set(
                                 ByteBuffer.wrap((USER_PREFIX + uid).getBytes(StandardCharsets.UTF_8)),
                                 ByteBuffer.wrap(user.getBytes(StandardCharsets.UTF_8)),
-                                Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                Expiration.from(finalExpirationTime, TimeUnit.SECONDS),
                                 RedisStringCommands.SetOption.UPSERT
                         ),
                         connection.stringCommands().set(
                                 ByteBuffer.wrap((ACCESS_TOKEN_PREFIX + accessToken).getBytes(StandardCharsets.UTF_8)),
                                 ByteBuffer.wrap(jcBytes),
-                                Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                Expiration.from(finalExpirationTime, TimeUnit.SECONDS),
                                 RedisStringCommands.SetOption.UPSERT
                         ),
                         connection.stringCommands().set(
                                 ByteBuffer.wrap((REFRESH_TOKEN_PREFIX + refreshToken).getBytes(StandardCharsets.UTF_8)),
                                 ByteBuffer.wrap(jcBytes),
-                                Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                Expiration.from(finalExpirationTime, TimeUnit.SECONDS),
                                 RedisStringCommands.SetOption.UPSERT
                         ),
                         connection.stringCommands().set(
                                 ByteBuffer.wrap((USER_ACCESS_TOKEN_PREFIX + uid + DELIMITER + accessToken).getBytes(StandardCharsets.UTF_8)),
                                 ByteBuffer.wrap(jcBytes),
-                                Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                Expiration.from(finalExpirationTime, TimeUnit.SECONDS),
                                 RedisStringCommands.SetOption.UPSERT
                         ),
                         connection.stringCommands().set(
                                 ByteBuffer.wrap((USER_REFRESH_TOKEN_PREFIX + uid + DELIMITER + refreshToken).getBytes(StandardCharsets.UTF_8)),
                                 ByteBuffer.wrap(jcBytes),
-                                Expiration.from(EXPIRATION_TIME, TimeUnit.SECONDS),
+                                Expiration.from(finalExpirationTime, TimeUnit.SECONDS),
                                 RedisStringCommands.SetOption.UPSERT
                         )
                 )

@@ -1,5 +1,7 @@
 package club.p6e.coat.auth.error;
 
+import club.p6e.coat.common.error.CustomException;
+
 /**
  * 自定义异常
  * 文件异常/文件操作异常
@@ -17,7 +19,7 @@ public class ServiceNotEnabledException extends CustomException {
     /**
      * 默认的简述
      */
-    private static final String DEFAULT_SKETCH = "FILE_EXCEPTION";
+    private static final String DEFAULT_SKETCH = "SERVICE_NOT_ENABLED_EXCEPTION";
 
     /**
      * 文件异常/文件操作异常

@@ -114,9 +114,21 @@ public class AuthVoucher implements Serializable {
      *
      * @return Mono<AuthVoucherContext> 认证凭证上下文对象
      */
-    public static Mono<AuthVoucher> createIndex() {
+    @SuppressWarnings("ALL")
+    public static Mono<AuthVoucher> createIndex(ServerWebExchange exchange) {
+        String device = "PC";
+        try {
+            final String content = exchange.getRequest().getHeaders().getFirst("X-Android");
+            if (content != null && !content.isEmpty()) {
+                device = "ANDROID";
+            }
+        } catch (Exception e) {
+            device = "PC";
+        }
+        final String finalDevice = device;
         return create(new HashMap<>() {{
             put(AuthVoucher.INDEX, "true");
+            put(AuthVoucher.DEVICE, finalDevice);
             put(AuthVoucher.INDEX_DATE, String.valueOf(System.currentTimeMillis()));
         }});
     }
@@ -375,7 +387,7 @@ public class AuthVoucher implements Serializable {
      * @return 设备信息数据
      */
     public String device() {
-        return "PC";
+        return this.get(DEVICE);
     }
 
 }
