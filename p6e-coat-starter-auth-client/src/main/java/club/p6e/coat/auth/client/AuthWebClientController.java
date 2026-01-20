@@ -53,9 +53,10 @@ public class AuthWebClientController extends BaseWebController {
     public void def(HttpServletRequest request, HttpServletResponse response) {
         try {
             final String source = getParam("source");
+            final String project = getParam("project");
             final String redirectUri = getParam("redirect_uri", "redirectUri");
             final String state = GeneratorUtil.random(8, true, false);
-            final Boolean bool = authStateCache.set(state, source == null ? "" : source);
+            final Boolean bool = authStateCache.set(state, (source == null ? "" : source) + "@" + (project == null ? "" : project));
             if (bool == null || bool == false) {
                 throw new CacheException(
                         this.getClass(),
@@ -69,6 +70,7 @@ public class AuthWebClientController extends BaseWebController {
                         + "&redirect_uri=" + (redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri)
                         + "&scope=open_id,user_info"
                         + "&state=" + state
+                        + (project == null ? "" : "&project=" + project)
                 );
             }
         } catch (Exception e) {
@@ -139,8 +141,11 @@ public class AuthWebClientController extends BaseWebController {
                                         "Get user information exception."
                                 );
                             } else {
-                                final Map<String, Object> data = authorization(String.valueOf(um.getId()), user, response);
-                                data.put("url", cache);
+                                Map<String, Object> e = new HashMap<>();
+                                e.put("pid", state.split("@")[1]);
+                                e.put("source", state.split("@")[0]);
+                                final Map<String, Object> data = authorization(String.valueOf(um.getId()), user, response, e);
+                                data.put("url", cache.split("@")[0]);
                                 return ResultContext.build(data);
                             }
                         }
@@ -153,6 +158,7 @@ public class AuthWebClientController extends BaseWebController {
     @SuppressWarnings("ALL")
     @PutMapping("/refresh")
     public ResultContext refresh(HttpServletRequest request, HttpServletResponse response) {
+        final String project = getParam("project");
         final String accessToken = getAccessToken();
         final String refreshToken = getRefreshToken();
         if (accessToken == null || refreshToken == null) {
@@ -162,8 +168,10 @@ public class AuthWebClientController extends BaseWebController {
                     "Request not exist authentication information exception."
             );
         } else {
-            final AuthCache.Token aToken = authCache.getAccessToken(accessToken);
-            final AuthCache.Token rToken = authCache.getRefreshToken(refreshToken);
+            final Map<String, Object> e = new HashMap<>();
+            e.put("pid", project);
+            final AuthCache.Token aToken = authCache.getAccessToken(accessToken, e);
+            final AuthCache.Token rToken = authCache.getRefreshToken(refreshToken, e);
             if (aToken == null || rToken == null) {
                 throw new AuthException(
                         this.getClass(),
@@ -173,7 +181,7 @@ public class AuthWebClientController extends BaseWebController {
             } else {
                 if (aToken.getAccessToken().equals(rToken.getAccessToken())
                         && aToken.getRefreshToken().equals(rToken.getRefreshToken())) {
-                    final String user = authCache.getUser(aToken.getUid());
+                    final String user = authCache.getUser(aToken.getUid(), e);
                     if (user == null) {
                         throw new AuthException(
                                 this.getClass(),
@@ -181,13 +189,13 @@ public class AuthWebClientController extends BaseWebController {
                                 "Request authentication information has exception."
                         );
                     } else {
-                        if (authCache.cleanAccessToken(aToken.getAccessToken()) == null) {
+                        if (authCache.cleanAccessToken(aToken.getAccessToken(), e) == null) {
                             throw new CacheException(this.getClass(),
                                     "fun refresh(ServerHttpRequest request, ServerHttpResponse response).",
                                     "Request clean token data exception."
                             );
                         }
-                        return ResultContext.build(authorization(aToken.getUid(), user, response));
+                        return ResultContext.build(authorization(aToken.getUid(), user, response, e));
                     }
                 } else {
                     throw new AuthException(
@@ -203,7 +211,10 @@ public class AuthWebClientController extends BaseWebController {
     @SuppressWarnings("ALL")
     @DeleteMapping("/logout")
     public ResultContext logout(HttpServletRequest request, HttpServletResponse response) {
+        final String project = getParam("project");
         final String accessToken = getAccessToken();
+        final Map<String, Object> e = new HashMap<>();
+        e.put("pid", project);
         if (accessToken == null) {
             throw new AuthException(
                     this.getClass(),
@@ -211,7 +222,7 @@ public class AuthWebClientController extends BaseWebController {
                     "Request not exist authentication information exception."
             );
         } else {
-            final AuthCache.Token token = authCache.getAccessToken(accessToken);
+            final AuthCache.Token token = authCache.getAccessToken(accessToken, e);
             if (token == null) {
                 throw new AuthException(
                         this.getClass(),
@@ -219,7 +230,7 @@ public class AuthWebClientController extends BaseWebController {
                         "Request authentication information has exception."
                 );
             } else {
-                if (authCache.cleanAccessToken(token.getAccessToken()) == null) {
+                if (authCache.cleanAccessToken(token.getAccessToken(), e) == null) {
                     throw new CacheException(this.getClass(),
                             "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
                             "Request clean token data exception."
@@ -232,7 +243,7 @@ public class AuthWebClientController extends BaseWebController {
     }
 
     @SuppressWarnings("ALL")
-    protected Map<String, Object> authorization(String id, String info, HttpServletResponse response) {
+    protected Map<String, Object> authorization(String id, String info, HttpServletResponse response, Map<String, Object> e) {
         /*
         // JWT
         final Date date = Date.from(LocalDateTime.now().plusSeconds(3600L).atZone(ZoneId.systemDefault()).toInstant());
@@ -244,7 +255,7 @@ public class AuthWebClientController extends BaseWebController {
 
         final String accessToken = GeneratorUtil.uuid() + GeneratorUtil.random();
         final String refreshToken = GeneratorUtil.uuid() + GeneratorUtil.random();
-        authCache.set(id, "PC", accessToken, refreshToken, info);
+        authCache.set(id, "PC", accessToken, refreshToken, info, e);
 
         /*
         // COOKIES

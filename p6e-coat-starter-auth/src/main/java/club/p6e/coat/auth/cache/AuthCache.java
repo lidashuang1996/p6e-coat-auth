@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 认证缓存服务
@@ -89,7 +90,7 @@ public interface AuthCache extends ICache {
      * @param user         用户信息数据
      * @return 令牌对象
      */
-    Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user);
+    Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user, Map<String, Object> data);
 
     /**
      * 读取用户内容
@@ -97,7 +98,7 @@ public interface AuthCache extends ICache {
      * @param uid 令牌内容
      * @return Mono/String 读取用户内容
      */
-    Mono<String> getUser(String uid);
+    Mono<String> getUser(String uid, Map<String, Object> data);
 
     /**
      * 读取 ACCESS TOKEN 令牌内容
@@ -105,7 +106,7 @@ public interface AuthCache extends ICache {
      * @param content 令牌内容
      * @return Mono/Token 读取 ACCESS TOKEN 令牌内容
      */
-    Mono<Token> getAccessToken(String content);
+    Mono<Token> getAccessToken(String content, Map<String, Object> data);
 
     /**
      * 读取 REFRESH TOKEN 令牌内容
@@ -113,7 +114,7 @@ public interface AuthCache extends ICache {
      * @param content 令牌内容
      * @return Mono/Token 读取 REFRESH TOKEN 令牌内容
      */
-    Mono<Token> getRefreshToken(String content);
+    Mono<Token> getRefreshToken(String content, Map<String, Object> data);
 
     /**
      * 清除用户的 ACCESS TOKEN 令牌对应的信息
@@ -121,7 +122,7 @@ public interface AuthCache extends ICache {
      * @param content 令牌内容
      * @return Mono/Long 清除的数据条数
      */
-    Mono<Long> cleanToken(String content);
+    Mono<Long> cleanToken(String content, Map<String, Object> data);
 
     /**
      * 清除用户的全部信息
@@ -129,6 +130,7 @@ public interface AuthCache extends ICache {
      * @param uid 用户 ID
      * @return Mono/Long 清除的数据条数
      */
-    Mono<Long> cleanUserAll(String uid);
+    Mono<Long> cleanUserAll(String uid, Map<String, Object> data);
 
+    Mono<Boolean> checkOnlineUserNum(long maxOnline, Map<String, Object> data);
 }

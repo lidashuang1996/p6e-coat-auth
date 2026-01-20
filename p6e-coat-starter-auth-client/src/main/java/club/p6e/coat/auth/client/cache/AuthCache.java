@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 认证缓存服务
@@ -88,14 +89,14 @@ public interface AuthCache extends ICache {
      * @param user         用户信息数据
      * @return 令牌对象
      */
-    Token set(String uid, String device, String accessToken, String refreshToken, String user);
+    Token set(String uid, String device, String accessToken, String refreshToken, String user, Map<String, Object> data);
 
-    String getUser(String id);
+    String getUser(String id, Map<String, Object> data);
 
-    Token getAccessToken(String token);
+    Token getAccessToken(String token, Map<String, Object> data);
 
-    Token getRefreshToken(String token);
+    Token getRefreshToken(String token, Map<String, Object> data);
 
-    Long cleanAccessToken(String token);
+    Long cleanAccessToken(String token, Map<String, Object> data);
 
 }

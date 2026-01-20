@@ -1,6 +1,7 @@
 package club.p6e.coat.auth.certificate;
 
 import club.p6e.coat.auth.AuthCertificateAuthority;
+import club.p6e.coat.auth.AuthParamHandler;
 import club.p6e.coat.auth.AuthUser;
 import club.p6e.coat.auth.cache.AuthCache;
 import club.p6e.coat.common.context.ResultContext;
@@ -8,6 +9,7 @@ import club.p6e.coat.auth.error.GlobalExceptionContext;
 import club.p6e.coat.auth.generator.AuthAccessTokenGenerator;
 import club.p6e.coat.auth.generator.AuthRefreshTokenGenerator;
 import club.p6e.coat.auth.AuthVoucher;
+import club.p6e.coat.common.utils.SpringUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -60,35 +62,42 @@ public class HttpCookieCacheCertificateAuthority extends HttpCertificate impleme
         final String info = model.serialize();
         final String accessToken = accessTokenGenerator.execute();
         final String refreshToken = refreshTokenGenerator.execute();
+        final AuthParamHandler authParamHandler = SpringUtil.getBean(AuthParamHandler.class);
         return AuthVoucher
                 .init(exchange)
-                .flatMap(v -> cache.set(uid, v.device(), accessToken, refreshToken, info)
-                        .flatMap(t -> {
-                            if (v.isOAuth2()) {
-                                return v.setOAuth2User(uid, info).flatMap(vv ->
-                                        setHttpCookieToken(exchange.getResponse(), t.getAccessToken(), t.getRefreshToken(),
-                                                new HashMap<>() {{
-                                                    put("oauth2", v.isOAuth2());
-                                                }}
-                                        ));
-                            } else {
-                                return v.del().flatMap(vv -> setHttpCookieToken(
-                                        exchange.getResponse(), t.getAccessToken(), t.getRefreshToken()));
-                            }
-                        })
+                .flatMap(v ->
+                        authParamHandler.execute(exchange).flatMap(r -> cache
+                                .set(uid, v.device(), accessToken, refreshToken, info, r)
+                                .flatMap(t -> {
+                                    if (v.isOAuth2()) {
+                                        return v.setOAuth2User(uid, info).flatMap(vv ->
+                                                setHttpCookieToken(exchange.getResponse(), t.getAccessToken(), t.getRefreshToken(),
+                                                        new HashMap<>() {{
+                                                            put("oauth2", v.isOAuth2());
+                                                        }}
+                                                ));
+                                    } else {
+                                        return v.del().flatMap(vv -> setHttpCookieToken(
+                                                exchange.getResponse(), t.getAccessToken(), t.getRefreshToken()));
+                                    }
+                                })
+                        )
                 ).map(ResultContext::build);
     }
 
     @Override
     public Mono<Void> abolish(ServerWebExchange exchange) {
+        final AuthParamHandler authParamHandler = SpringUtil.getBean(AuthParamHandler.class);
         return getHttpCookieToken(exchange.getRequest())
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun abolish(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/CACHE] HTTP request access token does not exist."
                 )))
-                .flatMap(cache::getAccessToken)
-                .flatMap(t -> cache.cleanToken(t.getAccessToken()))
+                .flatMap(t -> authParamHandler
+                        .execute(exchange)
+                        .flatMap(r -> cache.getAccessToken(t, r).flatMap(tt -> cache.cleanToken(tt.getAccessToken(), r)))
+                )
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun abolish(ServerWebExchange exchange).",

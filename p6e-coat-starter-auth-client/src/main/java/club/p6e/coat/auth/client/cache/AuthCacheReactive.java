@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 认证缓存服务
@@ -89,13 +90,13 @@ public interface AuthCacheReactive extends ICache {
      * @param user         用户信息数据
      * @return 令牌对象
      */
-    Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user);
+    Mono<Token> set(String uid, String device, String accessToken, String refreshToken, String user, Map<String, Object> data);
 
-    Mono<String> getUser(String id);
+    Mono<String> getUser(String id, Map<String, Object> data);
 
-    Mono<Token> getAccessToken(String token);
+    Mono<Token> getAccessToken(String token, Map<String, Object> data);
 
-    Mono<Token> getRefreshToken(String token);
+    Mono<Token> getRefreshToken(String token, Map<String, Object> data);
 
-    Mono<Long> cleanAccessToken(String token);
+    Mono<Long> cleanAccessToken(String token, Map<String, Object> data);
 }

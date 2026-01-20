@@ -42,6 +42,86 @@ public class AuthApplicationStarter {
         run(defaultListableBeanFactory);
     }
 
+    /**
+     * 读取文件内容
+     *
+     * @return 文件的内容
+     */
+    @SuppressWarnings("ALL")
+    public static String file(Class<?> clazz, String path) {
+        if (path != null) {
+            if (path.startsWith("classpath:")) {
+                InputStream inputStream = null;
+                InputStreamReader inputStreamReader = null;
+                BufferedReader bufferedReader = null;
+                final StringBuilder sb = new StringBuilder();
+                try {
+                    inputStream = clazz.getClassLoader().getResourceAsStream(
+                            path.substring("classpath:".length())
+                    );
+                    if (inputStream != null) {
+                        inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                        bufferedReader = new BufferedReader(inputStreamReader);
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            sb.append(line).append("\n");
+                        }
+                    }
+                    return sb.toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (bufferedReader != null) {
+                        try {
+                            bufferedReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (inputStreamReader != null) {
+                        try {
+                            inputStreamReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (inputStream != null) {
+                        try {
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } else {
+                FileReader fileReader = null;
+                final StringBuilder sb = new StringBuilder();
+                if (path.startsWith("file:")) {
+                    path = path.substring("file:".length());
+                }
+                try {
+                    fileReader = new FileReader(path);
+                    int ch;
+                    while ((ch = fileReader.read()) != -1) {
+                        sb.append((char) ch);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileReader != null) {
+                        try {
+                            fileReader.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return sb.toString();
+            }
+        }
+        return "";
+    }
+
     private void run(DefaultListableBeanFactory defaultListableBeanFactory) {
         // AUTH ENABLE
         if (properties.isEnable()) {
@@ -193,86 +273,6 @@ public class AuthApplicationStarter {
     }
 
     /**
-     * 读取文件内容
-     *
-     * @return 文件的内容
-     */
-    @SuppressWarnings("ALL")
-    public static String file(Class<?> clazz, String path) {
-        if (path != null) {
-            if (path.startsWith("classpath:")) {
-                InputStream inputStream = null;
-                InputStreamReader inputStreamReader = null;
-                BufferedReader bufferedReader = null;
-                final StringBuilder sb = new StringBuilder();
-                try {
-                    inputStream = clazz.getClassLoader().getResourceAsStream(
-                            path.substring("classpath:".length())
-                    );
-                    if (inputStream != null) {
-                        inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-                        bufferedReader = new BufferedReader(inputStreamReader);
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            sb.append(line).append("\n");
-                        }
-                    }
-                    return sb.toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (bufferedReader != null) {
-                        try {
-                            bufferedReader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (inputStreamReader != null) {
-                        try {
-                            inputStreamReader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (inputStream != null) {
-                        try {
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            } else {
-                FileReader fileReader = null;
-                final StringBuilder sb = new StringBuilder();
-                if (path.startsWith("file:")) {
-                    path = path.substring("file:".length());
-                }
-                try {
-                    fileReader = new FileReader(path);
-                    int ch;
-                    while ((ch = fileReader.read()) != -1) {
-                        sb.append((char) ch);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (fileReader != null) {
-                        try {
-                            fileReader.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                return sb.toString();
-            }
-        }
-        return "";
-    }
-
-    /**
      * 初始化我的页面内容
      */
     private void initMePage() {
@@ -363,9 +363,7 @@ public class AuthApplicationStarter {
                 "club.p6e.coat.auth.AuthJsonWebTokenCipher"
         };
         final String[] dependency2 = switch (properties.getCache().getType()) {
-            case REDIS -> new String[]{
-                    "club.p6e.coat.auth.cache.redis.AuthRedisCache",
-            };
+            case REDIS -> new String[0];
             case MEMORY -> new String[]{
                     "club.p6e.coat.auth.cache.memory.support.ReactiveMemoryTemplate",
                     "club.p6e.coat.auth.cache.memory.AuthMemoryCache",

@@ -37,14 +37,14 @@ public class HttpCookieJsonWebTokenCertificateValidator extends HttpCertificate 
                         "fun execute(ServerWebExchange exchange).",
                         "[HTTP/COOKIE/JWT] HTTP request access token does not exist."
                 )))
-                .flatMap(this::accessToken)
+                .flatMap(t -> accessToken(t, exchange))
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(getUserInfoHeaderName(), s).build()
                 ).build());
     }
 
     @Override
-    public Mono<String> accessToken(String token) {
+    public Mono<String> accessToken(String token, ServerWebExchange exchange) {
         final String r = jwtDecryption(token, cipher.getAccessTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),
@@ -54,7 +54,7 @@ public class HttpCookieJsonWebTokenCertificateValidator extends HttpCertificate 
     }
 
     @Override
-    public Mono<String> refreshToken(String token) {
+    public Mono<String> refreshToken(String token, ServerWebExchange exchange) {
         final String r = jwtDecryption(token, cipher.getRefreshTokenSecret());
         return r == null ? Mono.error(GlobalExceptionContext.exceptionAuthException(
                 this.getClass(),

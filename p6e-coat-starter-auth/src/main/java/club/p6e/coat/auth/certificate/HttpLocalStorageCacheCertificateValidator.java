@@ -1,8 +1,10 @@
 package club.p6e.coat.auth.certificate;
 
 import club.p6e.coat.auth.AuthCertificateValidator;
+import club.p6e.coat.auth.AuthParamHandler;
 import club.p6e.coat.auth.cache.AuthCache;
 import club.p6e.coat.auth.error.GlobalExceptionContext;
+import club.p6e.coat.common.utils.SpringUtil;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -37,16 +39,17 @@ public class HttpLocalStorageCacheCertificateValidator extends HttpCertificate i
                         "fun execute(ServerWebExchange exchange)",
                         "[HTTP/STORAGE/CACHE] HTTP request access token does not exist."
                 )))
-                .flatMap(this::accessToken)
+                .flatMap(t -> accessToken(t, exchange))
                 .map(s -> exchange.mutate().request(
                         exchange.getRequest().mutate().header(getUserInfoHeaderName(), s).build()
                 ).build());
     }
 
     @Override
-    public Mono<String> accessToken(String token) {
-        return cache.getAccessToken(token)
-                .flatMap(t -> cache.getUser(t.getUid()))
+    public Mono<String> accessToken(String token, ServerWebExchange exchange) {
+        final AuthParamHandler authParamHandler = SpringUtil.getBean(AuthParamHandler.class);
+        return authParamHandler.execute(exchange)
+                .flatMap(r -> cache.getAccessToken(token, r).flatMap(t -> cache.getUser(t.getUid(), r)))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun accessToken(String token).",
@@ -55,9 +58,10 @@ public class HttpLocalStorageCacheCertificateValidator extends HttpCertificate i
     }
 
     @Override
-    public Mono<String> refreshToken(String token) {
-        return cache.getRefreshToken(token)
-                .flatMap(t -> cache.getUser(t.getUid()))
+    public Mono<String> refreshToken(String token, ServerWebExchange exchange) {
+        final AuthParamHandler authParamHandler = SpringUtil.getBean(AuthParamHandler.class);
+        return authParamHandler.execute(exchange)
+                .flatMap(r -> cache.getRefreshToken(token, r).flatMap(t -> cache.getUser(t.getUid(), r)))
                 .switchIfEmpty(Mono.error(GlobalExceptionContext.exceptionAuthException(
                         this.getClass(),
                         "fun refreshToken(String token).",

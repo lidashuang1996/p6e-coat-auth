@@ -53,10 +53,11 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     @GetMapping("")
     public Mono<Void> def(ServerHttpRequest request, ServerHttpResponse response) {
         final String source = getParam(request, "source");
+        final String project = getParam(request, "project");
         final String redirectUri = getParam(request, "redirect_uri", "redirectUri");
         final String state = GeneratorUtil.random(8, true, false);
         return authStateCache
-                .set(state, source == null ? "" : source)
+                .set(state, (source == null ? "" : source) + "@" + (project == null ? "" : project))
                 .flatMap(b -> {
                     if (b) {
                         response.setStatusCode(HttpStatus.FOUND);
@@ -65,7 +66,9 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                 + "&client_id=" + properties.getAuthorizeAppId()
                                 + "&redirect_uri=" + (redirectUri == null ? properties.getAuthorizeAppRedirectUri() : redirectUri)
                                 + "&scope=open_id,user_info"
-                                + "&state=" + state));
+                                + "&state=" + state
+                                + (project == null ? "" : "&project=" + project)
+                        ));
                         return response.setComplete();
                     } else {
                         return Mono.error(new CacheException(
@@ -142,9 +145,12 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                                                         "Get user information exception."
                                                 ));
                                             } else {
-                                                return authorization(String.valueOf(um.getId()), user, response)
+                                                Map<String, Object> e = new HashMap<>();
+                                                e.put("pid", cache.split("@")[1]);
+                                                e.put("source", cache.split("@")[0]);
+                                                return authorization(String.valueOf(um.getId()), user, response, e)
                                                         .map(data -> {
-                                                            data.put("entranceUrl", cache);
+                                                            data.put("entranceUrl", cache.split("@")[0]);
                                                             return ResultContext.build(data);
                                                         });
                                             }
@@ -160,6 +166,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     @SuppressWarnings("ALL")
     @PutMapping("/refresh")
     public Mono<ResultContext> refresh(ServerHttpRequest request, ServerHttpResponse response) {
+        final String project = getParam(request, "project");
         final String accessToken = getAccessToken(request);
         final String refreshToken = getRefreshToken(request);
         if (accessToken == null || refreshToken == null) {
@@ -169,16 +176,18 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                     "Request not exist authentication information exception."
             ));
         } else {
-            return authCache.getAccessToken(accessToken)
-                    .flatMap(at -> authCache.getRefreshToken(refreshToken)
+            final Map<String, Object> e = new HashMap<>();
+            e.put("pid", project);
+            return authCache.getAccessToken(accessToken, e)
+                    .flatMap(at -> authCache.getRefreshToken(refreshToken, e)
                             .map(rt -> at.getAccessToken().equals(rt.getAccessToken())
                                     && at.getRefreshToken().equals(rt.getRefreshToken()))
                             .filter(b -> b)
                             .flatMap(b -> authCache
-                                    .getUser(at.getUid())
+                                    .getUser(at.getUid(), e)
                                     .flatMap(user -> authCache
-                                            .cleanAccessToken(at.getAccessToken())
-                                            .flatMap(l -> authorization(at.getUid(), user, response))
+                                            .cleanAccessToken(at.getAccessToken(), e)
+                                            .flatMap(l -> authorization(at.getUid(), user, response, e))
                                             .map(ResultContext::build)))
                     ).switchIfEmpty(Mono.error(new AuthException(
                             this.getClass(),
@@ -191,6 +200,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     @SuppressWarnings("ALL")
     @DeleteMapping("/logout")
     public Mono<ResultContext> logout(ServerHttpRequest request, ServerHttpResponse response) {
+        final String project = getParam(request, "project");
         final String accessToken = getAccessToken(request);
         if (accessToken == null) {
             return Mono.error(new AuthException(
@@ -199,15 +209,17 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
                     "Request not exist authentication information exception."
             ));
         } else {
+            final Map<String, Object> e = new HashMap<>();
+            e.put("pid", project);
             return authCache
-                    .getAccessToken(accessToken)
+                    .getAccessToken(accessToken, e)
                     .switchIfEmpty(Mono.error(new AuthException(
                             this.getClass(),
                             "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
                             "Request authentication information has exception."
                     )))
                     .flatMap(m -> authCache
-                            .cleanAccessToken(m.getAccessToken())
+                            .cleanAccessToken(m.getAccessToken(), e)
                             .switchIfEmpty(Mono.error(new CacheException(
                                     this.getClass(),
                                     "fun logout(ServerHttpRequest request, ServerHttpResponse response).",
@@ -217,7 +229,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
     }
 
     @SuppressWarnings("ALL")
-    protected Mono<Map<String, Object>> authorization(String id, String info, ServerHttpResponse response) {
+    protected Mono<Map<String, Object>> authorization(String id, String info, ServerHttpResponse response, Map<String, Object> e) {
         /*
         // JWT
         final Date date = Date.from(LocalDateTime.now().plusSeconds(3600L).atZone(ZoneId.systemDefault()).toInstant());
@@ -240,7 +252,7 @@ public class AuthWebFluxClientController extends BaseWebFluxController {
 
         final String accessToken = GeneratorUtil.uuid() + GeneratorUtil.random();
         final String refreshToken = GeneratorUtil.uuid() + GeneratorUtil.random();
-        return authCache.set(id, "PC", accessToken, refreshToken, info)
+        return authCache.set(id, "PC", accessToken, refreshToken, info, e)
                 .map(t -> new HashMap<>() {{
                     put("accessToken", accessToken);
                     put("refreshToken", refreshToken);
